@@ -1,13 +1,11 @@
-/**
- * Created by Felix on 01.11.2015.
- */
-/**
- * Created by Felix on 01.11.2015.
- */
-(function() {
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../../typings/angular-ui-router/angular-ui-router.d.ts" />
+
+module app.tree {
     'use strict';
+
     angular.module('app.tree')
-        .config(['$stateProvider', function($stateProvider) {
+        .config(['$stateProvider', function($stateProvider : ng.ui.IStateProvider){
             $stateProvider.state('tree', {
                 url: '/tree',
                 views: {
@@ -16,10 +14,9 @@
                         templateUrl: 'app/src/tree/tree.html'
                     }
                 }
-            });
+            })
         }]);
-})();
-
+}
 
 
 

@@ -21,14 +21,6 @@ module.exports = function(grunt) {
             }
         },
 
-        copy: {
-            js: {
-                files: [
-                    {expand: true, src: ['<%= app_files.js %>'], dest: '<%= build_dir %>/js', filter: 'isFile'}
-                ]
-            }
-        },
-
         // Concat all generated Javascript files
         concat: {
             options: {
@@ -106,10 +98,11 @@ module.exports = function(grunt) {
                 dir: '<%= build_dir %>',
                 src: [
                     '<%= build_dir %>/js/lib.js',
-                    '<%= build_dir %>/js/app/src/app.module.js',
-                    '<%= build_dir %>/js/app/src/tree/tree.module.js',
-                    '<%= build_dir %>/js/app/src/tree/tree.config.js',
-                    '<%= build_dir %>/js/app/src/tree/tree.controller.js',
+                    '<%= build_dir %>/js/app.module.js',
+                    '<%= build_dir %>/js/tree/tree.module.js',
+                    '<%= build_dir %>/js/tree/tree.config.js',
+                    '<%= build_dir %>/js/tree/tree.controller.js',
+                    '<%= build_dir %>/js/tree/tree.service.js',
                     '<%= build_dir %>/js/templates.js',
                     '<%= build_dir %>/css/*.css'
 
@@ -159,7 +152,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-index-html-template');
-    grunt.loadNpmTasks('grunt-contrib-copy');
 
     // Initialize the config and add the build configuration file
     grunt.initConfig(grunt.util._.extend(taskConfig, buildConfig));
@@ -174,7 +166,6 @@ module.exports = function(grunt) {
         'less:build',
         'ngtemplates:build',
         'concat:lib-js',
-        'copy:js',
         'index:build'
     ]);
 

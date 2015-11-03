@@ -17,8 +17,7 @@
     "grunt-typescript": "^0.6.2",
     "karma-junit-reporter": "^0.3.8",
     "grunt-contrib-less": "^1.0.1",
-    "grunt-index-html-template": "^0.2.5",
-    "grunt-contrib-copy": "^0.8.2"
+    "grunt-index-html-template": "^0.2.5"
   },
   "scripts": {
     "postinstall": "bower install"
