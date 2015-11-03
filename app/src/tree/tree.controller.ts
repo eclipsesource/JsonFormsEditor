@@ -4,10 +4,12 @@ module app.tree {
     'use strict';
     class TreeController {
 
+        public world : string;
+
         static $inject = ['$scope', 'TreeService'];
 
-        constructor($scope, treeService : app.tree.TreeService){
-            $scope.world = treeService.sayHello();
+        constructor(private treeService : app.tree.TreeService){
+            this.world = treeService.sayHello();
         }
     }
 

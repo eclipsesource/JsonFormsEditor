@@ -2,7 +2,7 @@ module app.tree {
 
     export class TreeService {
         sayHello() : string {
-            return "hello";
+            return "world!";
         }
     }
 

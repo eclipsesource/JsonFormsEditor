@@ -11,6 +11,7 @@ module app.tree {
                 views: {
                     'main': {
                         controller: 'TreeController',
+                        controllerAs: 'tree',
                         templateUrl: 'app/src/tree/tree.html'
                     }
                 }
