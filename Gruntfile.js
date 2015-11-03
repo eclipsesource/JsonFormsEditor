@@ -1,26 +1,31 @@
 module.exports = function(grunt) {
 
-    // Project configuration.
-    grunt.initConfig({
+    // import the build.config.js file: all attributes in it are later usable in the task configuration.
+    var buildConfig = require('./build.config.js');
+
+    // task configuration.
+    var taskConfig = {
         pkg: grunt.file.readJSON('package.json'),
 
         // Convert Typescript to ES5
         typescript: {
-            dist: {
-                src: ['app/**/*.ts'],
+            build: {
+                src: '<%= app_files.ts %>',
+                dest: '<%= build_dir %>/js',
                 options: {
                     module: 'commonjs',
                     target: 'es5',
                     sourcemap: true,
                     declaration: false
                 }
-            },
-            test: {
-                src: ['e2e-tests/**/*.ts'],
-                options: {
-                    module: 'commonjs',
-                    target: 'es5'
-                }
+            }
+        },
+
+        copy: {
+            js: {
+                files: [
+                    {expand: true, src: ['<%= app_files.js %>'], dest: '<%= build_dir %>/js', filter: 'isFile'}
+                ]
             }
         },
 
@@ -31,56 +36,44 @@ module.exports = function(grunt) {
                 stripBanners: true,
 
                 // Replace all 'use strict' statements in the code with a single one at the top
-                process: function(src, filepath) {
+                process: function (src, filepath) {
                     return '// Source: ' + filepath + '\n' +
                         src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
                 },
 
                 // Add new banner on top of generated file
                 banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-                '<%= grunt.template.today("yyyy-mm-dd") %> Copyright (c) EclipseSource Muenchen GmbH and others. */ \n' +
+                '<%= grunt.template.today("yyyy-mm-dd") %> Copyright (c) */ \n' +
                 "'use strict';\n"
             },
-            dist: {
-                // Concat all javascript source files
-                src: ['app/src/app.module.js', 'app/src/app.config.js', 'app/src/tree/tree.module.js', 'app/src/tree/tree.config.js', 'app/src/tree/tree.controller.js'],
-                filter: 'isFile',
-                dest: 'temp/js/<%= pkg.name %>.js'
-            },
             "lib-js": {
-                src: ['bower_components/angular/angular.js','bower_components/angular-loader/angular-loader.js','bower_components/angular-route/angular-route.js'],
+                src: '<%= vendor_files.js %>',
                 filter: 'isFile',
-                dest: 'temp/js/lib.js'
-            },
-            "lib-css": {
-                src: ['bower_components/**/*.css'],
-                filter: 'isFile',
-                dest: 'temp/css/lib.css'
+                dest: '<%= build_dir %>/js/lib.js'
             }
-
         },
 
         // Config for Uglify (= Minify) Task
         uglify: {
-            dist: {
-                src: 'temp/js/<%= pkg.name %>.js',
-                dest: 'dist/js/<%= pkg.name %>.min.js'
+            app: {
+                src: '<%= temp_dir %>/js/app.js',
+                dest: '<%= build_dir %>/js/app.min.js'
             },
             lib: {
-                src: 'temp/js/lib.js',
-                dest: 'dist/js/lib.min.js'
+                src: '<%= temp_dir %>/js/lib.js',
+                dest: '<%= build_dir %>/js/lib.min.js'
             },
             templates: {
-                src: 'temp/templates.js',
-                dest: 'dist/js/templates.min.js'
+                src: '<%= temp_dir %>/templates.js',
+                dest: '<%= build_dir %>/js/templates.min.js'
             }
         },
 
         //Config for embedding templates in angular module
         ngtemplates: {
-            dist: {
-                src: 'app/**/*.html',
-                dest: 'temp/templates.js',
+            build: {
+                src: '<%= app_files.html %>',
+                dest: '<%= build_dir %>/js/templates.js',
                 options: {
                     htmlmin: {collapseWhitespace: true, collapseBooleanAttributes: true},
                     module: "app"
@@ -91,12 +84,12 @@ module.exports = function(grunt) {
         less: {
             build: {
                 files: {
-                    'dist/css/style.css': 'app/common/style.less'
+                    '<%= build_dir %>/css/style.css': '<%= app_files.less %>'
                 }
             },
             compile: {
                 files: {
-                    'dist/css/style.css': 'app/common/style.less'
+                    '<%= compile_dir %>/css/style.css': '<%= app_files.less %>'
                 },
                 options: {
                     cleancss: true,
@@ -110,87 +103,94 @@ module.exports = function(grunt) {
                 src: 'app/index.html'
             },
             build: {
-                dir: 'dist',
+                dir: '<%= build_dir %>',
                 src: [
-                    "dist/js/lib.min.js",
-                    "dist/js/<%= pkg.name %>.min.js",
-                    "dist/js/templates.min.js",
-                    "dist/css/*.css"
+                    '<%= build_dir %>/js/lib.js',
+                    '<%= build_dir %>/js/app/src/app.module.js',
+                    '<%= build_dir %>/js/app/src/tree/tree.module.js',
+                    '<%= build_dir %>/js/app/src/tree/tree.config.js',
+                    '<%= build_dir %>/js/app/src/tree/tree.controller.js',
+                    '<%= build_dir %>/js/templates.js',
+                    '<%= build_dir %>/css/*.css'
+
+                ]
+            },
+            compile: {
+                dir: '<%= compile_dir %>',
+                src: [
+                    "<%= build_dir %>/js/lib.min.js",
+                    "<%= build_dir %>/js/app.min.js",
+                    "<%= build_dir %>/js/templates.min.js",
+                    "<%= build_dir %>/css/*.css"
                 ]
             }
         },
 
-        // Config for Jshint Task
-        jshint: {
-            beforeconcat: ['app/**', '!app/bower_components'],
-            afterconcat: ['dist/<%= pkg.name %>.js'],
-            options: { jshintrc: '.jshintrc' }
-        },
-
         watch: {
-            js: {
+            ts: {
                 files: 'app/**/*.ts',
-                tasks: ['typescript:dist', 'concat:dist', 'uglify:dist']
+                tasks: ['typescript:build', 'index:build']
+            },
+            js: {
+                files: 'app/**/*.js',
+                tasks: ['copy:js', 'index:build']
+            },
+            less: {
+                files: 'app/**/*.less',
+                tasks: ['less:build', 'index:build']
             },
             html: {
                 files: 'app/**/*.html',
-                tasks: ['ngtemplates']
+                tasks: ['ngtemplates:build', 'index:build']
             }
         },
 
         clean: {
-            dist: ["dist/**", "temp/**"],
-            temp: ["temp"],
-            all: ["dist", "temp", "node_modules", "app/bower_components"]
+            build: ['<%= build_dir %>'],
+            lib: ["node_modules", "bower_components"]
         }
-    });
+    };
 
-    // inline templates into template.js
+    // load all grunt-tasks
     grunt.loadNpmTasks('grunt-angular-templates');
-
-    // Load the plugin that provides the "concat" task.
     grunt.loadNpmTasks('grunt-contrib-concat');
-
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-
-    // clean
     grunt.loadNpmTasks('grunt-contrib-clean');
-
-    // Load the plugin that provides the "uglify" task.
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-
     grunt.loadNpmTasks('grunt-contrib-watch');
-
     grunt.loadNpmTasks('grunt-typescript');
-
     grunt.loadNpmTasks('grunt-contrib-less');
-
     grunt.loadNpmTasks('grunt-index-html-template');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
-    // Build distribution
-    grunt.registerTask('dist', [
-        "clean:dist",
-        'typescript:dist',
-        'ngtemplates:dist',
-        'less',
-        'concat:dist',
+    // Initialize the config and add the build configuration file
+    grunt.initConfig(grunt.util._.extend(taskConfig, buildConfig));
+
+    /**
+     * The basic build task builds the typescript, copys any javascript source files, compiles the less to css, #
+     * adds all html template files to the template cache, concats all library files and builds the new index file.
+     */
+    grunt.registerTask('build', [
+        'clean:build',
+        'typescript:build',
+        'less:build',
+        'ngtemplates:build',
         'concat:lib-js',
-        'concat:lib-css',
-        'uglify:dist',
-        'uglify:lib',
-        'uglify:templates',
-        'index:build',
-        //'clean:temp'
+        'copy:js',
+        'index:build'
     ]);
 
+    /**
+     * Development task, which builds all sources and then starts a watch task.
+     */
     grunt.registerTask('dev', [
-        'dist',
+        'build',
         'watch'
     ]);
 
-    // Build distribution as default
+    /**
+     * Register the development task as default task.
+     */
     grunt.registerTask('default', [
-        'dist'
+        'dev'
     ]);
 
     /**
@@ -200,9 +200,9 @@ module.exports = function(grunt) {
      * compilation.
      */
     grunt.registerMultiTask( 'index', 'Process index.html template', function () {
-        var dirRE = new RegExp( '^(dist)\/', 'g' );
+        var dirRE = new RegExp( '^('+buildConfig.build_dir+')\/', 'g' );
         var jsFiles = this.filesSrc.filter(function(file) {
-           return file.match(/\.js$/);
+            return file.match(/\.js$/);
         }).map( function ( file ) {
             return file.replace( dirRE, '' );
         });
@@ -212,7 +212,7 @@ module.exports = function(grunt) {
             return file.replace( dirRE, '' );
         });
 
-        grunt.file.copy('app/index.html', 'dist/index.html', {
+        grunt.file.copy('app/index.html', buildConfig.build_dir + '/index.html', {
             process: function ( contents, path ) {
                 return grunt.template.process( contents, {
                     data: {

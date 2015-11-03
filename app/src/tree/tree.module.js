@@ -4,7 +4,7 @@
 (function() {
     'use strict';
     angular.module('app.tree', [
-        'ngRoute'
+        'ui.router'
     ]);
 })();
 

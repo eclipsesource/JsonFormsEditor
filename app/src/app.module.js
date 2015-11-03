@@ -1,9 +1,8 @@
 (function() {
-  'use strict';
-  angular.module('app', [
-    'ngRoute',
-    'app.tree'
-  ]);
+    'use strict';
+    angular.module('app', [
+        'app.tree'
+    ]);
 })();
 
 

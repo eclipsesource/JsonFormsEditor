@@ -4,6 +4,6 @@
 (function(){
     angular.module('app.tree')
         .controller('TreeController', ['$scope', function($scope){
-            $scope.world = "world";
+            $scope.world = "world!";
         }]);
 })();

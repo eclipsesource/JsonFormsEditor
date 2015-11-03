@@ -7,10 +7,15 @@
 (function() {
     'use strict';
     angular.module('app.tree')
-        .config(['$routeProvider', function($routeProvider) {
-            $routeProvider.when('/tree', {
-                templateUrl: 'app/src/tree/tree.html',
-                controller: 'TreeController'
+        .config(['$stateProvider', function($stateProvider) {
+            $stateProvider.state('tree', {
+                url: '/tree',
+                views: {
+                    'main': {
+                        controller: 'TreeController',
+                        templateUrl: 'app/src/tree/tree.html'
+                    }
+                }
             });
         }]);
 })();

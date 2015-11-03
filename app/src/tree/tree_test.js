@@ -17,6 +17,6 @@ describe('app.tree module', function() {
             var TreeController = $controller('TreeController');
             expect(TreeController).toBeDefined();
 
-        }));
+        })
     });
 });
