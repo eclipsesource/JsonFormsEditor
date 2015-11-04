@@ -10,35 +10,39 @@ module app.tree {
 
         public data : TreeElement[];
 
-        constructor($scope, private treeService : app.tree.TreeService, private $location: ng.ILocationService) {
-            $scope.collapseAll = function () {
-                $scope.$broadcast('collapseAll');
-            };
 
-            $scope.expandAll = function () {
-                $scope.$broadcast('expandAll');
-            };
+        constructor(private $scope, public treeService : app.tree.TreeService, private $location: ng.ILocationService) {
 
             this.data = treeService.elements;
         }
 
-        remove(scope) : void {
-            scope.remove();
+        removeElement(node: TreeElement) : void {
+            this.treeService.removeElement(node);
         }
+
+        addElementInside(node: TreeElement) : void {
+            //TODO change so that the user can choose which element to add(not only buttons)
+            this.treeService.addElementInside(node, TreeElementType.Button);
+        }
+
+
 
         toggle(scope) : void {
             scope.toggle();
         }
 
-        newSubItem(node: TreeElement) : void {
-            //var nodeData = scope.$modelValue;
-            //nodeData.nodes.push(new TreeElement(nodeData.id * 10 + nodeData.nodes.length, TreeElementType.Label, []));
-            this.treeService.elements[0].nodes[this.treeService.elements[0].nodes.indexOf(node)].nodes.push(new TreeElement(6, TreeElementType.Button, []))
-        }
-
         openDetail(node : TreeElement) : void {
             this.$location.path('/detail/' + node.id);
         }
+
+        collapseAll = function () {
+            this.$scope.$broadcast('collapseAll');
+        };
+
+        expandAll = function () {
+            this.$scope.$broadcast('expandAll');
+        };
+
     }
 
     angular.module('app.tree').controller('MyTreeController', MyTreeController);
