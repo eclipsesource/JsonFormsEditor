@@ -1,69 +1,46 @@
 /// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../../typings/angular-ui-router/angular-ui-router.d.ts" />
+/// <reference path="model/treeElement.ts" />
 
 module app.tree {
     'use strict';
-    class TreeController {
+    class MyTreeController {
 
-        public list : any[];
+        static $inject = ['$scope', 'TreeService', '$location'];
 
-        static $inject = ['TreeService'];
+        public data : TreeElement[];
 
-        constructor(private treeService : app.tree.TreeService){
-            this.list = [
-                {
-                    "id": 1,
-                    "title": "node1",
-                    "nodes": [
-                        {
-                            "id": 11,
-                            "title": "node1.1",
-                            "nodes": [
-                                {
-                                    "id": 111,
-                                    "title": "node1.1.1",
-                                    "nodes": []
-                                }
-                            ]
-                        },
-                        {
-                            "id": 12,
-                            "title": "node1.2",
-                            "nodes": []
-                        }
-                    ]
-                },
-                {
-                    "id": 2,
-                    "title": "node2",
-                    "nodrop": true,
-                    "nodes": [
-                        {
-                            "id": 21,
-                            "title": "node2.1",
-                            "nodes": []
-                        },
-                        {
-                            "id": 22,
-                            "title": "node2.2",
-                            "nodes": []
-                        }
-                    ]
-                },
-                {
-                    "id": 3,
-                    "title": "node3",
-                    "nodes": [
-                        {
-                            "id": 31,
-                            "title": "node3.1",
-                            "nodes": []
-                        }
-                    ]
-                }
-            ]
+        constructor($scope, private treeService : app.tree.TreeService, private $location: ng.ILocationService) {
+            $scope.collapseAll = function () {
+                $scope.$broadcast('collapseAll');
+            };
+
+            $scope.expandAll = function () {
+                $scope.$broadcast('expandAll');
+            };
+
+            this.data = treeService.elements;
+        }
+
+        remove(scope) : void {
+            scope.remove();
+        }
+
+        toggle(scope) : void {
+            scope.toggle();
+        }
+
+        newSubItem(node: TreeElement) : void {
+            //var nodeData = scope.$modelValue;
+            //nodeData.nodes.push(new TreeElement(nodeData.id * 10 + nodeData.nodes.length, TreeElementType.Label, []));
+            this.treeService.elements[0].nodes[this.treeService.elements[0].nodes.indexOf(node)].nodes.push(new TreeElement(6, TreeElementType.Button, []))
+        }
+
+        openDetail(node : TreeElement) : void {
+            this.$location.path('/detail/' + node.id);
         }
     }
 
-    angular.module('app.tree').controller('TreeController', TreeController);
+    angular.module('app.tree').controller('MyTreeController', MyTreeController);
 }
 

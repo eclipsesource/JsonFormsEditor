@@ -19,7 +19,11 @@ module.exports = {
             'app/src/tree/tree.config.ts',
             'app/src/tree/tree.service.ts',
             'app/src/tree/tree.controller.ts',
-            'app/src/tree/tree.service.ts'
+            'app/src/tree/tree.service.ts',
+            'app/src/tree/model/treeElements.ts',
+            'app/src/detail/detail.module.ts',
+            'app/src/detail/detail.config.ts',
+            'app/src/detail/detail.controller.ts'
         ],
         tsunit: [ 'app/src/**/*.spec.ts' ],
         html: [ 'app/index.html', 'app/src/**/*.html' ],
@@ -48,10 +52,14 @@ module.exports = {
         js: [
             'bower_components/angular/angular.js',
             'bower_components/angular-ui-router/release/angular-ui-router.js',
-            'bower_components/angular-ui-tree/dist/angular-ui-tree.js'
+            'bower_components/angular-ui-tree/dist/angular-ui-tree.js',
+            'bower_components/jquery/dist/jquery.js',
+            'bower_components/bootstrap/dist/js/bootstrap.js'
         ],
         css: [
-            'bower_components/angular-ui-tree/dist/angular-ui-tree.min.css'
+            'bower_components/angular-ui-tree/dist/angular-ui-tree.min.css',
+            'bower_components/bootstrap/dist/css/bootstrap.css',
+            'bower_components/bootstrap/dist/css/bootstrap-theme.css'
         ],
         assets: [
         ]

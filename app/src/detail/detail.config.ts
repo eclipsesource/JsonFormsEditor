@@ -1,7 +1,6 @@
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../../../typings/angular-ui-router/angular-ui-router.d.ts" />
 
-module app.tree {
+module app.detail {
     'use strict';
 
 
@@ -9,13 +8,13 @@ module app.tree {
         static $inject = ["$stateProvider"];
 
         constructor($stateProvider : ng.ui.IStateProvider) {
-            $stateProvider.state('tree', {
-                url: '/tree',
+            $stateProvider.state('detail', {
+                url: '/detail/{id:int}',
                 views: {
                     'main': {
-                        controller: 'MyTreeController',
-                        controllerAs: 'tree',
-                        templateUrl: 'app/src/tree/tree.html'
+                        controller: 'DetailController',
+                        controllerAs: 'detail',
+                        templateUrl: 'app/src/detail/detail.html'
                     }
                 }
             });
