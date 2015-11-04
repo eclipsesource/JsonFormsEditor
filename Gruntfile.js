@@ -42,6 +42,11 @@ module.exports = function(grunt) {
                 src: '<%= vendor_files.js %>',
                 filter: 'isFile',
                 dest: '<%= build_dir %>/js/lib.js'
+            },
+            "lib-css": {
+                src: '<%= vendor_files.css %>',
+                filter: 'isFile',
+                dest: '<%= build_dir %>/css/lib.css'
             }
         },
 
@@ -89,7 +94,6 @@ module.exports = function(grunt) {
                     '<%= build_dir %>/js/tree/tree.service.js',
                     '<%= build_dir %>/js/templates.js',
                     '<%= build_dir %>/css/*.css'
-
                 ]
             },
             compile: {
@@ -150,6 +154,7 @@ module.exports = function(grunt) {
         'less:build',
         'ngtemplates:build',
         'concat:lib-js',
+        'concat:lib-css',
         'index:build'
     ]);
 

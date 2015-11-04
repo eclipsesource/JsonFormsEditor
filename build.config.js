@@ -47,10 +47,11 @@ module.exports = {
     vendor_files: {
         js: [
             'bower_components/angular/angular.js',
-            'bower_components/angular-ui-router/release/angular-ui-router.js'
+            'bower_components/angular-ui-router/release/angular-ui-router.js',
+            'bower_components/angular-ui-tree/dist/angular-ui-tree.js'
         ],
         css: [
-
+            'bower_components/angular-ui-tree/dist/angular-ui-tree.min.css'
         ],
         assets: [
         ]
