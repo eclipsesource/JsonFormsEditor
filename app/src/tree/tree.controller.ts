@@ -6,7 +6,7 @@ module app.tree {
 
         public world : string;
 
-        static $inject = ['$scope', 'TreeService'];
+        static $inject = ['TreeService'];
 
         constructor(private treeService : app.tree.TreeService){
             this.world = treeService.sayHello();

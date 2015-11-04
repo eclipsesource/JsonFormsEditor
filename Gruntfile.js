@@ -45,22 +45,6 @@ module.exports = function(grunt) {
             }
         },
 
-        // Config for Uglify (= Minify) Task
-        uglify: {
-            app: {
-                src: '<%= temp_dir %>/js/app.js',
-                dest: '<%= build_dir %>/js/app.min.js'
-            },
-            lib: {
-                src: '<%= temp_dir %>/js/lib.js',
-                dest: '<%= build_dir %>/js/lib.min.js'
-            },
-            templates: {
-                src: '<%= temp_dir %>/templates.js',
-                dest: '<%= build_dir %>/js/templates.min.js'
-            }
-        },
-
         //Config for embedding templates in angular module
         ngtemplates: {
             build: {
