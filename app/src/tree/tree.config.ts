@@ -4,9 +4,12 @@
 module app.tree {
     'use strict';
 
-    angular.module('app.tree')
-        .config(['$stateProvider', function($stateProvider : ng.ui.IStateProvider){
-            $stateProvider.state('tree', {
+
+    class TreeConfig {
+        static $inject = ["$stateProvider"];
+
+        constructor(private stateProvider:ng.ui.IStateProvider) {
+            stateProvider.state('tree', {
                 url: '/tree',
                 views: {
                     'main': {
@@ -15,8 +18,12 @@ module app.tree {
                         templateUrl: 'app/src/tree/tree.html'
                     }
                 }
-            })
-        }]);
+            });
+
+        }
+    }
+
+    angular.module('app.tree').config('TreeConfig', TreeConfig);
 }
 
 
