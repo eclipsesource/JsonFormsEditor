@@ -8,8 +8,8 @@ module app.tree {
     class TreeConfig {
         static $inject = ["$stateProvider"];
 
-        constructor(private stateProvider:ng.ui.IStateProvider) {
-            stateProvider.state('tree', {
+        constructor(private $stateProvider : ng.ui.IStateProvider) {
+            $stateProvider.state('tree', {
                 url: '/tree',
                 views: {
                     'main': {
@@ -23,7 +23,8 @@ module app.tree {
         }
     }
 
-    angular.module('app.tree').config('TreeConfig', TreeConfig);
+    angular.module('app.tree')
+        .config(TreeConfig);
 }
 
 
