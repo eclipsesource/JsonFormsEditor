@@ -31,10 +31,29 @@ module app.tree {
             return element;
         }
 
-
-        //TODO get element by id
+        //not tested
         getElement(id : number) : TreeElement {
+
+
             return new TreeElement(id, TreeElementType.Button, []);
+        }
+
+        getElementRec(id : number, el: TreeElement) : TreeElement{
+            if(el.id == id){
+                return el;
+            }else {
+                var res;
+                for(var node in el.nodes){
+                    if(node.id == id){
+                        return node;
+                    }
+                    res = this.getElementRec(id, node);
+                    if(res != null){
+                        return res;
+                    }
+                }
+            }
+            return null;
         }
 
     }
