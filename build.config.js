@@ -8,26 +8,20 @@ module.exports = {
     build_dir: 'build',
 
     /**
+     * Temp Directory used during the build and deleted afterwards.
+     */
+    temp_dir: 'temp',
+
+    /**
      * This is a collection of file patterns that refer to the app. These file paths are used in
-     * the configuration of build tasks. `js` is all project javascript, except the tests.
+     * the configuration of build tasks. `ts` is all project typescript, except the tests.
      * 'jsunit' are all unit tests. `html` are all the HTML files, `less` are the stylesheets.
      */
     app_files: {
-        ts: [
-            'app/src/app.module.ts',
-            'app/src/tree/tree.module.ts',
-            'app/src/tree/tree.config.ts',
-            'app/src/tree/tree.service.ts',
-            'app/src/tree/tree.controller.ts',
-            'app/src/tree/tree.service.ts',
-            'app/src/tree/model/treeElements.ts',
-            'app/src/detail/detail.module.ts',
-            'app/src/detail/detail.config.ts',
-            'app/src/detail/detail.controller.ts'
-        ],
+        ts: [ 'app/src/**/*.ts', '!app/src/**/*.spec.ts' ],
         tsunit: [ 'app/src/**/*.spec.ts' ],
         html: [ 'app/index.html', 'app/src/**/*.html' ],
-        less: ['app/common/style.less', 'app/src/**/.less']
+        less: ['app/assets/style/style.less']
     },
 
     /**
@@ -50,26 +44,26 @@ module.exports = {
      */
     vendor_files: {
         js: [
-            'bower_components/angular/angular.js',
-            'bower_components/angular-ui-router/release/angular-ui-router.js',
-            'bower_components/angular-ui-tree/dist/angular-ui-tree.js',
-            'bower_components/jquery/dist/jquery.js',
-            'bower_components/bootstrap/dist/js/bootstrap.js',
-            'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-            'bower_components/angular-ui-grid/ui-grid.js',
-            'bower_components/angular-ui-validate/dist/validate.js',
-            'bower_components/lodash-compat/lodash.js',
-            'bower_components/path-loader/browser/path-loader.js',
-            'bower_components/traverse/traverse.js',
-            'bower_components/json-refs/browser/json-refs.js',
-            'bower_components/tv4/tv4.js',
-            'bower_components/jsonforms/dist/js/jsonforms.js'
+            'app/assets/libs/angular/angular.js',
+            'app/assets/libs/angular-ui-router/release/angular-ui-router.js',
+            'app/assets/libs/angular-ui-tree/dist/angular-ui-tree.js',
+            'app/assets/libs/jquery/dist/jquery.js',
+            'app/assets/libs/bootstrap/dist/js/bootstrap.js',
+            'app/assets/libs/angular-bootstrap/ui-bootstrap-tpls.js',
+            'app/assets/libs/angular-ui-grid/ui-grid.js',
+            'app/assets/libs/angular-ui-validate/dist/validate.js',
+            'app/assets/libs/lodash-compat/lodash.js',
+            'app/assets/libs/path-loader/browser/path-loader.js',
+            'app/assets/libs/traverse/traverse.js',
+            'app/assets/libs/json-refs/browser/json-refs.js',
+            'app/assets/libs/tv4/tv4.js',
+            'app/assets/libs/jsonforms/dist/js/jsonforms.js'
 
         ],
         css: [
-            'bower_components/angular-ui-tree/dist/angular-ui-tree.min.css',
-            'bower_components/bootstrap/dist/css/bootstrap.css',
-            'bower_components/bootstrap/dist/css/bootstrap-theme.css'
+            'app/assets/libs/angular-ui-tree/dist/angular-ui-tree.min.css',
+            'app/assets/libs/bootstrap/dist/css/bootstrap.css',
+            'app/assets/libs/bootstrap/dist/css/bootstrap-theme.css'
         ],
         assets: [
         ]

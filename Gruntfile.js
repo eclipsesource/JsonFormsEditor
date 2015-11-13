@@ -11,11 +11,11 @@ module.exports = function(grunt) {
         typescript: {
             build: {
                 src: '<%= app_files.ts %>',
-                dest: '<%= build_dir %>/js',
+                dest: '<%= temp_dir %>/ts',
                 options: {
                     module: 'commonjs',
                     target: 'es5',
-                    sourcemap: true,
+                    sourceMap: true,
                     declaration: false
                 }
             }
@@ -37,6 +37,14 @@ module.exports = function(grunt) {
                 banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
                 '<%= grunt.template.today("yyyy-mm-dd") %> Copyright (c) */ \n' +
                 "'use strict';\n"
+            },
+            "app": {
+                src: [
+                    '<%= temp_dir %>/ts/**/*.module.js',
+                    '<%= temp_dir %>/ts/**/*.js'
+                ],
+                filter: 'isFile',
+                dest: '<%= build_dir %>/js/app.js'
             },
             "lib-js": {
                 src: '<%= vendor_files.js %>',
@@ -67,15 +75,6 @@ module.exports = function(grunt) {
                 files: {
                     '<%= build_dir %>/css/style.css': '<%= app_files.less %>'
                 }
-            },
-            compile: {
-                files: {
-                    '<%= compile_dir %>/css/style.css': '<%= app_files.less %>'
-                },
-                options: {
-                    cleancss: true,
-                    compress: true
-                }
             }
         },
 
@@ -87,26 +86,9 @@ module.exports = function(grunt) {
                 dir: '<%= build_dir %>',
                 src: [
                     '<%= build_dir %>/js/lib.js',
-                    '<%= build_dir %>/js/app.module.js',
-                    '<%= build_dir %>/js/tree/tree.module.js',
-                    '<%= build_dir %>/js/tree/tree.config.js',
-                    '<%= build_dir %>/js/tree/tree.controller.js',
-                    '<%= build_dir %>/js/tree/tree.service.js',
-                    '<%= build_dir %>/js/tree/model/treeElement.js',
-                    '<%= build_dir %>/js/detail/detail.module.js',
-                    '<%= build_dir %>/js/detail/detail.config.js',
-                    '<%= build_dir %>/js/detail/detail.controller.js',
+                    '<%= build_dir %>/js/app.js',
                     '<%= build_dir %>/js/templates.js',
                     '<%= build_dir %>/css/*.css'
-                ]
-            },
-            compile: {
-                dir: '<%= compile_dir %>',
-                src: [
-                    "<%= build_dir %>/js/lib.min.js",
-                    "<%= build_dir %>/js/app.min.js",
-                    "<%= build_dir %>/js/templates.min.js",
-                    "<%= build_dir %>/css/*.css"
                 ]
             }
         },
@@ -114,11 +96,7 @@ module.exports = function(grunt) {
         watch: {
             ts: {
                 files: 'app/**/*.ts',
-                tasks: ['typescript:build', 'index:build']
-            },
-            js: {
-                files: 'app/**/*.js',
-                tasks: ['copy:js', 'index:build']
+                tasks: ['ts:build', 'angular-builder:build', 'index:build']
             },
             less: {
                 files: 'app/**/*.less',
@@ -132,8 +110,20 @@ module.exports = function(grunt) {
 
         clean: {
             build: ['<%= build_dir %>'],
-            lib: ["node_modules", "bower_components"]
+            temp: ['<%= temp_dir %>'],
+            lib: ["node_modules", "app/assets/libs"]
+        },
+
+        connect: {
+            server: {
+                options: {
+                    port: 1234,
+                    base: '<%= build_dir %>'
+                }
+            }
         }
+
+
     };
 
     // load all grunt-tasks
@@ -144,6 +134,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-index-html-template');
+    grunt.loadNpmTasks('grunt-angular-builder');
+    grunt.loadNpmTasks('grunt-contrib-connect');
 
     // Initialize the config and add the build configuration file
     grunt.initConfig(grunt.util._.extend(taskConfig, buildConfig));
@@ -155,11 +147,11 @@ module.exports = function(grunt) {
     grunt.registerTask('build', [
         'clean:build',
         'typescript:build',
-        'less:build',
+        'concat',
         'ngtemplates:build',
-        'concat:lib-js',
-        'concat:lib-css',
-        'index:build'
+        'less:build',
+        'index:build',
+        'clean:temp'
     ]);
 
     /**
@@ -167,6 +159,7 @@ module.exports = function(grunt) {
      */
     grunt.registerTask('dev', [
         'build',
+        'connect',
         'watch'
     ]);
 

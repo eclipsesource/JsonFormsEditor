@@ -1,5 +1,5 @@
-/// <reference path="../../../app/src/tree/model/treeElement.ts" />
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
+/// <reference path="model/treeElement.ts" />
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
 module app.tree {
 
     export class TreeService {

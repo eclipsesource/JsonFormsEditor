@@ -1,5 +1,5 @@
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../../typings/angular-ui-router/angular-ui-router.d.ts" />
+/// <reference path="../../../../typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../typings/angular-ui-router/angular-ui-router.d.ts" />
 
 module app.tree {
     'use strict';
@@ -15,7 +15,7 @@ module app.tree {
                     'main': {
                         controller: 'MyTreeController',
                         controllerAs: 'tree',
-                        templateUrl: 'app/src/tree/tree.html'
+                        templateUrl: 'app/src/components/tree/tree.html'
                     }
                 }
             });

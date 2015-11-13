@@ -1,4 +1,4 @@
-/// <reference path="../../../typings/angular-ui-router/angular-ui-router.d.ts" />
+/// <reference path="../../../../typings/angular-ui-router/angular-ui-router.d.ts" />
 
 module app.detail {
     'use strict';
@@ -14,7 +14,7 @@ module app.detail {
                     'main': {
                         controller: 'DetailController',
                         controllerAs: 'detail',
-                        templateUrl: 'app/src/detail/detail.html'
+                        templateUrl: 'app/src/components/detail/detail.html'
                     }
                 }
             });
