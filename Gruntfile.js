@@ -15,8 +15,18 @@ module.exports = function(grunt) {
                 options: {
                     module: 'commonjs',
                     target: 'es5',
-                    sourceMap: true,
+                    sourceMap: false,
                     declaration: false
+                }
+            },
+            test: {
+                src: ['<%= app_files.ts %>', '<%= app_files.tsunit %>'],
+                dest: '<%= temp_dir %>/ts',
+                options: {
+                    module: 'commonjs',
+                    target: 'es5',
+                    sourceMap: false,
+                    declarations: false
                 }
             }
         },
@@ -121,6 +131,22 @@ module.exports = function(grunt) {
                     base: '<%= build_dir %>'
                 }
             }
+        },
+
+        karma: {
+            unit: {
+                options: {
+                    frameworks: ['jasmine'],
+                    singleRun: true,
+                    browsers: ['PhantomJS'],
+                    files: [
+                        '<%= vendor_files.js %>',
+                        '<%= vendor_files.test %>',
+                        '<%= temp_dir %>/ts/**/*.module.js',
+                        '<%= temp_dir %>/ts/**/*.js'
+                    ]
+                }
+            }
         }
 
 
@@ -136,6 +162,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-index-html-template');
     grunt.loadNpmTasks('grunt-angular-builder');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-karma');
 
     // Initialize the config and add the build configuration file
     grunt.initConfig(grunt.util._.extend(taskConfig, buildConfig));
@@ -161,6 +188,13 @@ module.exports = function(grunt) {
         'build',
         'connect',
         'watch'
+    ]);
+
+    grunt.registerTask('test', [
+        'clean:temp',
+        'typescript:test',
+        'karma',
+        'clean:temp'
     ]);
 
     /**

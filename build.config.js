@@ -60,6 +60,9 @@ module.exports = {
             'app/assets/libs/jsonforms/dist/js/jsonforms.js'
 
         ],
+        test: [
+            'app/assets/libs/angular-mocks/angular-mocks.js'
+        ],
         css: [
             'app/assets/libs/angular-ui-tree/dist/angular-ui-tree.min.css',
             'app/assets/libs/bootstrap/dist/css/bootstrap.css',
