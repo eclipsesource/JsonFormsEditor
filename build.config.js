@@ -54,7 +54,17 @@ module.exports = {
             'bower_components/angular-ui-router/release/angular-ui-router.js',
             'bower_components/angular-ui-tree/dist/angular-ui-tree.js',
             'bower_components/jquery/dist/jquery.js',
-            'bower_components/bootstrap/dist/js/bootstrap.js'
+            'bower_components/bootstrap/dist/js/bootstrap.js',
+            'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+            'bower_components/angular-ui-grid/ui-grid.js',
+            'bower_components/angular-ui-validate/dist/validate.js',
+            'bower_components/lodash-compat/lodash.js',
+            'bower_components/path-loader/browser/path-loader.js',
+            'bower_components/traverse/traverse.js',
+            'bower_components/json-refs/browser/json-refs.js',
+            'bower_components/tv4/tv4.js',
+            'bower_components/jsonforms/dist/js/jsonforms.js'
+
         ],
         css: [
             'bower_components/angular-ui-tree/dist/angular-ui-tree.min.css',

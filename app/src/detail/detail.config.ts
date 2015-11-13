@@ -4,7 +4,7 @@ module app.detail {
     'use strict';
 
 
-    class TreeConfig {
+    class DetailConfig {
         static $inject = ["$stateProvider"];
 
         constructor($stateProvider : ng.ui.IStateProvider) {
@@ -22,8 +22,8 @@ module app.detail {
         }
     }
 
-    angular.module('app.tree')
-        .config(TreeConfig);
+    angular.module('app.detail')
+        .config(DetailConfig);
 }
 
 

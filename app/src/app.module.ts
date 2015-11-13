@@ -4,7 +4,8 @@ module app {
    'use strict';
 
     angular.module('app', [
-        'app.tree'
+        'app.tree',
+        'app.detail'
     ]);
 }
 

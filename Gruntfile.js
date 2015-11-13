@@ -93,9 +93,9 @@ module.exports = function(grunt) {
                     '<%= build_dir %>/js/tree/tree.controller.js',
                     '<%= build_dir %>/js/tree/tree.service.js',
                     '<%= build_dir %>/js/tree/model/treeElement.js',
-                    '<%= build_dir %>/js/detail/detail.module.ts',
-                    '<%= build_dir %>/js/detail/detail.config.ts',
-                    '<%= build_dir %>/js/detail/detail.controller.ts',
+                    '<%= build_dir %>/js/detail/detail.module.js',
+                    '<%= build_dir %>/js/detail/detail.config.js',
+                    '<%= build_dir %>/js/detail/detail.controller.js',
                     '<%= build_dir %>/js/templates.js',
                     '<%= build_dir %>/css/*.css'
                 ]
