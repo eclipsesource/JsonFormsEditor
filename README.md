@@ -26,8 +26,8 @@ The following tasks can be run from the command line:
 
 **> grunt dev** does the same as `grunt build`, but starts a watch task afterwards. This will rebuild all, when grunt detects any changes in the typescript, javascript, css or html files.
 
+**> grunt test** runs all the tests defined in the `src` folder. Uses Karma as a test-runner and jasmine as testing framework.
+
 **> grunt** is currently a shortcut to start the `grunt dev` task.
 
-#### How to include new files
-In order to include new files (library or source files) to the build process, one needs to add them to the `build.config.js`. This ensures that all files are included in the `index.html` in the specified order.
 
