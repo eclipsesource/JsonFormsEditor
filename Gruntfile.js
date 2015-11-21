@@ -68,6 +68,14 @@ module.exports = function(grunt) {
             }
         },
 
+        copy: {
+            resources: {
+                files: [
+                    {src: ['<%= app_files.resources %>'], dest: '<%= build_dir %>/resources'}
+                ]
+            }
+        },
+
         //Config for embedding templates in angular module
         ngtemplates: {
             build: {
@@ -106,7 +114,7 @@ module.exports = function(grunt) {
         watch: {
             ts: {
                 files: 'app/**/*.ts',
-                tasks: ['ts:build', 'angular-builder:build', 'index:build']
+                tasks: ['typescript:build', 'concat:app', 'index:build']
             },
             less: {
                 files: 'app/**/*.less',
@@ -128,7 +136,7 @@ module.exports = function(grunt) {
             server: {
                 options: {
                     port: 1234,
-                    base: '<%= build_dir %>'
+                    base: ['<%= build_dir %>', '<%= build_dir %>/resources']
                 }
             }
         },
@@ -155,6 +163,7 @@ module.exports = function(grunt) {
     // load all grunt-tasks
     grunt.loadNpmTasks('grunt-angular-templates');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-typescript');
@@ -174,6 +183,7 @@ module.exports = function(grunt) {
     grunt.registerTask('build', [
         'clean:build',
         'typescript:build',
+        'copy',
         'concat',
         'ngtemplates:build',
         'less:build',

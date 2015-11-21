@@ -4,8 +4,10 @@ module app {
    'use strict';
 
     angular.module('app', [
+        'app.core',
         'app.tree',
-        'app.detail'
+        'app.detail',
+        'app.toolbox'
     ]);
 }
 
