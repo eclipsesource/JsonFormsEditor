@@ -32,7 +32,7 @@ module app.toolbox {
 
         static $inject = ['MetaschemaService'];
 
-        constructor(metaschemaService : app.core.metaschema.MetaschemaService){
+        /*constructor(metaschemaService : app.core.metaschema.MetaschemaService){
             this.schema = metaschemaService.getSchema();
             _.forEach(this.schema.getControls(), (control : string) => {
                 this.controls.push(new ToolboxControlElement(control));
@@ -41,7 +41,7 @@ module app.toolbox {
             _.forEach(this.schema.getLayouts(), (layout : string) => {
                 this.layouts.push(new ToolboxLayoutElement(layout));
             });
-        }
+        }*/
     }
 
     angular.module('app.toolbox').controller('ToolboxController', ToolboxController)

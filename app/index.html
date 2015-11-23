@@ -15,14 +15,8 @@
 
 </head>
 <body>
-<ul class="menu">
-  <li><a href ui-sref="tree">Tree</a></li>
-  <li>Test</li>
-  <li>Test</li>
-</ul>
-
-
-<div ui-view="main"></div>
-
+<div class="toolbox" ui-view="toolbox"></div>
+<div class="middle_container" ui-view="middle_container"></div>
+<div class="detail" ui-view="detail"></div>
 </body>
 </html>
