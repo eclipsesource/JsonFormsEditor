@@ -1,3 +1,5 @@
+/// <reference path="../../../../../typings/lodash/lodash.d.ts" />
+
 module app.core.metaschema {
 
     export class Metaschema {

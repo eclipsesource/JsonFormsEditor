@@ -10,9 +10,12 @@ module app.detail {
         static $inject = ['$stateParams', 'TreeService'];
 
         constructor($stateParams : any, treeElementService : app.tree.TreeService){
-            var id = $stateParams['id'];
+            var id = parseInt($stateParams['nodeId']);
 
-            this.data = treeElementService.getElement(id);
+            var element = treeElementService.getElement(id);
+            if(element == null) this.data = [];
+            else this.data = {"id":element.id,"title":element.title};
+            //this.data = {"id":id,"title":"hola"};
 
             this.schema = {
                 "type": "object",

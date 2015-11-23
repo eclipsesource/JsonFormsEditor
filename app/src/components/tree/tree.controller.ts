@@ -6,12 +6,12 @@ module app.tree {
     'use strict';
     class MyTreeController {
 
-        static $inject = ['$scope', 'TreeService', '$location'];
+        static $inject = ['$scope', 'TreeService'];
 
         public data : TreeElement[];
 
 
-        constructor(private $scope, public treeService : app.tree.TreeService, private $location: ng.ILocationService) {
+        constructor(private $scope, public treeService : app.tree.TreeService) {
 
             this.data = treeService.elements;
         }
@@ -20,19 +20,18 @@ module app.tree {
             this.treeService.removeElement(node);
         }
 
-        addElementInside(node: TreeElement) : void {
-            //TODO change so that the user can choose which element to add(not only buttons)
-            this.treeService.addElementInside(node, TreeElementType.Button);
+        addElementInside(node: TreeElement, type: TreeElementType) : void {
+            if(type === null){
+                type = TreeElementType.Control;
+            }
+
+            this.treeService.addElementInside(node, type);
         }
 
 
 
         toggle(scope) : void {
             scope.toggle();
-        }
-
-        openDetail(node : TreeElement) : void {
-            this.$location.path('/detail/' + node.id);
         }
 
         collapseAll = function () {

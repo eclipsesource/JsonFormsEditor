@@ -9,10 +9,10 @@
         }"></span></a>
         {{node.title}}
         <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="tree.removeElement(node)"><span
-                class="glyphicon glyphicon-remove"></span></a>
-        <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="tree.addElementInside(node)" style="margin-right: 8px;"><span
-                class="glyphicon glyphicon-plus"></span></a>
-        <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="tree.openDetail(node)" style="margin-right: 8px;"><span
+            class="glyphicon glyphicon-remove"></span></a>
+        <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="tree.addElementInside(node, null)" style="margin-right: 8px;"><span
+            class="glyphicon glyphicon-plus"></span></a>
+        <a class="pull-right btn btn-primary btn-xs" data-nodrag ui-sref="tree.detail({nodeId:node.id})" style="margin-right: 8px;"><span
                 class="glyphicon glyphicon-plus"></span></a>
     </div>
     <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
@@ -22,7 +22,7 @@
 </script>
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-10 col-sm-push-1">
         <div ui-tree id="tree-root" class="angular-ui-tree">
             <ol ui-tree-nodes ng-model="tree.data" class="angular-ui-tree-nodes">
                 <li ng-repeat="node in tree.data" ui-tree-node ng-include="'nodes_renderer.html'" class="angular-ui-tree-node"></li>

@@ -14,12 +14,16 @@ module app.tree {
         }
 
         removeElement(elem : TreeElement){
-            this.elements.splice(this.elements.indexOf(elem), 1);
+            if(elem.parent != null){
+                elem.parent.nodes.splice(elem.parent.nodes.indexOf(elem), 1);
+            } else {
+                this.elements.splice(this.elements.indexOf(elem), 1);
+            }
         }
 
         addElementInside(elem: TreeElement, type: TreeElementType) : TreeElement{
 
-            var element = new TreeElement(this.id, type, []);
+            var element = new TreeElement(this.id, type, [], elem);
             this.id++;
 
             if(elem == null){
@@ -33,9 +37,13 @@ module app.tree {
 
         //not tested
         getElement(id : number) : TreeElement {
-
-
-            return new TreeElement(id, TreeElementType.Button, []);
+            var res = null;
+            for(var i = 0; i < this.elements.length; i++) {
+                res = this.getElementRec(id, this.elements[i]);
+                if(res != null)
+                    return res;
+            }
+            return null;
         }
 
         getElementRec(id : number, el: TreeElement) : TreeElement{
@@ -43,11 +51,8 @@ module app.tree {
                 return el;
             }else {
                 var res;
-                for(var node in el.nodes){
-                    if(node.id == id){
-                        return node;
-                    }
-                    res = this.getElementRec(id, node);
+                for(var i = 0; i < el.nodes.length; i++){
+                    res = this.getElementRec(id, el.nodes[i]);
                     if(res != null){
                         return res;
                     }

@@ -11,12 +11,23 @@ module app.tree {
         constructor($stateProvider : ng.ui.IStateProvider) {
             $stateProvider.state('tree', {
                 url: '/tree',
-                views: {
-                    'main': {
+                views:{
+                    'middle_container': {
                         controller: 'MyTreeController',
                         controllerAs: 'tree',
                         templateUrl: 'app/src/components/tree/tree.html'
                     }
+                }
+            })
+            .state('tree.detail', {
+                url: '/detail/:nodeId',
+                views: {
+                    'detail@': {
+                        controller: 'DetailController',
+                        controllerAs: 'detail',
+                        templateUrl: 'app/src/components/detail/detail.html'
+                    }
+
                 }
             });
 
