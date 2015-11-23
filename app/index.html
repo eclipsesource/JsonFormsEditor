@@ -15,8 +15,31 @@
 
 </head>
 <body>
-<div class="toolbox" ui-view="toolbox"></div>
-<div class="middle_container" ui-view="middle_container"></div>
-<div class="detail" ui-view="detail"></div>
+
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">JsonForms Editor</span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation. We hide it in small screens. -->
+      <nav class="mdl-navigation mdl-layout--large-screen-only">
+        <a class="mdl-navigation__link" href="">Preview</a>
+      </nav>
+    </div>
+  </header>
+  <main class="mdl-layout__content">
+    <div class="page-content">
+      <div class="mdl-grid">
+        <div class="mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+          <div class="toolboxContainer" ui-view="toolboxContainer"></div>
+        </div>
+        <div class="treeContainer mdl-cell mdl-cell--8-col" ui-view="treeContainer"></div>
+        <div class="detailContainer mdl-cell mdl-cell--2-col" ui-view="detailContainer"></div>
+      </div>
+    </div>
+  </main>
+</div>
 </body>
 </html>

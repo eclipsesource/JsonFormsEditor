@@ -22,7 +22,7 @@ module.exports = {
         tsunit: [ 'app/src/**/*.spec.ts' ],
         html: [ 'app/index.html', 'app/src/**/*.html' ],
         less: ['app/assets/style/style.less'],
-        resources: ['app/assets/resources/**']
+        assets: ['**', '!libs/**', '!style/**']
     },
 
     /**
@@ -58,8 +58,8 @@ module.exports = {
             'app/assets/libs/traverse/traverse.js',
             'app/assets/libs/json-refs/browser/json-refs.js',
             'app/assets/libs/tv4/tv4.js',
-            'app/assets/libs/jsonforms/dist/js/jsonforms.js'
-
+            'app/assets/libs/jsonforms/dist/js/jsonforms.js',
+            'app/assets/libs/material-design-lite/material.js'
         ],
         test: [
             'app/assets/libs/angular-mocks/angular-mocks.js'
@@ -67,7 +67,8 @@ module.exports = {
         css: [
             'app/assets/libs/angular-ui-tree/dist/angular-ui-tree.min.css',
             'app/assets/libs/bootstrap/dist/css/bootstrap.css',
-            'app/assets/libs/bootstrap/dist/css/bootstrap-theme.css'
+            'app/assets/libs/bootstrap/dist/css/bootstrap-theme.css',
+            'app/assets/libs/material-design-lite/material.css'
         ],
         assets: [
         ]

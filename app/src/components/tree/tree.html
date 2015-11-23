@@ -1,19 +1,11 @@
 <!-- Nested node template -->
 <script type="text/ng-template" id="nodes_renderer.html">
     <div ui-tree-handle class="tree-node tree-node-content element">
-        <a class="btn btn-success btn-xs" ng-if="node.nodes && node.nodes.length > 0" data-nodrag ng-click="tree.toggle(this)"><span
-                class="glyphicon"
-                ng-class="{
-          'glyphicon-chevron-right': collapsed,
-          'glyphicon-chevron-down': !collapsed
-        }"></span></a>
+        <a ng-if="node.nodes && node.nodes.length > 0" data-nodrag ng-click="tree.toggle(this)"><i class="material-icons">expand_more</i></a>
         {{node.title}}
-        <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="tree.removeElement(node)"><span
-            class="glyphicon glyphicon-remove"></span></a>
-        <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="tree.addElementInside(node, null)" style="margin-right: 8px;"><span
-            class="glyphicon glyphicon-plus"></span></a>
-        <a class="pull-right btn btn-primary btn-xs" data-nodrag ui-sref="tree.detail({nodeId:node.id})" style="margin-right: 8px;"><span
-                class="glyphicon glyphicon-plus"></span></a>
+        <a class="pull-right" data-nodrag ng-click="tree.removeElement(node)"><i class="material-icons">delete</i></a>
+        <a class="pull-right" data-nodrag ng-click="tree.addElementInside(node, null)" style="margin-right: 8px;"><i class="material-icons">add</i></a>
+        <a class="pull-right" data-nodrag ui-sref="tree.detail({nodeId:node.id})" style="margin-right: 8px;"><i class="material-icons">edit</i></a>
     </div>
     <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
         <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">

@@ -69,9 +69,9 @@ module.exports = function(grunt) {
         },
 
         copy: {
-            resources: {
+            assets: {
                 files: [
-                    {src: ['<%= app_files.resources %>'], dest: '<%= build_dir %>/resources'}
+                    {cwd: 'app/assets', src: '<%= app_files.assets %>', dest: '<%= build_dir %>/', filter: 'isFile', expand: true}
                 ]
             }
         },
@@ -182,7 +182,7 @@ module.exports = function(grunt) {
     grunt.registerTask('build', [
         'clean:build',
         'typescript:build',
-        'copy',
+        'copy:assets',
         'concat',
         'ngtemplates:build',
         'less:build',

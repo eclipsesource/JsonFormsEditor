@@ -10,7 +10,6 @@ module app.tree {
 
         constructor($stateProvider : ng.ui.IStateProvider) {
             $stateProvider.state('tree', {
-                url: '/tree',
                 views:{
                     'middle_container': {
                         controller: 'MyTreeController',
@@ -33,9 +32,9 @@ module app.tree {
 
         }
     }
-
-    angular.module('app.tree')
-        .config(TreeConfig);
+    //
+    //angular.module('app.tree')
+    //    .config(TreeConfig);
 }
 
 

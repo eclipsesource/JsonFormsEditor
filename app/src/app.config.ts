@@ -2,13 +2,30 @@
 /// <reference path="../../typings/angular-ui-router/angular-ui-router.d.ts" />
 module app{
 
-  import IUrlRouterProvider = ng.ui.IUrlRouterProvider;
   class AppConfig{
 
-    static $inject = ["$urlRouterProvider"];
+    static $inject = ['$stateProvider', '$urlRouterProvider'];
 
-    constructor($urlRouterProvider: IUrlRouterProvider){
-      $urlRouterProvider.otherwise('/tree');
+    constructor($stateProvider : ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider){
+      $stateProvider.state('edit', {
+        url: '/edit',
+        views: {
+          'treeContainer': {
+            controller: 'MyTreeController',
+            controllerAs: 'tree',
+            templateUrl: 'app/src/components/tree/tree.html'
+          },
+          'toolboxContainer': {
+            controller: 'ToolboxController',
+            controllerAs: 'toolbox',
+            templateUrl: 'app/src/components/toolbox/toolbox.html'
+          },
+          'detailContainer': {
+
+          }
+        }
+      });
+      $urlRouterProvider.otherwise('/edit');
     }
   }
 

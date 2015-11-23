@@ -8,9 +8,8 @@ module app.toolbox {
 
         constructor($stateProvider : ng.ui.IStateProvider){
             $stateProvider.state('toolbox', {
-                url: '/toolbox',
                 views: {
-                    'main': {
+                    'toolbox': {
                         controller: 'ToolboxController',
                         controllerAs: 'toolbox',
                         templateUrl: 'app/src/components/toolbox/toolbox.html'
