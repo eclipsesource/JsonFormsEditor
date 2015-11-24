@@ -14,9 +14,12 @@ module app.tree {
             this.data = treeService.elements;
 
             $scope.treeOptions = {
+                // no accept more than one element (layout) in the root of the tree
                 accept: function(sourceNodeScope, destNodesScope, destIndex) {
-                    if(destNodesScope.$nodeScope == null && !sourceNodeScope.$modelValue.canHaveChildren()) return false;
-                    else return true;
+                    if(destNodesScope.$nodeScope == null
+                      && (destNodesScope.$nodes.length > 0 || !sourceNodeScope.$modelValue.canHaveChildren())) return false;
+
+                    return true;
                 },
             };
         }
