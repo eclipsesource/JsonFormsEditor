@@ -1,45 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="app">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>JsonForms Editor</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>JsonForms Editor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <% styles.forEach(function(file){ %>
-  <link rel="stylesheet" type="text/css" href="<%= file %>">
-  <% }); %>
-  <% scripts.forEach(function(file){ %>
-  <script type="text/javascript" src="<%= file %>"></script>
-  <% }); %>
+    <% styles.forEach(function(file){ %>
+    <link rel="stylesheet" type="text/css" href="<%= file %>">
+    <% }); %>
+    <% scripts.forEach(function(file){ %>
+    <script type="text/javascript" src="<%= file %>"></script>
+    <% }); %>
 
 </head>
 <body>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer">
-  <header class="mdl-layout__header">
-    <div class="mdl-layout__header-row">
-      <!-- Title -->
-      <span class="mdl-layout-title">JsonForms Editor</span>
-      <!-- Add spacer, to align navigation to the right -->
-      <div class="mdl-layout-spacer"></div>
-      <!-- Navigation. We hide it in small screens. -->
-      <nav class="mdl-navigation mdl-layout--large-screen-only">
-        <a class="mdl-navigation__link" href="">Preview</a>
-      </nav>
-    </div>
-  </header>
-  <main class="mdl-layout__content">
-    <div class="page-content">
-      <div class="mdl-grid">
-        <div class="mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
-          <div class="toolboxContainer" ui-view="toolboxContainer"></div>
+    <header class="mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+        <div class="mdl-layout__header-row">
+            <!-- Title -->
+            <span class="mdl-layout-title">JsonForms Editor</span>
+            <!-- Add spacer, to align navigation to the right -->
+            <div class="mdl-layout-spacer"></div>
+            <!-- Navigation. We hide it in small screens. -->
+            <nav class="mdl-navigation mdl-layout--large-screen-only">
+                <a class="mdl-navigation__link" href="">Preview</a>
+            </nav>
         </div>
-        <div class="treeContainer mdl-cell mdl-cell--8-col" ui-view="treeContainer"></div>
-        <div class="detailContainer mdl-cell mdl-cell--2-col" ui-view="detailContainer"></div>
-      </div>
+    </header>
+    <div class="mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+        <div class="toolboxContainer" ui-view="toolboxContainer"></div>
     </div>
-  </main>
+    <main class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-grid page-content">
+            <div class="treeContainer mdl-cell mdl-cell--8-col" ui-view="treeContainer"></div>
+            <div class="detailContainer mdl-cell mdl-cell--2-col" ui-view="detailContainer"></div>
+        </div>
+    </main>
 </div>
 </body>
 </html>
