@@ -7,7 +7,7 @@ module app.tree {
     export class TreeElement {
         public title : string;
 
-        constructor(public id: number, private type: TreeElementType, public nodes: TreeElement[], public parent: TreeElement){
+        constructor(public id: number, private type: TreeElementType, public nodes: TreeElement[]){
             this.title = TreeElementType[type];
         }
 

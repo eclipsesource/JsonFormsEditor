@@ -8,9 +8,9 @@
           'glyphicon-chevron-down': !collapsed
         }"></span></a>
         {{node.title}}
-        <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="tree.removeElement(node)"><span
+        <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="tree.remove(this)"><span
             class="glyphicon glyphicon-remove"></span></a>
-        <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="tree.addElementInside(node, null)" style="margin-right: 8px;"><span
+        <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="tree.newSubItem(this)" style="margin-right: 8px;"><span
             class="glyphicon glyphicon-plus"></span></a>
         <a class="pull-right btn btn-primary btn-xs" data-nodrag ui-sref="tree.detail({nodeId:node.id})" style="margin-right: 8px;"><span
                 class="glyphicon glyphicon-plus"></span></a>

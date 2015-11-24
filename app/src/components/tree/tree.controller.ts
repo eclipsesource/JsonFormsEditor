@@ -8,27 +8,21 @@ module app.tree {
 
         static $inject = ['$scope', 'TreeService'];
 
-        public data : TreeElement[];
+        public data: TreeElement[];
 
-
-        constructor(private $scope, public treeService : app.tree.TreeService) {
-
+        constructor(private $scope, private treeService: TreeService) {
             this.data = treeService.elements;
         }
 
-        removeElement(node: TreeElement) : void {
-            this.treeService.removeElement(node);
+        remove(scope) : void {
+            scope.remove();
+
         }
 
-        addElementInside(node: TreeElement, type: TreeElementType) : void {
-            if(type === null){
-                type = TreeElementType.Control;
-            }
-
-            this.treeService.addElementInside(node, type);
+        newSubItem(scope) : void {
+            var node: TreeElement = scope.$modelValue;
+            node.nodes.push(new TreeElement(this.treeService.getNewId(), TreeElementType.Control, []));
         }
-
-
 
         toggle(scope) : void {
             scope.toggle();

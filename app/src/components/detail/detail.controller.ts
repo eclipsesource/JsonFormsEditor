@@ -13,9 +13,7 @@ module app.detail {
             var id = parseInt($stateParams['nodeId']);
 
             var element = treeElementService.getElement(id);
-            if(element == null) this.data = [];
-            else this.data = {"id":element.id,"title":element.title};
-            //this.data = {"id":id,"title":"hola"};
+            this.data = {"id":element.id,"title":element.title};
 
             this.schema = {
                 "type": "object",

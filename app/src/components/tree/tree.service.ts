@@ -5,34 +5,15 @@ module app.tree {
     export class TreeService {
 
         public elements : TreeElement[] = [];
-        public id: number = 0;
+        private id: number;
 
         constructor(){
-
-            var parent : TreeElement = this.addElementInside(null, TreeElementType.VerticalLayout);
-            this.addElementInside(parent, TreeElementType.HorizontalLayout);
+            this.elements.push(new TreeElement(0, TreeElementType.VerticalLayout, [new TreeElement(1, TreeElementType.HorizontalLayout, [])]));
+            this.id = 2;
         }
 
-        removeElement(elem : TreeElement){
-            if(elem.parent != null){
-                elem.parent.nodes.splice(elem.parent.nodes.indexOf(elem), 1);
-            } else {
-                this.elements.splice(this.elements.indexOf(elem), 1);
-            }
-        }
-
-        addElementInside(elem: TreeElement, type: TreeElementType) : TreeElement{
-
-            var element = new TreeElement(this.id, type, [], elem);
-            this.id++;
-
-            if(elem == null){
-                this.elements.push(element);
-            } else {
-                elem.nodes.push(element);
-            }
-
-            return element;
+        getNewId() : number {
+            return this.id++;
         }
 
         //not tested
