@@ -6,13 +6,12 @@ module app.tree {
     'use strict';
     class MyTreeController {
 
-        static $inject = ['$scope', 'TreeService'];
+        static $inject = ['$scope', 'TreeService', 'DetailService'];
 
         public data : TreeElement[];
 
 
-        constructor(private $scope, public treeService : app.tree.TreeService) {
-
+        constructor(private $scope, public treeService : app.tree.TreeService, private detailService : app.detail.DetailService) {
             this.data = treeService.elements;
         }
 
@@ -42,6 +41,9 @@ module app.tree {
             this.$scope.$broadcast('expandAll');
         };
 
+        showDetails(node : app.tree.TreeElement) : void {
+            this.detailService.setElement(node);
+        }
     }
 
     angular.module('app.tree').controller('MyTreeController', MyTreeController);

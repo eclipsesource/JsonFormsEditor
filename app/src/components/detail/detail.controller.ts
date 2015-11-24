@@ -3,19 +3,17 @@
 module app.detail {
 
     class DetailController {
-        public data : any;
-        public uiSchema : any;
-        public schema : any;
+        public data:any;
+        public uiSchema:any;
+        public schema:any;
 
-        static $inject = ['$stateParams', 'TreeService'];
+        static $inject = ['$scope', 'DetailService'];
 
-        constructor($stateParams : any, treeElementService : app.tree.TreeService){
-            var id = parseInt($stateParams['nodeId']);
-
-            var element = treeElementService.getElement(id);
-            if(element == null) this.data = [];
-            else this.data = {"id":element.id,"title":element.title};
-            //this.data = {"id":id,"title":"hola"};
+        constructor($scope : ng.IScope, public detailService:app.detail.DetailService) {
+            this.data = {
+                "id": 1,
+                "title": "Test"
+            };
 
             this.schema = {
                 "type": "object",

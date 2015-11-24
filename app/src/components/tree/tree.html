@@ -5,7 +5,7 @@
         {{node.title}}
         <a class="pull-right" data-nodrag ng-click="tree.removeElement(node)"><i class="material-icons">delete</i></a>
         <a class="pull-right" data-nodrag ng-click="tree.addElementInside(node, null)" style="margin-right: 8px;"><i class="material-icons">add</i></a>
-        <a class="pull-right" data-nodrag ui-sref="tree.detail({nodeId:node.id})" style="margin-right: 8px;"><i class="material-icons">edit</i></a>
+        <a class="pull-right" data-nodrag ng-click="tree.showDetails(node)" style="margin-right: 8px;"><i class="material-icons">edit</i></a>
     </div>
     <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
         <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
