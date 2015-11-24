@@ -12,6 +12,13 @@ module app.tree {
 
         constructor(private $scope, private treeService: TreeService) {
             this.data = treeService.elements;
+
+            $scope.treeOptions = {
+                accept: function(sourceNodeScope, destNodesScope, destIndex) {
+                    if(destNodesScope.$nodeScope == null && !sourceNodeScope.$modelValue.canHaveChildren()) return false;
+                    else return true;
+                },
+            };
         }
 
         remove(scope) : void {
@@ -21,7 +28,7 @@ module app.tree {
 
         newSubItem(scope) : void {
             var node: TreeElement = scope.$modelValue;
-            node.nodes.push(new TreeElement(this.treeService.getNewId(), TreeElementType.Control, []));
+            node.getNodes().push(new Control(this.treeService.getNewId()));
         }
 
         toggle(scope) : void {
