@@ -1,27 +1,30 @@
+/// <reference path="../tree/model/control.ts" />
+/// <reference path="../tree/model/layout.ts" />
+
 module app.toolbox {
-
-    class ToolboxElement {
-        constructor(public name : string){
-
-        }
-    }
-
     class ToolboxController {
-        public controls : ToolboxElement[] = [];
-        public layouts : ToolboxElement[] = [];
+        public elements : app.tree.TreeElement[] = [];
         private schema : app.core.metaschema.Metaschema;
 
-        static $inject = ['MetaschemaService'];
+        static $inject = ['$scope', 'MetaschemaService', 'TreeService'];
 
-        constructor(metaschemaService : app.core.metaschema.MetaschemaService){
+        constructor($scope, metaschemaService : app.core.metaschema.MetaschemaService, treeService:app.tree.TreeService){
             this.schema = metaschemaService.getSchema();
-            _.forEach(this.schema.getControls(), (controlName : string) => {
-                this.controls.push(new ToolboxElement(controlName));
+            _.forEach(this.schema.getControls(), () => {
+                this.elements.push(new app.tree.Control(-1));
             });
 
             _.forEach(this.schema.getLayouts(), (layoutName : string) => {
-                this.layouts.push(new ToolboxElement(layoutName));
+                this.elements.push(new app.tree.Layout(-1, app.tree.LayoutType[layoutName]));
             });
+
+            $scope.treeOptionsToolbox = {
+                beforeDrop: function(event) {
+                    var node: app.tree.TreeElement = event.source.nodeScope.$modelValue;
+                    node.setId(treeService.getNewId());
+                    event.source.nodeScope.$modelValue = node;
+                }
+            };
         }
     }
 

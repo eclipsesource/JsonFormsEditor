@@ -1,7 +1,7 @@
 module app.tree {
 
   export enum LayoutType {
-    HorizontalLayout, VerticalLayout
+    HorizontalLayout, VerticalLayout, Group
   }
 
   export class Layout implements TreeElement {

@@ -9,32 +9,15 @@ module app.tree {
         static $inject = ['$scope', 'TreeService', 'DetailService'];
 
         public data: TreeElement[];
-        public toolbox: TreeElement[];
-
 
         constructor(private $scope, public treeService : app.tree.TreeService, private detailService : app.detail.DetailService) {
             this.data = treeService.elements;
 
-            this.toolbox = [];
-            this.toolbox.push(new Control(-1));
-            this.toolbox.push(new Layout(-1, LayoutType.VerticalLayout));
-            this.toolbox.push(new Layout(-1, LayoutType.HorizontalLayout));
-
-            $scope.treeOptions1 = {
-                beforeDrop: function(event) {
-                    var node: TreeElement = event.source.nodeScope.$modelValue;
-                    node.setId(treeService.getNewId());
-                    event.source.nodeScope.$modelValue = node;
-                }
-            };
-
-            $scope.treeOptions2 = {
+            $scope.treeOptions = {
                 // no accept more than one element (layout) in the root of the tree
                 accept: function(sourceNodeScope, destNodesScope, destIndex) {
-                    if(destNodesScope.$nodeScope == null
-                      && (destNodesScope.$nodes.length > 0 || !sourceNodeScope.$modelValue.canHaveChildren())) return false;
-
-                    return true;
+                    return !(destNodesScope.$nodeScope == null
+                    && (destNodesScope.$nodes.length > 0 || !sourceNodeScope.$modelValue.canHaveChildren()));
                 },
             };
         }
@@ -53,13 +36,13 @@ module app.tree {
             scope.toggle();
         }
 
-        collapseAll = function () {
+        collapseAll() : void {
             this.$scope.$broadcast('collapseAll');
-        };
+        }
 
-        expandAll = function () {
+        expandAll() : void {
             this.$scope.$broadcast('expandAll');
-        };
+        }
 
         showDetails(node : app.tree.TreeElement) : void {
             this.detailService.setElement(node);
