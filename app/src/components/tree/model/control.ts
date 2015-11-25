@@ -5,6 +5,8 @@ module app.tree {
 
     getId() : number { return this.id; }
 
+    setId(newId: number) { this.id = newId; }
+
     getTitle() : string { return "Control"; }
 
     getNodes() : TreeElement[] { return null; }

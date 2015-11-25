@@ -9,11 +9,25 @@ module app.tree {
         static $inject = ['$scope', 'TreeService'];
 
         public data: TreeElement[];
+        public toolbox: TreeElement[];
 
         constructor(private $scope, private treeService: TreeService) {
             this.data = treeService.elements;
 
-            $scope.treeOptions = {
+            this.toolbox = [];
+            this.toolbox.push(new Control(-1));
+            this.toolbox.push(new Layout(-1, LayoutType.VerticalLayout));
+            this.toolbox.push(new Layout(-1, LayoutType.HorizontalLayout));
+
+            $scope.treeOptions1 = {
+                beforeDrop: function(event) {
+                    var node: TreeElement = event.source.nodeScope.$modelValue;
+                    node.setId(treeService.getNewId());
+                    event.source.nodeScope.$modelValue = node;
+                }
+            };
+
+            $scope.treeOptions2 = {
                 // no accept more than one element (layout) in the root of the tree
                 accept: function(sourceNodeScope, destNodesScope, destIndex) {
                     if(destNodesScope.$nodeScope == null
