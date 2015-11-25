@@ -1,1 +1,7 @@
-<jsonforms ng-show="detail.detailService.currentElement" schema="detail.schema" ui-schema="detail.uiSchema" data="{'id': detail.detailService.currentElement.id, 'title': detail.detailService.currentElement.title}"/>
+<div class="row">
+  <jsonforms schema="detail.schema" ui-schema="detail.uiSchema" data="{'id': detail.detailService.currentElement.id, 'title': detail.detailService.currentElement.title}"/>
+</div>
+<div class="row">
+  <a class="btn btn-primary btn-xs" data-nodrag ui-sref="tree" style="margin-left: 8px;"><span
+      class="glyphicon glyphicon-plus"></span></a>
+</div>
