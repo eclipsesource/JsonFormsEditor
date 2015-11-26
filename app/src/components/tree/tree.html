@@ -1,14 +1,14 @@
 <!-- Nested node template -->
 <script type="text/ng-template" id="tree_renderer.html">
-  <div ui-tree-handle class="tree-node tree-node-content element">
-    <a ng-if="node.getNodes() && node.getNodes().length > 0" data-nodrag ng-click="tree.toggle(this)">
+  <div ui-tree-handle class="tree-node tree-node-content">
+    <a class="btn btn-xs" ng-if="node.getNodes() && node.getNodes().length > 0" data-nodrag ng-click="tree.toggle(this)">
       <i class="material-icons" ng-show="collapsed">expand_more</i>
       <i class="material-icons" ng-show="!collapsed">expand_less</i>
     </a>
     {{node.getTitle()}}
-    <a class="pull-right" data-nodrag ng-click="tree.remove(this)"><i class="material-icons">delete</i></a>
-    <a class="pull-right" data-nodrag ng-click="tree.showDetails(node)" style="margin-right: 8px;"><i class="material-icons">edit</i></a>
-    <a class="pull-right" ng-if="node.canHaveChildren()" data-nodrag
+    <a class="btn btn-xs pull-right" data-nodrag ng-click="tree.remove(this)"><i class="material-icons">delete</i></a>
+    <a class="btn btn-xs pull-right" data-nodrag ng-click="tree.showDetails(node)" style="margin-right: 8px;"><i class="material-icons">edit</i></a>
+    <a class="btn btn-xs pull-right" ng-if="node.canHaveChildren()" data-nodrag
        ng-click="tree.newSubItem(this)"
        style="margin-right: 8px;"><i class="material-icons">add</i></a>
   </div>
@@ -19,7 +19,7 @@
 </script>
 
 <div class="row">
-  <div class="col-sm-6 col-sm-push-1">
+  <div class="col-sm-10 col-sm-push-1">
     <div ui-tree="treeOptions" id="tree2-root" data-clone-enabled="true">
       <ol ui-tree-nodes="" ng-model="tree.data">
         <li ng-repeat="node in tree.data" ui-tree-node ng-include="'tree_renderer.html'"></li>
