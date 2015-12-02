@@ -1,7 +1,7 @@
 <div ng-show="detail.detailService.currentElement" class="mdl-card mdl-color--deep-purple-500 mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--12-col-desktop">
   <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
     <h3>Properties</h3>
-    <jsonforms schema="detail.schema" ui-schema="detail.uiSchema" data="detail.data"/>
+    <jsonforms ng-if="detail.detailService.currentElement" schema="detail.schema" ui-schema="detail.uiSchema" data="detail.detailService.currentElement"/>
   </div>
   <div class="mdl-card__actions mdl-card--border">
     <a ng-click="detail.reset()"><i class="material-icons">close</i> Close</a>

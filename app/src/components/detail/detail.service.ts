@@ -7,15 +7,6 @@ module app.detail {
             this.currentElement = element;
         }
 
-        fetchData() : any {
-            return () => {
-                return {
-                    "id": this.currentElement ? this.currentElement.getId() : 0,
-                    "title": this.currentElement ? this.currentElement.getTitle() : ""
-                }
-            }
-        }
-
     }
 
     angular.module('app.detail').service('DetailService', DetailService);

@@ -3,29 +3,12 @@
 module app.detail {
 
     class DetailController {
-        public data:any;
         public uiSchema:any;
         public schema:any;
 
         static $inject = ['$scope', 'DetailService'];
 
         constructor(public $scope, public detailService:app.detail.DetailService) {
-            $scope.service = detailService;
-            this.data = {
-                "id": 1,
-                "title": "Test"
-            };
-
-            $scope.$watch(this.detailService.currentElement, (newValue : app.tree.TreeElement) => {
-                if(newValue){
-                    this.data = {
-                        "id": newValue.getId(),
-                        "title": newValue.getTitle()
-                    }
-                }
-            });
-
-
             this.schema = {
                 "type": "object",
                 "properties": {
