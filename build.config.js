@@ -22,7 +22,7 @@ module.exports = {
         tsunit: [ 'app/src/**/*.spec.ts' ],
         html: [ 'app/index.html', 'app/src/**/*.html' ],
         less: ['app/assets/style/style.less'],
-        assets: ['**', '!libs/**', '!style/**']
+        assets: ['fonts/**/*.*', 'resource/**/*.*']
     },
 
     /**
