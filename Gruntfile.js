@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     // import the build.config.js file: all attributes in it are later usable in the task configuration.
     var buildConfig = require('./build.config.js');
@@ -68,10 +68,35 @@ module.exports = function(grunt) {
             }
         },
 
+        uglify: {
+            dist: {
+                src: ['<%= build_dir %>/js/lib.js', '<%= build_dir %>/js/app.js', '<%= build_dir %>/js/templates.js'],
+                dest: '<%= dist_dir %>/js/jfe.js'
+            }
+        },
+
         copy: {
             assets: {
                 files: [
-                    {cwd: 'app/assets', src: '<%= app_files.assets %>', dest: '<%= build_dir %>/', filter: 'isFile', expand: true}
+                    {
+                        cwd: 'app/assets',
+                        src: '<%= app_files.assets %>',
+                        dest: '<%= build_dir %>/',
+                        filter: 'isFile',
+                        expand: true
+                    }
+                ]
+            },
+
+            dist: {
+                files: [
+                    {
+                        cwd: '<%= build_dir %>',
+                        src: ['css/**', 'fonts/**', 'resource/**'],
+                        dest: '<%= dist_dir %>/',
+                        filter: 'isFile',
+                        expand: true
+                    }
                 ]
             }
         },
@@ -96,7 +121,7 @@ module.exports = function(grunt) {
             }
         },
 
-        index: {
+        indexBuild: {
             options: {
                 src: 'app/index.html'
             },
@@ -107,6 +132,19 @@ module.exports = function(grunt) {
                     '<%= build_dir %>/js/app.js',
                     '<%= build_dir %>/js/templates.js',
                     '<%= build_dir %>/css/*.css'
+                ]
+            }
+        },
+
+        indexDist: {
+            options: {
+                src: 'app/index.html'
+            },
+            build: {
+                dir: '<%= dist_dir %>',
+                src: [
+                    '<%= dist_dir %>/js/jfe.js',
+                    '<%= dist_dir %>/css/*.css'
                 ]
             }
         },
@@ -129,6 +167,7 @@ module.exports = function(grunt) {
         clean: {
             build: ['<%= build_dir %>'],
             temp: ['<%= temp_dir %>'],
+            dist: ['<%= dist_dir'],
             lib: ["node_modules", "app/assets/libs"]
         },
 
@@ -164,6 +203,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-angular-templates');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-typescript');
@@ -186,7 +226,7 @@ module.exports = function(grunt) {
         'concat',
         'ngtemplates:build',
         'less:build',
-        'index:build',
+        'indexBuild',
         'clean:temp'
     ]);
 
@@ -206,6 +246,21 @@ module.exports = function(grunt) {
         'clean:temp'
     ]);
 
+    grunt.registerTask('dist', [
+        'clean:dist',
+        'clean:build',
+        'typescript:build',
+        'copy:assets',
+        'concat',
+        'ngtemplates:build',
+        'less:build',
+        'uglify:dist',
+        'indexDist',
+        'copy:dist',
+        'clean:temp',
+        'clean:build'
+    ]);
+
     /**
      * Register the development task as default task.
      */
@@ -219,29 +274,56 @@ module.exports = function(grunt) {
      * the list into variables for the template to use and then runs the
      * compilation.
      */
-    grunt.registerMultiTask( 'index', 'Process index.html template', function () {
-        var dirRE = new RegExp( '^('+buildConfig.build_dir+')\/', 'g' );
-        var jsFiles = this.filesSrc.filter(function(file) {
+    grunt.registerMultiTask('indexBuild', 'Process index.html template', function () {
+        var dirRE = new RegExp('^(' + buildConfig.build_dir + ')\/', 'g');
+        var jsFiles = this.filesSrc.filter(function (file) {
             return file.match(/\.js$/);
-        }).map( function ( file ) {
-            return file.replace( dirRE, '' );
+        }).map(function (file) {
+            return file.replace(dirRE, '');
         });
-        var cssFiles = this.filesSrc.filter(function(file){
+        var cssFiles = this.filesSrc.filter(function (file) {
             return file.match(/\.css$/);
-        }).map( function ( file ) {
-            return file.replace( dirRE, '' );
+        }).map(function (file) {
+            return file.replace(dirRE, '');
         });
 
         grunt.file.copy('app/index.html', buildConfig.build_dir + '/index.html', {
-            process: function ( contents, path ) {
-                return grunt.template.process( contents, {
+            process: function (contents, path) {
+                return grunt.template.process(contents, {
                     data: {
                         scripts: jsFiles,
                         styles: cssFiles,
-                        version: grunt.config( 'pkg.version' )
+                        version: grunt.config('pkg.version')
                     }
                 });
             }
         });
     });
+
+    grunt.registerMultiTask('indexDist', 'Process index.html template', function () {
+        var dirRE = new RegExp('^(' + buildConfig.dist_dir + ')\/', 'g');
+        var jsFiles = this.filesSrc.filter(function (file) {
+            return file.match(/\.js$/);
+        }).map(function (file) {
+            return file.replace(dirRE, '');
+        });
+        var cssFiles = this.filesSrc.filter(function (file) {
+            return file.match(/\.css$/);
+        }).map(function (file) {
+            return file.replace(dirRE, '');
+        });
+
+        grunt.file.copy('app/index.html', buildConfig.dist_dir + '/index.html', {
+            process: function (contents, path) {
+                return grunt.template.process(contents, {
+                    data: {
+                        scripts: jsFiles,
+                        styles: cssFiles,
+                        version: grunt.config('pkg.version')
+                    }
+                });
+            }
+        });
+    });
+
 };

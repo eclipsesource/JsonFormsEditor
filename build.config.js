@@ -13,6 +13,11 @@ module.exports = {
     temp_dir: 'temp',
 
     /**
+     * Distribution Directory, where the project is compiled for production
+     */
+    dist_dir: 'dist',
+
+    /**
      * This is a collection of file patterns that refer to the app. These file paths are used in
      * the configuration of build tasks. `ts` is all project typescript, except the tests.
      * 'jsunit' are all unit tests. `html` are all the HTML files, `less` are the stylesheets.

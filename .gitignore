@@ -6,3 +6,4 @@ build
 app/assets/libs
 .tscache
 temp
+dist
