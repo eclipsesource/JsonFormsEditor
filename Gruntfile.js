@@ -255,8 +255,8 @@ module.exports = function (grunt) {
         'ngtemplates:build',
         'less:build',
         'uglify:dist',
-        'indexDist',
         'copy:dist',
+        'indexDist',
         'clean:temp',
         'clean:build'
     ]);
