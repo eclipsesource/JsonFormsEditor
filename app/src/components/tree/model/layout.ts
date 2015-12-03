@@ -1,29 +1,74 @@
 module app.tree {
 
-  export enum LayoutType {
-    HorizontalLayout, VerticalLayout, Group
-  }
-
   export class Layout implements TreeElement {
     private nodes: TreeElement[];
+    private propertiesSchema = {};
+    private propertiesUISchema = {};
+    private propertiesData = {};
 
-    constructor(private id: number, private type: LayoutType) {
+    constructor(private id: number, private type: string) {
       this.nodes = [];
+
+      // obtained from the "control" part of the metaSchema
+      this.propertiesSchema = {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "HorizontalLayout",
+              "VerticalLayout",
+              "Group"
+            ]
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      };
+
+      this.propertiesUISchema = {
+        "type": "VerticalLayout",
+        "elements": [
+          {
+            "type": "Control",
+            "label": "Id",
+            "scope": { "$ref": "#/properties/id" },
+          },
+          {
+            "type": "Control",
+            "label": "Type",
+            "scope": { "$ref": "#/properties/type" },
+          },
+          {
+            "type": "Control",
+            "label": "Label",
+            "scope": { "$ref": "#/properties/label" },
+          }
+        ]
+      };
+
+      this.propertiesData["id"] = id;
+      this.propertiesData["type"] = type;
+      this.propertiesData["label"] = "";
     }
 
-    getId() : number { return this.id; }
+    getId() : number { return this.propertiesData["id"]; }
 
-    setId(newId: number) { this.id = newId; }
+    setId(newId: number) { this.propertiesData["id"] = newId; }
 
-    getTitle() : string { return LayoutType[this.type]; }
+    getTitle() : string { return this.propertiesData["type"]; }
 
     getNodes() : TreeElement[] { return this.nodes; }
 
-    canHaveChildren() : boolean { return true; }
+    getPropertiesSchema() { return this.propertiesSchema; }
 
-    addNode(element: TreeElement) : void {
-      this.nodes.push(element);
-    }
+    getPropertiesUISchema() { return this.propertiesUISchema; }
+
+    getPropertiesData() { return this.propertiesData; }
   }
 
 }

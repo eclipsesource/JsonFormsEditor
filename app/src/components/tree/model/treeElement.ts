@@ -5,6 +5,8 @@ module app.tree {
         setId(newId: number) : void;
         getTitle() : string;
         getNodes() : TreeElement[];
-        canHaveChildren() : boolean;
+        getPropertiesSchema();
+        getPropertiesUISchema();
+        getPropertiesData();
     }
 }

@@ -8,10 +8,9 @@ module app.tree {
         private id: number;
 
         constructor(){
-            var root = new Layout(0, LayoutType.VerticalLayout);
-            root.addNode(new Layout(1, LayoutType.HorizontalLayout));
+            var root = new Layout(0, "VerticalLayout");
             this.elements.push(root);
-            this.id = 2;
+            this.id = 1;
         }
 
         getNewId() : number {

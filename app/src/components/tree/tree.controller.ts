@@ -16,8 +16,8 @@ module app.tree {
             $scope.treeOptions = {
                 // no accept more than one element (layout) in the root of the tree
                 accept: function(sourceNodeScope, destNodesScope, destIndex) {
-                    return !(destNodesScope.$nodeScope == null
-                    && (destNodesScope.$nodes.length > 0 || !sourceNodeScope.$modelValue.canHaveChildren()));
+                    return (destNodesScope.$nodeScope
+                    && destNodesScope.$nodeScope.$modelValue.getNodes());
                 },
             };
         }

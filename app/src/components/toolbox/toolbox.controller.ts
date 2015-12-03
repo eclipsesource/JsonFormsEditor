@@ -15,7 +15,7 @@ module app.toolbox {
             });
 
             _.forEach(this.schema.getLayouts(), (layoutName : string) => {
-                this.elements.push(new app.tree.Layout(-1, app.tree.LayoutType[layoutName]));
+                this.elements.push(new app.tree.Layout(-1, layoutName));
             });
 
             $scope.treeOptionsToolbox = {
