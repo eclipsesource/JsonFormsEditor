@@ -3,6 +3,8 @@ A web-based editor to create and modify UI Schemata and Data Schemata for JsonFo
 
 Checkout [JsonForms](http://github.eclipsesource.com/jsonforms) for further information.
 
+[![Build Status](https://travis-ci.org/FelixThieleTUM/JsonFormsEditor.svg?branch=master)](https://travis-ci.org/FelixThieleTUM/JsonFormsEditor)
+
 ## Working with TypeScript
 #### Definitely Typed
 In order to work with any library in TypeScript it is recomended to use [DefinitelyTyped](https://github.com/borisyankov/DefinitelyTyped). This will provide definition files that epxose the public interface of library methods. The propsed way of working with it is to use [tsd](http://definitelytyped.org/tsd/). This can be installed via npm:
