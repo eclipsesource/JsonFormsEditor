@@ -1,20 +1,39 @@
 module app.tree {
 
-    export interface TreeElement {
-        getId() : number;
-        setId(newId: number) : void;
-        getTitle() : string;
-        getNodes() : TreeElement[];
-        getPropertiesSchema();
-        getPropertiesUISchema();
-        getPropertiesData();
+    export class TreeElement {
 
-        /**
-         * Indicates wether the element shall be deletable. Can be overriden on a single object with the following syntax:
-         *  <pre><code>
-         *  object["isDeletable"] = function() { return false; };
-         *  </code></pre>
-         */
-        isDeletable() : boolean;
+        public data: any = {};
+        public elements: TreeElement[];
+
+        constructor(public id: number, type: string) {
+            switch(type) {
+                case "Control":
+                    this.data["id"] = id;
+                    this.data["type"] = type;
+                    this.data["label"] = "";
+                    this.data["scope"] = "";
+                    break;
+                case "VerticalLayout":
+                case "HorizontalLayout":
+                case "Group":
+                    this.data["id"] = id;
+                    this.data["type"] = type;
+                    this.data["label"] = "";
+                    this.elements = [];
+            }
+        }
+
+        public getTitle() : string {
+            return this.data["type"];
+        }
+
+        public getNodes() : TreeElement[] {
+            return this.elements;
+        }
+
+        public isDeletable() : boolean {
+            return true;
+        }
+
     }
 }

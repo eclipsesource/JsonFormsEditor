@@ -1,6 +1,3 @@
-/// <reference path="../tree/model/control.ts" />
-/// <reference path="../tree/model/layout.ts" />
-
 module app.toolbox {
     class ToolboxController {
         public elements : app.tree.TreeElement[] = [];
@@ -11,17 +8,17 @@ module app.toolbox {
         constructor($scope, metaschemaService : app.core.metaschema.MetaschemaService, treeService:app.tree.TreeService){
             this.schema = metaschemaService.getSchema();
             _.forEach(this.schema.getControls(), () => {
-                this.elements.push(new app.tree.Control(-1));
+                this.elements.push(new app.tree.TreeElement(-1, "Control"));
             });
 
             _.forEach(this.schema.getLayouts(), (layoutName : string) => {
-                this.elements.push(new app.tree.Layout(-1, layoutName));
+                this.elements.push(new app.tree.TreeElement(-1, layoutName));
             });
 
             $scope.treeOptionsToolbox = {
                 beforeDrop: function(event) {
                     var node: app.tree.TreeElement = event.source.nodeScope.$modelValue;
-                    node.setId(treeService.getNewId());
+                    node.id = treeService.getNewId();
                     event.source.nodeScope.$modelValue = node;
                 }
             };
