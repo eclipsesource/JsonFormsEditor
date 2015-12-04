@@ -2,15 +2,16 @@ module app.detail {
     export class DetailService {
 
         public currentElement : app.tree.TreeElement;
+        public schema: any;
+        public uischema: any;
+        public data: any;
 
         setElement(element : app.tree.TreeElement) : void {
             this.currentElement = element;
-        }
 
-        getSchema() : any {
             switch(this.currentElement.data["type"]) {
                 case "Control":
-                    return {
+                    this.schema = {
                         "type": "object",
                         "properties": {
                             "type": {
@@ -32,10 +33,11 @@ module app.detail {
                             }
                         }
                     };
+                    break;
                 case "VerticalLayout":
                 case "HorizontalLayout":
                 case "Group":
-                    return {
+                    this.schema = {
                         "type": "object",
                         "properties": {
                             "type": {
@@ -52,12 +54,10 @@ module app.detail {
                         }
                     };
             }
-        }
 
-        getUISchema() : any {
             switch(this.currentElement.data["type"]) {
                 case "Control":
-                    return {
+                    this.uischema = {
                         "type": "VerticalLayout",
                         "elements": [
                             {
@@ -77,10 +77,11 @@ module app.detail {
                             }
                         ]
                     };
+                    break;
                 case "VerticalLayout":
                 case "HorizontalLayout":
                 case "Group":
-                    return {
+                    this.uischema = {
                         "type": "VerticalLayout",
                         "elements": [
                             {
@@ -96,10 +97,8 @@ module app.detail {
                         ]
                     };
             }
-        }
 
-        getData() : any {
-            return this.currentElement.data;
+            this.data = this.currentElement.data;
         }
 
     }
