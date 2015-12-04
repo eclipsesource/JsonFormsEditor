@@ -5,7 +5,7 @@
       <i class="material-icons" ng-show="collapsed">expand_more</i>
       <i class="material-icons" ng-show="!collapsed">expand_less</i>
     </a>
-    {{node.getTitle()}}
+    {{node.getTitle()}} <span ng-show="node.getPropertiesData().label">-</span>  {{node.getPropertiesData().label}}
     <a class="pull-right" data-nodrag ng-click="tree.remove(this)"><i class="material-icons">delete</i></a>
     <a class="pull-right" data-nodrag ng-click="tree.showDetails(node)" style="margin-right: 8px;"><i class="material-icons">edit</i></a>
     <a class="pull-right" ng-if="node.getNodes()" data-nodrag
