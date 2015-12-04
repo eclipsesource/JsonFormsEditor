@@ -8,9 +8,6 @@
     {{node.getTitle()}}
     <a class="pull-right" data-nodrag ng-click="tree.remove(this)"><i class="material-icons">delete</i></a>
     <a class="pull-right" data-nodrag ng-click="tree.showDetails(node)" style="margin-right: 8px;"><i class="material-icons">edit</i></a>
-    <a class="pull-right" ng-if="node.getNodes()" data-nodrag
-       ng-click="tree.newSubItem(this)"
-       style="margin-right: 8px;"><i class="material-icons">add</i></a>
   </div>
   <ol ui-tree-nodes="" ng-model="node.getNodes()" ng-class="{hidden: collapsed}">
     <li ng-repeat="node in node.getNodes()" ui-tree-node ng-include="'tree_renderer.html'">

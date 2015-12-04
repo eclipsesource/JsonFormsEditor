@@ -27,11 +27,6 @@ module app.tree {
 
         }
 
-        newSubItem(scope) : void {
-            var node: TreeElement = scope.$modelValue;
-            node.getNodes().push(new Control(this.treeService.getNewId()));
-        }
-
         toggle(scope) : void {
             scope.toggle();
         }

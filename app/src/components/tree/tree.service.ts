@@ -8,7 +8,7 @@ module app.tree {
         private id: number;
 
         constructor(){
-            var root = new Layout(0, "VerticalLayout");
+            var root = new TreeElement(0, "VerticalLayout");
             this.elements.push(root);
             this.id = 1;
         }
@@ -29,7 +29,7 @@ module app.tree {
         }
 
         getElementRec(id : number, el: TreeElement) : TreeElement{
-            if(el.getId() == id){
+            if(el.id == id){
                 return el;
             }else {
                 var res;
