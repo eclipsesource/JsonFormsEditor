@@ -8,5 +8,13 @@ module app.tree {
         getPropertiesSchema();
         getPropertiesUISchema();
         getPropertiesData();
+
+        /**
+         * Indicates wether the element shall be deletable. Can be overriden on a single object with the following syntax:
+         *  <pre><code>
+         *  object["isDeletable"] = function() { return false; };
+         *  </code></pre>
+         */
+        isDeletable() : boolean;
     }
 }

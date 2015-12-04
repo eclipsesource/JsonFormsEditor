@@ -9,6 +9,9 @@ module app.tree {
 
         constructor(){
             var root = new Layout(0, "VerticalLayout");
+            root["isDeletable"] = function() {
+                return false;
+            };
             this.elements.push(root);
             this.id = 1;
         }

@@ -84,6 +84,10 @@ module app.tree {
         getPropertiesData() {
             return this.propertiesData;
         }
+
+        isDeletable() : boolean {
+            return true;
+        }
     }
 
 }
