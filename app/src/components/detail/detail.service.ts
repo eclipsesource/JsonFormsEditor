@@ -9,7 +9,7 @@ module app.detail {
         setElement(element : app.tree.TreeElement) : void {
             this.currentElement = element;
 
-            switch(this.currentElement.data["type"]) {
+            switch(this.currentElement.getType()) {
                 case "Control":
                     this.schema = {
                         "type": "object",
@@ -25,30 +25,6 @@ module app.detail {
                             }
                         }
                     };
-                    break;
-                case "VerticalLayout":
-                case "HorizontalLayout":
-                case "Group":
-                    this.schema = {
-                        "type": "object",
-                        "properties": {
-                            "label": {
-                                "type": "string"
-                            },
-                            "type": {
-                                "type": "string",
-                                "enum": [
-                                    "HorizontalLayout",
-                                    "VerticalLayout",
-                                    "Group"
-                                ]
-                            }
-                        }
-                    };
-            }
-
-            switch(this.currentElement.data["type"]) {
-                case "Control":
                     this.uischema = {
                         "type": "VerticalLayout",
                         "elements": [
@@ -73,6 +49,22 @@ module app.detail {
                 case "VerticalLayout":
                 case "HorizontalLayout":
                 case "Group":
+                    this.schema = {
+                        "type": "object",
+                        "properties": {
+                            "label": {
+                                "type": "string"
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "HorizontalLayout",
+                                    "VerticalLayout",
+                                    "Group"
+                                ]
+                            }
+                        }
+                    };
                     this.uischema = {
                         "type": "VerticalLayout",
                         "elements": [
@@ -88,9 +80,31 @@ module app.detail {
                             }
                         ]
                     };
+                    break;
+                case "Categorization":
+                case "Category":
+                    this.schema = {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            }
+                        }
+                    };
+                    this.uischema = {
+                        "type": "VerticalLayout",
+                        "elements": [
+                            {
+                                "type": "Control",
+                                "label": "Type",
+                                "scope": { "$ref": "#/properties/type" },
+                            }
+                        ]
+                    };
+
             }
 
-            this.data = this.currentElement.data;
+            this.data = this.currentElement.getData();
         }
 
     }

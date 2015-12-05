@@ -1,19 +1,19 @@
 <!-- Nested node template -->
 <script type="text/ng-template" id="tree_renderer.html">
   <div ui-tree-handle class="tree-node tree-node-content">
-    <a ng-if="node.getNodes() && node.getNodes().length > 0" data-nodrag ng-click="tree.toggle(this)">
+    <a ng-if="node.hasElements()" data-nodrag ng-click="tree.toggle(this)">
       <i class="material-icons" ng-show="collapsed">expand_more</i>
       <i class="material-icons" ng-show="!collapsed">expand_less</i>
     </a>
-    {{node.getTitle()}} <span ng-show="node.data.label">-</span>  {{node.data.label}}
+    {{node.getType()}} <span ng-show="node.getLabel()">-</span>  {{node.getLabel()}}
     <a class="pull-right" ng-if="node.isDeletable()" data-nodrag ng-click="tree.remove(this)"><i class="material-icons">delete</i></a>
     <a class="pull-right" data-nodrag ng-click="tree.showDetails(node)" style="margin-right: 8px;"><i class="material-icons">edit</i></a>
-    <a class="pull-right" ng-if="node.getNodes()" data-nodrag
+    <a class="pull-right" ng-if="node.getElements()" data-nodrag
        ng-click="tree.newSubItem(this)"
        style="margin-right: 8px;"><i class="material-icons">add</i></a>
   </div>
-  <ol ui-tree-nodes="" ng-model="node.getNodes()" ng-class="{hidden: collapsed}">
-    <li ng-repeat="node in node.getNodes()" ui-tree-node ng-include="'tree_renderer.html'">
+  <ol ui-tree-nodes="" ng-model="node.getElements()" ng-class="{hidden: collapsed}">
+    <li ng-repeat="node in node.getElements()" ui-tree-node ng-include="'tree_renderer.html'">
     </li>
   </ol>
 </script>
