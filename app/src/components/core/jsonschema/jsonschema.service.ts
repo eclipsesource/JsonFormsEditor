@@ -10,8 +10,6 @@ module app.core.jsonschema{
 
         constructor(){
             this.loadFromJson(exampleFieldSchema);
-            this.fields.push("");
-            //TODO improve system of default selection of scope
         }
         loadFromJson(json:any){
             for(var key in json.properties){
