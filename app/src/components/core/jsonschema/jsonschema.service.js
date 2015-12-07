@@ -12,7 +12,6 @@ var app;
                 function JsonSchemaService() {
                     this.fields = [];
                     this.loadFromJson(exampleFieldSchema);
-                    alert(this.getFields());
                 }
                 JsonSchemaService.prototype.loadFromJson = function (json) {
                     for (var key in json.properties) {

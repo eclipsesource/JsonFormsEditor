@@ -10,7 +10,6 @@ module app.core.jsonschema{
 
         constructor(){
             this.loadFromJson(exampleFieldSchema);
-            alert(this.getFields());
         }
         loadFromJson(json:any){
             for(var key in json.properties){

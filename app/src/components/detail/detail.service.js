@@ -13,14 +13,20 @@ var app;
                         this.schema = {
                             "type": "object",
                             "properties": {
-                                "label": {
-                                    "type": "string"
-                                },
                                 "type": {
                                     "type": "string"
                                 },
-                                "scope": {
+                                "label": {
                                     "type": "string"
+                                },
+                                "scope": {
+                                    "type": "object",
+                                    "properties": {
+                                        "$ref": {
+                                            "type": "string",
+                                            "enum": this.jsonSchemaService.getFields()
+                                        }
+                                    }
                                 }
                             }
                         };

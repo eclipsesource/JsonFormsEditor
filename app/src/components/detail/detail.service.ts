@@ -22,17 +22,24 @@ module app.detail {
                         "type": "object",
                         "properties": {
 
-                            "label": {
-                                "type": "string"
-                            },
                             "type": {
                                 "type": "string"
                             },
-                            "scope": {
+                            "label": {
                                 "type": "string"
+                            },
+                            "scope": {
+                                "type": "object",
+                                "properties": {
+                                    "$ref": {
+                                        "type": "string",
+                                        "enum": this.jsonSchemaService.getFields()
+                                    }
+                                }
                             }
                         }
                     };
+
                     this.uischema = {
                         "type": "VerticalLayout",
                         "elements": [
@@ -61,11 +68,9 @@ module app.detail {
                     this.schema = {
                         "type": "object",
                         "properties": {
-
                             "label": {
                                 "type": "string"
                             },
-
                             "type": {
                                 "type": "string",
                                 "enum": [
@@ -83,7 +88,6 @@ module app.detail {
                         "elements": [
                             {
                                 "type": "Control",
-
                                 "label": "Label",
                                 "scope": { "$ref": "#/properties/label" },
                             },
@@ -116,7 +120,6 @@ module app.detail {
                                 "type": "Control",
                                 "label": "Type",
                                 "scope": { "$ref": "#/properties/type" },
-
                             }
                         ]
                     };
@@ -124,6 +127,7 @@ module app.detail {
             }
 
             this.data = this.currentElement.getData();
+
         }
 
     }
