@@ -1,19 +1,19 @@
 <!-- Nested node template -->
 <script type="text/ng-template" id="tree_renderer.html">
   <div ui-tree-handle class="tree-node tree-node-content">
-    <a ng-if="node.hasElements()" data-nodrag ng-click="tree.toggle(this)">
+    <a ng-if="node.elements && node.elements.length > 0" data-nodrag ng-click="tree.toggle(this)">
       <i class="material-icons" ng-show="collapsed">expand_more</i>
       <i class="material-icons" ng-show="!collapsed">expand_less</i>
     </a>
-    {{node.getType()}} <span ng-show="node.getLabel()">-</span>  {{node.getLabel()}}
-    <a class="pull-right" ng-if="node.isDeletable()" data-nodrag ng-click="tree.remove(this)"><i class="material-icons">delete</i></a>
+    {{node.type}} <span ng-show="node.label">-</span>  {{node.label}}
+    <a class="pull-right" ng-if="node.root == undefined" data-nodrag ng-click="tree.remove(this)"><i class="material-icons">delete</i></a>
     <a class="pull-right" data-nodrag ng-click="tree.showDetails(node);" style="margin-right: 8px;"><i class="material-icons">edit</i></a>
-    <a class="pull-right" ng-if="node.getElements()" data-nodrag
+    <a class="pull-right" ng-if="node.elements" data-nodrag
        ng-click="tree.newSubItem(this)"
        style="margin-right: 8px;"><i class="material-icons">add</i></a>
   </div>
-  <ol ui-tree-nodes="" ng-model="node.getElements()" ng-class="{hidden: collapsed}">
-    <li ng-repeat="node in node.getElements()" ui-tree-node ng-include="'tree_renderer.html'">
+  <ol ui-tree-nodes="" ng-model="node.elements" ng-class="{hidden: collapsed}">
+    <li ng-repeat="node in node.elements" ui-tree-node ng-include="'tree_renderer.html'">
     </li>
   </ol>
 </script>
@@ -21,8 +21,8 @@
 <div class="row">
   <div class="col-sm-10 col-sm-push-1">
     <div ui-tree="treeOptions" id="tree2-root" data-clone-enabled="true">
-      <ol ui-tree-nodes="" ng-model="tree.data">
-        <li ng-repeat="node in tree.data" ui-tree-node ng-include="'tree_renderer.html'"></li>
+      <ol ui-tree-nodes="" ng-model="tree.elements">
+        <li ng-repeat="node in tree.elements" ui-tree-node ng-include="'tree_renderer.html'"></li>
       </ol>
     </div>
   </div>

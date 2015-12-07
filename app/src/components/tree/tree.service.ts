@@ -1,24 +1,15 @@
-/// <reference path="model/treeElement.ts" />
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
 module app.tree {
 
     export class TreeService {
 
-        public elements : TreeElement[] = [];
-        private id: number;
+        static $inject = ['ElementsFactoryService'];
 
-        constructor(){
-            var root = new TreeElement(0, "VerticalLayout");
+        public elements : any = [];
 
-            root["isDeletable"] = function() {
-                return false;
-            };
-            this.elements.push(root);
-            this.id = 1;
-        }
-
-        getNewId() : number {
-            return this.id++;
+        constructor(elementsFactoryService: app.core.ElementsFactoryService){
+            var rootElement: any = elementsFactoryService.getNewElement("VerticalLayout");
+            rootElement.root = "root";
+            this.elements.push(rootElement);
         }
 
         exportUISchemaAsJSON() : string{

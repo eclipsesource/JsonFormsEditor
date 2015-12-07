@@ -1,21 +1,18 @@
 module app.toolbox {
+
     class ToolboxController {
-        public elements : app.tree.TreeElement[] = [];
-        private schema : app.core.metaschema.Metaschema;
 
-        static $inject = ['$scope', 'MetaschemaService', 'TreeService'];
+        public elements : any = [];
 
-        constructor($scope, metaschemaService : app.core.metaschema.MetaschemaService, treeService:app.tree.TreeService){
-            this.schema = metaschemaService.getSchema();
+        static $inject = ['$scope', 'ElementsFactoryService'];
 
-            _.forEach(this.schema.getDefinitions(), (definition: string) => {
-                this.elements.push(new app.tree.TreeElement(-1, definition));
-            });
+        constructor($scope, elementsFactoryService: app.core.ElementsFactoryService){
+            this.elements = elementsFactoryService.getElementsAsArray();
 
             $scope.treeOptionsToolbox = {
                 beforeDrop: function(event) {
-                    var node: app.tree.TreeElement = event.source.nodeScope.$modelValue;
-                    node.setId(treeService.getNewId());
+                    var node: any = event.source.nodeScope.$modelValue;
+                    node.id = elementsFactoryService.getNewId();
                     event.source.nodeScope.$modelValue = node;
                 }
             };

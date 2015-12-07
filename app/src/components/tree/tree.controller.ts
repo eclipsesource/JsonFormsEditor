@@ -1,50 +1,46 @@
-/// <reference path="../../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../../../typings/angular-ui-router/angular-ui-router.d.ts" />
-/// <reference path="model/treeElement.ts" />
-
 module app.tree {
-    'use strict';
+
     class MyTreeController {
 
-        static $inject = ['$scope', 'TreeService', 'DetailService'];
+        static $inject = ['$scope', 'TreeService', 'DetailService', 'ElementsFactoryService'];
 
-        public data:TreeElement[];
+        public elements: any = [];
 
-        constructor(private $scope, public treeService:app.tree.TreeService, private detailService:app.detail.DetailService) {
-            this.data = treeService.elements;
+        constructor(private $scope, treeService: app.tree.TreeService, private detailService: app.detail.DetailService, private elementsFactoryService: app.core.ElementsFactoryService) {
+            this.elements = treeService.elements;
 
             $scope.treeOptions = {
                 // no accept more than one element (layout) in the root of the tree
                 accept: function (sourceNodeScope, destNodesScope, destIndex) {
                     return (destNodesScope.$nodeScope
-                    && destNodesScope.$nodeScope.$modelValue.acceptElement(sourceNodeScope.$modelValue.getType()));
+                    && destNodesScope.$nodeScope.$modelValue.acceptedElements.indexOf(sourceNodeScope.$modelValue.type) >= 0);
                 },
             };
         }
 
-        remove(scope):void {
+        remove(scope) : void {
             scope.remove();
 
         }
 
-        newSubItem(scope):void {
-            var node:TreeElement = scope.$modelValue;
-            node.getElements().push(new TreeElement(this.treeService.getNewId(), node.getDefaultAddElementType()));
+        newSubItem(scope) : void {
+            var node: any = scope.$modelValue;
+            node.elements.push(this.elementsFactoryService.getNewElement(node.acceptedElements[0]));
         }
 
-        toggle(scope):void {
+        toggle(scope) : void {
             scope.toggle();
         }
 
-        collapseAll():void {
+        collapseAll() : void {
             this.$scope.$broadcast('collapseAll');
         }
 
-        expandAll():void {
+        expandAll() : void {
             this.$scope.$broadcast('expandAll');
         }
 
-        showDetails(node:app.tree.TreeElement):void {
+        showDetails(node: any) : void {
             this.detailService.setElement(node);
         }
     }
