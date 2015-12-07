@@ -61,6 +61,10 @@ module app.tree {
             return this.elements;
         }
 
+        public getDefaultAddElementType() : string {
+            return this.acceptedElements[0];
+        }
+
         public hasElements() : boolean {
             return this.elements && this.elements.length > 0;
         }
