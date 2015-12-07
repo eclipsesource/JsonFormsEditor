@@ -5,30 +5,29 @@ var app;
         var TreeElement = (function () {
             function TreeElement(id, type) {
                 this.id = id;
-                this.data = {};
                 switch (type) {
                     case "Control":
-                        this.data.type = type;
-                        this.data.label = "";
-                        this.data.scope = "";
+                        this.type = type;
+                        this.label = "";
+                        this.scope = "";
                         break;
                     case "VerticalLayout":
                     case "HorizontalLayout":
                     case "Group":
-                        this.data.type = type;
-                        this.data.label = "";
+                        this.type = type;
+                        this.label = "";
                         this.elements = [];
-                        this.data.acceptedElements = ["Control", "VerticalLayout", "HorizontalLayout", "Group", "Categorization"];
+                        this.acceptedElements = ["Control", "VerticalLayout", "HorizontalLayout", "Group", "Categorization"];
                         break;
                     case "Categorization":
-                        this.data.type = type;
+                        this.type = type;
                         this.elements = [];
-                        this.data.acceptedElements = ["Category"];
+                        this.acceptedElements = ["Category"];
                         break;
                     case "Category":
-                        this.data.type = type;
+                        this.type = type;
                         this.elements = [];
-                        this.data.acceptedElements = ["Control", "VerticalLayout", "HorizontalLayout", "Group", "Categorization"];
+                        this.acceptedElements = ["Control", "VerticalLayout", "HorizontalLayout", "Group", "Categorization"];
                 }
             }
             TreeElement.prototype.getId = function () {
@@ -38,13 +37,13 @@ var app;
                 this.id = newId;
             };
             TreeElement.prototype.getData = function () {
-                return this.data;
+                return this;
             };
             TreeElement.prototype.getType = function () {
-                return this.data.type;
+                return this.type;
             };
             TreeElement.prototype.getLabel = function () {
-                return this.data.label;
+                return this.label;
             };
             TreeElement.prototype.getElements = function () {
                 return this.elements;
@@ -55,8 +54,8 @@ var app;
             TreeElement.prototype.acceptElement = function (type) {
                 if (!this.elements)
                     return false;
-                for (var i = 0; i < this.data.acceptedElements.length; i++) {
-                    if (type == this.data.acceptedElements[i])
+                for (var i = 0; i < this.acceptedElements.length; i++) {
+                    if (type == this.acceptedElements[i])
                         return true;
                 }
                 return false;

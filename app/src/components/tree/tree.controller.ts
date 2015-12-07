@@ -8,43 +8,43 @@ module app.tree {
 
         static $inject = ['$scope', 'TreeService', 'DetailService'];
 
-        public data: TreeElement[];
+        public data:TreeElement[];
 
-        constructor(private $scope, public treeService : app.tree.TreeService, private detailService : app.detail.DetailService) {
+        constructor(private $scope, public treeService:app.tree.TreeService, private detailService:app.detail.DetailService) {
             this.data = treeService.elements;
 
             $scope.treeOptions = {
                 // no accept more than one element (layout) in the root of the tree
-                accept: function(sourceNodeScope, destNodesScope, destIndex) {
+                accept: function (sourceNodeScope, destNodesScope, destIndex) {
                     return (destNodesScope.$nodeScope
                     && destNodesScope.$nodeScope.$modelValue.acceptElement(sourceNodeScope.$modelValue.getType()));
                 },
             };
         }
 
-        remove(scope) : void {
+        remove(scope):void {
             scope.remove();
 
         }
 
-        newSubItem(scope) : void {
-            var node: TreeElement = scope.$modelValue;
+        newSubItem(scope):void {
+            var node:TreeElement = scope.$modelValue;
             node.getElements().push(new TreeElement(this.treeService.getNewId(), "Control"));
         }
 
-        toggle(scope) : void {
+        toggle(scope):void {
             scope.toggle();
         }
 
-        collapseAll() : void {
+        collapseAll():void {
             this.$scope.$broadcast('collapseAll');
         }
 
-        expandAll() : void {
+        expandAll():void {
             this.$scope.$broadcast('expandAll');
         }
 
-        showDetails(node : app.tree.TreeElement) : void {
+        showDetails(node:app.tree.TreeElement):void {
             this.detailService.setElement(node);
         }
     }

@@ -17,6 +17,21 @@ var app;
             TreeService.prototype.getNewId = function () {
                 return this.id++;
             };
+            TreeService.prototype.exportUISchemaAsJSON = function () {
+                return JSON.stringify(this.elements[0], function (key, value) {
+                    if (value == "") {
+                        return undefined;
+                    }
+                    switch (key) {
+                        case "id":
+                        case "acceptedElements":
+                        case "$$hashKey":
+                            return undefined;
+                            break;
+                    }
+                    return value;
+                });
+            };
             return TreeService;
         })();
         tree.TreeService = TreeService;

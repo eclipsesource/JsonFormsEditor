@@ -21,6 +21,26 @@ module app.tree {
             return this.id++;
         }
 
+        exportUISchemaAsJSON() : string{
+            return JSON.stringify(this.elements[0], function(key, value){
+
+                if(value==""){
+                    return undefined;
+                }
+
+                switch(key){
+
+                    case "id":
+                    case "acceptedElements":
+                    case "$$hashKey":
+                        return undefined;
+                        break;
+
+                }
+
+                return value;
+            });
+        }
 
     }
 

@@ -12,6 +12,8 @@ var app;
                 function JsonSchemaService() {
                     this.fields = [];
                     this.loadFromJson(exampleFieldSchema);
+                    this.fields.push("");
+                    //TODO improve system of default selection of scope
                 }
                 JsonSchemaService.prototype.loadFromJson = function (json) {
                     for (var key in json.properties) {

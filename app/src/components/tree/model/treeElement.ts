@@ -2,35 +2,38 @@ module app.tree {
 
     export class TreeElement {
 
+        private type: string;
+        private label: string;
+        private scope: string;
+        private acceptedElements: [string];
 
-        private data: any = {};
         private elements: TreeElement[];
 
         constructor(private id: number, type: string) {
             switch(type) {
                 case "Control":
-                    this.data.type = type;
-                    this.data.label = "";
-                    this.data.scope = "";
+                    this.type = type;
+                    this.label = "";
+                    this.scope = "";
                     break;
                 case "VerticalLayout":
                 case "HorizontalLayout":
                 case "Group":
 
-                    this.data.type = type;
-                    this.data.label = "";
+                    this.type = type;
+                    this.label = "";
                     this.elements = [];
-                    this.data.acceptedElements = ["Control", "VerticalLayout", "HorizontalLayout", "Group", "Categorization"];
+                    this.acceptedElements = ["Control", "VerticalLayout", "HorizontalLayout", "Group", "Categorization"];
                     break;
                 case "Categorization":
-                    this.data.type = type;
+                    this.type = type;
                     this.elements = [];
-                    this.data.acceptedElements = ["Category"];
+                    this.acceptedElements = ["Category"];
                     break;
                 case "Category":
-                    this.data.type = type;
+                    this.type = type;
                     this.elements = [];
-                    this.data.acceptedElements = ["Control", "VerticalLayout", "HorizontalLayout", "Group", "Categorization"];
+                    this.acceptedElements = ["Control", "VerticalLayout", "HorizontalLayout", "Group", "Categorization"];
             }
         }
 
@@ -43,15 +46,15 @@ module app.tree {
         }
 
         public getData() : any {
-            return this.data;
+            return this;
         }
 
         public getType() : string {
-            return this.data.type;
+            return this.type;
         }
 
         public getLabel() : string {
-            return this.data.label;
+            return this.label;
         }
 
         public getElements() : TreeElement[] {
@@ -64,8 +67,8 @@ module app.tree {
 
         public acceptElement(type: string) {
             if(!this.elements) return false;
-            for(var i = 0; i < this.data.acceptedElements.length; i++) {
-                if(type == this.data.acceptedElements[i]) return true;
+            for(var i = 0; i < this.acceptedElements.length; i++) {
+                if(type == this.acceptedElements[i]) return true;
             }
             return false;
         }
