@@ -16,12 +16,16 @@ var app;
                     // no accept more than one element (layout) in the root of the tree
                     accept: function (sourceNodeScope, destNodesScope, destIndex) {
                         return (destNodesScope.$nodeScope
-                            && destNodesScope.$nodeScope.$modelValue.getNodes());
+                            && destNodesScope.$nodeScope.$modelValue.acceptElement(sourceNodeScope.$modelValue.getType()));
                     }
                 };
             }
             MyTreeController.prototype.remove = function (scope) {
                 scope.remove();
+            };
+            MyTreeController.prototype.newSubItem = function (scope) {
+                var node = scope.$modelValue;
+                node.getElements().push(new tree.TreeElement(this.treeService.getNewId(), "Control"));
             };
             MyTreeController.prototype.toggle = function (scope) {
                 scope.toggle();

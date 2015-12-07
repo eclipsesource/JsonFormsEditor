@@ -7,11 +7,8 @@ var app;
                 var _this = this;
                 this.elements = [];
                 this.schema = metaschemaService.getSchema();
-                _.forEach(this.schema.getControls(), function () {
-                    _this.elements.push(new app.tree.TreeElement(-1, "Control"));
-                });
-                _.forEach(this.schema.getLayouts(), function (layoutName) {
-                    _this.elements.push(new app.tree.TreeElement(-1, layoutName));
+                _.forEach(this.schema.getDefinitions(), function (definition) {
+                    _this.elements.push(new app.tree.TreeElement(-1, definition));
                 });
                 $scope.treeOptionsToolbox = {
                     beforeDrop: function (event) {

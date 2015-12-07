@@ -6,22 +6,28 @@ var app;
         var metaschema;
         (function (metaschema) {
             var Metaschema = (function () {
+                /*private controls:string[] = [];
+                private layouts:string[] = [];*/
                 function Metaschema(json) {
-                    var _this = this;
-                    this.controls = [];
-                    this.layouts = [];
-                    _.forEach(json.definitions.control.properties.type.enum, function (control) {
-                        _this.controls.push(control);
+                    this.definitions = [];
+                    this.definitions.push("Control");
+                    this.definitions.push("HorizontalLayout");
+                    this.definitions.push("VerticalLayout");
+                    this.definitions.push("Group");
+                    this.definitions.push("Categorization");
+                    this.definitions.push("Category");
+                    _.forEach(json.definitions, function (definition) {
                     });
-                    _.forEach(json.definitions.layout.properties.type.enum, function (layout) {
-                        _this.layouts.push(layout);
+                    /*_.forEach(json.definitions.control.properties.type.enum, (control:string) => {
+                        this.controls.push(control);
                     });
+        
+                    _.forEach(json.definitions.layout.properties.type.enum, (layout:string) => {
+                        this.layouts.push(layout);
+                    });*/
                 }
-                Metaschema.prototype.getControls = function () {
-                    return this.controls;
-                };
-                Metaschema.prototype.getLayouts = function () {
-                    return this.layouts;
+                Metaschema.prototype.getDefinitions = function () {
+                    return this.definitions;
                 };
                 return Metaschema;
             })();
