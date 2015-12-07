@@ -6,7 +6,7 @@
     <div ui-tree="treeOptionsToolbox" data-clone-enabled="true" data-nodrop-enabled="true">
         <ol ui-tree-nodes ng-model="toolbox.elements">
             <li ng-repeat="element in toolbox.elements" ui-tree-node class="mdl-navigation__link">
-                <div ui-tree-handle>{{element.getTitle()}}</div>
+                <div ui-tree-handle>{{element.getType()}}</div>
             </li>
         </ol>
     </div>

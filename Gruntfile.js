@@ -152,15 +152,15 @@ module.exports = function (grunt) {
         watch: {
             ts: {
                 files: 'app/**/*.ts',
-                tasks: ['typescript:build', 'concat:app', 'index:build']
+                tasks: ['typescript:build', 'concat:app', 'indexBuild']
             },
             less: {
                 files: 'app/**/*.less',
-                tasks: ['less:build', 'index:build']
+                tasks: ['less:build', 'indexBuild']
             },
             html: {
                 files: 'app/**/*.html',
-                tasks: ['ngtemplates:build', 'index:build']
+                tasks: ['ngtemplates:build', 'indexBuild']
             }
         },
 

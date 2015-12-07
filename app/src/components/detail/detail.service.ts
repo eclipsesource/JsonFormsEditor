@@ -14,31 +14,46 @@ module app.detail {
         setElement(element : app.tree.TreeElement) : void {
             this.currentElement = element;
 
-            switch(this.currentElement.data["type"]) {
+
+            switch(this.currentElement.getType()) {
+
                 case "Control":
                     this.schema = {
                         "type": "object",
                         "properties": {
-                            "type": {
-                                "type": "string",
-                                "enum": [
-                                    "Control"
-                                ]
-                            },
+
                             "label": {
                                 "type": "string"
                             },
+                            "type": {
+                                "type": "string"
+                            },
                             "scope": {
-                                "type": "object",
-                                "properties": {
-                                    "$ref": {
-                                        "type": "string",
-                                        "enum": this.jsonSchemaService.getFields()
-                                    }
-                                }
+                                "type": "string"
                             }
                         }
                     };
+                    this.uischema = {
+                        "type": "VerticalLayout",
+                        "elements": [
+                            {
+                                "type": "Control",
+                                "label": "Label",
+                                "scope": { "$ref": "#/properties/label" },
+                            },
+                            {
+                                "type": "Control",
+                                "label": "Type",
+                                "scope": { "$ref": "#/properties/type" },
+                            },
+                            {
+                                "type": "Control",
+                                "label": "Scope",
+                                "scope": { "$ref": "#/properties/scope" },
+                            }
+                        ]
+                    };
+
                     break;
                 case "VerticalLayout":
                 case "HorizontalLayout":
@@ -46,6 +61,11 @@ module app.detail {
                     this.schema = {
                         "type": "object",
                         "properties": {
+
+                            "label": {
+                                "type": "string"
+                            },
+
                             "type": {
                                 "type": "string",
                                 "enum": [
@@ -53,40 +73,42 @@ module app.detail {
                                     "VerticalLayout",
                                     "Group"
                                 ]
-                            },
-                            "label": {
-                                "type": "string"
+
                             }
                         }
                     };
-            }
 
-            switch(this.currentElement.data["type"]) {
-                case "Control":
                     this.uischema = {
                         "type": "VerticalLayout",
                         "elements": [
                             {
                                 "type": "Control",
-                                "label": "Type",
-                                "scope": { "$ref": "#/properties/type" },
-                            },
-                            {
-                                "type": "Control",
+
                                 "label": "Label",
                                 "scope": { "$ref": "#/properties/label" },
                             },
                             {
                                 "type": "Control",
-                                "label": "Scope",
-                                "scope": { "$ref": "#/properties/scope/properties/$ref" },
+
+                                "label": "Type",
+                                "scope": { "$ref": "#/properties/type" },
+
                             }
                         ]
                     };
                     break;
-                case "VerticalLayout":
-                case "HorizontalLayout":
-                case "Group":
+
+                case "Categorization":
+                case "Category":
+                    this.schema = {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            }
+                        }
+                    };
+
                     this.uischema = {
                         "type": "VerticalLayout",
                         "elements": [
@@ -94,17 +116,14 @@ module app.detail {
                                 "type": "Control",
                                 "label": "Type",
                                 "scope": { "$ref": "#/properties/type" },
-                            },
-                            {
-                                "type": "Control",
-                                "label": "Label",
-                                "scope": { "$ref": "#/properties/label" },
+
                             }
                         ]
                     };
+
             }
 
-            this.data = this.currentElement.data;
+            this.data = this.currentElement.getData();
         }
 
     }

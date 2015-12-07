@@ -17,7 +17,7 @@ module app.tree {
                 // no accept more than one element (layout) in the root of the tree
                 accept: function(sourceNodeScope, destNodesScope, destIndex) {
                     return (destNodesScope.$nodeScope
-                    && destNodesScope.$nodeScope.$modelValue.getNodes());
+                    && destNodesScope.$nodeScope.$modelValue.acceptElement(sourceNodeScope.$modelValue.getType()));
                 },
             };
         }
@@ -25,6 +25,11 @@ module app.tree {
         remove(scope) : void {
             scope.remove();
 
+        }
+
+        newSubItem(scope) : void {
+            var node: TreeElement = scope.$modelValue;
+            node.getElements().push(new TreeElement(this.treeService.getNewId(), "Control"));
         }
 
         toggle(scope) : void {

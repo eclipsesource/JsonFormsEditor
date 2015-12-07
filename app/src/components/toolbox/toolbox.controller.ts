@@ -7,12 +7,9 @@ module app.toolbox {
 
         constructor($scope, metaschemaService : app.core.metaschema.MetaschemaService, treeService:app.tree.TreeService){
             this.schema = metaschemaService.getSchema();
-            _.forEach(this.schema.getControls(), () => {
-                this.elements.push(new app.tree.TreeElement(-1, "Control"));
-            });
 
-            _.forEach(this.schema.getLayouts(), (layoutName : string) => {
-                this.elements.push(new app.tree.TreeElement(-1, layoutName));
+            _.forEach(this.schema.getDefinitions(), (definition: string) => {
+                this.elements.push(new app.tree.TreeElement(-1, definition));
             });
 
             $scope.treeOptionsToolbox = {
