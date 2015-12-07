@@ -15,7 +15,7 @@ module app.toolbox {
             $scope.treeOptionsToolbox = {
                 beforeDrop: function(event) {
                     var node: app.tree.TreeElement = event.source.nodeScope.$modelValue;
-                    node.id = treeService.getNewId();
+                    node.setId(treeService.getNewId());
                     event.source.nodeScope.$modelValue = node;
                 }
             };

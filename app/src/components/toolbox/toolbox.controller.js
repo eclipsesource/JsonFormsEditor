@@ -13,7 +13,7 @@ var app;
                 $scope.treeOptionsToolbox = {
                     beforeDrop: function (event) {
                         var node = event.source.nodeScope.$modelValue;
-                        node.id = treeService.getNewId();
+                        node.setId(treeService.getNewId());
                         event.source.nodeScope.$modelValue = node;
                     }
                 };
