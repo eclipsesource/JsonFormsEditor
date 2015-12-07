@@ -21,10 +21,10 @@ module app.detail {
                     this.schema = {
                         "type": "object",
                         "properties": {
-                            "label": {
+                            "type": {
                                 "type": "string"
                             },
-                            "type": {
+                            "label": {
                                 "type": "string"
                             },
                             "scope": {
