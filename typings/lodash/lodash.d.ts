@@ -470,7 +470,7 @@ declare module _ {
          * If a property name is provided for predicate the created _.property style callback returns the property
          * value of the given element.
          *
-         * If a value is also provided for thisArg the created _.matchesProperty style callback returns true for
+         * If a  also provided for thisArg the created _.matchesProperty style callback returns true for
          * elements that have a matching property value, else false.
          *
          * If an object is provided for predicate the created _.matches style callback returns true for elements that
@@ -614,7 +614,7 @@ declare module _ {
          * If a property name is provided for predicate the created _.property style callback returns the property
          * value of the given element.
          *
-         * If a value is also provided for thisArg the created _.matchesProperty style callback returns true for
+         * If a  also provided for thisArg the created _.matchesProperty style callback returns true for
          * elements that have a matching property value, else false.
          *
          * If an object is provided for predicate the created _.matches style callback returns true for elements that
@@ -758,7 +758,7 @@ declare module _ {
          * If a property name is provided for predicate the created _.property style callback returns the property
          * value of the given element.
          *
-         * If a value is also provided for thisArg the created _.matchesProperty style callback returns true for
+         * If a  also provided for thisArg the created _.matchesProperty style callback returns true for
          * elements that have a matching property value, else false.
          *
          * If an object is provided for predicate the created _.matches style callback returns true for elements that
@@ -901,7 +901,7 @@ declare module _ {
          * If a property name is provided for predicate the created _.property style callback returns the property
          * value of the given element.
          *
-         * If a value is also provided for thisArg the created _.matchesProperty style callback returns true for
+         * If a  also provided for thisArg the created _.matchesProperty style callback returns true for
          * elements that have a matching property value, else false.
          *
          * If an object is provided for predicate the created _.matches style callback returns true for elements that
@@ -1166,7 +1166,7 @@ declare module _ {
     //_.indexOf
     interface LoDashStatic {
         /**
-         * Gets the index at which the first occurrence of value is found in array using SameValueZero for equality
+         * Gets the index at which the first occurrence of  found in array using SameValueZero for equality
          * comparisons. If fromIndex is negative, it’s used as the offset from the end of array. If array is sorted
          * providing true for fromIndex performs a faster binary search.
          *
@@ -1610,7 +1610,7 @@ declare module _ {
          * If a property name is provided for predicate the created _.property style callback returns the property
          * value of the given element.
          *
-         * If a value is also provided for thisArg the created _.matchesProperty style callback returns true for
+         * If a  also provided for thisArg the created _.matchesProperty style callback returns true for
          * elements that have a matching property value, else false.
          *
          * If an object is provided for predicate the created _.matches style callback returns true for elements that
@@ -2096,7 +2096,7 @@ declare module _ {
          * If a property name is provided for predicate the created _.property style callback returns the property
          * value of the given element.
          *
-         * If a value is also provided for thisArg the created _.matchesProperty style callback returns true for
+         * If a  also provided for thisArg the created _.matchesProperty style callback returns true for
          * elements that have a matching property value, else false.
          *
          * If an object is provided for predicate the created _.matches style callback returns true for elements that
@@ -2240,7 +2240,7 @@ declare module _ {
          * If a property name is provided for predicate the created _.property style callback returns the property
          * value of the given element.
          *
-         * If a value is also provided for thisArg the created _.matchesProperty style callback returns true for
+         * If a  also provided for thisArg the created _.matchesProperty style callback returns true for
          * elements that have a matching property value, else false.
          *
          * If an object is provided for predicate the created _.matches style callback returns true for elements that
@@ -4376,7 +4376,7 @@ declare module _ {
          * If a property name is provided for predicate the created _.property style callback returns the property
          * value of the given element.
          *
-         * If a value is also provided for thisArg the created _.matchesProperty style callback returns true for
+         * If a  also provided for thisArg the created _.matchesProperty style callback returns true for
          * elements that have a matching property value, else false.
          *
          * If an object is provided for predicate the created _.matches style callback returns true for elements that
@@ -4580,7 +4580,7 @@ declare module _ {
          * If a property name is provided for predicate the created _.property style callback returns the property
          * value of the given element.
          *
-         * If a value is also provided for thisArg the created _.matchesProperty style callback returns true for
+         * If a  also provided for thisArg the created _.matchesProperty style callback returns true for
          * elements that have a matching property value, else false.
          *
          * If an object is provided for predicate the created _.matches style callback returns true for elements that
@@ -4756,7 +4756,7 @@ declare module _ {
          * If a property name is provided for predicate the created _.property style callback returns the property
          * value of the given element.
          *
-         * If a value is also provided for thisArg the created _.matchesProperty style callback returns true for
+         * If a  also provided for thisArg the created _.matchesProperty style callback returns true for
          * elements that have a matching property value, else false.
          *
          * If an object is provided for predicate the created _.matches style callback returns true for elements that
@@ -5673,7 +5673,7 @@ declare module _ {
          * If a property name is provided for iteratee the created _.property style callback returns the property value
          * of the given element.
          *
-         * If a value is also provided for thisArg the created _.matchesProperty style callback returns true for
+         * If a  also provided for thisArg the created _.matchesProperty style callback returns true for
          * elements that have a matching property value, else false.
          *
          * If an object is provided for iteratee the created _.matches style callback returns true for elements that
@@ -5832,7 +5832,7 @@ declare module _ {
         * If a property name is provided for predicate the created _.property style callback
         * returns the property value of the given element.
         *
-        * If a value is also provided for thisArg the created _.matchesProperty style callback
+        * If a  also provided for thisArg the created _.matchesProperty style callback
         * returns true for elements that have a matching property value, else false.
         *
         * If an object is provided for predicate the created _.matches style callback returns
@@ -6892,7 +6892,7 @@ declare module _ {
          * If a property name is provided for predicate the created _.property style callback returns the property
          * value of the given element.
          *
-         * If a value is also provided for thisArg the created _.matchesProperty style callback returns true for
+         * If a  also provided for thisArg the created _.matchesProperty style callback returns true for
          * elements that have a matching property value, else false.
          *
          * If an object is provided for predicate the created _.matches style callback returns true for elements that
@@ -7049,7 +7049,7 @@ declare module _ {
          * If a property name is provided for iteratee the created _.property style callback returns the property
          * valueof the given element.
          *
-         * If a value is also provided for thisArg the created _.matchesProperty style callback returns true for
+         * If a  also provided for thisArg the created _.matchesProperty style callback returns true for
          * elements that have a matching property value, else false.
          *
          * If an object is provided for iteratee the created _.matches style callback returns true for elements that
@@ -7208,7 +7208,7 @@ declare module _ {
         * If a property name is provided for an iteratee the created "_.property" style callback
         * returns the property value of the given element.
         *
-        * If a value is also provided for thisArg the created "_.matchesProperty" style callback
+        * If a  also provided for thisArg the created "_.matchesProperty" style callback
         * returns true for elements that have a matching property value, else false.
         *
         * If an object is provided for an iteratee the created "_.matches" style callback returns
@@ -7279,7 +7279,7 @@ declare module _ {
         /**
         * This method is like "_.sortByAll" except that it allows specifying the sort orders of the
         * iteratees to sort by. If orders is unspecified, all values are sorted in ascending order.
-        * Otherwise, a value is sorted in ascending order if its corresponding order is "asc", and
+        * Otherwise, a  sorted in ascending order if its corresponding order is "asc", and
         * descending if "desc".
         *
         * If a property name is provided for an iteratee the created "_.property" style callback
@@ -8536,11 +8536,11 @@ declare module _ {
     //_.gt
     interface LoDashStatic {
         /**
-         * Checks if value is greater than other.
+         * Checks if  greater than other.
          *
          * @param value The value to compare.
          * @param other The other value to compare.
-         * @return Returns true if value is greater than other, else false.
+         * @return Returns true if  greater than other, else false.
          */
         gt(
             value: any,
@@ -8565,11 +8565,11 @@ declare module _ {
     //_.gte
     interface LoDashStatic {
         /**
-         * Checks if value is greater than or equal to other.
+         * Checks if  greater than or equal to other.
          *
          * @param value The value to compare.
          * @param other The other value to compare.
-         * @return Returns true if value is greater than or equal to other, else false.
+         * @return Returns true if  greater than or equal to other, else false.
          */
         gte(
             value: any,
@@ -8594,11 +8594,11 @@ declare module _ {
     //_.isArguments
     interface LoDashStatic {
         /**
-         * Checks if value is classified as an arguments object.
+         * Checks if  classified as an arguments object.
          * @param value The value to check.
-         * @return Returns true if value is correctly classified, else false.
+         * @return Returns true if  correctly classified, else false.
          */
-        isArguments(value?: any): value is IArguments;
+        isArguments(value?: any):  IArguments;
     }
 
     interface LoDashImplicitWrapperBase<T, TWrapper> {
@@ -8611,11 +8611,11 @@ declare module _ {
     //_.isArray
     interface LoDashStatic {
         /**
-         * Checks if value is classified as an Array object.
+         * Checks if  classified as an Array object.
          * @param value The value to check.
-         * @return Returns true if value is correctly classified, else false.
+         * @return Returns true if  correctly classified, else false.
          **/
-        isArray(value?: any): value is any[];
+        isArray(value?: any):  any[];
     }
 
     interface LoDashImplicitWrapperBase<T,TWrapper> {
@@ -8628,11 +8628,11 @@ declare module _ {
     //_.isBoolean
     interface LoDashStatic {
         /**
-         * Checks if value is classified as a boolean primitive or object.
+         * Checks if  classified as a boolean primitive or object.
          * @param value The value to check.
-         * @return Returns true if value is correctly classified, else false.
+         * @return Returns true if  correctly classified, else false.
          **/
-        isBoolean(value?: any): value is boolean;
+        isBoolean(value?: any):  boolean;
     }
 
     interface LoDashImplicitWrapperBase<T, TWrapper> {
@@ -8645,11 +8645,11 @@ declare module _ {
     //_.isDate
     interface LoDashStatic {
         /**
-         * Checks if value is classified as a Date object.
+         * Checks if  classified as a Date object.
          * @param value The value to check.
-         * @return Returns true if value is correctly classified, else false.
+         * @return Returns true if  correctly classified, else false.
          **/
-        isDate(value?: any): value is Date;
+        isDate(value?: any):  Date;
     }
 
     interface LoDashImplicitWrapperBase<T, TWrapper> {
@@ -8662,9 +8662,9 @@ declare module _ {
     //_.isElement
     interface LoDashStatic {
         /**
-         * Checks if value is a DOM element.
+         * Checks if  a DOM element.
          * @param value The value to check.
-         * @return Returns true if value is a DOM element, else false.
+         * @return Returns true if  a DOM element, else false.
          */
         isElement(value?: any): boolean;
     }
@@ -8679,10 +8679,10 @@ declare module _ {
     //_.isEmpty
     interface LoDashStatic {
         /**
-         * Checks if value is empty. A value is considered empty unless it’s an arguments object, array, string, or
+         * Checks if  empty. A  considered empty unless it’s an arguments object, array, string, or
          * jQuery-like collection with a length greater than 0 or an object with own enumerable properties.
          * @param value The value to inspect.
-         * @return Returns true if value is empty, else false.
+         * @return Returns true if  empty, else false.
          **/
         isEmpty(value?: any[]|Dictionary<any>|string|any): boolean;
     }
@@ -8751,12 +8751,12 @@ declare module _ {
     //_.isError
     interface LoDashStatic {
         /**
-         * Checks if value is an Error, EvalError, RangeError, ReferenceError, SyntaxError, TypeError, or URIError
+         * Checks if  an Error, EvalError, RangeError, ReferenceError, SyntaxError, TypeError, or URIError
          * object.
          * @param value The value to check.
-         * @return Returns true if value is an error object, else false.
+         * @return Returns true if  an error object, else false.
          */
-        isError(value: any): value is Error;
+        isError(value: any):  Error;
     }
 
     interface LoDashImplicitWrapperBase<T, TWrapper> {
@@ -8769,12 +8769,12 @@ declare module _ {
     //_.isFinite
     interface LoDashStatic {
         /**
-         * Checks if value is a finite primitive number.
+         * Checks if  a finite primitive number.
          * Note: This method is based on Number.isFinite.
          * @param value The value to check.
-         * @return Returns true if value is a finite number, else false.
+         * @return Returns true if  a finite number, else false.
          **/
-        isFinite(value?: any): value is number;
+        isFinite(value?: any):  number;
     }
 
     interface LoDashImplicitWrapperBase<T, TWrapper> {
@@ -8787,11 +8787,11 @@ declare module _ {
     //_.isFunction
     interface LoDashStatic {
         /**
-         * Checks if value is classified as a Function object.
+         * Checks if  classified as a Function object.
          * @param value The value to check.
-         * @return Returns true if value is correctly classified, else false.
+         * @return Returns true if  correctly classified, else false.
          **/
-        isFunction(value?: any): value is Function;
+        isFunction(value?: any):  Function;
     }
 
     interface LoDashImplicitWrapperBase<T, TWrapper> {
@@ -8831,10 +8831,10 @@ declare module _ {
     //_.isNaN
     interface LoDashStatic {
         /**
-         * Checks if value is NaN.
+         * Checks if  NaN.
          * Note: This method is not the same as isNaN which returns true for undefined and other non-numeric values.
          * @param value The value to check.
-         * @return Returns true if value is NaN, else false.
+         * @return Returns true if  NaN, else false.
          */
         isNaN(value?: any): boolean;
     }
@@ -8849,11 +8849,11 @@ declare module _ {
     //_.isNative
     interface LoDashStatic {
         /**
-         * Checks if value is a native function.
+         * Checks if  a native function.
          * @param value The value to check.
-         * @retrun Returns true if value is a native function, else false.
+         * @retrun Returns true if  a native function, else false.
          */
-        isNative(value: any): value is Function;
+        isNative(value: any):  Function;
     }
 
     interface LoDashImplicitWrapperBase<T, TWrapper> {
@@ -8866,9 +8866,9 @@ declare module _ {
     //_.isNull
     interface LoDashStatic {
         /**
-         * Checks if value is null.
+         * Checks if  null.
          * @param value The value to check.
-         * @return Returns true if value is null, else false.
+         * @return Returns true if  null, else false.
          **/
         isNull(value?: any): boolean;
     }
@@ -8883,12 +8883,12 @@ declare module _ {
     //_.isNumber
     interface LoDashStatic {
         /**
-         * Checks if value is classified as a Number primitive or object.
+         * Checks if  classified as a Number primitive or object.
          * Note: To exclude Infinity, -Infinity, and NaN, which are classified as numbers, use the _.isFinite method.
          * @param value The value to check.
-         * @return Returns true if value is correctly classified, else false.
+         * @return Returns true if  correctly classified, else false.
          */
-        isNumber(value?: any): value is number;
+        isNumber(value?: any):  number;
     }
 
     interface LoDashImplicitWrapperBase<T, TWrapper> {
@@ -8901,10 +8901,10 @@ declare module _ {
     //_.isObject
     interface LoDashStatic {
         /**
-         * Checks if value is the language type of Object. (e.g. arrays, functions, objects, regexes, new Number(0),
+         * Checks if  the language type of Object. (e.g. arrays, functions, objects, regexes, new Number(0),
          * and new String(''))
          * @param value The value to check.
-         * @return Returns true if value is an object, else false.
+         * @return Returns true if  an object, else false.
          **/
         isObject(value?: any): boolean;
     }
@@ -8919,13 +8919,13 @@ declare module _ {
     //_.isPlainObject
     interface LoDashStatic {
         /**
-         * Checks if value is a plain object, that is, an object created by the Object constructor or one with a
+         * Checks if  a plain object, that is, an object created by the Object constructor or one with a
          * [[Prototype]] of null.
          *
          * Note: This method assumes objects created by the Object constructor have no inherited enumerable properties.
          *
          * @param value The value to check.
-         * @return Returns true if value is a plain object, else false.
+         * @return Returns true if  a plain object, else false.
          */
         isPlainObject(value?: any): boolean;
     }
@@ -8940,11 +8940,11 @@ declare module _ {
     //_.isRegExp
     interface LoDashStatic {
         /**
-         * Checks if value is classified as a RegExp object.
+         * Checks if  classified as a RegExp object.
          * @param value The value to check.
-         * @return Returns true if value is correctly classified, else false.
+         * @return Returns true if  correctly classified, else false.
          */
-        isRegExp(value?: any): value is RegExp;
+        isRegExp(value?: any):  RegExp;
     }
 
     interface LoDashImplicitWrapperBase<T, TWrapper> {
@@ -8957,11 +8957,11 @@ declare module _ {
     //_.isString
     interface LoDashStatic {
         /**
-         * Checks if value is classified as a String primitive or object.
+         * Checks if  classified as a String primitive or object.
          * @param value The value to check.
-         * @return Returns true if value is correctly classified, else false.
+         * @return Returns true if  correctly classified, else false.
          **/
-        isString(value?: any): value is string;
+        isString(value?: any):  string;
     }
 
     interface LoDashImplicitWrapperBase<T, TWrapper> {
@@ -8974,9 +8974,9 @@ declare module _ {
     //_.isTypedArray
     interface LoDashStatic {
         /**
-         * Checks if value is classified as a typed array.
+         * Checks if  classified as a typed array.
          * @param value The value to check.
-         * @return Returns true if value is correctly classified, else false.
+         * @return Returns true if  correctly classified, else false.
          */
         isTypedArray(value: any): boolean;
     }
@@ -8991,9 +8991,9 @@ declare module _ {
     //_.isUndefined
     interface LoDashStatic {
         /**
-         * Checks if value is undefined.
+         * Checks if  undefined.
          * @param value The value to check.
-         * @return Returns true if value is undefined, else false.
+         * @return Returns true if  undefined, else false.
          **/
         isUndefined(value: any): boolean;
     }
@@ -9008,11 +9008,11 @@ declare module _ {
     //_.lt
     interface LoDashStatic {
         /**
-         * Checks if value is less than other.
+         * Checks if  less than other.
          *
          * @param value The value to compare.
          * @param other The other value to compare.
-         * @return Returns true if value is less than other, else false.
+         * @return Returns true if  less than other, else false.
          */
         lt(
             value: any,
@@ -9037,11 +9037,11 @@ declare module _ {
     //_.lte
     interface LoDashStatic {
         /**
-         * Checks if value is less than or equal to other.
+         * Checks if  less than or equal to other.
          *
          * @param value The value to compare.
          * @param other The other value to compare.
-         * @return Returns true if value is less than or equal to other, else false.
+         * @return Returns true if  less than or equal to other, else false.
          */
         lte(
             value: any,
@@ -9235,7 +9235,7 @@ declare module _ {
          * If a property name is provided for iteratee the created _.property style callback returns the property value
          * of the given element.
          *
-         * If a value is also provided for thisArg the created _.matchesProperty style callback returns true for
+         * If a  also provided for thisArg the created _.matchesProperty style callback returns true for
          * elements that have a matching property value, else false.
          *
          * If an object is provided for iteratee the created _.matches style callback returns true for elements that
@@ -9339,7 +9339,7 @@ declare module _ {
          * If a property name is provided for iteratee the created _.property style callback returns the property value
          * of the given element.
          *
-         * If a value is also provided for thisArg the created _.matchesProperty style callback returns true for
+         * If a  also provided for thisArg the created _.matchesProperty style callback returns true for
          * elements that have a matching property value, else false.
          *
          * If an object is provided for iteratee the created _.matches style callback returns true for elements that
@@ -10289,7 +10289,7 @@ declare module _ {
          * If a property name is provided for predicate the created _.property style callback returns the property
          * value of the given element.
          *
-         * If a value is also provided for thisArg the created _.matchesProperty style callback returns true for
+         * If a  also provided for thisArg the created _.matchesProperty style callback returns true for
          * elements that have a matching property value, else false.
          *
          * If an object is provided for predicate the created _.matches style callback returns true for elements that
@@ -10374,7 +10374,7 @@ declare module _ {
          * If a property name is provided for predicate the created _.property style callback returns the property
          * value of the given element.
          *
-         * If a value is also provided for thisArg the created _.matchesProperty style callback returns true for
+         * If a  also provided for thisArg the created _.matchesProperty style callback returns true for
          * elements that have a matching property value, else false.
          *
          * If an object is provided for predicate the created _.matches style callback returns true for elements that
@@ -10670,10 +10670,10 @@ declare module _ {
     interface LoDashStatic {
         /**
          * Gets the property value at path of object. If the resolved
-         * value is undefined the defaultValue is used in its place.
+         *  undefined the default used in its place.
          * @param object The object to query.
          * @param path The path of the property to get.
-         * @param defaultValue The value returned if the resolved value is undefined.
+         * @param defaultValue The value returned if the resolved  undefined.
          * @return Returns the resolved value.
          **/
         get<TResult>(object: Object,
@@ -10724,7 +10724,7 @@ declare module _ {
     interface LoDashStatic {
         /**
          * Creates an object composed of the inverted keys and values of object. If object contains duplicate values,
-         * subsequent values overwrite property assignments of previous values unless multiValue is true.
+         * subsequent values overwrite property assignments of previous values unless multi true.
          *
          * @param object The object to invert.
          * @param multiValue Allow multiple values per key.
@@ -10936,7 +10936,7 @@ declare module _ {
         * If a property name is provided iteratee the created "_.property" style callback returns
         * the property value of the given element.
         *
-        * If a value is also provided for thisArg the creted "_.matchesProperty" style callback returns
+        * If a  also provided for thisArg the creted "_.matchesProperty" style callback returns
         * true for elements that have a matching property value, else false;.
         *
         * If an object is provided for iteratee the created "_.matches" style callback returns true
@@ -10956,7 +10956,7 @@ declare module _ {
     interface LoDashImplicitObjectWrapper<T> {
         /**
          * @see _.mapValues
-         * TValue is the type of the property values of T.
+         * T the type of the property values of T.
          * TResult is the type output by the ObjectIterator function
          */
         mapValues<TValue, TResult>(callback: ObjectIterator<TValue, TResult>, thisArg?: any): LoDashImplicitObjectWrapper<Dictionary<TResult>>;
@@ -11256,12 +11256,12 @@ declare module _ {
     //_.result
     interface LoDashStatic {
         /**
-         * This method is like _.get except that if the resolved value is a function it’s invoked with the this binding
+         * This method is like _.get except that if the resolved  a function it’s invoked with the this binding
          * of its parent object and its result is returned.
          *
          * @param object The object to query.
          * @param path The path of the property to resolve.
-         * @param defaultValue The value returned if the resolved value is undefined.
+         * @param defaultValue The value returned if the resolved  undefined.
          * @return Returns the resolved value.
          */
         result<TObject, TResult>(
@@ -11777,7 +11777,7 @@ declare module _ {
     interface LoDashStatic {
         /**
          * Converts string to an integer of the specified radix. If radix is undefined or 0, a radix of 10 is used
-         * unless value is a hexadecimal, in which case a radix of 16 is used.
+         * unless  a hexadecimal, in which case a radix of 16 is used.
          *
          * Note: This method aligns with the ES5 implementation of parseInt.
          *

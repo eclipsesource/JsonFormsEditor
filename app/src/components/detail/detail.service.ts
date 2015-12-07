@@ -6,6 +6,11 @@ module app.detail {
         public uischema: any;
         public data: any;
 
+        static $inject = ["JsonSchemaService"];
+
+        constructor(public jsonSchemaService:any){
+
+        }
         setElement(element : app.tree.TreeElement) : void {
             this.currentElement = element;
 
@@ -27,7 +32,8 @@ module app.detail {
                                 "type": "object",
                                 "properties": {
                                     "$ref": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "enum": this.jsonSchemaService.getFields()
                                     }
                                 }
                             }
