@@ -3,7 +3,7 @@ node_js:
 - node
 before_install: npm install -g grunt-cli
 install: npm install
-script: grunt
+script: grunt test
 after_success: grunt dist
 after_script:
   - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && bash deploy.sh
