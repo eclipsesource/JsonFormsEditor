@@ -2,11 +2,32 @@
     <h6 class="mdl-color-text--accent-contrast" style="text-align: center">Toolbox</h6>
 </header>
 
-<div class="mdl-navigation mdl-color--blue-grey-800">
+<ul class="nav nav-pills">
+    <li ng-class="{ active:toolbox.isSet(1) }">
+        <a href ng-click="toolbox.setTab(1)">Expert Mode</a>
+    </li>
+    <li ng-class="{ active:toolbox.isSet(2) }">
+        <a href ng-click="toolbox.setTab(2)">Schema Mode</a>
+    </li>
+</ul>
+
+<!--  Expert Mode Toolbox  -->
+<div class="mdl-navigation mdl-color--blue-grey-800" ng-show="toolbox.isSet(1)">
     <div ui-tree="treeOptionsToolbox" data-clone-enabled="true" data-nodrop-enabled="true">
-        <ol ui-tree-nodes ng-model="toolbox.elements">
-            <li ng-repeat="element in toolbox.elements" ui-tree-node class="mdl-navigation__link">
+        <ol ui-tree-nodes ng-model="toolbox.expertElements">
+            <li ng-repeat="element in toolbox.expertElements" ui-tree-node class="mdl-navigation__link">
                 <div ui-tree-handle>{{element.type}}</div>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<!--  Schema Mode Toolbox  -->
+<div class="mdl-navigation mdl-color--blue-grey-800" ng-show="toolbox.isSet(2)">
+    <div ui-tree="treeOptionsToolbox" data-clone-enabled="true" data-nodrop-enabled="true">
+        <ol ui-tree-nodes ng-model="toolbox.schemaElements">
+            <li ng-repeat="element in toolbox.schemaElements" ui-tree-node class="mdl-navigation__link">
+                <div ui-tree-handle>{{element.type + " - " + element.scope}}</div>
             </li>
         </ol>
     </div>

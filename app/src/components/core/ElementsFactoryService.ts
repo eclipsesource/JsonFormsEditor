@@ -35,9 +35,13 @@ module app.core {
         }
 
         getNewElement(type:string):any {
-            var element:any = JSON.parse(JSON.stringify(this.elements[type]));
-            element.id = this.id++;
+            var element:any = this.getFakeElement(type);
+            element.id = this.getNewId();
             return element;
+        }
+
+        getFakeElement(type:string):any {
+            return JSON.parse(JSON.stringify(this.elements[type]));
         }
 
     }
