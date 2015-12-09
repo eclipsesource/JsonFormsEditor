@@ -12,11 +12,25 @@ module app.core.jsonschema{
             this.loadFromJson(exampleFieldSchema);
         }
         loadFromJson(json:any){
-            for(var key in json.properties){
-                if(json.properties.hasOwnProperty(key)){
-                    this.fields.push(key);
+            this.fields = this.getPropertiesRecursive(json, '');
+        }
+
+        // From a json object, returns all the propertie names iinside it recursively and by adding a prefix with its location
+        private getPropertiesRecursive(json: any, prefix: string) : string[] {
+            var res: string[] = [];
+
+            if(json.hasOwnProperty('properties')) {
+                for(var key in json.properties) {
+                    if(json.properties.hasOwnProperty(key)){
+
+                        var name = prefix == '' ? key : prefix + '/' + key;
+                        res.push(name);
+                        res = res.concat(this.getPropertiesRecursive(json.properties[key], name));
+                    }
+
                 }
             }
+            return res;
         }
 
         getFields(): string[]{
@@ -30,15 +44,43 @@ module app.core.jsonschema{
 
 //TODO load from user
 var exampleFieldSchema = {
-    "type":"object",
-    "properties":{
-        "firstName":{
-            "type":"string",
-
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Product",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "The unique identifier for a product",
+            "type": "number"
         },
-        "lastName":{
-            "type":"string"
+        "name": {
+            "type": "string"
+        },
+        "price": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true
+        },
+        "tags": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+        },
+        "dimensions": {
+            "type": "object",
+            "properties": {
+                "length": {"type": "number"},
+                "width": {"type": "number"},
+                "height": {"type": "number"}
+            },
+            "required": ["length", "width", "height"]
+        },
+        "warehouseLocation": {
+            "description": "Coordinates of the warehouse with the product",
+            "$ref": "http://json-schema.org/geo"
         }
-    }
+    },
+    "required": ["id", "name", "price"]
 };
-
