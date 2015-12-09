@@ -7,7 +7,7 @@ var app;
             var MetaSchemaService = (function () {
                 function MetaSchemaService($http, jsonSchemaService) {
                     //TODO implement using $http and promises, to get resource from static location on the server
-                    this.metaSchema = new metaschema.MetaSchema(jsonSchemaService, jsonMetaSchema);
+                    this.metaSchema = new MetaSchema(jsonSchemaService, jsonMetaSchema);
                 }
                 MetaSchemaService.prototype.getMetaSchema = function () {
                     return this.metaSchema;

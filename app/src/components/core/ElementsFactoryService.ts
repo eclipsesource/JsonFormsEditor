@@ -37,6 +37,7 @@ module app.core {
         getNewElement(type:string):any {
             var element:any = this.getFakeElement(type);
             element.id = this.getNewId();
+            delete element.$$hashKey;
             return element;
         }
 

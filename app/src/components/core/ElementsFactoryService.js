@@ -31,6 +31,7 @@ var app;
             ElementsFactoryService.prototype.getNewElement = function (type) {
                 var element = this.getFakeElement(type);
                 element.id = this.getNewId();
+                delete element.$$hashKey;
                 return element;
             };
             ElementsFactoryService.prototype.getFakeElement = function (type) {
