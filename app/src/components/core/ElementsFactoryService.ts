@@ -8,6 +8,14 @@ module app.core {
 
         private id:number = 0;
         private elements:any = {};
+        private elementIcons = {
+            'Control': 'code',
+            'HorizontalLayout': 'border_horizontal',
+            'VerticalLayout': 'border_vertical',
+            'Group': 'crop_free',
+            'Categorization': 'view_module',
+            'Category': 'folder_open'
+        };
 
         constructor(metaSchemaService:app.core.metaschema.MetaSchemaService) {
             var metaSchema:app.core.metaschema.MetaSchema = metaSchemaService.getMetaSchema();
@@ -18,6 +26,7 @@ module app.core {
                     this.elements[elementType] = JSON.parse(JSON.stringify(metaSchema.getDefinitions()[i].initialData));
                     this.elements[elementType].type = elementType;
                     this.elements[elementType].id = -1;
+                    this.elements[elementType].icon = this.elementIcons[elementType];
                 }
             }
         }

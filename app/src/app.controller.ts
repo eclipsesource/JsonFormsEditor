@@ -11,14 +11,6 @@ module app{
         constructor(public treeService: any, public $mdDialog: ng.material.IDialogService, public $scope) {
           $scope.editorOutput = treeService.exportUISchemaAsJSON();
           $scope.cancelDialog = $mdDialog.hide;
-          $scope.copyOutput = function() { 
-            var code = document.querySelector('#output');
-            var range = document.createRange();
-            range.selectNode(code);
-            window.getSelection().addRange(range);
-            document.execCommand('copy');
-            //window.getSelection().removeAllRanges();
-          }
         }
 
         alertWithOutputUISchema() {
