@@ -1,5 +1,16 @@
 <md-content>
   <md-subheader class="md-primary bottom-border">PROPERTIES</md-subheader>
+  <md-content class="md-padding" ng-if="detail.detailService.currentElement">
+    <jsonforms schema="detail.detailService.schema" ui-schema="detail.detailService.uiSchema" data="detail.detailService.currentElement"></jsonforms>
+    <section layout="row">
+      <md-button class="md-warn md-raised" flex ng-click="detail.reset()">Finish</md-button>
+    </section>
+  </md-content>
+</md-content>
+
+
+<!-- <md-content>
+  <md-subheader class="md-primary bottom-border">PROPERTIES</md-subheader>
   <md-content class="md-padding">
     <md-card ng-show="detail.detailService.currentElement">
       <md-card-content class="md-padding">
@@ -10,6 +21,6 @@
       </md-card-actions>
     </md-card>
   </md-content>
-</md-content>
+</md-content> -->
 
 
