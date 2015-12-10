@@ -18,7 +18,7 @@
   </div>
 
   <ol ui-tree-nodes="" ng-model="node.elements" ng-class="{hidden: collapsed}">
-    <li ng-repeat="node in node.elements track by $index" ui-tree-node ng-include="'tree_renderer.html'"></li>
+    <li ng-repeat="node in node.elements" ui-tree-node ng-include="'tree_renderer.html'"></li>
   </ol>
 </script>
 
@@ -26,7 +26,7 @@
 <md-content class="md-padding tree-view">
   <div ui-tree="treeOptions" data-clone-enabled="true">
     <ol ui-tree-nodes="" ng-model="tree.elements">
-      <li ng-repeat="node in tree.elements track by $index" ui-tree-node ng-include="'tree_renderer.html'"></li>
+      <li ng-repeat="node in tree.elements" ui-tree-node ng-include="'tree_renderer.html'"></li>
     </ol>
   </div>
 </md-content>
