@@ -64,7 +64,10 @@ module.exports = {
             'app/assets/libs/json-refs/browser/json-refs.js',
             'app/assets/libs/tv4/tv4.js',
             'app/assets/libs/jsonforms/dist/js/jsonforms.js',
-            'app/assets/libs/material-design-lite/material.js'
+            'app/assets/libs/material-design-lite/material.js',
+            'app/assets/libs/angular-animate/angular-animate.js',
+            'app/assets/libs/angular-aria/angular-aria.js',
+            'app/assets/libs/angular-material/angular-material.js'
         ],
         test: [
             'app/assets/libs/angular-mocks/angular-mocks.js'
@@ -73,7 +76,8 @@ module.exports = {
             'app/assets/libs/angular-ui-tree/dist/angular-ui-tree.min.css',
             'app/assets/libs/bootstrap/dist/css/bootstrap.css',
             'app/assets/libs/bootstrap/dist/css/bootstrap-theme.css',
-            'app/assets/libs/material-design-lite/material.css'
+            'app/assets/libs/material-design-lite/material.css',
+            'app/assets/libs/angular-material/angular-material.css'
         ],
         assets: [
         ]

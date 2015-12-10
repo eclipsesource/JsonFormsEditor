@@ -1,12 +1,18 @@
 /// <reference path="../../typings/angularjs/angular.d.ts" />
 /// <reference path="../../typings/angular-ui-router/angular-ui-router.d.ts" />
+/// <reference path="../../typings/angular-material/angular-material.d.ts" />
+
 module app{
 
   class AppConfig{
 
-    static $inject = ['$stateProvider', '$urlRouterProvider'];
+      static $inject = ['$stateProvider', '$urlRouterProvider', '$mdThemingProvider'];
 
-    constructor($stateProvider : ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider){
+    constructor(
+      $stateProvider : ng.ui.IStateProvider, 
+      $urlRouterProvider: ng.ui.IUrlRouterProvider,
+      $mdThemingProvider: ng.material.IThemingProvider) {
+
       $stateProvider.state('edit', {
         url: '/edit',
         views: {
@@ -27,7 +33,13 @@ module app{
           }
         }
       });
+
       $urlRouterProvider.otherwise('/edit');
+
+      $mdThemingProvider.theme('default')
+        .primaryPalette('indigo', { 'default': '800' })
+        .accentPalette('blue', { 'default': '500' })
+        .warnPalette('red', { 'default': '600' });
     }
   }
 

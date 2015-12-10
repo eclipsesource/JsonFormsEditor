@@ -16,29 +16,32 @@
 </head>
 <body ng-controller="AppController as main">
 
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer">
-    <header class="mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
-        <div class="mdl-layout__header-row">
-            <!-- Title -->
-            <span class="mdl-layout-title">JsonForms Editor</span>
-            <button ng-click="main.alertWithOutputUISchema()">Output UI Schema</button>
-            <!-- Add spacer, to align navigation to the right -->
-            <div class="mdl-layout-spacer"></div>
-            <!-- Navigation. We hide it in small screens. -->
-            <nav class="mdl-navigation mdl-layout--large-screen-only">
-                <a class="mdl-navigation__link" href="">Preview</a>
-            </nav>
-        </div>
-    </header>
-    <div class="mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
-        <div class="toolboxContainer" ui-view="toolboxContainer"></div>
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <span>JsonForms Editor</span>
+        <!-- fill up the space between left and right area -->
+        <span flex></span>
+        <md-button class="md-raised md-accent" ng-click="main.alertWithOutputUISchema()">Output UI Schema</md-button>
+        <md-button class="md-raised md-accent">Preview Form</md-button>
     </div>
-    <main class="mdl-layout__content mdl-color--grey-100">
-        <div class="mdl-grid page-content">
-            <div class="treeContainer mdl-cell mdl-cell--8-col" ui-view="treeContainer"></div>
-            <div class="detailContainer mdl-cell mdl-cell--4-col" ui-view="detailContainer"></div>
-        </div>
-    </main>
+</md-toolbar>
+
+<div layout="row" class="bottom-border">
+    <!-- toolbox -->
+    <div flex="20">
+        <div ui-view="toolboxContainer"></div>
+    </div>
+
+    <!-- tree view -->
+    <div flex="60" class="side-borders" layout-padding>
+        <div ui-view="treeContainer"></div>
+    </div>
+
+    <!-- properties -->
+    <div flex="20">
+        <div ui-view="detailContainer"></div>
+    </div>
 </div>
+
 </body>
 </html>

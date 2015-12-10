@@ -1,11 +1,15 @@
-<div ng-show="detail.detailService.currentElement" class="mdl-card mdl-color--deep-purple-500 mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--12-col-desktop">
-  <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-    <h3>Properties</h3>
-    <jsonforms ng-if="detail.detailService.currentElement" schema="detail.detailService.schema" ui-schema="detail.detailService.uiSchema" data="detail.detailService.currentElement"/>
-  </div>
-  <div class="mdl-card__actions mdl-card--border">
-    <a ng-click="detail.reset()"><i class="material-icons">close</i> Close</a>
-  </div>
-</div>
+<md-content>
+  <md-subheader class="md-primary">PROPERTIES</md-subheader>
+  <md-content class="md-padding">
+    <md-card ng-show="detail.detailService.currentElement">
+      <md-card-content class="md-padding">
+        <jsonforms ng-if="detail.detailService.currentElement" schema="detail.detailService.schema" ui-schema="detail.detailService.uiSchema" data="detail.detailService.currentElement"/>
+      </md-card-content>
+      <md-card-actions layout="row" layout-align="end center">
+        <md-button ng-click="detail.reset()">Finish</md-button>
+      </md-card-actions>
+    </md-card>
+  </md-content>
+</md-content>
 
 
