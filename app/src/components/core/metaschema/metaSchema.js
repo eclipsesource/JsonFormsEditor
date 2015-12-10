@@ -59,7 +59,7 @@ var app;
                         "label": undefined,
                         "scope": undefined
                     };
-                    this.definitions.push(new metaschema.Definition(schema, uiSchema, initialData));
+                    this.definitions.push(new Definition(schema, uiSchema, initialData));
                     // Layout Definition
                     schema = {
                         "type": "object",
@@ -101,7 +101,7 @@ var app;
                         "elements": [],
                         "acceptedElements": ["Control", "VerticalLayout", "HorizontalLayout", "Group", "Categorization"]
                     };
-                    this.definitions.push(new metaschema.Definition(schema, uiSchema, initialData));
+                    this.definitions.push(new Definition(schema, uiSchema, initialData));
                     // Categorization Definition
                     schema = {
                         "type": "object",
@@ -132,7 +132,7 @@ var app;
                         "elements": [],
                         "acceptedElements": ["Category"]
                     };
-                    this.definitions.push(new metaschema.Definition(schema, uiSchema, initialData));
+                    this.definitions.push(new Definition(schema, uiSchema, initialData));
                     // Category Definition
                     schema = {
                         "type": "object",
@@ -163,7 +163,7 @@ var app;
                         "elements": [],
                         "acceptedElements": ["Control", "VerticalLayout", "HorizontalLayout", "Group", "Categorization"]
                     };
-                    this.definitions.push(new metaschema.Definition(schema, uiSchema, initialData));
+                    this.definitions.push(new Definition(schema, uiSchema, initialData));
                 }
                 MetaSchema.prototype.getDefinitions = function () {
                     return this.definitions;

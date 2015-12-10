@@ -19,6 +19,7 @@ var app;
                         case "acceptedElements":
                         case "$$hashKey":
                         case "root":
+                        case "icon":
                             return undefined;
                             break;
                     }
