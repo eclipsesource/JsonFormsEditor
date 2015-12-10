@@ -6,9 +6,9 @@
             <md-content class="md-padding">
                 <div ui-tree="treeOptionsToolbox" data-clone-enabled="true" data-nodrop-enabled="true">
                     <md-list ui-tree-nodes ng-model="toolbox.expertElements">
-                        <md-list-item ng-repeat="element in toolbox.expertElements" ui-tree-node>
+                        <md-list-item ng-repeat="element in toolbox.expertElements" ui-tree-handle ui-tree-node>
                             <md-icon class="material-icons">{{element.icon}}</md-icon>
-                            <p ui-tree-handle>{{element.type}}</p>
+                            <p>{{element.type}}</p>
                         </md-list-item>
                     </md-list>
                 </div>
@@ -20,9 +20,9 @@
             <md-content class="md-padding">
                 <div ui-tree="treeOptionsToolbox" data-clone-enabled="true" data-nodrop-enabled="true">
                     <md-list ui-tree-nodes ng-model="toolbox.schemaElements">
-                        <md-list-item ng-repeat="element in toolbox.schemaElements" ui-tree-node>
+                        <md-list-item ng-repeat="element in toolbox.schemaElements" ui-tree-handle ui-tree-node>
                             <md-icon class="material-icons">{{element.icon}}</md-icon>
-                            <p ui-tree-handle>{{element.type + " - " + element.scope}}</p>
+                            <p>{{element.type + " - " + element.scope}}</p>
                         </md-list-item>
                     </md-list>
                 </div>

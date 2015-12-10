@@ -18,6 +18,7 @@ var app;
                         case "id":
                         case "acceptedElements":
                         case "$$hashKey":
+                        case "root":
                             return undefined;
                             break;
                     }

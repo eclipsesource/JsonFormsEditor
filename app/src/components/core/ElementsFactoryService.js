@@ -7,6 +7,14 @@ var app;
             function ElementsFactoryService(metaSchemaService) {
                 this.id = 0;
                 this.elements = {};
+                this.elementIcons = {
+                    'Control': 'code',
+                    'HorizontalLayout': 'border_horizontal',
+                    'VerticalLayout': 'border_vertical',
+                    'Group': 'crop_free',
+                    'Categorization': 'view_module',
+                    'Category': 'folder_open'
+                };
                 var metaSchema = metaSchemaService.getMetaSchema();
                 var elementType;
                 for (var i = 0; i < metaSchema.getDefinitions().length; i++) {
@@ -15,6 +23,7 @@ var app;
                         this.elements[elementType] = JSON.parse(JSON.stringify(metaSchema.getDefinitions()[i].initialData));
                         this.elements[elementType].type = elementType;
                         this.elements[elementType].id = -1;
+                        this.elements[elementType].icon = this.elementIcons[elementType];
                     }
                 }
             }

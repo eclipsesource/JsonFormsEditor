@@ -24,6 +24,7 @@ module app.tree {
                     case "id":
                     case "acceptedElements":
                     case "$$hashKey":
+                    case "root":
                         return undefined;
                         break;
 
