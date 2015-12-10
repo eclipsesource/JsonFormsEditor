@@ -67,7 +67,9 @@ module.exports = {
             'app/assets/libs/material-design-lite/material.js',
             'app/assets/libs/angular-animate/angular-animate.js',
             'app/assets/libs/angular-aria/angular-aria.js',
-            'app/assets/libs/angular-material/angular-material.js'
+            'app/assets/libs/angular-material/angular-material.js',
+            'app/assets/libs/zeroclipboard/dist/ZeroClipboard.js',
+            'app/assets/libs/ng-clip/src/ngClip.js'
         ],
         test: [
             'app/assets/libs/angular-mocks/angular-mocks.js'

@@ -6,12 +6,13 @@ module app{
 
   class AppConfig{
 
-      static $inject = ['$stateProvider', '$urlRouterProvider', '$mdThemingProvider'];
+      static $inject = ['$stateProvider', '$urlRouterProvider', '$mdThemingProvider', 'ngClipProvider'];
 
     constructor(
       $stateProvider : ng.ui.IStateProvider, 
       $urlRouterProvider: ng.ui.IUrlRouterProvider,
-      $mdThemingProvider: ng.material.IThemingProvider) {
+      $mdThemingProvider: ng.material.IThemingProvider,
+      ngClipProvider) {
 
       $stateProvider.state('edit', {
         url: '/edit',
@@ -40,6 +41,8 @@ module app{
         .primaryPalette('indigo', { 'default': '800' })
         .accentPalette('blue', { 'default': '500' })
         .warnPalette('red', { 'default': '600' });
+
+      ngClipProvider.setPath("resource/ZeroClipboard.swf");
     }
   }
 

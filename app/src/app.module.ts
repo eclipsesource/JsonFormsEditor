@@ -9,7 +9,8 @@ module app {
         'app.tree',
         'app.detail',
         'app.toolbox',
-        'ngMaterial'
+        'ngMaterial',
+        'ngClipboard'
     ]);
 }
 
