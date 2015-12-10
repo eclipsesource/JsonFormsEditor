@@ -24,8 +24,15 @@ module app.core.jsonschema{
                     if(json.properties.hasOwnProperty(key)){
 
                         var name = prefix == '' ? key : prefix + '/' + key;
-                        res.push(name);
-                        res = res.concat(this.getPropertiesRecursive(json.properties[key], name));
+
+                        var childProps = this.getPropertiesRecursive(json.properties[key], name);
+                        if(childProps.length > 0){
+                            res = res.concat(childProps);
+                        } else {
+                            res.push(name);
+                        }
+
+
                     }
 
                 }
