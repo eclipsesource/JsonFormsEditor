@@ -2,7 +2,7 @@ module app.tree {
 
     // created custom type to solve problems accesing attrs properties
     interface myAttrs extends ng.IAttributes{
-        hideIf:string;
+        hideif:string;
     }
 
     // Code for directives in typescript from http://blog.aaronholmes.net/writing-angularjs-directives-as-typescript-classes/
@@ -11,8 +11,8 @@ module app.tree {
 
         constructor() {
             HideIfDirective.prototype.link = (scope:ng.IScope, element:any, attrs:myAttrs) => {
-                scope.$watch(attrs.hideIf, function (value) {
-                    element.css('visibility', value ? 'visible' : 'hidden');
+                scope.$watch(attrs.hideif, function (value) {
+                    element.css('visibility', value ? 'hidden' : 'visible');
                 });
             };
         }
@@ -26,5 +26,5 @@ module app.tree {
         }
     }
 
-    angular.module('app.tree').directive('hideIf', HideIfDirective.Factory());
+    angular.module('app.tree').directive('hideif', HideIfDirective.Factory());
 }
