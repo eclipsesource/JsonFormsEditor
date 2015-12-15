@@ -50,10 +50,10 @@ module.exports = {
      */
     vendor_files: {
         js: [
+            'app/assets/libs/jquery/dist/jquery.js',
             'app/assets/libs/angular/angular.js',
             'app/assets/libs/angular-ui-router/release/angular-ui-router.js',
             'app/assets/libs/angular-ui-tree/dist/angular-ui-tree.js',
-            'app/assets/libs/jquery/dist/jquery.js',
             'app/assets/libs/bootstrap/dist/js/bootstrap.js',
             'app/assets/libs/angular-bootstrap/ui-bootstrap-tpls.js',
             'app/assets/libs/angular-ui-grid/ui-grid.js',

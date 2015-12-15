@@ -4,9 +4,9 @@
 
 module app{
 
-  class AppConfig{
+  class AppConfig {
 
-      static $inject = ['$stateProvider', '$urlRouterProvider', '$mdThemingProvider', 'ngClipProvider'];
+    static $inject = ['$stateProvider', '$urlRouterProvider', '$mdThemingProvider', 'ngClipProvider'];
 
     constructor(
       $stateProvider : ng.ui.IStateProvider, 
@@ -14,26 +14,37 @@ module app{
       $mdThemingProvider: ng.material.IThemingProvider,
       ngClipProvider) {
 
-      $stateProvider.state('edit', {
-        url: '/edit',
-        views: {
-          'treeContainer': {
-            controller: 'MyTreeController',
-            controllerAs: 'tree',
-            templateUrl: 'app/src/components/tree/tree.html'
-          },
-          'toolboxContainer': {
-            controller: 'ToolboxController',
-            controllerAs: 'toolbox',
-            templateUrl: 'app/src/components/toolbox/toolbox.html'
-          },
-          'detailContainer': {
-            controller: 'DetailController',
-            controllerAs: 'detail',
-            templateUrl: 'app/src/components/detail/detail.html'
+      $stateProvider
+        .state('edit', {
+          url: '/edit',
+          views: {
+            'treeContainer': {
+              controller: 'MyTreeController',
+              controllerAs: 'tree',
+              templateUrl: 'app/src/components/tree/tree.html'
+            },
+            'toolboxContainer': {
+              controller: 'ToolboxController',
+              controllerAs: 'toolbox',
+              templateUrl: 'app/src/components/toolbox/toolbox.html'
+            },
+            'detailContainer': {
+              controller: 'DetailController',
+              controllerAs: 'detail',
+              templateUrl: 'app/src/components/detail/detail.html'
+            }
           }
-        }
-      });
+        })
+        .state('preview', {
+            url: '/preview',
+            views: {
+              'treeContainer': {
+                  controller: 'MyTreeController',
+                  controllerAs: 'tree',
+                  templateUrl: 'app/src/components/tree/tree.html'
+              }
+            }
+        });
 
       $urlRouterProvider.otherwise('/edit');
 
@@ -46,6 +57,17 @@ module app{
     }
   }
 
+  class AppRun {
+
+    static $inject = ['$rootScope', '$state'];
+
+    constructor($rootScope, $state) {
+      $rootScope.$state = $state;
+    }
+
+  }
+
+  angular.module('app').run(AppRun);
   angular.module('app').config(AppConfig);
 
 }

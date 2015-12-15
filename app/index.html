@@ -22,25 +22,26 @@
         <!-- fill up the space between left and right area -->
         <span flex></span>
         <md-button class="md-raised md-accent" ng-click="main.alertWithOutputUISchema()">Output UI Schema</md-button>
-        <md-button class="md-raised md-accent">Preview Form</md-button>
+        <md-button class="md-raised md-accent" ng-click="main.previewForm()">Preview Form</md-button>
+        <a href="#/preview" id="preview" class="hide" target="_blank"></a>
     </div>
 </md-toolbar>
 
-<div layout="row" class="bottom-border">
+<!-- show edit area -->
+<div layout="row" class="bottom-border" ng-if="$state.includes('edit')">
     <!-- toolbox -->
-    <div flex="20">
-        <div ui-view="toolboxContainer"></div>
-    </div>
+    <div flex="20" ui-view="toolboxContainer"></div>
 
     <!-- tree view -->
-    <div flex="60" class="side-borders" layout-padding>
-        <div ui-view="treeContainer"></div>
-    </div>
+    <div flex="60" class="side-borders" layout-padding ui-view="treeContainer"></div>
 
     <!-- properties -->
-    <div flex="20">
-        <div ui-view="detailContainer"></div>
-    </div>
+    <div flex="20" ui-view="detailContainer"></div>
+</div>
+
+<!-- show preview -->
+<div layout="row" ng-if="$state.includes('preview')">
+    <jsonforms schema="detail.detailService.schema" ui-schema="detail.detailService.uiSchema" data="detail.detailService.currentElement"></jsonforms>
 </div>
 
 </body>
