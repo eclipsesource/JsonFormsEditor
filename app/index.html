@@ -42,7 +42,8 @@
 
 <!-- show preview -->
 <div layout="row" ng-if="$state.includes('preview')">
-    <jsonforms schema="detail.detailService.schema" ui-schema="detail.detailService.uiSchema" data="detail.detailService.currentElement"></jsonforms>
+    <!-- preview -->
+    <div flex ui-view="previewContainer"></div>
 </div>
 
 </body>

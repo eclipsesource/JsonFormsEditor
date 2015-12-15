@@ -38,10 +38,10 @@ module app{
         .state('preview', {
             url: '/preview',
             views: {
-              'treeContainer': {
+              'previewContainer': {
                   controller: 'MyTreeController',
                   controllerAs: 'tree',
-                  templateUrl: 'app/src/components/tree/tree.html'
+                  templateUrl: 'app/src/components/tree/tree.preview.html'
               }
             }
         });
