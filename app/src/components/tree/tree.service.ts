@@ -12,7 +12,7 @@ module app.tree {
             this.elements.push(rootElement);
         }
 
-        exportUISchemaAsJSON() : string{
+        exportUISchemaAsJSON() : string {
             return JSON.stringify(this.elements[0], function(key, value){
 
                 if(value==""){
@@ -24,13 +24,15 @@ module app.tree {
                     case "id":
                     case "acceptedElements":
                     case "$$hashKey":
+                    case "root":
+                    case "icon":
                         return undefined;
                         break;
 
                 }
 
                 return value;
-            });
+            }, 2 /* two spaces as indentation */);
         }
 
     }
