@@ -43,6 +43,10 @@ module app.core.jsonschema{
         getFields(): string[]{
             return this.fields;
         }
+
+        getUISchema(): any {
+            return exampleFieldSchema;
+        }
     }
     angular.module("app.core").service("JsonSchemaService", JsonSchemaService);
 }

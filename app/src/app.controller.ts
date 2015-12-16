@@ -7,14 +7,17 @@
  */
 module app{
     class AppController{
-        static $inject = ['TreeService', '$mdDialog', '$scope'];
+        static $inject = ['TreeService', 'JsonSchemaService', '$mdDialog', '$scope'];
 
         constructor(
           public treeService: any, 
+          public JsonSchemaService: any, 
           public $mdDialog: ng.material.IDialogService, 
           public $scope) {
 
           $scope.editorOutput = treeService.exportUISchemaAsJSON();
+          $scope.editorSchema = JsonSchemaService.getUISchema();
+          $scope.editorData = {};
           $scope.cancelDialog = $mdDialog.hide;
         }
 
