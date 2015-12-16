@@ -15,7 +15,26 @@ module app{
           public $mdDialog: ng.material.IDialogService, 
           public $scope) {
 
-          $scope.editorOutput = treeService.exportUISchemaAsJSON();
+          /*$scope.editorOutput = {
+              "type": "VerticalLayout",
+              "elements": [
+                  {
+                      "type": "Control",
+                      "scope": {
+                          "$ref": "#/properties/name"
+                      },
+                      "label": "Name"
+                  },
+                  {
+                      "type": "Control",
+                      "scope": {
+                          "$ref": "#/properties/price"
+                      },
+                      "label": "Price"
+                  }
+              ]
+          };*/
+            $scope.editorOutput = this.treeService.exportUISchemaAsJSON();
           $scope.editorSchema = JsonSchemaService.getUISchema();
           $scope.editorData = {};
           $scope.cancelDialog = $mdDialog.hide;
