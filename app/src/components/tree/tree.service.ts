@@ -19,6 +19,10 @@ module app.tree {
                     return undefined;
                 }
 
+                if(key=="scope") {
+                    return { "$ref": "#/properties/" + value };
+                }
+
                 switch(key){
 
                     case "id":
