@@ -120,9 +120,11 @@ var demoSchema = {
     }
 };
 
+/*
 var demoData = {
     "name": 'John Doe',
     "age": 36,
     "height": 1.85,
     "gender": 'Male'
-};
+};*/
+var demoData = {};
