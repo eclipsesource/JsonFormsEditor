@@ -38,5 +38,6 @@
 
 <!-- tree preview -->
 <md-content class="md-padding" ng-if="isPreview">
+  {{previewUISchema}}
   <jsonforms schema="previewSchema" ui-schema="previewUISchema" data="previewData"></jsonforms>
 </md-content>
