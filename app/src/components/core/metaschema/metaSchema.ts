@@ -145,6 +145,9 @@ module app.core.metaschema {
                         "enum": [
                             "Category"
                         ]
+                    },
+                    "label": {
+                        "type": "string"
                     }
                 },
                 "required": [
@@ -156,6 +159,11 @@ module app.core.metaschema {
                 "elements": [
                     {
                         "type": "Control",
+                        "label": "Label",
+                        "scope": { "$ref": "#/properties/label" },
+                    },
+                    {
+                        "type": "Control",
                         "label": "Type",
                         "scope": { "$ref": "#/properties/type" },
                     }
@@ -163,6 +171,7 @@ module app.core.metaschema {
             };
             initialData = {
                 "type": undefined,
+                "label": undefined,
                 "elements": [],
                 "acceptedElements": ["Control", "VerticalLayout", "HorizontalLayout", "Group", "Categorization"]
             };
