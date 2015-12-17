@@ -34,16 +34,6 @@ module app{
               templateUrl: 'app/src/components/detail/detail.html'
             }
           }
-        })
-        .state('preview', {
-            url: '/preview',
-            views: {
-              'previewContainer': {
-                  controller: 'MyTreeController',
-                  controllerAs: 'tree',
-                  templateUrl: 'app/src/components/tree/tree.preview.html'
-              }
-            }
         });
 
       $urlRouterProvider.otherwise('/edit');
@@ -57,17 +47,6 @@ module app{
     }
   }
 
-  class AppRun {
-
-    static $inject = ['$rootScope', '$state'];
-
-    constructor($rootScope, $state) {
-      $rootScope.$state = $state;
-    }
-
-  }
-
-  angular.module('app').run(AppRun);
   angular.module('app').config(AppConfig);
 
 }

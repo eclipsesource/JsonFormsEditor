@@ -23,13 +23,11 @@
         <!-- fill up the space between left and right area -->
         <span flex></span>
         <md-button class="md-raised md-accent" ng-click="main.alertWithOutputUISchema()">Export</md-button>
-        <md-button class="md-raised md-accent" ng-click="main.previewForm()">Preview</md-button>
-        <a href="#/preview" id="preview" class="hide" target="_blank"></a>
     </div>
 </md-toolbar>
 
 <!-- show edit area -->
-<div layout="row" class="bottom-border" ng-if="$state.includes('edit')">
+<div layout="row" class="bottom-border">
     <!-- toolbox -->
     <div flex="20" ui-view="toolboxContainer"></div>
 
@@ -38,12 +36,6 @@
 
     <!-- properties -->
     <div flex="20" ui-view="detailContainer"></div>
-</div>
-
-<!-- show preview -->
-<div layout="row" ng-if="$state.includes('preview')">
-    <!-- preview -->
-    <div flex ui-view="previewContainer"></div>
 </div>
 
 </body>
