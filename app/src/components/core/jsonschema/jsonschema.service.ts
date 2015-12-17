@@ -9,7 +9,7 @@ module app.core.jsonschema{
         fields:string[] = [];
 
         constructor(){
-            this.loadFromJson(exampleFieldSchema);
+            this.loadFromJson(demoSchema);
         }
         loadFromJson(json:any){
             this.fields = this.getPropertiesRecursive(json, '');
@@ -45,7 +45,11 @@ module app.core.jsonschema{
         }
 
         getUISchema(): any {
-            return exampleFieldSchema;
+            return demoSchema;
+        }
+
+        getSchemaData(): any {
+            return demoData;
         }
     }
     angular.module("app.core").service("JsonSchemaService", JsonSchemaService);
@@ -94,4 +98,31 @@ var exampleFieldSchema = {
         }
     },
     "required": ["id", "name", "price"]
+};
+
+var demoSchema = {
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "minLength": 3
+        },
+        "age": {
+            "type": "integer"
+        },
+        "gender": {
+            "type": "string",
+            "enum": ["Male", "Female"]
+        },
+        "height": {
+            "type": "number"
+        }
+    }
+};
+
+var demoData = {
+    "name": 'John Doe',
+    "age": 36,
+    "height": 1.85,
+    "gender": 'Male'
 };

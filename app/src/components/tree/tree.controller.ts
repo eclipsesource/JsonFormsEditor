@@ -32,7 +32,7 @@ module app.tree {
         updatePreview() : void {
             this.$scope.previewUISchema = JSON.parse(this.treeService.exportUISchemaAsJSON());
             this.$scope.previewSchema = this.JsonSchemaService.getUISchema();
-            this.$scope.previewData = {};
+            this.$scope.previewData = this.JsonSchemaService.getSchemaData();
         }
 
         preview(bool) : void {
