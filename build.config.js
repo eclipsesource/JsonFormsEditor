@@ -79,7 +79,8 @@ module.exports = {
             'app/assets/libs/bootstrap/dist/css/bootstrap.css',
             'app/assets/libs/bootstrap/dist/css/bootstrap-theme.css',
             'app/assets/libs/material-design-lite/material.css',
-            'app/assets/libs/angular-material/angular-material.css'
+            'app/assets/libs/angular-material/angular-material.css',
+            'app/assets/libs/jsonforms/dist/css/jsonforms.css'
         ],
         assets: [
         ]
