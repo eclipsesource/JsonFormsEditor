@@ -2,8 +2,8 @@ module app.toolbox {
 
     import GeneralToolboxElement = app.core.GeneralToolboxElement;
     import ControlToolboxElement = app.core.ControlToolboxElement;
-    import ToolboxElement = app.core.ToolboxElement;
     import TreeElement = app.core.TreeElement;
+    import ToolboxElement = app.core.ToolboxElement;
 
     class ToolboxController {
 
@@ -16,7 +16,16 @@ module app.toolbox {
 
 
             $scope.treeOptionsToolbox = {
+                accept: function (sourceNodeScope, destNodesScope, destIndex) {
+                    return false;
+                },
                 dropped: function(e) {
+                    console.log(e);
+
+                    //if the element is being dragged into the toolbar itself, return
+                    if(e.dest.nodesScope.$modelValue == e.source.nodesScope.$modelValue) {
+                        return;
+                    }
 
                     // Convert the ToolboxElement into a TreeElement
                     var index = e.dest.index;
