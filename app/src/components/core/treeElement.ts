@@ -1,13 +1,18 @@
 module app.core {
 
-    export class Element {
+    export class TreeElement {
 
         private id:number;
         private type:string;
         private label:string;
         private scope:string;
-        private elements:Element[];
-        public metaData:any;
+        public elements:TreeElement[] = [];
+        public metaData:any = {};
+
+        static id = 0;
+        static getNewId(): number {
+            return TreeElement.id++;
+        }
 
         public getId():number {
             return this.id;
@@ -45,7 +50,7 @@ module app.core {
             this.elements = [];
         }
 
-        public getElements() : Element[] {
+        public getElements() : TreeElement[] {
             return this.elements;
         }
 
@@ -53,8 +58,23 @@ module app.core {
             return this.elements && this.elements.length > 0;
         }
 
-        public acceptElement(type:string) {
+        public addElement(element: TreeElement) {
+            this.elements.push(element);
+        }
+
+        public acceptsElement(type:string) {
+            if(!this.metaData.hasOwnProperty('acceptedElements')){
+                return false;
+            }
             return this.metaData.acceptedElements.indexOf(type) >= 0;
+        }
+
+        public setAcceptedElements(acceptedElements: string[]) {
+            this.metaData['acceptedElements'] = acceptedElements;
+        }
+
+        public getAcceptedElements(): string[] {
+            return this.metaData['acceptedElements'];
         }
 
         public isDeletable() : boolean {

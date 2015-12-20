@@ -1,18 +1,27 @@
 module app.tree {
 
+    import GeneralToolboxElement = app.core.GeneralToolboxElement;
+
+    import TreeElement = app.core.TreeElement;
+    import ToolboxService = app.toolbox.ToolboxService;
     export class TreeService {
 
-        static $inject = ['ElementsFactoryService'];
+        static $inject = ['ToolboxService'];
 
-        public elements : any = [];
+        public elements : TreeElement[] = [];
 
-        constructor(elementsFactoryService: app.core.ElementsFactoryService){
-            var rootElement: any = elementsFactoryService.getNewElement("VerticalLayout");
-            rootElement.root = "root";
+
+        constructor(private toolboxService: ToolboxService){
+
+            var rootElement: TreeElement = toolboxService.getExpertElementOfType("VerticalLayout").insertIntoTree(TreeElement.getNewId());
+            rootElement['root'] = 'root';
             this.elements.push(rootElement);
         }
 
         exportUISchemaAsJSON() : string {
+
+            console.log(this.elements);
+
             return JSON.stringify(this.elements[0], function(key, value){
 
                 if(value==""){
@@ -26,10 +35,9 @@ module app.tree {
                 switch(key){
 
                     case "id":
-                    case "acceptedElements":
                     case "$$hashKey":
-                    case "root":
-                    case "icon":
+                    case 'root':
+                    case "metaData":
                         return undefined;
                         break;
 

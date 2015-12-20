@@ -5,10 +5,10 @@
         <md-tab label="General">
             <md-content class="md-padding">
                 <div ui-tree="treeOptionsToolbox" data-clone-enabled="true" data-nodrop-enabled="true">
-                    <md-list ui-tree-nodes ng-model="toolbox.expertElements">
-                        <md-list-item ng-repeat="element in toolbox.expertElements" ui-tree-handle ui-tree-node>
-                            <md-icon class="material-icons">{{element.icon}}</md-icon>
-                            <p>{{element.type}}</p>
+                    <md-list ui-tree-nodes data-clone-enabled="true" data-nodrop-enabled="true" ng-model="toolbox.toolboxService.expertElements">
+                        <md-list-item ng-repeat="element in toolbox.toolboxService.expertElements" ui-tree-handle ui-tree-node>
+                            <md-icon class="material-icons">{{element.getIcon()}}</md-icon>
+                            <p>{{element.getName()}}</p>
                         </md-list-item>
                     </md-list>
                 </div>
@@ -19,10 +19,10 @@
         <md-tab label="Controls">
             <md-content class="md-padding">
                 <div ui-tree="treeOptionsToolbox" data-clone-enabled="true" data-nodrop-enabled="true">
-                    <md-list ui-tree-nodes ng-model="toolbox.schemaElements">
-                        <md-list-item ng-repeat="element in toolbox.schemaElements" ui-tree-handle ui-tree-node>
-                            <md-icon class="material-icons">{{element.icon}}</md-icon>
-                            <p>{{element.label}}</p>
+                    <md-list ui-tree-nodes data-clone-enabled="true" data-nodrop-enabled="true" ng-model="toolbox.toolboxService.schemaElements">
+                        <md-list-item ng-repeat="element in toolbox.toolboxService.schemaElements" ui-tree-handle ui-tree-node>
+                            <md-icon class="material-icons">{{element.getIcon()}}</md-icon>
+                            <p>{{element.getName()}}</p>
                         </md-list-item>
                     </md-list>
                 </div>

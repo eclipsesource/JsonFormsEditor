@@ -15,7 +15,7 @@ module app.detail {
 
         setElement(element: any) : void {
             this.currentElement = element;
-
+            this.metaSchema.reloadData();
             this.schema = this.metaSchema.getDefinition(element.type).schema;
             this.uiSchema = this.metaSchema.getDefinition(element.type).uiSchema;
         }

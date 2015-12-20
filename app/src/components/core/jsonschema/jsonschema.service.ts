@@ -6,18 +6,17 @@
 
 module app.core.jsonschema{
     export class JsonSchemaService{
-        fields:string[] = [];
+        fields:any[] = [];
+        json:any = {};
 
-        constructor(){
-            this.loadFromJson(demoSchema);
-        }
         loadFromJson(json:any){
+            this.json = json;
             this.fields = this.getPropertiesRecursive(json, '');
         }
 
         // From a json object, returns all the propertie names iinside it recursively and by adding a prefix with its location
-        private getPropertiesRecursive(json: any, prefix: string) : string[] {
-            var res: string[] = [];
+        private getPropertiesRecursive(json: any, prefix: string) : any[] {
+            var res: any[] = [];
 
             if(json.hasOwnProperty('properties')) {
                 for(var key in json.properties) {
@@ -29,7 +28,10 @@ module app.core.jsonschema{
                         if(childProps.length > 0){
                             res = res.concat(childProps);
                         } else {
-                            res.push(name);
+                            res.push({
+                                'name':name,
+                                'type':json.properties[key].type
+                            });
                         }
 
 
@@ -40,91 +42,59 @@ module app.core.jsonschema{
             return res;
         }
 
-        getFields(): string[]{
+        getNames(): string[] {
+            return this.fields.map(function(obj){return obj['name'];});
+
+        }
+
+        getFields(): any[]{
             return this.fields;
         }
 
-        getUISchema(): any {
-            return demoSchema;
+        getDataSchema(): any {
+           return this.json;
         }
 
-        getSchemaData(): any {
-            return demoData;
+
+
+        // if the 'name' already exists as a property, it gets modified with the new content
+        // path is an array of string containing the name of the parent properties in order
+        // eg. : ['person', 'appearance', 'head']
+        // returns a boolean indicating if the addition was succesful(when false, it means the element was not added)
+        addNewProperty(name: string, content:any, path: string[]) : boolean {
+
+            var cur = this.traverseJsonPath(path);
+            if(cur==false){
+                return false;
+            }
+            cur[name] = content;
+            return true;
+        }
+
+        getPropertyContent(name: string, path: string[]): any {
+            var cur = this.traverseJsonPath(path);
+            if(cur == false || !cur.hasOwnProperty(name)) {
+                return false;
+            }
+            return cur[name];
+
+        }
+
+        private traverseJsonPath(path: string[]): any {
+            var cur = this.json;
+            var index = 0;
+            while(index < path.length) {
+                if(cur.hasOwnProperty(path[index])) {
+                    cur = cur[path[index]];
+                    index++;
+                } else {
+                    // path doesnt exist
+                    return false;
+                }
+            }
+            return cur;
         }
     }
     angular.module("app.core").service("JsonSchemaService", JsonSchemaService);
 }
 
-//TODO flatten fieldschema to include all the properties (use lodash)
-
-//TODO load from user
-var exampleFieldSchema = {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "Product",
-    "type": "object",
-    "properties": {
-        "id": {
-            "description": "The unique identifier for a product",
-            "type": "number"
-        },
-        "name": {
-            "type": "string"
-        },
-        "price": {
-            "type": "number",
-            "minimum": 0,
-            "exclusiveMinimum": true
-        },
-        "tags": {
-            "type": "array",
-            "items": {
-                "type": "string"
-            },
-            "minItems": 1,
-            "uniqueItems": true
-        },
-        "dimensions": {
-            "type": "object",
-            "properties": {
-                "length": {"type": "number"},
-                "width": {"type": "number"},
-                "height": {"type": "number"}
-            },
-            "required": ["length", "width", "height"]
-        },
-        "warehouseLocation": {
-            "description": "Coordinates of the warehouse with the product",
-            "$ref": "http://json-schema.org/geo"
-        }
-    },
-    "required": ["id", "name", "price"]
-};
-
-var demoSchema = {
-    "type": "object",
-    "properties": {
-        "name": {
-            "type": "string",
-            "minLength": 3
-        },
-        "age": {
-            "type": "integer"
-        },
-        "gender": {
-            "type": "string",
-            "enum": ["Male", "Female"]
-        },
-        "height": {
-            "type": "number"
-        }
-    }
-};
-
-/*
-var demoData = {
-    "name": 'John Doe',
-    "age": 36,
-    "height": 1.85,
-    "gender": 'Male'
-};*/
-var demoData = {};

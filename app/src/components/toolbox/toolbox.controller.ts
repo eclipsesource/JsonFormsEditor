@@ -1,46 +1,40 @@
 module app.toolbox {
 
+    import GeneralToolboxElement = app.core.GeneralToolboxElement;
+    import ControlToolboxElement = app.core.ControlToolboxElement;
+    import ToolboxElement = app.core.ToolboxElement;
+    import TreeElement = app.core.TreeElement;
+
     class ToolboxController {
 
-        public expertElements:any = [];
-        public schemaElements:any = [];
+
         private tab:number = 1;
 
-        static $inject = ['$scope', 'ElementsFactoryService', 'JsonSchemaService'];
+        static $inject = ['$scope', 'ToolboxService'];
 
-        constructor($scope, private elementsFactoryService:app.core.ElementsFactoryService, private jsonSchemaService:app.core.jsonschema.JsonSchemaService) {
-            this.expertElements = elementsFactoryService.getElementsAsArray();
+        constructor($scope, public toolboxService: ToolboxService) {
 
-            this.initializeSchemaElements();
 
             $scope.treeOptionsToolbox = {
-                beforeDrop: function (event) {
-                    var node:any = event.source.nodeScope.$modelValue;
-                    node.id = elementsFactoryService.getNewId();
-                    event.source.nodeScope.$modelValue = node;
+                dropped: function(e) {
+
+                    // Convert the ToolboxElement into a TreeElement
+                    var index = e.dest.index;
+                    var modelDest: ToolboxElement = e.dest.nodesScope.$modelValue[index];
+
+                    e.dest.nodesScope.$modelValue[index] = modelDest.insertIntoTree(TreeElement.getNewId());
+
                 }
+
             };
         }
 
-        private initializeSchemaElements() {
-            var schemaProperties:string[] = this.jsonSchemaService.getFields();
-            for(var i = 0; i < schemaProperties.length; i++) {
-                var element:any = this.elementsFactoryService.getFakeElement("Control");
-                element.scope = schemaProperties[i];
-                element.label = this.convertScopeToLabel(schemaProperties[i]);
-                    this.schemaElements.push(element);
-            }
+        public getExpertElements(): GeneralToolboxElement[] {
+            return this.toolboxService.expertElements;
         }
 
-        private convertScopeToLabel(scope:string):string {
-
-            var sc = scope.split('/').pop();
-
-            return sc
-                // insert a space before all caps
-                .replace(/([A-Z])/g, ' $1')
-                // uppercase the first character
-                .replace(/^./, function(str){ return str.toUpperCase(); })
+        public getSchemaElements(): ControlToolboxElement[] {
+            return this.toolboxService.schemaElements;
         }
 
         isSet(checkTab):boolean {
@@ -54,3 +48,4 @@ module app.toolbox {
 
     angular.module('app.toolbox').controller('ToolboxController', ToolboxController)
 }
+

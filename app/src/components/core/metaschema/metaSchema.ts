@@ -5,10 +5,10 @@ module app.core.metaschema {
 
         private definitions: Definition[] = [];
 
-        constructor(jsonSchemaService: JsonSchemaService, json: any) {
+        constructor(public jsonSchemaService: JsonSchemaService, json: any) {
             var schema: any;
             var uiSchema: any;
-            var initialData: any;
+            var acceptedElements: string[];
 
             // TODO derive the schema, uiSchema and initialData of the different definitions automatically from the metaschema
             // Control definition
@@ -26,7 +26,7 @@ module app.core.metaschema {
                     },
                     "scope": {
                         "type": "string",
-                        "enum": jsonSchemaService.getFields()
+                        "enum": jsonSchemaService.getNames()
                     }
                 },
                 "required": [
@@ -54,12 +54,8 @@ module app.core.metaschema {
                     }
                 ]
             };
-            initialData = {
-                "type": undefined,
-                "label": undefined,
-                "scope": undefined
-            };
-            this.definitions.push(new Definition(schema, uiSchema, initialData));
+            acceptedElements = [];
+            this.definitions.push(new Definition(schema, uiSchema, acceptedElements));
 
             // Layout Definition
             schema = {
@@ -96,13 +92,9 @@ module app.core.metaschema {
                     }
                 ]
             };
-            initialData = {
-                "type": "",
-                "label": undefined,
-                "elements": [],
-                "acceptedElements": ["Control", "VerticalLayout", "HorizontalLayout", "Group", "Categorization"]
-            };
-            this.definitions.push(new Definition(schema, uiSchema, initialData));
+            acceptedElements = ["Control", "VerticalLayout", "HorizontalLayout", "Group", "Categorization"];
+
+            this.definitions.push(new Definition(schema, uiSchema, acceptedElements));
 
             // Categorization Definition
             schema = {
@@ -129,12 +121,9 @@ module app.core.metaschema {
                     }
                 ]
             };
-            initialData = {
-                "type": undefined,
-                "elements": [],
-                "acceptedElements": ["Category"]
-            };
-            this.definitions.push(new Definition(schema, uiSchema, initialData));
+            acceptedElements = ["Category"];
+
+            this.definitions.push(new Definition(schema, uiSchema, acceptedElements));
 
             // Category Definition
             schema = {
@@ -169,13 +158,15 @@ module app.core.metaschema {
                     }
                 ]
             };
-            initialData = {
-                "type": undefined,
-                "label": undefined,
-                "elements": [],
-                "acceptedElements": ["Control", "VerticalLayout", "HorizontalLayout", "Group", "Categorization"]
-            };
-            this.definitions.push(new Definition(schema, uiSchema, initialData));
+            acceptedElements = ["Control", "VerticalLayout", "HorizontalLayout", "Group", "Categorization"];
+
+            this.definitions.push(new Definition(schema, uiSchema, acceptedElements));
+        }
+
+        //small hack to reload data elements of the Controls. Refactor ASAP
+        reloadData() {
+            var def = this.getDefinition("Control");
+            def.schema.properties.scope.enum = this.jsonSchemaService.getNames();
         }
 
         getDefinitions() : Definition[] {
