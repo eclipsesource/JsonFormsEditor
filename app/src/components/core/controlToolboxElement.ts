@@ -3,7 +3,9 @@
  */
 module app.core {
     export class ControlToolboxElement extends ToolboxElement{
-        constructor(name: string, private datatype: string, private scope: string){
+        private alreadyPlaced: number = 0;
+
+        constructor(name: string, public datatype: string, public scope: string){
             super(name, 'Control');
         }
 
@@ -26,6 +28,22 @@ module app.core {
         getIcon() {
             //TODO custom icon for each datatype
             return 'code';
+        }
+
+        decreasePlacedTimes() {
+            this.alreadyPlaced--;
+        }
+
+        increasePlacedTimes() {
+
+            this.alreadyPlaced++;
+        }
+
+        isAlreadyPlaced(): boolean {
+            return (this.alreadyPlaced>0);
+        }
+        getScope(): string {
+            return this.scope;
         }
     }
 }

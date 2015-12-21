@@ -51,6 +51,14 @@ module app.core.jsonschema{
             return this.fields;
         }
 
+        getFieldWithScope(scope: string): any {
+            for(var i = 0; i < this.fields.length; i++){
+                if(this.fields[i].name == scope) {
+                    return this.fields[i];
+                }
+            }
+            return null;
+        }
         getDataSchema(): any {
            return this.json;
         }

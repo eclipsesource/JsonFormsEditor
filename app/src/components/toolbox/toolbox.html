@@ -20,12 +20,13 @@
             <md-content class="md-padding">
                 <div ui-tree="treeOptionsToolbox" data-clone-enabled="true" data-nodrop-enabled="true">
                     <md-list ui-tree-nodes data-clone-enabled="true" data-nodrop-enabled="true" ng-model="toolbox.toolboxService.schemaElements">
-                        <md-list-item ng-repeat="element in toolbox.toolboxService.schemaElements" ui-tree-handle ui-tree-node>
+                        <md-list-item ng-repeat="element in toolbox.toolboxService.schemaElements" ui-tree-handle ui-tree-node ng-hide="toolbox.shouldHide(element)">
                             <md-icon class="material-icons">{{element.getIcon()}}</md-icon>
                             <p>{{element.getName()}}</p>
                         </md-list-item>
                     </md-list>
                 </div>
+                <button ng-click="toolbox.filterDataToolbox = !toolbox.filterDataToolbox">FILTER</button>
             </md-content>
         </md-tab>
     </md-tabs>

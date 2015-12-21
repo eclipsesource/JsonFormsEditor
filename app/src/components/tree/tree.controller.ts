@@ -3,11 +3,12 @@ module app.tree {
     import ControlToolboxElement = app.core.ControlToolboxElement;
     import ToolboxElement = app.core.ToolboxElement;
     import TreeElement = app.core.TreeElement;
+    import ToolboxService = app.toolbox.ToolboxService;
 
 
     class MyTreeController {
 
-        static $inject = ['$scope', 'TreeService', 'JsonSchemaService', 'DetailService'];
+        static $inject = ['$scope', 'TreeService', 'JsonSchemaService', 'DetailService', 'ToolboxService'];
 
         public elements: any = [];
 
@@ -15,10 +16,12 @@ module app.tree {
             public $scope, 
             public treeService: app.tree.TreeService, 
             public JsonSchemaService: any,
-            private detailService: app.detail.DetailService){
+            private detailService: app.detail.DetailService,
+            public toolboxService: ToolboxService){
 
             this.elements = treeService.elements;
 
+            var _this = this;
             $scope.treeOptions = {
                 // no accept more than one element (layout) in the root of the tree
                 accept: function (sourceNodeScope, destNodesScope, destIndex) {
@@ -39,6 +42,11 @@ module app.tree {
                     var accepted: boolean = destParent.acceptsElement(source.getType());
 
                     return accepted;
+                },
+                removed: function(node) {
+
+                    var treeElement: TreeElement = node.$modelValue;
+                    _this.decreasePlacedTimesOfChilds(treeElement);
                 }
             };
 
@@ -46,6 +54,18 @@ module app.tree {
             $scope.previewUISchema = {};
             $scope.previewSchema = {};
             $scope.previewData = {};
+        }
+
+        decreasePlacedTimesOfChilds(treeElement: TreeElement) {
+            var toolboxElement: ToolboxElement = this.toolboxService.getAssociatedToolboxElement(treeElement);
+
+            for(var i=0; i<treeElement.elements.length; i++) {
+                this.decreasePlacedTimesOfChilds(treeElement.elements[i]);
+            }
+
+            if(toolboxElement instanceof ControlToolboxElement) {
+               toolboxElement.decreasePlacedTimes();
+            }
         }
 
         updatePreview() : void {
@@ -63,7 +83,7 @@ module app.tree {
         }
 
         remove(scope) : void {
-            scope.remove();
+            scope.removeNode(scope);
 
         }
 

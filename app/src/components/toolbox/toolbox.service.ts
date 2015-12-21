@@ -8,12 +8,15 @@ module app.toolbox {
     import MetaSchemaService = app.core.metaschema.MetaSchemaService;
     import GeneralToolboxElement = app.core.GeneralToolboxElement;
     import ControlToolboxElement = app.core.ControlToolboxElement;
+    import ToolboxElement = app.core.ToolboxElement;
+    import TreeElement = app.core.TreeElement;
 
     export class ToolboxService {
         static $inject = ['JsonSchemaService', 'MetaSchemaService'];
 
         public expertElements:GeneralToolboxElement[] = [];
         public schemaElements:ControlToolboxElement[] = [];
+
 
         constructor(public jsonSchemaService: JsonSchemaService, public metaSchemaService: MetaSchemaService) {
             this.initializeGeneralElements();
@@ -47,7 +50,10 @@ module app.toolbox {
             for(var i = 0; i < schemaProperties.length; i++) {
                 var element:ControlToolboxElement = new ControlToolboxElement(this.convertScopeToLabel(schemaProperties[i].name),schemaProperties[i].type, schemaProperties[i].name);
                 this.schemaElements.push(element);
+
             }
+
+
         }
 
         private convertScopeToLabel(scope:string):string {
@@ -71,6 +77,32 @@ module app.toolbox {
                 }
             }
             return null;
+        }
+
+        public getSchemaElementWithScope(scope: string): ControlToolboxElement {
+            var element: ControlToolboxElement;
+            for (var i = 0; i < this.schemaElements.length; i++) {
+
+                element = this.schemaElements[i];
+                if(element.getScope() == scope) {
+                    return element;
+                }
+            }
+            return null;
+        }
+
+        //used for retrieving the data element associated with this treeelement
+        //if its a layout, it only uses the type to get it
+        //if its a control, it uses the scope value
+        public getAssociatedToolboxElement(treeElement:TreeElement): ToolboxElement{
+            if(treeElement.getType()!='Control'){
+                //Layouts
+                return this.getExpertElementOfType(treeElement.getType());
+            } else {
+                //Controls
+                return this.getSchemaElementWithScope(treeElement.getScope());
+
+            }
         }
     }
     angular.module('app.toolbox').service('ToolboxService', ToolboxService);
