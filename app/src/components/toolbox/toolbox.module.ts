@@ -1,5 +1,7 @@
 module app.toolbox {
     'use strict';
 
-    angular.module('app.toolbox', []);
+    angular.module('app.toolbox', [
+        'angularFileUpload'
+    ]);
 }

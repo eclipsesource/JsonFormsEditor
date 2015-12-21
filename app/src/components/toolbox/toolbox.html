@@ -5,8 +5,10 @@
         <md-tab label="General">
             <md-content class="md-padding">
                 <div ui-tree="treeOptionsToolbox" data-clone-enabled="true" data-nodrop-enabled="true">
-                    <md-list ui-tree-nodes data-clone-enabled="true" data-nodrop-enabled="true" ng-model="toolbox.toolboxService.expertElements">
-                        <md-list-item ng-repeat="element in toolbox.toolboxService.expertElements" ui-tree-handle ui-tree-node>
+                    <md-list ui-tree-nodes data-clone-enabled="true" data-nodrop-enabled="true"
+                             ng-model="toolbox.toolboxService.expertElements">
+                        <md-list-item ng-repeat="element in toolbox.toolboxService.expertElements" ui-tree-handle
+                                      ui-tree-node>
                             <md-icon class="material-icons">{{element.getIcon()}}</md-icon>
                             <p>{{element.getName()}}</p>
                         </md-list-item>
@@ -18,15 +20,19 @@
         <!-- schema mode -->
         <md-tab label="Controls">
             <md-content class="md-padding">
+                <md-switch class="md-primary" md-no-ink ng-model="toolbox.filterDataToolbox">
+                    filter used elements
+                </md-switch>
                 <div ui-tree="treeOptionsToolbox" data-clone-enabled="true" data-nodrop-enabled="true">
-                    <md-list ui-tree-nodes data-clone-enabled="true" data-nodrop-enabled="true" ng-model="toolbox.toolboxService.schemaElements">
-                        <md-list-item ng-repeat="element in toolbox.toolboxService.schemaElements" ui-tree-handle ui-tree-node ng-hide="toolbox.shouldHide(element)">
+                    <md-list ui-tree-nodes data-clone-enabled="true" data-nodrop-enabled="true"
+                             ng-model="toolbox.toolboxService.schemaElements">
+                        <md-list-item ng-repeat="element in toolbox.toolboxService.schemaElements" ui-tree-handle
+                                      ui-tree-node ng-hide="toolbox.shouldHide(element)">
                             <md-icon class="material-icons">{{element.getIcon()}}</md-icon>
                             <p>{{element.getName()}}</p>
                         </md-list-item>
                     </md-list>
                 </div>
-                <button ng-click="toolbox.filterDataToolbox = !toolbox.filterDataToolbox">FILTER</button>
             </md-content>
         </md-tab>
     </md-tabs>
