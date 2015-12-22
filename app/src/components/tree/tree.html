@@ -22,13 +22,13 @@
   </ol>
 </script>
 
-<div>
+<div style="height:60px;">
   <md-button ng-click="tree.preview(false)" ng-class="{'md-raised': !isPreview, 'md-accent': !isPreview}">Design View</md-button>
   <md-button ng-click="tree.preview(true)" ng-class="{'md-raised': isPreview, 'md-accent': isPreview}">Preview</md-button>
 </div>
 
 <!-- tree view -->
-<md-content class="md-padding tree-view" ng-if="!isPreview">
+<md-content style="height: calc(100% - 60px);" class="md-padding tree-view" ng-if="!isPreview">
   <div ui-tree="treeOptions" data-clone-enabled="true">
     <ol ui-tree-nodes="" ng-model="tree.elements">
       <li ng-repeat="node in tree.elements" ui-tree-node ng-include="'tree_renderer.html'"></li>
@@ -37,6 +37,6 @@
 </md-content>
 
 <!-- tree preview -->
-<md-content class="md-padding jsf" ng-if="isPreview">
+<md-content style="height: calc(100% - 60px);" class="md-padding jsf" ng-if="isPreview">
   <jsonforms schema="previewSchema" ui-schema="previewUISchema" data="previewData"></jsonforms>
 </md-content>

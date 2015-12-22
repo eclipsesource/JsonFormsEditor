@@ -16,7 +16,7 @@
 </head>
 <body ng-controller="AppController as main">
 
-<md-toolbar>
+<md-toolbar style="height:66px;">
     <div class="md-toolbar-tools">
         <img src="resource/jsonforms-logo.png" style="height: 32px"/>
         <span>JSON Forms Editor</span>
@@ -27,7 +27,8 @@
 </md-toolbar>
 
 <!-- show edit area -->
-<div layout="row" class="bottom-border">
+<div style="height: calc(100% - 66px);">
+<div layout="row" class="bottom-border" style="height:100%;">
     <!-- toolbox -->
     <div flex="20" ui-view="toolboxContainer"></div>
 
@@ -36,6 +37,7 @@
 
     <!-- properties -->
     <div flex="20" ui-view="detailContainer"></div>
+</div>
 </div>
 
 </body>
