@@ -2,25 +2,11 @@ module app.core.model {
 
     export class TreeElement {
 
-        private id:number;
         private type:string;
         private label:string;
         private scope:string;
         public elements:TreeElement[] = [];
         public metaData:any = {};
-
-        static id = 0;
-        static getNewId(): number {
-            return TreeElement.id++;
-        }
-
-        public getId():number {
-            return this.id;
-        }
-
-        public setId(newId:number) {
-            this.id = newId;
-        }
 
         public getType():string {
             return this.type;

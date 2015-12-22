@@ -11,7 +11,7 @@ module app.tree {
         public elements:TreeElement[] = [];
 
         constructor(private toolboxService:ToolboxService) {
-            var rootElement:TreeElement = toolboxService.getExpertElementOfType("VerticalLayout").insertIntoTree(TreeElement.getNewId());
+            var rootElement:TreeElement = toolboxService.getExpertElementOfType("VerticalLayout").convertToTreeElement();
             rootElement['root'] = 'root';
             this.elements.push(rootElement);
         }

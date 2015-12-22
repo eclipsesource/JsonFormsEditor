@@ -7,9 +7,8 @@ module app.core.model {
             super(name, type);
         }
 
-        insertIntoTree(id: number): TreeElement {
+        convertToTreeElement(): app.core.model.TreeElement {
             var res = new TreeElement();
-            res.setId(id);
             res.setType(this.getType());
             res.setLabel("");
             res.setAcceptedElements(this.getAcceptedElements());

@@ -42,7 +42,7 @@ module app.toolbox {
                         var control:ControlToolboxElement = modelSource;
                         control.increasePlacedTimes();
                     }
-                    e.dest.nodesScope.$modelValue[index] = modelDest.insertIntoTree(TreeElement.getNewId());
+                    e.dest.nodesScope.$modelValue[index] = modelDest.convertToTreeElement();
 
                 }
 

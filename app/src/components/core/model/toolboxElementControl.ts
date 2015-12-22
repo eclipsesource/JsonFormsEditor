@@ -15,12 +15,12 @@ module app.core.model {
         setDatatype(dt: string) {
             this.datatype = dt;
         }
-        insertIntoTree(id: number): TreeElement {
+
+        convertToTreeElement(): app.core.model.TreeElement {
             var res = new TreeElement();
-            res.setId(id);
             res.setType("Control");
             res.setScope(this.scope);
-            res.setLabel(this.getName());
+            res.setLabel(this.getLabel());
             res.setAcceptedElements(this.getAcceptedElements());
             return res;
         }

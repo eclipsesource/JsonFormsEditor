@@ -5,7 +5,7 @@ module app.core.model {
     export abstract class ToolboxElement {
 
         private acceptedElements: string[];
-        constructor(private name: string, private type: string) {
+        constructor(private label: string, private type: string) {
 
         }
 
@@ -21,22 +21,22 @@ module app.core.model {
             this.type = type;
         }
 
-        setName(name: string) {
-            this.name = name;
+        setLabel(name: string) {
+            this.label = name;
         }
 
         getType(): string {
             return this.type;
         }
 
-        getName(): string {
-            return this.name;
+        getLabel(): string {
+            return this.label;
         }
 
         abstract getIcon(): string;
 
         //returns a converted element suitable for inserting into the tree with a given id
-        abstract insertIntoTree(id: number): TreeElement;
+        abstract convertToTreeElement(): app.core.model.TreeElement;
 
     }
 }

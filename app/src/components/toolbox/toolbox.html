@@ -10,7 +10,7 @@
                         <md-list-item ng-repeat="element in toolbox.toolboxService.expertElements" ui-tree-handle
                                       ui-tree-node>
                             <md-icon class="material-icons">{{element.getIcon()}}</md-icon>
-                            <p>{{element.getName()}}</p>
+                            <p>{{element.getLabel()}}</p>
                         </md-list-item>
                     </md-list>
                 </div>
@@ -30,7 +30,7 @@
                         <md-list-item ng-repeat="element in toolbox.toolboxService.schemaElements" ui-tree-handle
                                       ui-tree-node ng-hide="toolbox.shouldHide(element)">
                             <md-icon class="material-icons">{{element.getIcon()}}</md-icon>
-                            <p>{{element.getName()}}</p>
+                            <p>{{element.getLabel()}}</p>
                             <a class="pull-right left-margin" ng-hide="!toolbox.canRemoveDataElement(element)"
                                ng-click="toolbox.removeDataElement(element)">
                                 <md-icon class="material-icons">delete</md-icon>
