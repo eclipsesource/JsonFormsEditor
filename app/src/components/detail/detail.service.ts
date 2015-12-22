@@ -2,10 +2,11 @@ module app.detail {
 
     import MetaSchemaService = app.core.metaschema.MetaSchemaService;
     import MetaSchema = app.core.metaschema.MetaSchema;
+    import TreeElement = app.core.TreeElement;
 
     export class DetailService {
 
-        public currentElement : any;
+        public currentElement : TreeElement;
         public schema: any;
         public uiSchema: any;
 
@@ -13,15 +14,19 @@ module app.detail {
 
         static $inject = ["MetaSchemaService"];
 
-        constructor(private metaSchemaService: MetaSchemaService) {
+        constructor(metaSchemaService: MetaSchemaService) {
             this.metaSchema = metaSchemaService.getMetaSchema();
         }
 
-        setElement(element: any) : void {
+        setElement(element: TreeElement) : void {
             this.currentElement = element;
             this.metaSchema.reloadData();
-            this.schema = this.metaSchema.getDefinition(element.type).schema;
-            this.uiSchema = this.metaSchema.getDefinition(element.type).uiSchema;
+            this.schema = this.metaSchema.getDefinition(element.getType()).schema;
+            this.uiSchema = this.metaSchema.getDefinition(element.getType()).uiSchema;
+        }
+
+        reset() : void {
+            this.currentElement = null;
         }
 
     }

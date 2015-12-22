@@ -7,7 +7,7 @@ module app.detail {
         constructor(public detailService:DetailService) {}
 
         reset() : void {
-            this.detailService.currentElement = null;
+            this.detailService.reset();
         }
 
     }
