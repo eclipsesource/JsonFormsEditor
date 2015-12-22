@@ -14,30 +14,22 @@
     <% }); %>
 
 </head>
-<body ng-controller="AppController as main">
+<body>
 
-<md-toolbar style="height:66px;">
-    <div class="md-toolbar-tools">
-        <img src="resource/jsonforms-logo.png" style="height: 32px"/>
-        <span>JSON Forms Editor</span>
-        <!-- fill up the space between left and right area -->
-        <span flex></span>
-        <md-button class="md-raised md-accent" ng-click="main.alertWithOutputUISchema()">Export</md-button>
-    </div>
-</md-toolbar>
+<div class="jsonFormsEditor-Header" ui-view="headerContainer"></div>
 
 <!-- show edit area -->
-<div style="height: calc(100% - 66px);">
-<div layout="row" class="bottom-border" style="height:100%;">
-    <!-- toolbox -->
-    <div flex="20" ui-view="toolboxContainer"></div>
+<div class="jsonFormsEditor-Body" style="height: calc(100% - 66px);">
+    <div layout="row" class="bottom-border" style="height:100%;">
+        <!-- toolbox -->
+        <div flex="20" ui-view="toolboxContainer"></div>
 
-    <!-- tree view -->
-    <div flex="60" class="side-borders" layout-padding ui-view="treeContainer"></div>
+        <!-- tree view -->
+        <div flex="60" class="side-borders" layout-padding ui-view="treeContainer"></div>
 
-    <!-- properties -->
-    <div flex="20" ui-view="detailContainer"></div>
-</div>
+        <!-- properties -->
+        <div flex="20" ui-view="detailContainer"></div>
+    </div>
 </div>
 
 </body>

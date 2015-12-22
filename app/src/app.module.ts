@@ -2,10 +2,11 @@
 /// <reference path="../../typings/angular-material/angular-material.d.ts" />
 
 module app {
-   'use strict';
+    'use strict';
 
     angular.module('app', [
         'app.core',
+        'app.header',
         'app.tree',
         'app.detail',
         'app.toolbox',
