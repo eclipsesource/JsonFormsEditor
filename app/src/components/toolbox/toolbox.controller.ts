@@ -12,10 +12,9 @@ module app.toolbox {
     class ToolboxController {
 
         public currentAddElementLabel: string = '';
+        public currentAddElementType: string = 'string';
+        public elementTypes = ['string', 'number', 'boolean'];
 
-        private elementTypes = ['string', 'number', 'boolean'];
-
-        public currentAddElementIndex: number = 0;
 
         public filterDataToolbox: boolean = true;
         private tab:number = 1;
@@ -72,25 +71,29 @@ module app.toolbox {
             this.tab = activeTab;
         }
 
-        changeAddType() {
+        changeAddType(type: string) {
 
-            this.currentAddElementIndex = (this.currentAddElementIndex + 1) % this.elementTypes.length;
+            this.currentAddElementType = type;
 
         }
 
         typeOfNewElement(): string {
-            return this.elementTypes[this.currentAddElementIndex];
+            return this.currentAddElementType;
         }
 
 
         //TODO support different scopes(inside folders)
         //TODO add more data into content(required, min chars, etc)
         addNewElement() {
+            document.getElementById("inputLabel").focus();
+
             var content = {
                 type: this.typeOfNewElement()
             };
 
             this.toolboxService.addSchemaElement(this.currentAddElementLabel, content);
+
+            this.currentAddElementLabel = '';
         }
 
         removeDataElement(element: ControlToolboxElement) {

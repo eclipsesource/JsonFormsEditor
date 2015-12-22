@@ -1,6 +1,6 @@
-<md-content style="height:100%;">
+<md-content style="height:100%;" layout="column">
     <md-subheader class="md-primary">TOOLBOX</md-subheader>
-    <md-tabs md-dynamic-height md-no-ink md-no-ink-bar md-stretch-tabs="always">
+    <md-tabs flex md-no-ink md-no-ink-bar md-stretch-tabs="always">
         <!-- expert mode -->
         <md-tab label="General">
             <md-content class="md-padding">
@@ -19,40 +19,50 @@
 
         <!-- schema mode -->
         <md-tab label="Controls">
-            <md-content class="md-padding">
-                <md-switch class="md-primary" md-no-ink ng-model="toolbox.filterDataToolbox">
-                    filter used elements
-                </md-switch>
-                <div ui-tree="treeOptionsToolbox" data-drag-delay="100" data-clone-enabled="true" data-nodrop-enabled="true">
-                    <md-list ui-tree-nodes data-clone-enabled="true" data-nodrop-enabled="true"
-                             ng-model="toolbox.toolboxService.schemaElements">
-                        <md-list-item ng-repeat="element in toolbox.toolboxService.schemaElements" ui-tree-handle
-                                      ui-tree-node ng-hide="toolbox.shouldHide(element)">
-                            <md-icon class="material-icons">{{element.getIcon()}}</md-icon>
-                            <p>{{element.getName()}}</p>
-                            <a class="pull-right left-margin" ng-hide="!toolbox.canRemoveDataElement(element)" ng-click="toolbox.removeDataElement(element)">
-                                <md-icon class="material-icons">delete</md-icon>
-                            </a>
-                        </md-list-item>
-                    </md-list>
-                </div>
+            <div layout="column">
+                <md-content flex class="md-padding" style="margin-bottom:100px;">
+                    <md-switch class="md-primary" md-no-ink ng-model="toolbox.filterDataToolbox">
+                        filter used elements
+                    </md-switch>
+                    <div ui-tree="treeOptionsToolbox" data-drag-delay="100" data-clone-enabled="true" data-nodrop-enabled="true">
+                        <md-list ui-tree-nodes data-clone-enabled="true" data-nodrop-enabled="true"
+                                 ng-model="toolbox.toolboxService.schemaElements">
+                            <md-list-item ng-repeat="element in toolbox.toolboxService.schemaElements" ui-tree-handle
+                                          ui-tree-node ng-hide="toolbox.shouldHide(element)">
+                                <md-icon class="material-icons">{{element.getIcon()}}</md-icon>
+                                <p style="overflow:hidden;">{{element.getName()}}</p>
+                                <a class="pull-right left-margin" ng-hide="!toolbox.canRemoveDataElement(element)" ng-click="toolbox.removeDataElement(element)">
+                                    <md-icon class="material-icons">delete</md-icon>
+                                </a>
+                            </md-list-item>
+                        </md-list>
+                    </div>
+                </md-content>
+                <md-content class="toolbox-bottom-control top-border">
+                    <md-menu>
+                        <md-button ng-click="$mdOpenMenu($event)" class="md-raised md-primary">
+                            {{toolbox.typeOfNewElement()}}
+                            <md-icon class="material-icons">keyboard_arrow_down</md-icon>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item ng-repeat="typeLabel in toolbox.elementTypes">
+                                <md-button ng-click="toolbox.changeAddType(typeLabel)">
+                                    {{typeLabel}}
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
 
-                <div>
-                    <md-button ng-click="toolbox.changeAddType()" class="md-raised md-primary">
-                        <md-icon class="material-icons">navigate_before</md-icon>
-                        {{toolbox.typeOfNewElement()}}
-                        <md-icon class="material-icons">navigate_next</md-icon>
-                    </md-button>
                     <div layout="row" layout-align="space-around center">
 
-                        <input ng-model="toolbox.currentAddElementLabel" flex="auto" flex-order="0" class="md-primary" type="text" />
+                        <input id="inputLabel" ng-enter="toolbox.addNewElement()" ng-model="toolbox.currentAddElementLabel" flex="auto" flex-order="0" class="md-primary" type="text" />
 
                         <md-button ng-click="toolbox.addNewElement()" class="md-fab md-mini" flex="none" flex-order="2">
                             <md-icon class="material-icons">add</md-icon>
                         </md-button>
                     </div>
-                </div>
-            </md-content>
+                </md-content>
+            </div>
         </md-tab>
     </md-tabs>
 </md-content>

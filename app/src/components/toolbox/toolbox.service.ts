@@ -62,10 +62,16 @@ module app.toolbox {
         //PARAMETERS: content has to be an object containing the property 'type'
         public addSchemaElement(scope: string, content: any): boolean {
 
+            if(scope == ''){
+                return false;
+            }
+
             if(this.jsonSchemaService.getNames().indexOf(scope)!=-1){
                 console.log('ERROR: Trying to add a duplicated schema element');
                 return false;
             }
+
+
 
             var bundle = this.convertScopeToPathAndName(scope);
             var name = bundle.name;
