@@ -19,7 +19,7 @@ module app.toolbox {
         public schemaElements:ControlToolboxElement[] = [];
 
 
-        constructor(public jsonSchemaService: JsonSchemaService, public metaSchemaService: MetaSchemaService) {
+        constructor(public jsonSchemaService:JsonSchemaService, public metaSchemaService:MetaSchemaService) {
             this.initializeGeneralElements();
             this.loadSchemaElements(demoSchema);
         }
@@ -32,7 +32,7 @@ module app.toolbox {
                     elementType = metaSchema.getDefinitions()[i].getTypeEnum()[j];
 
                     //Ignore control, as it's handled on the controltoolbox
-                    if(elementType=='Control'){
+                    if (elementType == 'Control') {
                         continue;
                     }
                     var element = new GeneralToolboxElement(elementType, elementType);
@@ -43,13 +43,12 @@ module app.toolbox {
             }
         }
 
-        private loadSchemaElements(jsonWithDataSchema: any) {
-
+        private loadSchemaElements(jsonWithDataSchema:any) {
             this.jsonSchemaService.loadFromJson(jsonWithDataSchema);
 
             var schemaProperties:any[] = this.jsonSchemaService.getFields();
-            for(var i = 0; i < schemaProperties.length; i++) {
-                var element:ControlToolboxElement = new ControlToolboxElement(this.convertScopeToLabel(schemaProperties[i].name),schemaProperties[i].type, schemaProperties[i].name);
+            for (var i = 0; i < schemaProperties.length; i++) {
+                var element:ControlToolboxElement = new ControlToolboxElement(this.convertScopeToLabel(schemaProperties[i].name), schemaProperties[i].type, schemaProperties[i].name);
                 this.schemaElements.push(element);
 
             }
@@ -60,9 +59,8 @@ module app.toolbox {
         //adds new data element into schema and into toolbox
         //returns if the addition was successful
         //PARAMETERS: content has to be an object containing the property 'type'
-        public addSchemaElement(scope: string, content: any): boolean {
-
-            if(this.jsonSchemaService.getNames().indexOf(scope)!=-1){
+        public addSchemaElement(scope:string, content:any):boolean {
+            if (this.jsonSchemaService.getNames().indexOf(scope) != -1) {
                 console.log('ERROR: Trying to add a duplicated schema element');
                 return false;
             }
@@ -73,13 +71,13 @@ module app.toolbox {
 
 
             //Schema elements always need a type property
-            if(!content.hasOwnProperty('type')){
+            if (!content.hasOwnProperty('type')) {
                 return false;
             }
             //if the addition works on the schema, the element gets added into the toolbox array
-            if(this.jsonSchemaService.addNewProperty(name,content,path)) {
+            if (this.jsonSchemaService.addNewProperty(name, content, path)) {
 
-                var element: ControlToolboxElement = new ControlToolboxElement(this.convertScopeToLabel(scope),content.type,scope);
+                var element:ControlToolboxElement = new ControlToolboxElement(this.convertScopeToLabel(scope), content.type, scope);
                 this.schemaElements.push(element);
                 return true;
             }
@@ -87,18 +85,16 @@ module app.toolbox {
         }
 
 
-
-        public removeSchemaElement(scope: string): boolean {
-
+        public removeSchemaElement(scope:string):boolean {
             var bundle = this.convertScopeToPathAndName(scope);
             var name = bundle.name;
             var path = bundle.path;
-            if(this.jsonSchemaService.removeProperty(name, path)) {
+            if (this.jsonSchemaService.removeProperty(name, path)) {
 
-                for(var i = 0; i< this.schemaElements.length; i++){
-                    if(this.schemaElements[i].getScope() == scope) {
+                for (var i = 0; i < this.schemaElements.length; i++) {
+                    if (this.schemaElements[i].getScope() == scope) {
 
-                        this.schemaElements.splice(i,1);
+                        this.schemaElements.splice(i, 1);
                         return true;
                     }
                 }
@@ -113,12 +109,11 @@ module app.toolbox {
         }
 
 
-        private convertScopeToPathAndName(scope: string): any {
+        private convertScopeToPathAndName(scope:string):any {
+            var path:string[] = scope.split('/');
+            var name = path[path.length - 1];
 
-            var path: string[] = scope.split('/');
-            var name = path[path.length-1];
-
-            path.splice(path.length-1,1);
+            path.splice(path.length - 1, 1);
 
             return {
                 name: name,
@@ -126,45 +121,46 @@ module app.toolbox {
             }
         }
 
-        private convertPathAndNameToScope(name: string, path: string[]): string {
+        private convertPathAndNameToScope(name:string, path:string[]):string {
             var res = '';
             res += path.join('/');
-            if(res != ''){
-                res+='/';
+            if (res != '') {
+                res += '/';
             }
-            res+=name;
+            res += name;
             return res;
         }
 
         private convertScopeToLabel(scope:string):string {
-
             var sc = scope.split('/').pop();
 
             return sc
             // insert a space before all caps
                 .replace(/([A-Z])/g, ' $1')
                 // uppercase the first character
-                .replace(/^./, function(str){ return str.toUpperCase(); })
+                .replace(/^./, function (str) {
+                    return str.toUpperCase();
+                })
         }
 
-        public getExpertElementOfType(type: string): GeneralToolboxElement {
-            var element: GeneralToolboxElement;
+        public getExpertElementOfType(type:string):GeneralToolboxElement {
+            var element:GeneralToolboxElement;
             for (var i = 0; i < this.expertElements.length; i++) {
 
                 element = this.expertElements[i];
-                if(element.getType() == type) {
+                if (element.getType() == type) {
                     return element;
                 }
             }
             return null;
         }
 
-        public getSchemaElementWithScope(scope: string): ControlToolboxElement {
-            var element: ControlToolboxElement;
+        public getSchemaElementWithScope(scope:string):ControlToolboxElement {
+            var element:ControlToolboxElement;
             for (var i = 0; i < this.schemaElements.length; i++) {
 
                 element = this.schemaElements[i];
-                if(element.getScope() == scope) {
+                if (element.getScope() == scope) {
                     return element;
                 }
             }
@@ -174,8 +170,8 @@ module app.toolbox {
         //used for retrieving the data element associated with this treeelement
         //if its a layout, it only uses the type to get it
         //if its a control, it uses the scope value
-        public getAssociatedToolboxElement(treeElement:TreeElement): ToolboxElement{
-            if(treeElement.getType()!='Control'){
+        public getAssociatedToolboxElement(treeElement:TreeElement):ToolboxElement {
+            if (treeElement.getType() != 'Control') {
                 //Layouts
                 return this.getExpertElementOfType(treeElement.getType());
             } else {

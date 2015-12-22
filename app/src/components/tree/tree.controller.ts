@@ -4,20 +4,21 @@ module app.tree {
     import ToolboxElement = app.core.ToolboxElement;
     import TreeElement = app.core.TreeElement;
     import ToolboxService = app.toolbox.ToolboxService;
+    import DetailService = app.detail.DetailService;
+    import JsonSchemaService = app.core.jsonschema.JsonSchemaService;
 
 
     class MyTreeController {
 
         static $inject = ['$scope', 'TreeService', 'JsonSchemaService', 'DetailService', 'ToolboxService'];
 
-        public elements: any = [];
+        public elements:any = [];
 
-        constructor(
-            public $scope, 
-            public treeService: app.tree.TreeService, 
-            public JsonSchemaService: any,
-            private detailService: app.detail.DetailService,
-            public toolboxService: ToolboxService){
+        constructor(public $scope,
+                    public treeService:TreeService,
+                    public JsonSchemaService:JsonSchemaService,
+                    private detailService:DetailService,
+                    public toolboxService:ToolboxService) {
 
             this.elements = treeService.elements;
 
@@ -26,26 +27,26 @@ module app.tree {
                 // no accept more than one element (layout) in the root of the tree
                 accept: function (sourceNodeScope, destNodesScope, destIndex) {
 
-                    var source: ToolboxElement = sourceNodeScope.$modelValue;
+                    var source:ToolboxElement = sourceNodeScope.$modelValue;
                     //var dest: TreeElement = source.insertIntoTree(TreeElement.getNewId());
 
-                    var parent: any = destNodesScope.$nodeScope;
+                    var parent:any = destNodesScope.$nodeScope;
 
-                    if(parent == null) {
+                    if (parent == null) {
                         //Means that the element has no parent and therefore is outside the root
                         return false;
                     }
 
-                    var destParent: TreeElement = parent.$modelValue;
+                    var destParent:TreeElement = parent.$modelValue;
 
 
-                    var accepted: boolean = destParent.acceptsElement(source.getType());
+                    var accepted:boolean = destParent.acceptsElement(source.getType());
 
                     return accepted;
                 },
-                removed: function(node) {
+                removed: function (node) {
 
-                    var treeElement: TreeElement = node.$modelValue;
+                    var treeElement:TreeElement = node.$modelValue;
                     _this.decreasePlacedTimesOfChilds(treeElement);
                 }
             };
@@ -56,56 +57,48 @@ module app.tree {
             $scope.previewData = {};
         }
 
-        decreasePlacedTimesOfChilds(treeElement: TreeElement) {
-            var toolboxElement: ToolboxElement = this.toolboxService.getAssociatedToolboxElement(treeElement);
+        decreasePlacedTimesOfChilds(treeElement:TreeElement) {
+            var toolboxElement:ToolboxElement = this.toolboxService.getAssociatedToolboxElement(treeElement);
 
-            for(var i=0; i<treeElement.elements.length; i++) {
+            for (var i = 0; i < treeElement.elements.length; i++) {
                 this.decreasePlacedTimesOfChilds(treeElement.elements[i]);
             }
 
-            if(toolboxElement instanceof ControlToolboxElement) {
-               toolboxElement.decreasePlacedTimes();
+            if (toolboxElement instanceof ControlToolboxElement) {
+                toolboxElement.decreasePlacedTimes();
             }
         }
 
-        updatePreview() : void {
+        updatePreview():void {
             this.$scope.previewUISchema = JSON.parse(this.treeService.exportUISchemaAsJSON());
             this.$scope.previewSchema = this.JsonSchemaService.getDataSchema();
             // The data introduced into the preview is not stored, as it's not relevant
             this.$scope.previewData = {};
         }
 
-        preview(bool) : void {
+        preview(bool):void {
             if (bool) {
                 this.updatePreview();
             }
             this.$scope.isPreview = bool;
         }
 
-        remove(scope) : void {
+        remove(scope):void {
             scope.removeNode(scope);
 
         }
 
-        newSubItem(scope) : void {
-            var node: any = scope.$modelValue;
+        newSubItem(scope):void {
+            var node:any = scope.$modelValue;
             //TODO borrar esta functionalidad si quito scope binding
             node.elements.push(new ControlToolboxElement('', '', ''));
         }
 
-        toggle(scope) : void {
+        toggle(scope):void {
             scope.toggle();
         }
 
-        collapseAll() : void {
-            this.$scope.$broadcast('collapseAll');
-        }
-
-        expandAll() : void {
-            this.$scope.$broadcast('expandAll');
-        }
-
-        showDetails(node: any) : void {
+        showDetails(node:any):void {
             this.detailService.setElement(node);
         }
     }

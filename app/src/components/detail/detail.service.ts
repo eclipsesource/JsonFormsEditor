@@ -1,15 +1,19 @@
 module app.detail {
+
+    import MetaSchemaService = app.core.metaschema.MetaSchemaService;
+    import MetaSchema = app.core.metaschema.MetaSchema;
+
     export class DetailService {
 
         public currentElement : any;
         public schema: any;
         public uiSchema: any;
 
-        private metaSchema: app.core.metaschema.MetaSchema;
+        private metaSchema: MetaSchema;
 
         static $inject = ["MetaSchemaService"];
 
-        constructor(private metaSchemaService: app.core.metaschema.MetaSchemaService) {
+        constructor(private metaSchemaService: MetaSchemaService) {
             this.metaSchema = metaSchemaService.getMetaSchema();
         }
 

@@ -23,14 +23,16 @@
                 <md-switch class="md-primary" md-no-ink ng-model="toolbox.filterDataToolbox">
                     filter used elements
                 </md-switch>
-                <div ui-tree="treeOptionsToolbox" data-drag-delay="100" data-clone-enabled="true" data-nodrop-enabled="true">
+                <div ui-tree="treeOptionsToolbox" data-drag-delay="100" data-clone-enabled="true"
+                     data-nodrop-enabled="true">
                     <md-list ui-tree-nodes data-clone-enabled="true" data-nodrop-enabled="true"
                              ng-model="toolbox.toolboxService.schemaElements">
                         <md-list-item ng-repeat="element in toolbox.toolboxService.schemaElements" ui-tree-handle
                                       ui-tree-node ng-hide="toolbox.shouldHide(element)">
                             <md-icon class="material-icons">{{element.getIcon()}}</md-icon>
                             <p>{{element.getName()}}</p>
-                            <a class="pull-right left-margin" ng-hide="!toolbox.canRemoveDataElement(element)" ng-click="toolbox.removeDataElement(element)">
+                            <a class="pull-right left-margin" ng-hide="!toolbox.canRemoveDataElement(element)"
+                               ng-click="toolbox.removeDataElement(element)">
                                 <md-icon class="material-icons">delete</md-icon>
                             </a>
                         </md-list-item>
@@ -45,7 +47,8 @@
                     </md-button>
                     <div layout="row" layout-align="space-around center">
 
-                        <input ng-model="toolbox.currentAddElementLabel" flex="auto" flex-order="0" class="md-primary" type="text" />
+                        <input ng-model="toolbox.currentAddElementLabel" flex="auto" flex-order="0" class="md-primary"
+                               type="text"/>
 
                         <md-button ng-click="toolbox.addNewElement()" class="md-fab md-mini" flex="none" flex-order="2">
                             <md-icon class="material-icons">add</md-icon>

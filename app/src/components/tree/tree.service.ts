@@ -8,31 +8,29 @@ module app.tree {
 
         static $inject = ['ToolboxService'];
 
-        public elements : TreeElement[] = [];
+        public elements:TreeElement[] = [];
 
-
-        constructor(private toolboxService: ToolboxService){
-
-            var rootElement: TreeElement = toolboxService.getExpertElementOfType("VerticalLayout").insertIntoTree(TreeElement.getNewId());
+        constructor(private toolboxService:ToolboxService) {
+            var rootElement:TreeElement = toolboxService.getExpertElementOfType("VerticalLayout").insertIntoTree(TreeElement.getNewId());
             rootElement['root'] = 'root';
             this.elements.push(rootElement);
         }
 
-        exportUISchemaAsJSON() : string {
+        exportUISchemaAsJSON():string {
 
             console.log(this.elements);
 
-            return JSON.stringify(this.elements[0], function(key, value){
+            return JSON.stringify(this.elements[0], function (key, value) {
 
-                if(value==""){
+                if (value == "") {
                     return undefined;
                 }
 
-                if(key=="scope") {
-                    return { "$ref": "#/properties/" + value };
+                if (key == "scope") {
+                    return {"$ref": "#/properties/" + value};
                 }
 
-                switch(key){
+                switch (key) {
 
                     case "id":
                     case "$$hashKey":
