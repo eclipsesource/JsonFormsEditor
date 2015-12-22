@@ -7,6 +7,7 @@ module app.toolbox {
     import ControlToolboxElement = app.core.ControlToolboxElement;
     import TreeElement = app.core.TreeElement;
     import ToolboxElement = app.core.ToolboxElement;
+    import ConfigDialogService = app.header.ConfigDialogService;
 
 
     class ToolboxController {
@@ -16,12 +17,11 @@ module app.toolbox {
         public elementTypes = ['string', 'number', 'boolean'];
 
 
-        public filterDataToolbox: boolean = true;
         private tab:number = 1;
 
-        static $inject = ['$scope', '$filter', 'ToolboxService'];
+        static $inject = ['$scope', '$filter', 'ToolboxService', 'ConfigDialogService'];
 
-        constructor($scope, public $filter, public toolboxService: ToolboxService) {
+        constructor($scope, public $filter, public toolboxService: ToolboxService, public configService: ConfigDialogService) {
 
             var _this = this;
             $scope.treeOptionsToolbox = {
@@ -52,7 +52,7 @@ module app.toolbox {
         }
 
         shouldHide(element: ToolboxElement): boolean {
-            if(!this.filterDataToolbox){
+            if(!this.configService.enableFilter){
                 return false;
             }
             if(element instanceof ControlToolboxElement){

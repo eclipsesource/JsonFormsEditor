@@ -21,9 +21,7 @@
         <md-tab label="Controls">
             <div layout="column">
                 <md-content flex class="md-padding" style="margin-bottom:100px;">
-                    <md-switch class="md-primary" md-no-ink ng-model="toolbox.filterDataToolbox">
-                        filter used elements
-                    </md-switch>
+
                     <div ui-tree="treeOptionsToolbox" data-drag-delay="100" data-clone-enabled="true" data-nodrop-enabled="true">
                         <md-list ui-tree-nodes data-clone-enabled="true" data-nodrop-enabled="true"
                                  ng-model="toolbox.toolboxService.schemaElements">

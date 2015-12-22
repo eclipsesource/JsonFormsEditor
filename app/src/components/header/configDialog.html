@@ -1,0 +1,17 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Configuration</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="config.hideConfigDialog()">
+                <md-icon class="material-icons">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="md-padding">
+        <md-switch class="md-primary" md-no-ink ng-model="config.configService.enableFilter">
+            Hide used properties on Toolbox
+        </md-switch>
+    </md-dialog-content>
+
+</md-dialog>
