@@ -8,7 +8,7 @@ module app.tree {
 
     class MyTreeController {
 
-        static $inject = ['$scope', 'TreeService', 'JsonSchemaService', 'DetailService', 'ToolboxService'];
+        static $inject = ['$scope', 'TreeService', 'JsonSchemaService', 'ToolboxService'];
 
         public elements: any = [];
 
@@ -16,7 +16,6 @@ module app.tree {
             public $scope, 
             public treeService: app.tree.TreeService, 
             public JsonSchemaService: any,
-            private detailService: app.detail.DetailService,
             public toolboxService: ToolboxService){
 
             this.elements = treeService.elements;
@@ -87,12 +86,6 @@ module app.tree {
 
         }
 
-        newSubItem(scope) : void {
-            var node: any = scope.$modelValue;
-            //TODO borrar esta functionalidad si quito scope binding
-            node.elements.push(new ControlToolboxElement('', '', ''));
-        }
-
         toggle(scope) : void {
             scope.toggle();
         }
@@ -105,9 +98,6 @@ module app.tree {
             this.$scope.$broadcast('expandAll');
         }
 
-        showDetails(node: any) : void {
-            this.detailService.setElement(node);
-        }
     }
 
     angular.module('app.tree').controller('MyTreeController', MyTreeController);

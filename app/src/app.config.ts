@@ -31,11 +31,6 @@ module app {
                             controller: 'ToolboxController',
                             controllerAs: 'toolbox',
                             templateUrl: 'app/src/components/toolbox/toolbox.html'
-                        },
-                        'detailContainer': {
-                            controller: 'DetailController',
-                            controllerAs: 'detail',
-                            templateUrl: 'app/src/components/detail/detail.html'
                         }
                     }
                 });

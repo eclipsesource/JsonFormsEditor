@@ -8,10 +8,10 @@ module app {
         'app.core',
         'app.header',
         'app.tree',
-        'app.detail',
         'app.toolbox',
         'ngMaterial',
-        'ngClipboard'
+        'ngClipboard',
+        'jsonforms'
     ]);
 }
 
