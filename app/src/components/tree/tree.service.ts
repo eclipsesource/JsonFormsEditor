@@ -1,8 +1,8 @@
 module app.tree {
 
-    import GeneralToolboxElement = app.core.GeneralToolboxElement;
+    import GeneralToolboxElement = app.core.model.GeneralToolboxElement;
 
-    import TreeElement = app.core.TreeElement;
+    import TreeElement = app.core.model.TreeElement;
     import ToolboxService = app.toolbox.ToolboxService;
     export class TreeService {
 

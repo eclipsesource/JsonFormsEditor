@@ -1,4 +1,4 @@
-module app.core {
+module app.core.model {
 
     export class TreeElement {
 

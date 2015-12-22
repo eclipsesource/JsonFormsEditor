@@ -3,10 +3,10 @@ module app.toolbox {
 
     //TODO change scrolling in toolbox to let bottom bar and top tabs stay static
 
-    import GeneralToolboxElement = app.core.GeneralToolboxElement;
-    import ControlToolboxElement = app.core.ControlToolboxElement;
-    import TreeElement = app.core.TreeElement;
-    import ToolboxElement = app.core.ToolboxElement;
+    import GeneralToolboxElement = app.core.model.GeneralToolboxElement;
+    import ControlToolboxElement = app.core.model.ControlToolboxElement;
+    import TreeElement = app.core.model.TreeElement;
+    import ToolboxElement = app.core.model.ToolboxElement;
 
 
     class ToolboxController {

@@ -2,7 +2,7 @@ module app.detail {
 
     import MetaSchemaService = app.core.metaschema.MetaSchemaService;
     import MetaSchema = app.core.metaschema.MetaSchema;
-    import TreeElement = app.core.TreeElement;
+    import TreeElement = app.core.model.TreeElement;
 
     export class DetailService {
 

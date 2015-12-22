@@ -1,8 +1,8 @@
 module app.tree {
 
-    import ControlToolboxElement = app.core.ControlToolboxElement;
-    import ToolboxElement = app.core.ToolboxElement;
-    import TreeElement = app.core.TreeElement;
+    import ControlToolboxElement = app.core.model.ControlToolboxElement;
+    import ToolboxElement = app.core.model.ToolboxElement;
+    import TreeElement = app.core.model.TreeElement;
     import ToolboxService = app.toolbox.ToolboxService;
     import DetailService = app.detail.DetailService;
     import JsonSchemaService = app.core.jsonschema.JsonSchemaService;

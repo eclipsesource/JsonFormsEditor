@@ -1,7 +1,7 @@
 /**
  * Created by pancho111203 on 19/12/15.
  */
-module app.core {
+module app.core.model {
     export abstract class ToolboxElement {
 
         private acceptedElements: string[];

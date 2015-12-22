@@ -7,10 +7,10 @@ module app.toolbox {
     // TODO validation so that there cannot be 2 schema elements with the same name in the same path of the toolbox(nor in dataschema)
     import JsonSchemaService = app.core.jsonschema.JsonSchemaService;
     import MetaSchemaService = app.core.metaschema.MetaSchemaService;
-    import GeneralToolboxElement = app.core.GeneralToolboxElement;
-    import ControlToolboxElement = app.core.ControlToolboxElement;
-    import ToolboxElement = app.core.ToolboxElement;
-    import TreeElement = app.core.TreeElement;
+    import GeneralToolboxElement = app.core.model.GeneralToolboxElement;
+    import ControlToolboxElement = app.core.model.ControlToolboxElement;
+    import ToolboxElement = app.core.model.ToolboxElement;
+    import TreeElement = app.core.model.TreeElement;
 
     export class ToolboxService {
         static $inject = ['JsonSchemaService', 'MetaSchemaService'];
