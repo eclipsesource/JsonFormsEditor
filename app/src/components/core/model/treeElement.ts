@@ -12,7 +12,7 @@ module app.core.model {
             return this.type;
         }
 
-        public setType(newType:string) {
+        public setType(newType:string):void {
             this.type = newType;
         }
 
@@ -20,7 +20,7 @@ module app.core.model {
             return this.label;
         }
 
-        public setLabel(newLabel:string) {
+        public setLabel(newLabel:string):void {
             this.label = newLabel;
         }
 
@@ -28,42 +28,42 @@ module app.core.model {
             return this.scope;
         }
 
-        public setScope(newScope:string) {
+        public setScope(newScope:string):void {
             this.scope = newScope;
         }
 
-        public initElements() {
+        public initElements():void {
             this.elements = [];
         }
 
-        public getElements() : TreeElement[] {
+        public getElements():TreeElement[] {
             return this.elements;
         }
 
-        public hasElements() : boolean {
+        public hasElements():boolean {
             return this.elements && this.elements.length > 0;
         }
 
-        public addElement(element: TreeElement) {
+        public addElement(element:TreeElement):void {
             this.elements.push(element);
         }
 
-        public acceptsElement(type:string) {
-            if(!this.metaData.hasOwnProperty('acceptedElements')){
+        public acceptsElement(type:string):boolean {
+            if (!this.metaData.hasOwnProperty('acceptedElements')) {
                 return false;
             }
             return this.metaData.acceptedElements.indexOf(type) >= 0;
         }
 
-        public setAcceptedElements(acceptedElements: string[]) {
+        public setAcceptedElements(acceptedElements:string[]):void {
             this.metaData['acceptedElements'] = acceptedElements;
         }
 
-        public getAcceptedElements(): string[] {
+        public getAcceptedElements():string[] {
             return this.metaData['acceptedElements'];
         }
 
-        public isDeletable() : boolean {
+        public isDeletable():boolean {
             return true;
         }
 

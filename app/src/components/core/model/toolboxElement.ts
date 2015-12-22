@@ -4,8 +4,9 @@
 module app.core.model {
     export abstract class ToolboxElement {
 
-        private acceptedElements: string[];
-        constructor(private label: string, private type: string) {
+        private acceptedElements:string[];
+
+        constructor(private label:string, private type:string) {
 
         }
 
@@ -13,30 +14,30 @@ module app.core.model {
             this.acceptedElements = acceptedElements;
         }
 
-        getAcceptedElements(): string[] {
+        getAcceptedElements():string[] {
             return this.acceptedElements;
         }
 
-        setType(type: string) {
+        setType(type:string):void {
             this.type = type;
         }
 
-        setLabel(name: string) {
+        setLabel(name:string):void {
             this.label = name;
         }
 
-        getType(): string {
+        getType():string {
             return this.type;
         }
 
-        getLabel(): string {
+        getLabel():string {
             return this.label;
         }
 
-        abstract getIcon(): string;
+        abstract getIcon():string;
 
         //returns a converted element suitable for inserting into the tree with a given id
-        abstract convertToTreeElement(): app.core.model.TreeElement;
+        abstract convertToTreeElement():TreeElement;
 
     }
 }
