@@ -1,13 +1,21 @@
 module app.toolbox {
 
+
+    //TODO change scrolling in toolbox to let bottom bar and top tabs stay static
+
     import GeneralToolboxElement = app.core.GeneralToolboxElement;
     import ControlToolboxElement = app.core.ControlToolboxElement;
     import TreeElement = app.core.TreeElement;
     import ToolboxElement = app.core.ToolboxElement;
 
 
-
     class ToolboxController {
+
+        public currentAddElementLabel: string = '';
+
+        private elementTypes = ['string', 'number', 'boolean'];
+
+        public currentAddElementIndex: number = 0;
 
         public filterDataToolbox: boolean = true;
         private tab:number = 1;
@@ -63,6 +71,41 @@ module app.toolbox {
         setTab(activeTab) {
             this.tab = activeTab;
         }
+
+        changeAddType() {
+
+            this.currentAddElementIndex = (this.currentAddElementIndex + 1) % this.elementTypes.length;
+
+        }
+
+        typeOfNewElement(): string {
+            return this.elementTypes[this.currentAddElementIndex];
+        }
+
+
+        //TODO support different scopes(inside folders)
+        //TODO add more data into content(required, min chars, etc)
+        addNewElement() {
+            var content = {
+                type: this.typeOfNewElement()
+            };
+
+            this.toolboxService.addSchemaElement(this.currentAddElementLabel, content);
+        }
+
+        removeDataElement(element: ControlToolboxElement) {
+            if(this.canRemoveDataElement(element)){
+                this.toolboxService.removeSchemaElement(element.getScope());
+            }
+        }
+
+        canRemoveDataElement(element: ControlToolboxElement): boolean {
+            if(element.isAlreadyPlaced()) {
+                return false;
+            }
+            return true;
+        }
+
     }
 
     angular.module('app.toolbox').controller('ToolboxController', ToolboxController)
