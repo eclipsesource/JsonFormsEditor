@@ -22,7 +22,12 @@
 <div class="jsonFormsEditor-Body" style="height: calc(100% - 66px);">
     <div layout="row" class="bottom-border" style="height:100%;">
         <!-- toolbox -->
-        <div class="toolbox-container" ui-view="toolboxContainer"></div>
+
+
+        <div class="toolbar-container" layout="column">
+            <div ui-view="layoutsContainer"></div>
+            <div ui-view="toolboxContainer"></div>
+        </div>
 
         <!-- tree view -->
         <div flex class="side-borders" layout-padding ui-view="treeContainer"></div>

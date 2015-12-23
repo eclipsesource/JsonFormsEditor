@@ -3,8 +3,11 @@
  */
 module app.core {
     export class GeneralToolboxElement extends ToolboxElement {
+        public tooltip: string;
         constructor(name: string, type: string){
             super(name, type);
+
+            this.tooltip = type;
         }
 
         insertIntoTree(id: number): TreeElement {

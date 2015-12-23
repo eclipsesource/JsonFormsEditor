@@ -9,6 +9,7 @@ module app {
         'app.header',
         'app.tree',
         'app.toolbox',
+        'app.layouts',
         'ngMaterial',
         'ngClipboard',
         'jsonforms'

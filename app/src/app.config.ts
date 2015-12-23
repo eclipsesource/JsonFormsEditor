@@ -31,6 +31,11 @@ module app {
                             controller: 'ToolboxController',
                             controllerAs: 'toolbox',
                             templateUrl: 'app/src/components/toolbox/toolbox.html'
+                        },
+                        'layoutsContainer': {
+                            controller: 'LayoutsController',
+                            controllerAs: 'layouts',
+                            templateUrl: 'app/src/components/layouts/layouts.html'
                         }
                     }
                 });
