@@ -14,6 +14,10 @@ module app.core.jsonschema{
             this.fields = this.getPropertiesRecursive(json, '');
         }
 
+        updateFields() {
+            this.fields = this.getPropertiesRecursive(this.json, '');
+        }
+
         // From a json object, returns all the propertie names iinside it recursively and by adding a prefix with its location
         private getPropertiesRecursive(json: any, prefix: string) : any[] {
             var res: any[] = [];
@@ -43,6 +47,7 @@ module app.core.jsonschema{
         }
 
         getNames(): string[] {
+            console.log(this.fields);
             return this.fields.map(function(obj){return obj['name'];});
 
         }
@@ -85,6 +90,7 @@ module app.core.jsonschema{
                 name: name,
                 type: content.type
             });
+            this.updateFields();
             return true;
         }
 
@@ -112,7 +118,12 @@ module app.core.jsonschema{
                 return false;
             }
 
-            return delete cur[name];
+            var success = delete cur[name];
+            if(success){
+                this.updateFields();
+                return true;
+            }
+            return false;
         }
 
         getPropertyContent(name: string, path: string[]): any {

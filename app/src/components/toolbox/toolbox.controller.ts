@@ -91,14 +91,21 @@ module app.toolbox {
                 type: this.typeOfNewElement()
             };
 
-            this.toolboxService.addSchemaElement(this.currentAddElementLabel, content);
+            var added = this.toolboxService.addSchemaElement(this.currentAddElementLabel, content);
 
+            if(added==false) {
+                console.log("ERROR: failed to add the element into the schema");
+            }
             this.currentAddElementLabel = '';
         }
 
         removeDataElement(element: ControlToolboxElement) {
             if(this.canRemoveDataElement(element)){
-                this.toolboxService.removeSchemaElement(element.getScope());
+                var removed = this.toolboxService.removeSchemaElement(element.getScope());
+
+                if(removed==false) {
+                    console.log("ERROR: failed to remove the element from the schema");
+                }
             }
         }
 
