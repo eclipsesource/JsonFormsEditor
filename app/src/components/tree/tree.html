@@ -30,7 +30,7 @@
 
 <!-- tree view -->
 <md-content style="height: calc(100% - 60px);" class="md-padding tree-view" ng-if="!isPreview">
-  <div ui-tree="treeOptions" data-clone-enabled="true">
+  <div style="margin-bottom:500px;" ui-tree="treeOptions" data-clone-enabled="true">
     <ol ui-tree-nodes="" ng-model="tree.elements">
       <li ng-repeat="node in tree.elements" ui-tree-node ng-include="'tree_renderer.html'"></li>
     </ol>
