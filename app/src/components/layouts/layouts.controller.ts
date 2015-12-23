@@ -7,7 +7,7 @@ module app.layouts {
     import ControlToolboxElement = app.core.ControlToolboxElement;
     import TreeElement = app.core.TreeElement;
 
-    
+
     class LayoutsController {
         static $inject = ['$scope', 'ToolboxService'];
 
@@ -18,8 +18,6 @@ module app.layouts {
                     return false;
                 },
                 dropped: function(e) {
-
-                    console.log(e);
                     //if the element is being dragged into the toolbar itself, return
                     if(e.dest.nodesScope.$modelValue == e.source.nodesScope.$modelValue) {
                         return;
@@ -36,6 +34,15 @@ module app.layouts {
                     }
                     e.dest.nodesScope.$modelValue[index] = modelDest.insertIntoTree(TreeElement.getNewId());
 
+                },
+                dragStart: function(e) {
+                    var h = 52;
+                    var w = $('.tree-view').width() /2;
+
+                    console.log(e);
+
+                    $(e.elements.placeholder).css('height',h+'px');
+                    $(e.elements.placeholder).css('width',w+'px');
                 }
 
             };

@@ -46,6 +46,10 @@ module app.tree {
 
                     var treeElement: TreeElement = node.$modelValue;
                     _this.decreasePlacedTimesOfChilds(treeElement);
+                },
+                dragStart: function(e) {
+                    console.log(e.elements.placeholder);
+
                 }
             };
 
