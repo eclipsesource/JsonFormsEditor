@@ -11,6 +11,7 @@ module app.toolbox {
     import ControlToolboxElement = app.core.model.ControlToolboxElement;
     import ToolboxElement = app.core.model.ToolboxElement;
     import TreeElement = app.core.model.TreeElement;
+    import JsonschemaProperty = app.core.jsonschema.JsonschemaProperty;
 
     export class ToolboxService {
         static $inject = ['JsonSchemaService', 'MetaSchemaService'];
@@ -46,9 +47,9 @@ module app.toolbox {
         private loadSchemaElements(jsonWithDataSchema:any) {
             this.jsonSchemaService.loadFromJson(jsonWithDataSchema);
 
-            var schemaProperties:any[] = this.jsonSchemaService.getFields();
+            var schemaProperties:JsonschemaProperty[] = this.jsonSchemaService.getProperties();
             for (var i = 0; i < schemaProperties.length; i++) {
-                var element:ControlToolboxElement = new ControlToolboxElement(this.convertScopeToLabel(schemaProperties[i].name), schemaProperties[i].type, schemaProperties[i].name);
+                var element:ControlToolboxElement = new ControlToolboxElement(this.convertScopeToLabel(schemaProperties[i].getName()), schemaProperties[i].getType(), schemaProperties[i].getName());
                 this.schemaElements.push(element);
 
             }
@@ -75,7 +76,7 @@ module app.toolbox {
                 return false;
             }
             //if the addition works on the schema, the element gets added into the toolbox array
-            if (this.jsonSchemaService.addNewProperty(name, content, path)) {
+            if (this.jsonSchemaService.addNewProperty(new JsonschemaProperty(name, content.type), path)) {
 
                 var element:ControlToolboxElement = new ControlToolboxElement(this.convertScopeToLabel(scope), content.type, scope);
                 this.schemaElements.push(element);
