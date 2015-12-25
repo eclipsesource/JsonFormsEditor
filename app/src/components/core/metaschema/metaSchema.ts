@@ -1,11 +1,11 @@
 module app.core.metaschema {
 
-    import JsonSchemaService = app.core.jsonschema.JsonSchemaService;
+    import DataschemaService = app.core.dataschema.DataschemaService;
     export class MetaSchema {
 
         private definitions: Definition[] = [];
 
-        constructor(public jsonSchemaService: JsonSchemaService, json: any) {
+        constructor(public dataschemaService: DataschemaService, json: any) {
             var schema: any;
             var uiSchema: any;
             var acceptedElements: string[];
@@ -26,7 +26,7 @@ module app.core.metaschema {
                     },
                     "scope": {
                         "type": "string",
-                        "enum": jsonSchemaService.getNames()
+                        "enum": dataschemaService.getNames()
                     }
                 },
                 "required": [
@@ -166,7 +166,7 @@ module app.core.metaschema {
         //small hack to reload data elements of the Controls. Refactor ASAP
         reloadData() {
             var def = this.getDefinition("Control");
-            def.schema.properties.scope.enum = this.jsonSchemaService.getNames();
+            def.schema.properties.scope.enum = this.dataschemaService.getNames();
         }
 
         getDefinitions() : Definition[] {

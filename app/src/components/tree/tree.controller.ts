@@ -5,12 +5,12 @@ module app.tree {
     import TreeElement = app.core.model.TreeElement;
     import ToolboxService = app.toolbox.ToolboxService;
     import DetailService = app.detail.DetailService;
-    import JsonSchemaService = app.core.jsonschema.JsonSchemaService;
+    import JsonSchemaService = app.core.dataschema.DataschemaService;
 
 
     class MyTreeController {
 
-        static $inject = ['$scope', 'TreeService', 'JsonSchemaService', 'DetailService', 'ToolboxService'];
+        static $inject = ['$scope', 'TreeService', 'DataschemaService', 'DetailService', 'ToolboxService'];
 
         public elements:any = [];
 

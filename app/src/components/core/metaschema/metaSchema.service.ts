@@ -1,16 +1,16 @@
 module app.core.metaschema {
 
-  import JsonSchemaService = app.core.jsonschema.JsonSchemaService;
+  import DataschemaService = app.core.dataschema.DataschemaService;
   export class MetaSchemaService {
 
-    static $inject = ['$http', 'JsonSchemaService'];
+    static $inject = ['$http', 'DataschemaService'];
 
     private metaSchema: MetaSchema;
 
 
-    constructor($http: ng.IHttpService, jsonSchemaService: JsonSchemaService) {
+    constructor($http: ng.IHttpService, dataschemaService: DataschemaService) {
       //TODO implement using $http and promises, to get resource from static location on the server
-      this.metaSchema = new MetaSchema(jsonSchemaService, jsonMetaSchema);
+      this.metaSchema = new MetaSchema(dataschemaService, jsonMetaSchema);
     }
 
     getMetaSchema() : MetaSchema {

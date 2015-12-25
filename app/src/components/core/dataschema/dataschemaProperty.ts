@@ -1,5 +1,5 @@
-module app.core.jsonschema {
-    export class JsonschemaProperty {
+module app.core.dataschema {
+    export class DataschemaProperty {
         constructor(private name:string, private type:string) {
 
         }

@@ -1,9 +1,9 @@
 /// <reference path="../../../../../typings/angular-ui-router/angular-ui-router.d.ts" />
 
-module app.core.jsonschema {
+module app.core.dataschema {
 
-    export class JsonSchemaService {
-        private properties:JsonschemaProperty[] = [];
+    export class DataschemaService {
+        private properties:DataschemaProperty[] = [];
         private json:any = {};
 
         loadFromJson(json:any) {
@@ -12,12 +12,12 @@ module app.core.jsonschema {
         }
 
         getNames():string[] {
-            return _.map(this.properties, (property:JsonschemaProperty) => {
+            return _.map(this.properties, (property:DataschemaProperty) => {
                 return property.getName();
             });
         }
 
-        getProperties():JsonschemaProperty[] {
+        getProperties():DataschemaProperty[] {
             return this.properties;
         }
 
@@ -32,7 +32,7 @@ module app.core.jsonschema {
          * @param path path is an array of string containing the name of the parent properties in order eg. : ['person', 'appearance', 'head']
          * @returns {boolean} indicating if the addition was succesful(when false, it means the element was not added)
          */
-        addNewProperty(property:JsonschemaProperty, path:string[]):boolean {
+        addNewProperty(property:DataschemaProperty, path:string[]):boolean {
             if (!property.isValid()) {
                 return false;
             }
@@ -66,8 +66,8 @@ module app.core.jsonschema {
         /**
          * From a json object, returns all the property names inside it recursively and by adding a prefix with its location
          */
-        private getPropertiesRecursive(json:any, prefix:string):JsonschemaProperty[] {
-            var result:JsonschemaProperty[] = [];
+        private getPropertiesRecursive(json:any, prefix:string):DataschemaProperty[] {
+            var result:DataschemaProperty[] = [];
 
             if (json.hasOwnProperty('properties')) {
                 for (var key in json['properties']) {
@@ -78,7 +78,7 @@ module app.core.jsonschema {
                         if (childProps.length > 0) {
                             result = result.concat(childProps);
                         } else {
-                            result.push(new JsonschemaProperty(name, json['properties'][key].type));
+                            result.push(new DataschemaProperty(name, json['properties'][key].type));
                         }
                     }
 
@@ -91,9 +91,9 @@ module app.core.jsonschema {
         /**
          * Retrieves the property at the specified path in the data-schema.
          * @param path the path to the property: e.g. ['person','adress','street']
-         * @returns {JsonschemaProperty} the property or null, if no property was found at the path
+         * @returns {DataschemaProperty} the property or null, if no property was found at the path
          */
-        private getPropertyAt(path:string[]):JsonschemaProperty {
+        private getPropertyAt(path:string[]):DataschemaProperty {
             var currentElement = this.json;
             var index = 0;
 
@@ -115,6 +115,6 @@ module app.core.jsonschema {
         }
     }
 
-    angular.module("app.core").service("JsonSchemaService", JsonSchemaService);
+    angular.module("app.core").service("DataschemaService", DataschemaService);
 }
 

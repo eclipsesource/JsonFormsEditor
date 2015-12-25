@@ -5,22 +5,22 @@
 module app.toolbox {
 
     // TODO validation so that there cannot be 2 schema elements with the same name in the same path of the toolbox(nor in dataschema)
-    import JsonSchemaService = app.core.jsonschema.JsonSchemaService;
+    import DataschemaService = app.core.dataschema.DataschemaService;
     import MetaSchemaService = app.core.metaschema.MetaSchemaService;
     import GeneralToolboxElement = app.core.model.GeneralToolboxElement;
     import ControlToolboxElement = app.core.model.ControlToolboxElement;
     import ToolboxElement = app.core.model.ToolboxElement;
     import TreeElement = app.core.model.TreeElement;
-    import JsonschemaProperty = app.core.jsonschema.JsonschemaProperty;
+    import JsonschemaProperty = app.core.dataschema.DataschemaProperty;
 
     export class ToolboxService {
-        static $inject = ['JsonSchemaService', 'MetaSchemaService'];
+        static $inject = ['DataschemaService', 'MetaSchemaService'];
 
         public expertElements:GeneralToolboxElement[] = [];
         public schemaElements:ControlToolboxElement[] = [];
 
 
-        constructor(public jsonSchemaService:JsonSchemaService, public metaSchemaService:MetaSchemaService) {
+        constructor(public dataschemaService:DataschemaService, public metaSchemaService:MetaSchemaService) {
             this.initializeGeneralElements();
             this.loadSchemaElements(demoSchema);
         }
@@ -45,9 +45,9 @@ module app.toolbox {
         }
 
         private loadSchemaElements(jsonWithDataSchema:any) {
-            this.jsonSchemaService.loadFromJson(jsonWithDataSchema);
+            this.dataschemaService.loadFromJson(jsonWithDataSchema);
 
-            var schemaProperties:JsonschemaProperty[] = this.jsonSchemaService.getProperties();
+            var schemaProperties:JsonschemaProperty[] = this.dataschemaService.getProperties();
             for (var i = 0; i < schemaProperties.length; i++) {
                 var element:ControlToolboxElement = new ControlToolboxElement(this.convertScopeToLabel(schemaProperties[i].getName()), schemaProperties[i].getType(), schemaProperties[i].getName());
                 this.schemaElements.push(element);
@@ -61,7 +61,7 @@ module app.toolbox {
         //returns if the addition was successful
         //PARAMETERS: content has to be an object containing the property 'type'
         public addSchemaElement(scope:string, content:any):boolean {
-            if (this.jsonSchemaService.getNames().indexOf(scope) != -1) {
+            if (this.dataschemaService.getNames().indexOf(scope) != -1) {
                 console.log('ERROR: Trying to add a duplicated schema element');
                 return false;
             }
@@ -76,7 +76,7 @@ module app.toolbox {
                 return false;
             }
             //if the addition works on the schema, the element gets added into the toolbox array
-            if (this.jsonSchemaService.addNewProperty(new JsonschemaProperty(name, content.type), path)) {
+            if (this.dataschemaService.addNewProperty(new JsonschemaProperty(name, content.type), path)) {
 
                 var element:ControlToolboxElement = new ControlToolboxElement(this.convertScopeToLabel(scope), content.type, scope);
                 this.schemaElements.push(element);
@@ -90,7 +90,7 @@ module app.toolbox {
             var bundle = this.convertScopeToPathAndName(scope);
             var name = bundle.name;
             var path = bundle.path;
-            if (this.jsonSchemaService.removeProperty(name, path)) {
+            if (this.dataschemaService.removeProperty(name, path)) {
 
                 for (var i = 0; i < this.schemaElements.length; i++) {
                     if (this.schemaElements[i].getScope() == scope) {
