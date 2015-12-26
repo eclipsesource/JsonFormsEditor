@@ -32,6 +32,24 @@ module app.core.metaschema {
                 return definition.getName() === name;
             })
         }
+
+        getNames():string[] {
+            return _.map(this.definitions, (definition:Definition) => {
+                return definition.getName();
+            })
+        }
+
+        getLabels():string[] {
+            return _.union(_.flatten(_.map(this.definitions, (definition:Definition) => {
+                return definition.getTypeEnum();
+            })))
+        }
+
+        getDefinitionFromLabel(label:String):Definition {
+            return _.find(this.definitions, (definition:Definition) => {
+                return _.contains(definition.getTypeEnum(), label);
+            })
+        }
     }
 }
 

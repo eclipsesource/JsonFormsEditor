@@ -56,7 +56,7 @@ module app.core.metaschema {
                             if (items.hasOwnProperty('properties') && items['properties'].hasOwnProperty('type')) {
                                 if (items['properties']['type'].hasOwnProperty('enum')) {
                                     _.forEach(items['properties']['type']['enum'], (name:string) => {
-                                       result.push(new Definition(name, items));
+                                       result.push(new Definition(name.toLowerCase(), items));
                                     });
                                 }
                             }
