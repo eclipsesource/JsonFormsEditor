@@ -6,43 +6,56 @@ module app.toolbox {
 
     // TODO validation so that there cannot be 2 schema elements with the same name in the same path of the toolbox(nor in dataschema)
     import DataschemaService = app.core.dataschema.DataschemaService;
-    import MetaSchemaService = app.core.metaschema.MetaSchemaService;
     import GeneralToolboxElement = app.core.model.GeneralToolboxElement;
     import ControlToolboxElement = app.core.model.ControlToolboxElement;
     import ToolboxElement = app.core.model.ToolboxElement;
     import TreeElement = app.core.model.TreeElement;
     import JsonschemaProperty = app.core.dataschema.DataschemaProperty;
+    import MetaSchema = app.core.metaschema.MetaSchema;
+    import Definition = app.core.metaschema.Definition;
+    import MetaSchemaService = app.core.metaschema.MetaSchemaService;
+    import IPromise = angular.IPromise;
+    import IQService = angular.IQService;
+    import IDeferred = angular.IDeferred;
 
     export class ToolboxService {
-        static $inject = ['DataschemaService', 'MetaSchemaService'];
+        static $inject = ['DataschemaService', 'MetaSchemaService', '$q'];
 
         public expertElements:GeneralToolboxElement[] = [];
         public schemaElements:ControlToolboxElement[] = [];
 
 
-        constructor(public dataschemaService:DataschemaService, public metaSchemaService:MetaSchemaService) {
-            this.initializeGeneralElements();
+        constructor(public dataschemaService:DataschemaService, private metaschemaService:MetaSchemaService, private $q:IQService) {
+            this.getGeneralElements().then((elements:GeneralToolboxElement[]) => {
+                this.expertElements = elements;
+            });
             this.loadSchemaElements(demoSchema);
         }
 
-        private initializeGeneralElements() {
-            var metaSchema:app.core.metaschema.MetaSchema = this.metaSchemaService.getMetaSchema();
-            var elementType:string;
-            for (var i = 0; i < metaSchema.getDefinitions().length; i++) {
-                for (var j = 0; j < metaSchema.getDefinitions()[i].getTypeEnum().length; j++) {
-                    elementType = metaSchema.getDefinitions()[i].getTypeEnum()[j];
+        private getGeneralElements():IPromise<GeneralToolboxElement[]> {
+            var defer:IDeferred<GeneralToolboxElement[]> = this.$q.defer();
 
-                    //Ignore control, as it's handled on the controltoolbox
-                    if (elementType == 'Control') {
-                        continue;
-                    }
-                    var element = new GeneralToolboxElement(elementType, elementType);
+            this.metaschemaService.getMetaSchema().then((schema:MetaSchema) => {
+                var result:GeneralToolboxElement[] = [];
 
-                    element.setAcceptedElements(JSON.parse(JSON.stringify(metaSchema.getDefinitions()[i].acceptedElements)));
-                    this.expertElements.push(element);
-                }
-            }
+                _.forEach(schema.getDefinitions(), (definition:Definition) => {
+                    _.forEach(definition.getTypeEnum(), (type:string)=> {
+                        //Ignore control, as it's handled on the controltoolbox
+                        if (type === 'Control') {
+                            return;
+                        }
+                        var element = new GeneralToolboxElement(type, type);
+
+                        element.setAcceptedElements(definition.getAcceptedElements());
+                        result.push(element);
+                    });
+                });
+
+                defer.resolve(result);
+            });
+            return defer.promise;
         }
+
 
         private loadSchemaElements(jsonWithDataSchema:any) {
             this.dataschemaService.loadFromJson(jsonWithDataSchema);
@@ -53,8 +66,6 @@ module app.toolbox {
                 this.schemaElements.push(element);
 
             }
-
-
         }
 
         //adds new data element into schema and into toolbox
@@ -144,16 +155,16 @@ module app.toolbox {
                 })
         }
 
-        public getExpertElementOfType(type:string):GeneralToolboxElement {
-            var element:GeneralToolboxElement;
-            for (var i = 0; i < this.expertElements.length; i++) {
+        public getExpertElementOfType(type:string):IPromise<GeneralToolboxElement> {
+            var deffered:IDeferred<GeneralToolboxElement> = this.$q.defer();
 
-                element = this.expertElements[i];
-                if (element.getType() == type) {
-                    return element;
-                }
-            }
-            return null;
+            this.getGeneralElements().then((elements:GeneralToolboxElement[]) => {
+                deffered.resolve(_.find(this.expertElements, (element:GeneralToolboxElement) => {
+                    return element.getType() === type;
+                }));
+            });
+
+            return deffered.promise;
         }
 
         public getSchemaElementWithScope(scope:string):ControlToolboxElement {
@@ -171,15 +182,20 @@ module app.toolbox {
         //used for retrieving the data element associated with this treeelement
         //if its a layout, it only uses the type to get it
         //if its a control, it uses the scope value
-        public getAssociatedToolboxElement(treeElement:TreeElement):ToolboxElement {
+        public getAssociatedToolboxElement(treeElement:TreeElement):IPromise<ToolboxElement> {
+            var deffered:IDeferred<GeneralToolboxElement> = this.$q.defer();
+
             if (treeElement.getType() != 'Control') {
                 //Layouts
-                return this.getExpertElementOfType(treeElement.getType());
+                this.getExpertElementOfType(treeElement.getType()).then((element:GeneralToolboxElement)=> {
+                    deffered.resolve(element);
+                });
             } else {
                 //Controls
-                return this.getSchemaElementWithScope(treeElement.getScope());
-
+                deffered.resolve(this.getSchemaElementWithScope(treeElement.getScope()));
             }
+
+            return deffered.promise;
         }
     }
     angular.module('app.toolbox').service('ToolboxService', ToolboxService);

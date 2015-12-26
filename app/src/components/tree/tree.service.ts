@@ -11,9 +11,11 @@ module app.tree {
         public elements:TreeElement[] = [];
 
         constructor(private toolboxService:ToolboxService) {
-            var rootElement:TreeElement = toolboxService.getExpertElementOfType("VerticalLayout").convertToTreeElement();
-            rootElement['root'] = 'root';
-            this.elements.push(rootElement);
+            toolboxService.getExpertElementOfType('VerticalLayout').then((element:GeneralToolboxElement) => {
+                var rootElement:TreeElement = element.convertToTreeElement();
+                rootElement['root'] = 'root';
+                this.elements.push(rootElement);
+            });
         }
 
         exportUISchemaAsJSON():string {

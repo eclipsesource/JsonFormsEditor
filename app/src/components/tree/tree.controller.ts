@@ -58,15 +58,15 @@ module app.tree {
         }
 
         decreasePlacedTimesOfChilds(treeElement:TreeElement) {
-            var toolboxElement:ToolboxElement = this.toolboxService.getAssociatedToolboxElement(treeElement);
+            this.toolboxService.getAssociatedToolboxElement(treeElement).then((toolboxElement:ToolboxElement) => {
+                for (var i = 0; i < treeElement.elements.length; i++) {
+                    this.decreasePlacedTimesOfChilds(treeElement.elements[i]);
+                }
 
-            for (var i = 0; i < treeElement.elements.length; i++) {
-                this.decreasePlacedTimesOfChilds(treeElement.elements[i]);
-            }
-
-            if (toolboxElement instanceof ControlToolboxElement) {
-                toolboxElement.decreasePlacedTimes();
-            }
+                if (toolboxElement instanceof ControlToolboxElement) {
+                    toolboxElement.decreasePlacedTimes();
+                }
+            });
         }
 
         updatePreview():void {
