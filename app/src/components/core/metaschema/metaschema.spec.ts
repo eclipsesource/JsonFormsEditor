@@ -9,7 +9,7 @@ describe('app.core.Metaschema', () => {
     var metaschema:MetaSchema;
 
     beforeAll(() => {
-       metaschema = MetaSchema.fromJSON(json);
+        metaschema = MetaSchema.fromJSON(json);
     });
 
     it('should create metaschema from JSON', () => {
@@ -46,12 +46,19 @@ describe('app.core.Metaschema', () => {
     });
 
     it('should read one element from label', () => {
-       expect(metaschema.getDefinitionFromLabel('Control')).toBeDefined();
-       expect(metaschema.getDefinitionFromLabel('VerticalLayout')).toBeDefined();
-       expect(metaschema.getDefinitionFromLabel('HorizontalLayout')).toBeDefined();
-       expect(metaschema.getDefinitionFromLabel('Group')).toBeDefined();
-       expect(metaschema.getDefinitionFromLabel('Categorization')).toBeDefined();
-       expect(metaschema.getDefinitionFromLabel('Category')).toBeDefined();
+        expect(metaschema.getDefinitionFromLabel('Control')).toBeDefined();
+        expect(metaschema.getDefinitionFromLabel('VerticalLayout')).toBeDefined();
+        expect(metaschema.getDefinitionFromLabel('HorizontalLayout')).toBeDefined();
+        expect(metaschema.getDefinitionFromLabel('Group')).toBeDefined();
+        expect(metaschema.getDefinitionFromLabel('Categorization')).toBeDefined();
+        expect(metaschema.getDefinitionFromLabel('Category')).toBeDefined();
+    });
+
+    it('should correctly read accepted elements', () => {
+        expect(metaschema.getDefinition('control').acceptsElements()).toBeFalsy();
+        expect(metaschema.getDefinition('layout').acceptsElements()).toBeTruthy();
+        expect(metaschema.getDefinition('layout').getAcceptedElements().length).toBeGreaterThan(0);
+        expect(metaschema.getDefinition('categorization').getAcceptedElements().length).toBe(1);
     });
 
     /**

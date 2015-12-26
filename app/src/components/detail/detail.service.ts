@@ -18,9 +18,9 @@ module app.detail {
 
         setElement(element: TreeElement) : void {
             this.metaschemaService.getMetaSchema().then((metaschema:MetaSchema) => {
+                this.schema = metaschema.getDefinitionFromLabel(element.getType()).getDataschema();
+                this.uiSchema = metaschema.getDefinitionFromLabel(element.getType()).getUISchema();
                 this.currentElement = element;
-                this.schema = metaschema.getDefinition(element.getType()).getSchema();
-                this.uiSchema = metaschema.getDefinition(element.getType()).getUISchema();
             });
         }
 

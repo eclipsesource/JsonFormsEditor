@@ -35,7 +35,7 @@ describe('app.core.Definition', () => {
                 "type",
                 "elements"
             ]
-        });
+        }, ['Control', 'VerticalLayout', 'HorizontalLayout', 'Group', 'Categorization']);
         controlDefinition = new Definition('control', {
             "type": "object",
             "properties": {
@@ -61,13 +61,13 @@ describe('app.core.Definition', () => {
                 "type",
                 "scope"
             ]
-        });
+        }, []);
     });
 
     it('should get the labels of the defintion', () => {
-        expect(layoutDefinition.getTypeEnum()).toContain('VerticalLayout');
-        expect(layoutDefinition.getTypeEnum()).toContain('HorizontalLayout');
-        expect(layoutDefinition.getTypeEnum()).toContain('Group');
+        expect(layoutDefinition.getTypes()).toContain('VerticalLayout');
+        expect(layoutDefinition.getTypes()).toContain('HorizontalLayout');
+        expect(layoutDefinition.getTypes()).toContain('Group');
     });
 
     it('should get accepted elements for layout', () => {
@@ -79,7 +79,7 @@ describe('app.core.Definition', () => {
     });
 
     it('should get accepted elements for control', () => {
-        expect(controlDefinition.getAcceptedElements()).toBe([]);
+        expect(controlDefinition.getAcceptedElements().length).toBe(0);
     });
 
 });

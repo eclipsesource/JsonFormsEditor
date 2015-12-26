@@ -1,26 +1,100 @@
 module app.core.metaschema {
 
-    //TODO Felix rework
     export class MetaSchema {
 
-        private definitions:Definition[] = [];
+        constructor(private definitions:Definition[] = []) {
 
+        }
+
+        /**
+         * Factory-Method to create a Metaschema from a json-object.
+         *
+         * @param json the json structure to create the metaschema from
+         * @returns {app.core.metaschema.MetaSchema}
+         */
         static fromJSON(json:any):MetaSchema {
-            var metaSchema = new MetaSchema();
+            var definitions:Definition[] = [];
+
+            // array contains all names of the elements in the root scope of the json, so they can be referenced by '#'.
+            var elements:string[] = [];
 
             if (json.hasOwnProperty('definitions')) {
-                _.forOwn(json['definitions'], (value:{[key:string] : string|string[]|{}}, key:string) => {
+                _.forOwn(json['definitions'], (value:{}, name:string) => {
+                    // we are only looking at object definitions (e.g. 'label' gets sorted out)
                     if (value.hasOwnProperty('type')) {
                         if (value['type'] === 'object') {
-                            var definition = new Definition(key, value);
-                            metaSchema.definitions.push(definition);
-                            metaSchema.definitions = _.union(metaSchema.definitions, definition.getChildElements());
+                            var definition:Definition = new Definition(name, _.omit(value, 'properties.elements'), MetaSchema.retrieveAcceptedElements(value, elements));
+
+                            // now continue with all child elements that the current element can accept
+                            _.forEach(MetaSchema.retrieveChildElements(value, elements), (child:Definition) => {
+                                definitions.push(child);
+                                _.forEach(child.getTypes(), (type:string)=> {
+                                    if (elements.indexOf(type) === -1) {
+                                        elements.push(type);
+                                    }
+                                });
+                            });
+
+                            // add everything to the result
+                            definitions.push(definition);
+                            _.forEach(definition.getTypes(), (type:string) => {
+                                if (elements.indexOf(type) === -1) {
+                                    elements.push(type);
+                                }
+                            });
                         }
                     }
                 });
             }
+            return new MetaSchema(definitions);
+        }
 
-            return metaSchema;
+        private static retrieveAcceptedElements(value:{}, allElements:string[]):string[] {
+            var result:string[] = [];
+            if (value.hasOwnProperty('properties') && value['properties'].hasOwnProperty('elements') && value['properties']['elements'].hasOwnProperty('items')) {
+                var items = value['properties']['elements']['items'];
+
+                if (items.hasOwnProperty('$ref') && items['$ref'] === '#') {
+                    result = allElements;
+                } else {
+                    // a new object is declared, so get its label
+                    if (items.hasOwnProperty('properties') && items['properties'].hasOwnProperty('type') && items['properties']['type'].hasOwnProperty('enum')) {
+                        result = items['properties']['type']['enum'];
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private static retrieveChildElements(schema:{}, allElements:string[]):Definition[] {
+            var result:Definition[] = [];
+
+            if (schema.hasOwnProperty('properties') && schema['properties'].hasOwnProperty('elements')) {
+                var elements = schema['properties']['elements'];
+
+                if (elements.hasOwnProperty('type') && elements['type'] === 'array' && elements.hasOwnProperty('items')) {
+                    var items = elements['items'];
+                    if (items.hasOwnProperty('type')) {
+                        if (items['type'] === 'array') {
+                            if (!items.hasOwnProperty('$ref')) {
+                                // a new object is introduced, otherwise $ref would be used
+
+                            }
+                        } else if (items['type'] === 'object') {
+                            // we are sure that there is a new object introduced here
+                            if (items.hasOwnProperty('properties') && items['properties'].hasOwnProperty('type')) {
+                                if (items['properties']['type'].hasOwnProperty('enum')) {
+                                    _.forEach(items['properties']['type']['enum'], (name:string) => {
+                                        result.push(new Definition(name.toLowerCase(), _.omit(items, 'properties.elements'), MetaSchema.retrieveAcceptedElements(items, allElements)));
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
         }
 
         getDefinitions():Definition[] {
@@ -41,15 +115,17 @@ module app.core.metaschema {
 
         getLabels():string[] {
             return _.union(_.flatten(_.map(this.definitions, (definition:Definition) => {
-                return definition.getTypeEnum();
+                return definition.getTypes();
             })))
         }
 
         getDefinitionFromLabel(label:String):Definition {
             return _.find(this.definitions, (definition:Definition) => {
-                return _.contains(definition.getTypeEnum(), label);
+                return _.contains(definition.getTypes(), label);
             })
         }
+
+
     }
 }
 
