@@ -1,123 +1,95 @@
 module app.core.metaschema {
 
-    // TODO Felix rework
     export class Definition {
 
-        constructor(private name:string, private options:{[key:string] : string|string[]|{}}) {
+        private types:string[] = [];
+        private uischema:{} = {};
 
+        /**
+         * Constructs a new definition.
+         *
+         * @param name the name of the definition
+         * @param dataschema the dataschema of the definition
+         * @param acceptedElements the labels of the elements this definition accepts as children
+         */
+        constructor(private name:string, private dataschema:{}, private acceptedElements:string[]) {
+            if (this.dataschema.hasOwnProperty('properties')) {
+                if (this.dataschema['properties'].hasOwnProperty('type')) {
+                    if (this.dataschema['properties']['type'].hasOwnProperty('enum')) {
+                        this.types = this.dataschema['properties']['type']['enum'];
+                    }
+                }
+            }
+            this.uischema = this.generateUISchema(dataschema);
         }
 
+        /**
+         * The name of the definition, e.g. 'control' or 'layout'.
+         * @returns {string}
+         */
         getName():string {
             return this.name;
         }
 
-        getTypeEnum():string[] {
-            var result:string[] = [];
-
-            if (this.options.hasOwnProperty('properties')) {
-                if (this.options['properties'].hasOwnProperty('type')) {
-                    if (this.options['properties']['type'].hasOwnProperty('enum')) {
-                        result = this.options['properties']['type']['enum'];
-                    }
-                }
-            }
-
-            return result;
+        /**
+         * The types (labels) this definition can exhibit (e.g. 'VerticalLayout' / 'HorizontalLayout' for Definition 'layout').
+         * @returns {string[]}
+         */
+        getTypes():string[] {
+            return this.types;
         }
 
-        canContainElements():boolean {
-            var result:boolean = false;
-
-            if (this.options.hasOwnProperty('properties')) {
-                if (this.options['properties'].hasOwnProperty('elements')) {
-                    result = true;
-                }
-            }
-
-            return result;
+        /**
+         * Checks wether this definition accepts child elements.
+         * @returns {boolean}
+         */
+        acceptsElements():boolean {
+            return this.acceptedElements.length > 0;
         }
 
-        getChildElements():Definition[] {
-            var result:Definition[] = [];
-
-            if (this.canContainElements()) {
-                var elements = this.options['properties']['elements'];
-
-                if (elements.hasOwnProperty('type') && elements['type'] === 'array' && elements.hasOwnProperty('items')) {
-                    var items = elements['items'];
-                    if (items.hasOwnProperty('type')) {
-                        if (items['type'] === 'array') {
-                            if (!items.hasOwnProperty('$ref')) {
-                                // a new object is introduced, otherwise $ref would be used
-
-                            }
-                        } else if (items['type'] === 'object') {
-                            // we are sure that there is a new object introduced here
-                            if (items.hasOwnProperty('properties') && items['properties'].hasOwnProperty('type')) {
-                                if (items['properties']['type'].hasOwnProperty('enum')) {
-                                    _.forEach(items['properties']['type']['enum'], (name:string) => {
-                                       result.push(new Definition(name.toLowerCase(), items));
-                                    });
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            return result;
+        /**
+         * The types (labels) this definition accepts as child elements.
+         * @returns {string[]}
+         */
+        getAcceptedElements():string[] {
+            return this.acceptedElements;
         }
 
-        getSchema():{} {
-            return {
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "Control"
-                        ]
-                    },
-                    "label": {
-                        "type": "string"
-                    },
-                    "scope": {
-                        "type": "string",
-                        "enum": ["test"]
-                    }
-                },
-                "required": [
-                    "type",
-                    "scope"
-                ]
-            };
+        /**
+         * Gets the dataschema for this definition, so it can be edited by jsonforms.
+         * @returns {{}}
+         */
+        getDataschema():{} {
+            return this.dataschema;
         }
 
+        /**
+         * Gets the uischema for this definition, so it can be edited by jsonforms.
+         * @returns {{}}
+         */
         getUISchema():{} {
+            return this.uischema;
+        }
+
+        private generateUISchema(dataschema:{}):{} {
+            var elements = [];
+            if (dataschema && dataschema.hasOwnProperty('properties')) {
+                var properties = dataschema['properties'];
+
+                _.forOwn(properties, (value, key) => {
+                    elements.push({
+                        "type": "Control",
+                        "label": _.capitalize(key),
+                        "scope": {
+                            "$ref": "#/properties/" + key
+                        }
+                    })
+                });
+            }
             return {
                 "type": "VerticalLayout",
-                "elements": [
-                    {
-                        "type": "Control",
-                        "label": "Label",
-                        "scope": { "$ref": "#/properties/label" },
-                    },
-                    {
-                        "type": "Control",
-                        "label": "Type",
-                        "scope": { "$ref": "#/properties/type" },
-                    },
-                    {
-                        "type": "Control",
-                        "label": "Scope",
-                        "scope": { "$ref": "#/properties/scope" },
-                    }
-                ]
-            };
-        }
-
-        getAcceptedElements():string[] {
-            return ['VerticalLayout', 'HorizontalLayout', 'Categorization', 'Category', 'Group', 'Control'];
+                "elements": elements
+            }
         }
     }
 }
