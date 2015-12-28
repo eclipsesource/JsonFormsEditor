@@ -10,38 +10,32 @@ module app.core.metaschema {
          * Factory-Method to create a Metaschema from a json-object.
          *
          * @param json the json structure to create the metaschema from
-         * @param availableScopeElements the registered elements in the {@link app.core.dataschema.DataschemaService}
          *
          * @returns {app.core.metaschema.MetaSchema}
          */
-        static fromJSON(json:any, availableScopeElements:string[]):MetaSchema {
+        static fromJSON(json:any):MetaSchema {
             var definitions:Definition[] = [];
 
             // array contains all names of the elements in the root scope of the json, so they can be referenced by '#'.
-            var elements:string[] = [];
+            var rootElements:string[] = [];
 
             if (json.hasOwnProperty('definitions')) {
                 _.forOwn(json['definitions'], (value:{}, name:string) => {
                     // we are only looking at object definitions (e.g. 'label' gets sorted out)
                     if (value.hasOwnProperty('type')) {
                         if (value['type'] === 'object') {
-                            var definition:Definition = new Definition(name, MetaSchema.cleanupDataschema(value, availableScopeElements), MetaSchema.retrieveAcceptedElements(value, elements));
+                            var definition:Definition = new Definition(name, MetaSchema.cleanupDataschema(value), MetaSchema.retrieveAcceptedElements(value, rootElements));
 
                             // now continue with all child elements that the current element can accept
-                            _.forEach(MetaSchema.retrieveChildElements(value, elements, availableScopeElements), (child:Definition) => {
+                            _.forEach(MetaSchema.retrieveChildElements(value, rootElements), (child:Definition) => {
                                 definitions.push(child);
-                                _.forEach(child.getTypes(), (type:string)=> {
-                                    if (elements.indexOf(type) === -1) {
-                                        elements.push(type);
-                                    }
-                                });
                             });
 
                             // add everything to the result
                             definitions.push(definition);
                             _.forEach(definition.getTypes(), (type:string) => {
-                                if (elements.indexOf(type) === -1) {
-                                    elements.push(type);
+                                if (rootElements.indexOf(type) === -1) {
+                                    rootElements.push(type);
                                 }
                             });
                         }
@@ -51,13 +45,13 @@ module app.core.metaschema {
             return new MetaSchema(definitions);
         }
 
-        private static retrieveAcceptedElements(value:{}, allElements:string[]):string[] {
+        private static retrieveAcceptedElements(value:{}, rootElements:string[]):string[] {
             var result:string[] = [];
             if (value.hasOwnProperty('properties') && value['properties'].hasOwnProperty('elements') && value['properties']['elements'].hasOwnProperty('items')) {
                 var items = value['properties']['elements']['items'];
 
                 if (items.hasOwnProperty('$ref') && items['$ref'] === '#') {
-                    result = allElements;
+                    result = rootElements;
                 } else {
                     // a new object is declared, so get its label
                     if (items.hasOwnProperty('properties') && items['properties'].hasOwnProperty('type') && items['properties']['type'].hasOwnProperty('enum')) {
@@ -69,7 +63,7 @@ module app.core.metaschema {
             return result;
         }
 
-        private static retrieveChildElements(schema:{}, allElements:string[], availableScopeElements:string[]):Definition[] {
+        private static retrieveChildElements(schema:{}, rootElements:string[]):Definition[] {
             var result:Definition[] = [];
 
             if (schema.hasOwnProperty('properties') && schema['properties'].hasOwnProperty('elements')) {
@@ -88,7 +82,7 @@ module app.core.metaschema {
                             if (items.hasOwnProperty('properties') && items['properties'].hasOwnProperty('type')) {
                                 if (items['properties']['type'].hasOwnProperty('enum')) {
                                     _.forEach(items['properties']['type']['enum'], (name:string) => {
-                                        result.push(new Definition(name.toLowerCase(), MetaSchema.cleanupDataschema(items, availableScopeElements), MetaSchema.retrieveAcceptedElements(items, allElements)));
+                                        result.push(new Definition(name.toLowerCase(), MetaSchema.cleanupDataschema(items), MetaSchema.retrieveAcceptedElements(items, rootElements)));
                                     });
                                 }
                             }
@@ -99,18 +93,25 @@ module app.core.metaschema {
             return result;
         }
 
-        static cleanupDataschema(dataschema:{}, availableScopeElements:string[]):{} {
+        static cleanupDataschema(dataschema:{}):{} {
             var result = {};
-
-            if (dataschema.hasOwnProperty('type')) {
-                result['type'] = dataschema['type'];
-            }
 
             if (dataschema.hasOwnProperty('properties')) {
                 result['properties'] = _.omit(dataschema['properties'], ['elements', 'scope']);
 
                 if (dataschema['properties'].hasOwnProperty('scope')) {
-                    result['properties']['scope'] = {'type': 'string', 'enum': availableScopeElements};
+                    result['properties']['scope'] = {'type': 'string'};
+                }
+
+                if (dataschema['properties'].hasOwnProperty('type')) {
+                    if (dataschema['properties']['type'].hasOwnProperty('enum')) {
+                        if (dataschema['properties']['type']['enum'].length > 1) {
+                            result['properties']['type'] = dataschema['properties']['type'];
+                        }
+                        else {
+                            result['properties']['type'] = _.omit(dataschema['properties']['type'], ['enum']);
+                        }
+                    }
                 }
             }
 

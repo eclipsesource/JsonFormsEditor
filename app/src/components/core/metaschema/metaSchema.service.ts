@@ -8,15 +8,15 @@ module app.core.metaschema {
 
     export class MetaSchemaService {
 
-        static $inject = ['$http', '$q', 'DataschemaService'];
+        static $inject = ['$http', '$q'];
 
         private metaSchema:IPromise<MetaSchema>;
 
-        constructor($http:ng.IHttpService, $q:IQService, dataschemaService:DataschemaService) {
+        constructor($http:ng.IHttpService, $q:IQService) {
             var deffered:IDeferred<MetaSchema> = $q.defer();
 
             $http.get('/resource/metaschema.json').success((json:any):void => {
-                deffered.resolve(MetaSchema.fromJSON(json, dataschemaService.getNames()));
+                deffered.resolve(MetaSchema.fromJSON(json));
             });
 
             this.metaSchema = deffered.promise;

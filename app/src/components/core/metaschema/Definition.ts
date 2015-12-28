@@ -17,6 +17,8 @@ module app.core.metaschema {
                 if (this.dataschema['properties'].hasOwnProperty('type')) {
                     if (this.dataschema['properties']['type'].hasOwnProperty('enum')) {
                         this.types = this.dataschema['properties']['type']['enum'];
+                    } else {
+                        this.types.push(_.capitalize(name));
                     }
                 }
             }
