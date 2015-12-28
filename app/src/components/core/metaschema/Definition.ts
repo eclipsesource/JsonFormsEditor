@@ -3,7 +3,7 @@ module app.core.metaschema {
     export class Definition {
 
         private types:string[] = [];
-        private uischema:{} = {};
+        private uischema:{};
 
         /**
          * Constructs a new definition.
@@ -20,7 +20,7 @@ module app.core.metaschema {
                     }
                 }
             }
-            this.uischema = this.generateUISchema(dataschema);
+            this.uischema = this.generateUISchema(this.dataschema);
         }
 
         /**

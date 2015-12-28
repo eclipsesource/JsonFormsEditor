@@ -4,18 +4,19 @@ module app.core.metaschema {
     import IPromise = angular.IPromise;
     import IQService = angular.IQService;
     import IDeferred = angular.IDeferred;
+    import DataschemaService = app.core.dataschema.DataschemaService;
 
     export class MetaSchemaService {
 
-        static $inject = ['$http', '$q'];
+        static $inject = ['$http', '$q', 'DataschemaService'];
 
         private metaSchema:IPromise<MetaSchema>;
 
-        constructor($http:ng.IHttpService, $q:IQService) {
+        constructor($http:ng.IHttpService, $q:IQService, dataschemaService:DataschemaService) {
             var deffered:IDeferred<MetaSchema> = $q.defer();
 
             $http.get('/resource/metaschema.json').success((json:any):void => {
-                deffered.resolve(MetaSchema.fromJSON(json));
+                deffered.resolve(MetaSchema.fromJSON(json, dataschemaService.getNames()));
             });
 
             this.metaSchema = deffered.promise;

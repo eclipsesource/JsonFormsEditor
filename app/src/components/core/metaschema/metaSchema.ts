@@ -10,9 +10,11 @@ module app.core.metaschema {
          * Factory-Method to create a Metaschema from a json-object.
          *
          * @param json the json structure to create the metaschema from
+         * @param availableScopeElements the registered elements in the {@link app.core.dataschema.DataschemaService}
+         *
          * @returns {app.core.metaschema.MetaSchema}
          */
-        static fromJSON(json:any):MetaSchema {
+        static fromJSON(json:any, availableScopeElements:string[]):MetaSchema {
             var definitions:Definition[] = [];
 
             // array contains all names of the elements in the root scope of the json, so they can be referenced by '#'.
@@ -23,10 +25,10 @@ module app.core.metaschema {
                     // we are only looking at object definitions (e.g. 'label' gets sorted out)
                     if (value.hasOwnProperty('type')) {
                         if (value['type'] === 'object') {
-                            var definition:Definition = new Definition(name, _.omit(value, 'properties.elements'), MetaSchema.retrieveAcceptedElements(value, elements));
+                            var definition:Definition = new Definition(name, MetaSchema.cleanupDataschema(value, availableScopeElements), MetaSchema.retrieveAcceptedElements(value, elements));
 
                             // now continue with all child elements that the current element can accept
-                            _.forEach(MetaSchema.retrieveChildElements(value, elements), (child:Definition) => {
+                            _.forEach(MetaSchema.retrieveChildElements(value, elements, availableScopeElements), (child:Definition) => {
                                 definitions.push(child);
                                 _.forEach(child.getTypes(), (type:string)=> {
                                     if (elements.indexOf(type) === -1) {
@@ -67,7 +69,7 @@ module app.core.metaschema {
             return result;
         }
 
-        private static retrieveChildElements(schema:{}, allElements:string[]):Definition[] {
+        private static retrieveChildElements(schema:{}, allElements:string[], availableScopeElements:string[]):Definition[] {
             var result:Definition[] = [];
 
             if (schema.hasOwnProperty('properties') && schema['properties'].hasOwnProperty('elements')) {
@@ -86,7 +88,7 @@ module app.core.metaschema {
                             if (items.hasOwnProperty('properties') && items['properties'].hasOwnProperty('type')) {
                                 if (items['properties']['type'].hasOwnProperty('enum')) {
                                     _.forEach(items['properties']['type']['enum'], (name:string) => {
-                                        result.push(new Definition(name.toLowerCase(), _.omit(items, 'properties.elements'), MetaSchema.retrieveAcceptedElements(items, allElements)));
+                                        result.push(new Definition(name.toLowerCase(), MetaSchema.cleanupDataschema(items, availableScopeElements), MetaSchema.retrieveAcceptedElements(items, allElements)));
                                     });
                                 }
                             }
@@ -94,6 +96,28 @@ module app.core.metaschema {
                     }
                 }
             }
+            return result;
+        }
+
+        static cleanupDataschema(dataschema:{}, availableScopeElements:string[]):{} {
+            var result = {};
+
+            if (dataschema.hasOwnProperty('type')) {
+                result['type'] = dataschema['type'];
+            }
+
+            if (dataschema.hasOwnProperty('properties')) {
+                result['properties'] = _.omit(dataschema['properties'], ['elements', 'scope']);
+
+                if (dataschema['properties'].hasOwnProperty('scope')) {
+                    result['properties']['scope'] = {'type': 'string', 'enum': availableScopeElements};
+                }
+            }
+
+            if (dataschema.hasOwnProperty('required')) {
+                result['required'] = dataschema['required'];
+            }
+
             return result;
         }
 
