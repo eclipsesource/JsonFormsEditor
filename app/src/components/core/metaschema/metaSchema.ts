@@ -97,7 +97,7 @@ module app.core.metaschema {
             var result = {};
 
             if (dataschema.hasOwnProperty('properties')) {
-                result['properties'] = _.omit(dataschema['properties'], ['elements', 'scope']);
+                result['properties'] = _.omit(dataschema['properties'], ['elements']);
 
                 if (dataschema['properties'].hasOwnProperty('scope')) {
                     result['properties']['scope'] = {'type': 'string'};
