@@ -39,7 +39,7 @@ module app.toolbox {
                 var result:GeneralToolboxElement[] = [];
 
                 _.forEach(schema.getDefinitions(), (definition:Definition) => {
-                    _.forEach(definition.getTypes(), (type:string)=> {
+                    _.forEach(definition.getTypeLabels(), (type:string)=> {
                         //Ignore control, as it's handled on the controltoolbox
                         if (type === 'Control') {
                             return;

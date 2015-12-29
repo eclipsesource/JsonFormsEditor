@@ -33,7 +33,7 @@ module app.core.metaschema {
 
                             // add everything to the result
                             definitions.push(definition);
-                            _.forEach(definition.getTypes(), (type:string) => {
+                            _.forEach(definition.getTypeLabels(), (type:string) => {
                                 if (rootElements.indexOf(type) === -1) {
                                     rootElements.push(type);
                                 }
@@ -93,7 +93,7 @@ module app.core.metaschema {
             return result;
         }
 
-        static cleanupDataschema(dataschema:{}):{} {
+        private static cleanupDataschema(dataschema:{}):{} {
             var result = {};
 
             if (dataschema.hasOwnProperty('properties')) {
@@ -122,31 +122,22 @@ module app.core.metaschema {
             return result;
         }
 
+        /**
+         * Gets all definitions associated with the metaschema.
+         * @returns {Definition[]}
+         */
         getDefinitions():Definition[] {
             return this.definitions;
         }
 
-        getDefinition(name:String):Definition {
+        /**
+         * Gets all definitions with the given type label.
+         * @param typeLabel the label of the type (e.g. 'VerticalLayout')
+         * @returns {Definition} the definition or undefined if not found
+         */
+        getDefinitionByTypeLabel(typeLabel:String):Definition {
             return _.find(this.definitions, (definition:Definition) => {
-                return definition.getName() === name;
-            })
-        }
-
-        getNames():string[] {
-            return _.map(this.definitions, (definition:Definition) => {
-                return definition.getName();
-            })
-        }
-
-        getLabels():string[] {
-            return _.union(_.flatten(_.map(this.definitions, (definition:Definition) => {
-                return definition.getTypes();
-            })))
-        }
-
-        getDefinitionFromLabel(label:String):Definition {
-            return _.find(this.definitions, (definition:Definition) => {
-                return _.contains(definition.getTypes(), label);
+                return _.contains(definition.getTypeLabels(), typeLabel);
             })
         }
 

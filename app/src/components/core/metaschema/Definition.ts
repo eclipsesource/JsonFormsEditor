@@ -12,7 +12,7 @@ module app.core.metaschema {
          * @param dataschema the dataschema of the definition
          * @param acceptedElements the labels of the elements this definition accepts as children
          */
-        constructor(private name:string, private dataschema:{}, private acceptedElements:string[]) {
+        constructor(name:string, private dataschema:{}, private acceptedElements:string[]) {
             if (this.dataschema.hasOwnProperty('properties')) {
                 if (this.dataschema['properties'].hasOwnProperty('type')) {
                     if (this.dataschema['properties']['type'].hasOwnProperty('enum')) {
@@ -26,18 +26,10 @@ module app.core.metaschema {
         }
 
         /**
-         * The name of the definition, e.g. 'control' or 'layout'.
-         * @returns {string}
-         */
-        getName():string {
-            return this.name;
-        }
-
-        /**
-         * The types (labels) this definition can exhibit (e.g. 'VerticalLayout' / 'HorizontalLayout' for Definition 'layout').
+         * The labels of the types this definition can exhibit (e.g. 'VerticalLayout' / 'HorizontalLayout' for Definition 'layout').
          * @returns {string[]}
          */
-        getTypes():string[] {
+        getTypeLabels():string[] {
             return this.types;
         }
 
@@ -50,7 +42,7 @@ module app.core.metaschema {
         }
 
         /**
-         * The types (labels) this definition accepts as child elements.
+         * The labels of the types this definition accepts as child elements.
          * @returns {string[]}
          */
         getAcceptedElements():string[] {

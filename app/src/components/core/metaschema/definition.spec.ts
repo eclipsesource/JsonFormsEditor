@@ -65,9 +65,9 @@ describe('app.core.Definition', () => {
     });
 
     it('should get the labels of the defintion', () => {
-        expect(layoutDefinition.getTypes()).toContain('VerticalLayout');
-        expect(layoutDefinition.getTypes()).toContain('HorizontalLayout');
-        expect(layoutDefinition.getTypes()).toContain('Group');
+        expect(layoutDefinition.getTypeLabels()).toContain('VerticalLayout');
+        expect(layoutDefinition.getTypeLabels()).toContain('HorizontalLayout');
+        expect(layoutDefinition.getTypeLabels()).toContain('Group');
     });
 
     it('should get accepted elements for layout', () => {
