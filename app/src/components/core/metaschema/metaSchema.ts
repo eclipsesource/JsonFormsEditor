@@ -1,6 +1,6 @@
 module app.core.metaschema {
 
-    export class MetaSchema {
+    export class Metaschema {
 
         constructor(private definitions:Definition[] = []) {
 
@@ -11,9 +11,9 @@ module app.core.metaschema {
          *
          * @param json the json structure to create the metaschema from
          *
-         * @returns {app.core.metaschema.MetaSchema}
+         * @returns {app.core.metaschema.Metaschema}
          */
-        static fromJSON(json:any):MetaSchema {
+        static fromJSON(json:any):Metaschema {
             var definitions:Definition[] = [];
 
             // array contains all names of the elements in the root scope of the json, so they can be referenced by '#'.
@@ -24,10 +24,10 @@ module app.core.metaschema {
                     // we are only looking at object definitions (e.g. 'label' gets sorted out)
                     if (value.hasOwnProperty('type')) {
                         if (value['type'] === 'object') {
-                            var definition:Definition = new Definition(name, MetaSchema.cleanupDataschema(value), MetaSchema.retrieveAcceptedElements(value, rootElements));
+                            var definition:Definition = new Definition(name, Metaschema.cleanupDataschema(value), Metaschema.retrieveAcceptedElements(value, rootElements));
 
                             // now continue with all child elements that the current element can accept
-                            _.forEach(MetaSchema.retrieveChildElements(value, rootElements), (child:Definition) => {
+                            _.forEach(Metaschema.retrieveChildElements(value, rootElements), (child:Definition) => {
                                 definitions.push(child);
                             });
 
@@ -42,7 +42,7 @@ module app.core.metaschema {
                     }
                 });
             }
-            return new MetaSchema(definitions);
+            return new Metaschema(definitions);
         }
 
         private static retrieveAcceptedElements(value:{}, rootElements:string[]):string[] {
@@ -82,7 +82,7 @@ module app.core.metaschema {
                             if (items.hasOwnProperty('properties') && items['properties'].hasOwnProperty('type')) {
                                 if (items['properties']['type'].hasOwnProperty('enum')) {
                                     _.forEach(items['properties']['type']['enum'], (name:string) => {
-                                        result.push(new Definition(name.toLowerCase(), MetaSchema.cleanupDataschema(items), MetaSchema.retrieveAcceptedElements(items, rootElements)));
+                                        result.push(new Definition(name.toLowerCase(), Metaschema.cleanupDataschema(items), Metaschema.retrieveAcceptedElements(items, rootElements)));
                                     });
                                 }
                             }
@@ -123,7 +123,7 @@ module app.core.metaschema {
         }
 
         /**
-         * Gets all definitions associated with the metaschema.
+         * Gets all definitions associated with the Metaschema.
          * @returns {Definition[]}
          */
         getDefinitions():Definition[] {

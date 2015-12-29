@@ -6,32 +6,32 @@ module app.core.metaschema {
     import IDeferred = angular.IDeferred;
     import DataschemaService = app.core.dataschema.DataschemaService;
 
-    export class MetaSchemaService {
+    export class MetaschemaService {
 
         static $inject = ['$http', '$q'];
 
-        private metaSchema:IPromise<MetaSchema>;
+        private metaschema:IPromise<Metaschema>;
 
         constructor($http:ng.IHttpService, $q:IQService) {
-            var deffered:IDeferred<MetaSchema> = $q.defer();
+            var deffered:IDeferred<Metaschema> = $q.defer();
 
             $http.get('/resource/metaschema.json').success((json:any):void => {
-                deffered.resolve(MetaSchema.fromJSON(json));
+                deffered.resolve(Metaschema.fromJSON(json));
             });
 
-            this.metaSchema = deffered.promise;
+            this.metaschema = deffered.promise;
         }
 
         /**
          * Gets a promise of the Metaschema.
          *
-         * @returns {IPromise<MetaSchema>}
+         * @returns {IPromise<Metaschema>}
          */
-        getMetaSchema():IPromise<MetaSchema> {
-            return this.metaSchema;
+        getMetaschema():IPromise<Metaschema> {
+            return this.metaschema;
         }
 
     }
 
-    angular.module('app.core').service('MetaSchemaService', MetaSchemaService);
+    angular.module('app.core').service('MetaschemaService', MetaschemaService);
 }

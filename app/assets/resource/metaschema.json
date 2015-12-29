@@ -84,6 +84,9 @@
                 "items": {
                   "$ref": "#"
                 }
+              },
+              "label": {
+                "type": "string"
               }
             },
             "required": [

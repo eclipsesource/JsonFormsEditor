@@ -1,19 +1,19 @@
 /// <reference path="../../../../../typings/jasmine/jasmine.d.ts" />
 /// <reference path="../../../../../typings/angularjs/angular-mocks.d.ts" />
 
-import MetaSchema = app.core.metaschema.MetaSchema;
+import Metaschema = app.core.metaschema.Metaschema;
 'use strict';
 
 describe('app.core.Metaschema', () => {
 
-    var metaschema:MetaSchema;
+    var metaschema:Metaschema;
 
     beforeAll(() => {
-        metaschema = MetaSchema.fromJSON(json);
+        metaschema = Metaschema.fromJSON(json);
     });
 
     it('should create metaschema from JSON', () => {
-        var metaschema:MetaSchema = MetaSchema.fromJSON(json);
+        var metaschema:Metaschema = Metaschema.fromJSON(json);
         expect(metaschema).toBeDefined();
     });
 

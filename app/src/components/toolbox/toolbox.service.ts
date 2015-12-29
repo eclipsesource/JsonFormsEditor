@@ -11,21 +11,21 @@ module app.toolbox {
     import ToolboxElement = app.core.model.ToolboxElement;
     import TreeElement = app.core.model.TreeElement;
     import JsonschemaProperty = app.core.dataschema.DataschemaProperty;
-    import MetaSchema = app.core.metaschema.MetaSchema;
+    import Metaschema = app.core.metaschema.Metaschema;
     import Definition = app.core.metaschema.Definition;
-    import MetaSchemaService = app.core.metaschema.MetaSchemaService;
+    import MetaschemaService = app.core.metaschema.MetaschemaService;
     import IPromise = angular.IPromise;
     import IQService = angular.IQService;
     import IDeferred = angular.IDeferred;
 
     export class ToolboxService {
-        static $inject = ['DataschemaService', 'MetaSchemaService', '$q'];
+        static $inject = ['DataschemaService', 'MetaschemaService', '$q'];
 
         public expertElements:GeneralToolboxElement[] = [];
         public schemaElements:ControlToolboxElement[] = [];
 
 
-        constructor(public dataschemaService:DataschemaService, private metaschemaService:MetaSchemaService, private $q:IQService) {
+        constructor(public dataschemaService:DataschemaService, private metaschemaService:MetaschemaService, private $q:IQService) {
             this.getGeneralElements().then((elements:GeneralToolboxElement[]) => {
                 this.expertElements = elements;
             });
@@ -35,7 +35,7 @@ module app.toolbox {
         private getGeneralElements():IPromise<GeneralToolboxElement[]> {
             var defer:IDeferred<GeneralToolboxElement[]> = this.$q.defer();
 
-            this.metaschemaService.getMetaSchema().then((schema:MetaSchema) => {
+            this.metaschemaService.getMetaschema().then((schema:Metaschema) => {
                 var result:GeneralToolboxElement[] = [];
 
                 _.forEach(schema.getDefinitions(), (definition:Definition) => {
