@@ -36,6 +36,11 @@ module app {
                             controller: 'LayoutsController',
                             controllerAs: 'layouts',
                             templateUrl: 'app/src/components/layouts/layouts.html'
+                        },
+                        'detailContainer': {
+                            controller: 'DetailController',
+                            controllerAs: 'detail',
+                            templateUrl: 'app/src/components/detail/detail.html'
                         }
                     }
                 });

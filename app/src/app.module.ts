@@ -12,6 +12,7 @@ module app {
         'app.layouts',
         'ngMaterial',
         'ngClipboard',
+        'app.detail',
         'jsonforms'
     ]);
 }

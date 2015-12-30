@@ -4,11 +4,12 @@ module app.tree {
     import ToolboxElement = app.core.ToolboxElement;
     import TreeElement = app.core.TreeElement;
     import ToolboxService = app.toolbox.ToolboxService;
+    import DetailService = app.detail.DetailService;
 
 
     class MyTreeController {
 
-        static $inject = ['$scope', 'TreeService', 'JsonSchemaService', 'ToolboxService'];
+        static $inject = ['$scope', 'TreeService', 'JsonSchemaService', 'ToolboxService', 'DetailService'];
 
         public elements: any = [];
 
@@ -16,7 +17,8 @@ module app.tree {
             public $scope, 
             public treeService: app.tree.TreeService, 
             public JsonSchemaService: any,
-            public toolboxService: ToolboxService){
+            public toolboxService: ToolboxService,
+            public detailService: DetailService){
 
             this.elements = treeService.elements;
 
@@ -88,6 +90,10 @@ module app.tree {
         remove(scope) : void {
             scope.removeNode(scope);
 
+        }
+
+        showDetails(node: any) : void {
+            this.detailService.setElement(node);
         }
 
         toggle(scope) : void {
