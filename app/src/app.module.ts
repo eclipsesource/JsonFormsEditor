@@ -10,7 +10,7 @@ module app {
         'app.tree',
         'app.detail',
         'app.toolbox',
-        'ui.router',
+        'app.layouts',
         'ngMaterial',
         'ngClipboard'
     ]);

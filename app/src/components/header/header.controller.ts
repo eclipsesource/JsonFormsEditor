@@ -2,6 +2,7 @@ module app.header {
 
     import TreeService = app.tree.TreeService;
     import IDialogService = angular.material.IDialogService;
+    import IDialogOptions = angular.material.IDialogOptions;
 
     class HeaderViewController {
 
@@ -13,7 +14,7 @@ module app.header {
         showExportDialog():void {
             var exportDialogContent = this.treeService.exportUISchemaAsJSON();
 
-            var options:ng.material.IDialogOptions = {
+            var options:IDialogOptions = {
                 parent: angular.element(document.body),
                 templateUrl: 'app/src/components/header/exportDialog.html',
                 clickOutsideToClose: true,
@@ -22,6 +23,18 @@ module app.header {
                 locals: {
                     content: exportDialogContent
                 }
+            };
+
+            this.$mdDialog.show(options);
+        }
+
+        showConfigDialog():void {
+            var options: IDialogOptions = {
+                parent: angular.element(document.body),
+                templateUrl: 'app/src/components/header/configDialog.html',
+                clickOutsideToClose: true,
+                controller: ConfigDialogController,
+                controllerAs: 'config'
             };
 
             this.$mdDialog.show(options);

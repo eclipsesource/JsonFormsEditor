@@ -14,4 +14,3 @@ module app.detail {
 
     angular.module('app.detail').controller('DetailController', DetailController);
 }
-

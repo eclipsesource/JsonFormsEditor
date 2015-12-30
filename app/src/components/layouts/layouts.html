@@ -1,0 +1,16 @@
+<md-content class="layouts-view bottom-border md-padding">
+    <div ui-tree="treeOptionsToolbox" data-clone-enabled="true" data-nodrop-enabled="true">
+        <div layout="row" layout-wrap ui-tree-nodes data-clone-enabled="true" data-nodrop-enabled="true"
+                 ng-model="layouts.toolboxService.expertElements">
+            <md-card flex class="layouts-element" ng-repeat="element in layouts.toolboxService.expertElements" ui-tree-handle
+                          ui-tree-node>
+                <md-icon class="material-icons">{{element.getIcon()}}</md-icon>
+                <md-tooltip>
+                    {{element.tooltip}}
+                </md-tooltip>
+            </md-card>
+        </div>
+    </div>
+</md-content>
+
+

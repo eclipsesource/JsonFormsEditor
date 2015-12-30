@@ -1,3 +1,4 @@
+
 module app.detail {
     'use strict';
 
@@ -5,8 +6,3 @@ module app.detail {
         'jsonforms'
     ])
 }
-
-
-
-
-

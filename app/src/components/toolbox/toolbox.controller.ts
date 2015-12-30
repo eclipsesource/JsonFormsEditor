@@ -3,58 +3,65 @@ module app.toolbox {
 
     //TODO change scrolling in toolbox to let bottom bar and top tabs stay static
 
-    import GeneralToolboxElement = app.core.model.GeneralToolboxElement;
-    import ControlToolboxElement = app.core.model.ControlToolboxElement;
-    import TreeElement = app.core.model.TreeElement;
-    import ToolboxElement = app.core.model.ToolboxElement;
+    import GeneralToolboxElement = app.core.GeneralToolboxElement;
+    import ControlToolboxElement = app.core.ControlToolboxElement;
+    import TreeElement = app.core.TreeElement;
+    import ToolboxElement = app.core.ToolboxElement;
 
 
     class ToolboxController {
 
-        public currentAddElementLabel:string = '';
+        public currentAddElementLabel: string = '';
+        public currentAddElementType: string = 'string';
+        public elementTypes = ['string', 'number', 'boolean'];
 
-        private elementTypes = ['string', 'number', 'boolean'];
 
-        public currentAddElementIndex:number = 0;
+        static $inject = ['$scope', '$filter', 'ToolboxService', 'ConfigDialogService'];
 
-        public filterDataToolbox:boolean = true;
+        constructor($scope, public $filter, public toolboxService: ToolboxService, public configService: ConfigDialogService) {
 
-        static $inject = ['$scope', '$filter', 'ToolboxService'];
-
-        constructor($scope, public $filter, public toolboxService:ToolboxService) {
+            var _this = this;
             $scope.treeOptionsToolbox = {
                 accept: function (sourceNodeScope, destNodesScope, destIndex) {
                     return false;
                 },
-                dropped: function (e) {
-                    console.log(e);
+                dropped: function(e) {
                     //if the element is being dragged into the toolbar itself, return
-                    if (e.dest.nodesScope.$modelValue == e.source.nodesScope.$modelValue) {
+                    if(e.dest.nodesScope.$modelValue == e.source.nodesScope.$modelValue) {
                         return;
                     }
 
                     // Convert the ToolboxElement into a TreeElement
                     var index = e.dest.index;
-                    var modelDest:ToolboxElement = e.dest.nodesScope.$modelValue[index];
+                    var modelDest: ToolboxElement = e.dest.nodesScope.$modelValue[index];
 
-                    var modelSource:ToolboxElement = e.source.nodeScope.$modelValue;
-                    if (modelSource instanceof ControlToolboxElement) {
-                        var control:ControlToolboxElement = modelSource;
+                    var modelSource: ToolboxElement = e.source.nodeScope.$modelValue;
+                    if(modelSource instanceof ControlToolboxElement) {
+                        var control: ControlToolboxElement = modelSource;
                         control.increasePlacedTimes();
                     }
-                    e.dest.nodesScope.$modelValue[index] = modelDest.convertToTreeElement();
+                    e.dest.nodesScope.$modelValue[index] = modelDest.insertIntoTree(TreeElement.getNewId());
 
+                },
+                dragStart: function(e) {
+                    var h = 52;
+                    var w = $('.tree-view').width() /2;
+
+                    console.log(e);
+
+                    $(e.elements.placeholder).css('height',h+'px');
+                    $(e.elements.placeholder).css('width',w+'px');
                 }
 
             };
         }
 
-        shouldHide(element:ToolboxElement):boolean {
-            if (!this.filterDataToolbox) {
+        shouldHide(element: ToolboxElement): boolean {
+            if(!this.configService.enableFilter){
                 return false;
             }
-            if (element instanceof ControlToolboxElement) {
-                if (element.isAlreadyPlaced()) {
+            if(element instanceof ControlToolboxElement){
+                if(element.isAlreadyPlaced()){
                     return true;
                 }
             }
@@ -65,30 +72,42 @@ module app.toolbox {
             this.currentAddElementIndex = (this.currentAddElementIndex + 1) % this.elementTypes.length;
         }
 
-        typeOfNewElement():string {
-            return this.elementTypes[this.currentAddElementIndex];
+        typeOfNewElement(): string {
+            return this.currentAddElementType;
         }
 
 
         //TODO support different scopes(inside folders)
         //TODO add more data into content(required, min chars, etc)
         addNewElement() {
+            document.getElementById("inputLabel").focus();
+
             var content = {
                 type: this.typeOfNewElement()
             };
 
-            this.toolboxService.addSchemaElement(this.currentAddElementLabel, content);
+            var added = this.toolboxService.addSchemaElement(this.currentAddElementLabel, content);
+
+            if(added==false) {
+                console.log("ERROR: failed to add the element into the schema");
+            }
+            this.currentAddElementLabel = '';
         }
 
-        removeDataElement(element:ControlToolboxElement) {
-            if (this.canRemoveDataElement(element)) {
-                this.toolboxService.removeSchemaElement(element.getScope());
+        removeDataElement(element: ControlToolboxElement) {
+            if(this.canRemoveDataElement(element)){
+                var removed = this.toolboxService.removeSchemaElement(element.getScope());
+
+                if(removed==false) {
+                    console.log("ERROR: failed to remove the element from the schema");
+                }
             }
         }
 
         canRemoveDataElement(element:ControlToolboxElement):boolean {
             return !element.isAlreadyPlaced();
         }
+
     }
 
     angular.module('app.toolbox').controller('ToolboxController', ToolboxController)

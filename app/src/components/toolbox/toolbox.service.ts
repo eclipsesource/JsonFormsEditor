@@ -56,7 +56,6 @@ module app.toolbox {
             return defer.promise;
         }
 
-
         private loadSchemaElements(jsonWithDataSchema:any) {
             this.dataschemaService.loadFromJson(jsonWithDataSchema);
 
@@ -66,13 +65,20 @@ module app.toolbox {
                 this.schemaElements.push(element);
 
             }
+
+
         }
 
         //adds new data element into schema and into toolbox
         //returns if the addition was successful
         //PARAMETERS: content has to be an object containing the property 'type'
-        public addSchemaElement(scope:string, content:any):boolean {
-            if (this.dataschemaService.getNames().indexOf(scope) != -1) {
+        public addSchemaElement(scope: string, content: any): boolean {
+
+            if(scope == ''){
+                return false;
+            }
+
+            if(this.dataschemaService.getNames().indexOf(scope)!=-1){
                 console.log('ERROR: Trying to add a duplicated schema element');
                 return false;
             }
@@ -144,6 +150,7 @@ module app.toolbox {
         }
 
         private convertScopeToLabel(scope:string):string {
+
             var sc = scope.split('/').pop();
 
             return sc

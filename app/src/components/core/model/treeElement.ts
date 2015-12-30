@@ -3,7 +3,7 @@ module app.core.model {
     export class TreeElement {
 
         private type:string;
-        private label:string;
+        public label:string;
         private scope:string;
         public elements:TreeElement[] = [];
         public metaData:any = {};
@@ -64,6 +64,13 @@ module app.core.model {
         }
 
         public isDeletable():boolean {
+            return true;
+        }
+
+        public hasLabel() : boolean {
+            if(this.type=='HorizontalLayout' || this.type == 'VerticalLayout' || this.type == 'Categorization') {
+                return false;
+            }
             return true;
         }
 

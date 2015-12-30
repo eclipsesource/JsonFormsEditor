@@ -1,46 +1,42 @@
 <!-- Nested node template -->
 <script type="text/ng-template" id="tree_renderer.html">
-    <div ui-tree-handle class="tree-node tree-node-content">
-        <a ng-if="node.getElements().length > 0" data-nodrag ng-click="tree.toggle(this)">
-            <md-icon class="material-icons" ng-show="collapsed">expand_more</md-icon>
-            <md-icon class="material-icons" ng-show="!collapsed">expand_less</md-icon>
-        </a>
-        {{node.getType()}} <span ng-show="node.getLabel()">-</span> {{node.getLabel()}}
-        <a class="pull-right left-margin" hideif="node.root" data-nodrag ng-click="tree.remove(this)">
-            <md-icon class="material-icons">delete</md-icon>
-        </a>
-        <a class="pull-right left-margin" data-nodrag ng-click="tree.showDetails(node);">
-            <md-icon class="material-icons">edit</md-icon>
-        </a>
-        <a class="pull-right" hideif="!node.getAcceptedElements().length > 0" data-nodrag
-           ng-click="tree.newSubItem(this)">
-            <md-icon class="material-icons">add</md-icon>
-        </a>
-    </div>
 
-    <ol ui-tree-nodes="" ng-model="node.elements" ng-class="{hidden: collapsed}">
-        <li ng-repeat="node in node.elements" ui-tree-node ng-include="'tree_renderer.html'"></li>
-    </ol>
+  <div ui-tree-handle class="tree-node tree-node-content">
+    <a ng-if="node.getElements().length > 0" data-nodrag ng-click="tree.toggle(this)">
+      <md-icon class="material-icons" ng-show="collapsed">expand_more</md-icon>
+      <md-icon class="material-icons" ng-show="!collapsed">expand_less</md-icon>
+    </a>
+    {{node.getType()}} <span ng-show="node.getLabel()">-</span>  {{node.getLabel()}}
+    <a class="pull-right left-margin" hideif="node.root" data-nodrag ng-click="tree.remove(this)">
+      <md-icon class="material-icons">delete</md-icon>
+    </a>
+    <a class="pull-right left-margin" data-nodrag ng-click="tree.showDetails(node);">
+      <md-icon class="material-icons">edit</md-icon>
+    </a>
+  </div>
+
+  </div>
+
+  <ol ui-tree-nodes="" ng-model="node.elements" ng-class="{hidden: collapsed}">
+    <li ng-repeat="node in node.elements" ui-tree-node ng-include="'tree_renderer.html'"></li>
+  </ol>
 </script>
 
 <div style="height:60px;">
-    <md-button ng-click="tree.preview(false)" ng-class="{'md-raised': !isPreview, 'md-accent': !isPreview}">Design
-        View
-    </md-button>
-    <md-button ng-click="tree.preview(true)" ng-class="{'md-raised': isPreview, 'md-accent': isPreview}">Preview
-    </md-button>
+  <md-button ng-click="tree.preview(false)" ng-class="{'md-raised': !isPreview, 'md-accent': !isPreview}">Design View</md-button>
+  <md-button ng-click="tree.preview(true)" ng-class="{'md-raised': isPreview, 'md-accent': isPreview}">Preview</md-button>
 </div>
 
 <!-- tree view -->
 <md-content style="height: calc(100% - 60px);" class="md-padding tree-view" ng-if="!isPreview">
-    <div ui-tree="treeOptions" data-clone-enabled="true">
-        <ol ui-tree-nodes="" ng-model="tree.elements">
-            <li ng-repeat="node in tree.elements" ui-tree-node ng-include="'tree_renderer.html'"></li>
-        </ol>
-    </div>
+  <div style="margin-bottom:500px;" ui-tree="treeOptions" data-clone-enabled="true">
+    <ol ui-tree-nodes="" ng-model="tree.elements">
+      <li ng-repeat="node in tree.elements" ui-tree-node ng-include="'tree_renderer.html'"></li>
+    </ol>
+  </div>
 </md-content>
 
 <!-- tree preview -->
 <md-content style="height: calc(100% - 60px);" class="md-padding jsf" ng-if="isPreview">
-    <jsonforms schema="previewSchema" ui-schema="previewUISchema" data="previewData"></jsonforms>
+  <jsonforms schema="previewSchema" ui-schema="previewUISchema" data="previewData"></jsonforms>
 </md-content>

@@ -5,20 +5,20 @@ module app.tree {
     import TreeElement = app.core.model.TreeElement;
     import ToolboxService = app.toolbox.ToolboxService;
     import DetailService = app.detail.DetailService;
-    import JsonSchemaService = app.core.dataschema.DataschemaService;
 
 
     class MyTreeController {
 
-        static $inject = ['$scope', 'TreeService', 'DataschemaService', 'DetailService', 'ToolboxService'];
+        static $inject = ['$scope', 'TreeService', 'JsonSchemaService', 'ToolboxService', 'DetailService'];
 
-        public elements:any = [];
+        public elements: any = [];
 
-        constructor(public $scope,
-                    public treeService:TreeService,
-                    public JsonSchemaService:JsonSchemaService,
-                    private detailService:DetailService,
-                    public toolboxService:ToolboxService) {
+        constructor(
+            public $scope, 
+            public treeService: app.tree.TreeService, 
+            public JsonSchemaService: any,
+            public toolboxService: ToolboxService,
+            public detailService: DetailService){
 
             this.elements = treeService.elements;
 
@@ -88,19 +88,14 @@ module app.tree {
 
         }
 
-        newSubItem(scope):void {
-            var node:any = scope.$modelValue;
-            //TODO borrar esta functionalidad si quito scope binding
-            node.elements.push(new ControlToolboxElement('', '', ''));
+        showDetails(node: any) : void {
+            this.detailService.setElement(node);
         }
 
         toggle(scope):void {
             scope.toggle();
         }
 
-        showDetails(node:any):void {
-            this.detailService.setElement(node);
-        }
     }
 
     angular.module('app.tree').controller('MyTreeController', MyTreeController);
