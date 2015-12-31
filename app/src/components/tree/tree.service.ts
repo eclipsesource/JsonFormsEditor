@@ -2,16 +2,16 @@ module app.tree {
 
     import LayoutToolboxElement = app.core.model.LayoutToolboxElement;
     import TreeElement = app.core.model.TreeElement;
-    import ToolboxService = app.toolbox.ToolboxService;
+    import LayoutsService = app.layouts.LayoutsService;
 
     export class TreeService {
 
-        static $inject = ['ToolboxService'];
+        static $inject = ['LayoutsService'];
 
         public elements:TreeElement[] = [];
 
-        constructor(private toolboxService:ToolboxService) {
-            toolboxService.getExpertElementOfType('VerticalLayout').then((element:LayoutToolboxElement) => {
+        constructor(private layoutsService:LayoutsService) {
+            layoutsService.getElementByType('VerticalLayout').then((element:LayoutToolboxElement) => {
                 var rootElement:TreeElement = element.convertToTreeElement();
                 rootElement['root'] = 'root';
                 this.elements.push(rootElement);

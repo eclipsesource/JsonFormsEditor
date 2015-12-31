@@ -4,7 +4,7 @@ module app.core.elementsConfig {
 
         }
 
-        getName():string {
+        getTypeLabel():string {
             return this.typeLabel;
         }
 

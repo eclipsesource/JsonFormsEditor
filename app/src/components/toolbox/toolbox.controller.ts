@@ -12,8 +12,9 @@ module app.toolbox {
 
     class ToolboxController {
 
-        public currentAddElementLabel: string = '';
-        public currentAddElementType: string = 'string';
+        public newElementLabel: string = '';
+        public newElementTypeLabel: string = 'string';
+
         public elementTypes = ['string', 'number', 'boolean'];
 
         public treeOptions:{};
@@ -41,7 +42,6 @@ module app.toolbox {
                     var index = event.dest.index;
                     var destination: ToolboxElement = event.dest.nodesScope.$modelValue[index];
                     event.dest.nodesScope.$modelValue[index] = destination.convertToTreeElement();
-
                 },
                 dragStart: (event) => {
                     var h = 52;
@@ -66,34 +66,28 @@ module app.toolbox {
             return false;
         }
 
-        changeAddType(type: string) {
-            this.currentAddElementType = type;
+        setNewElementTypeLabel(type: string) {
+            this.newElementTypeLabel = type;
         }
-
-        typeOfNewElement(): string {
-            return this.currentAddElementType;
-        }
-
 
         //TODO support different scopes(inside folders)
         //TODO add more data into content(required, min chars, etc)
         addNewElement() {
-            document.getElementById("inputLabel").focus();
-
             var content = {
-                type: this.typeOfNewElement()
+                type: this.newElementTypeLabel
             };
 
-            var added = this.toolboxService.addSchemaElement(this.currentAddElementLabel, content);
+            var added = this.toolboxService.addSchemaElement(this.newElementLabel, content);
 
             if(added==false) {
                 console.log("ERROR: failed to add the element into the schema");
             }
-            this.currentAddElementLabel = '';
+
+            this.newElementLabel = '';
         }
 
         removeDataElement(element: ControlToolboxElement) {
-            if(this.canRemoveDataElement(element)){
+            if(element.canBeRemoved()){
                 var removed = this.toolboxService.removeSchemaElement(element.getScope());
 
                 if(removed==false) {
@@ -101,11 +95,6 @@ module app.toolbox {
                 }
             }
         }
-
-        canRemoveDataElement(element:ControlToolboxElement):boolean {
-            return !element.isAlreadyPlaced();
-        }
-
     }
 
     angular.module('app.toolbox').controller('ToolboxController', ToolboxController)

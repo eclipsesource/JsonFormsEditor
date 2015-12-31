@@ -19,57 +19,26 @@ module app.toolbox {
     import IDeferred = angular.IDeferred;
     import ElementsConfigService = app.core.elementsConfig.ElementsConfigService;
     import ElementConfig = app.core.elementsConfig.ElementConfig;
+    import LayoutsService = app.layouts.LayoutsService;
 
     export class ToolboxService {
-        static $inject = ['DataschemaService', 'MetaschemaService', '$q', 'ElementsConfigService'];
+        static $inject = ['DataschemaService', '$q', 'LayoutsService'];
 
-        public expertElements:LayoutToolboxElement[] = [];
-        public schemaElements:ControlToolboxElement[] = [];
+        public elements:ControlToolboxElement[] = [];
 
 
-        constructor(public dataschemaService:DataschemaService, private metaschemaService:MetaschemaService, private $q:IQService, private elementsConfigService:ElementsConfigService) {
-            this.getGeneralElements().then((elements:LayoutToolboxElement[]) => {
-                this.expertElements = elements;
-            });
+        constructor(public dataschemaService:DataschemaService, private $q:IQService, private layoutsService:LayoutsService) {
             this.loadSchemaElements(demoSchema);
         }
 
-        private getGeneralElements():IPromise<LayoutToolboxElement[]> {
-            var defer:IDeferred<LayoutToolboxElement[]> = this.$q.defer();
-
-            this.metaschemaService.getMetaschema().then((schema:Metaschema) => {
-                this.elementsConfigService.getElements().then((elements:ElementConfig[]) => {
-                    var result:LayoutToolboxElement[] = [];
-
-                    _.forEach(schema.getDefinitions(), (definition:Definition) => {
-                        _.forEach(definition.getTypeLabels(), (type:string)=> {
-                            //Ignore control, as it's handled on the controltoolbox
-                            if (type === 'Control') {
-                                return;
-                            }
-                            var element = new LayoutToolboxElement(type, type, _.find(elements, {typeLabel: type}));
-
-                            element.setAcceptedElements(definition.getAcceptedElements());
-                            result.push(element);
-                        });
-                    });
-
-                    defer.resolve(result);
-                });
-            });
-            return defer.promise;
-        }
 
         private loadSchemaElements(jsonWithDataSchema:any) {
             this.dataschemaService.loadFromJson(jsonWithDataSchema);
 
             var schemaProperties:DataschemaProperty[] = this.dataschemaService.getProperties();
-            for (var i = 0; i < schemaProperties.length; i++) {
-                var element:ControlToolboxElement = new ControlToolboxElement(this.convertScopeToLabel(schemaProperties[i].getName()), schemaProperties[i].getType(), schemaProperties[i].getName());
-                this.schemaElements.push(element);
-            }
-
-            console.log(this.schemaElements);
+            _.forEach(schemaProperties, (property:DataschemaProperty) => {
+                this.elements.push(new ControlToolboxElement(this.convertScopeToLabel(property.getName()), property.getType(), property.getName()));
+            });
         }
 
         //adds new data element into schema and into toolbox
@@ -99,7 +68,7 @@ module app.toolbox {
             if (this.dataschemaService.addNewProperty(new DataschemaProperty(name, content.type), path)) {
 
                 var element:ControlToolboxElement = new ControlToolboxElement(this.convertScopeToLabel(scope), content.type, scope);
-                this.schemaElements.push(element);
+                this.elements.push(element);
                 return true;
             }
             return false;
@@ -112,10 +81,10 @@ module app.toolbox {
             var path = bundle.path;
             if (this.dataschemaService.removeProperty(name, path)) {
 
-                for (var i = 0; i < this.schemaElements.length; i++) {
-                    if (this.schemaElements[i].getScope() == scope) {
+                for (var i = 0; i < this.elements.length; i++) {
+                    if (this.elements[i].getScope() == scope) {
 
-                        this.schemaElements.splice(i, 1);
+                        this.elements.splice(i, 1);
                         return true;
                     }
                 }
@@ -166,23 +135,12 @@ module app.toolbox {
                 })
         }
 
-        public getExpertElementOfType(type:string):IPromise<LayoutToolboxElement> {
-            var deffered:IDeferred<LayoutToolboxElement> = this.$q.defer();
-
-            this.getGeneralElements().then((elements:LayoutToolboxElement[]) => {
-                deffered.resolve(_.find(this.expertElements, (element:LayoutToolboxElement) => {
-                    return element.getType() === type;
-                }));
-            });
-
-            return deffered.promise;
-        }
 
         public getSchemaElementWithScope(scope:string):ControlToolboxElement {
             var element:ControlToolboxElement;
-            for (var i = 0; i < this.schemaElements.length; i++) {
+            for (var i = 0; i < this.elements.length; i++) {
 
-                element = this.schemaElements[i];
+                element = this.elements[i];
                 if (element.getScope() == scope) {
                     return element;
                 }
@@ -198,7 +156,7 @@ module app.toolbox {
 
             if (treeElement.getType() != 'Control') {
                 //Layouts
-                this.getExpertElementOfType(treeElement.getType()).then((element:LayoutToolboxElement)=> {
+                this.layoutsService.getElementByType(treeElement.getType()).then((element:LayoutToolboxElement)=> {
                     deffered.resolve(element);
                 });
             } else {

@@ -34,5 +34,9 @@ module app.core.model {
         getScope():string {
             return this.scope;
         }
+
+        canBeRemoved():boolean {
+            return !this.isAlreadyPlaced();
+        }
     }
 }

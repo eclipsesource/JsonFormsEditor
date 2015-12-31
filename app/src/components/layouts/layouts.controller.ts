@@ -2,7 +2,6 @@
  * Created by pancho111203 on 23/12/15.
  */
 module app.layouts {
-    import ToolboxService = app.toolbox.ToolboxService;
     import ToolboxElement = app.core.model.ToolboxElement;
     import ControlToolboxElement = app.core.model.ControlToolboxElement;
 
@@ -10,9 +9,9 @@ module app.layouts {
 
         public treeOptions:{};
 
-        static $inject = ['ToolboxService'];
+        static $inject = ['LayoutsService'];
 
-        constructor(public toolboxService:ToolboxService) {
+        constructor(public layoutsService:LayoutsService) {
             this.treeOptions = {
                 accept: () => {
                     return false;
@@ -22,12 +21,6 @@ module app.layouts {
                     if (event.dest.nodesScope.$modelValue == event.source.nodesScope.$modelValue) {
                         return;
                     }
-
-                    var toolboxElement:ToolboxElement = event.source.nodeScope.$modelValue;
-                    if (toolboxElement instanceof ControlToolboxElement) {
-                        toolboxElement.increasePlacedTimes();
-                    }
-
                     // Convert the ToolboxElement into a TreeElement
                     var index = event.dest.index;
                     var destination:ToolboxElement = event.dest.nodesScope.$modelValue[index];
