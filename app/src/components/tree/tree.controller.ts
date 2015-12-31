@@ -7,27 +7,19 @@ module app.tree {
     import DetailService = app.detail.DetailService;
     import DataschemaService = app.core.dataschema.DataschemaService;
 
-
     class MyTreeController {
+
+        public elements:TreeElement[] = [];
+        public treeOptions:{};
 
         static $inject = ['$scope', 'TreeService', 'DataschemaService', 'ToolboxService', 'DetailService'];
 
-        public elements: any = [];
-
-        public treeOptions:{};
-
-        constructor(
-            public $scope, 
-            public treeService: TreeService,
-            public dataschemaService: DataschemaService,
-            public toolboxService: ToolboxService,
-            public detailService: DetailService){
-
+        constructor(public $scope, private treeService:TreeService, private dataschemaService:DataschemaService, private toolboxService:ToolboxService, private detailService:DetailService) {
             this.elements = treeService.elements;
 
             this.treeOptions = {
                 // don't accept more than one element (layout) in the root of the tree
-                accept: (sourceNodeScope, destNodesScope, destIndex) => {
+                accept: (sourceNodeScope, destNodesScope) => {
 
                     var source:ToolboxElement = sourceNodeScope.$modelValue;
                     //var dest: TreeElement = source.insertIntoTree(TreeElement.getNewId());
@@ -40,7 +32,6 @@ module app.tree {
                     }
 
                     var destParent:TreeElement = parent.$modelValue;
-
 
                     var accepted:boolean = destParent.acceptsElement(source.getType());
 
@@ -58,25 +49,6 @@ module app.tree {
             $scope.previewData = {};
         }
 
-        decreasePlacedTimesOfChilds(treeElement:TreeElement) {
-            this.toolboxService.getAssociatedToolboxElement(treeElement).then((toolboxElement:ToolboxElement) => {
-                for (var i = 0; i < treeElement.elements.length; i++) {
-                    this.decreasePlacedTimesOfChilds(treeElement.elements[i]);
-                }
-
-                if (toolboxElement instanceof ControlToolboxElement) {
-                    toolboxElement.decreasePlacedTimes();
-                }
-            });
-        }
-
-        updatePreview():void {
-            this.$scope.previewUISchema = JSON.parse(this.treeService.exportUISchemaAsJSON());
-            this.$scope.previewSchema = this.dataschemaService.getDataSchema();
-            // The data introduced into the preview is not stored, as it's not relevant
-            this.$scope.previewData = {};
-        }
-
         preview(bool):void {
             if (bool) {
                 this.updatePreview();
@@ -84,17 +56,45 @@ module app.tree {
             this.$scope.isPreview = bool;
         }
 
+        /**
+         * Removes the element from the tree.
+         * @param scope Scope Element from ui.tree.
+         */
         remove(scope):void {
             scope.removeNode(scope);
-
         }
 
-        showDetails(node: any) : void {
+        /**
+         * Shows the Detail-Window for the given element.
+         * @param node
+         */
+        showDetails(node:TreeElement):void {
             this.detailService.setElement(node);
         }
 
+        /**
+         * Collapses or expands the current element.
+         * @param scope Scope Element from ui.tree.
+         */
         toggle(scope):void {
             scope.toggle();
+        }
+
+        private decreasePlacedTimesOfChilds(treeElement:TreeElement) {
+            this.toolboxService.getAssociatedToolboxElement(treeElement).then((toolboxElement:ToolboxElement) => {
+                _.forEach(treeElement.elements, this.decreasePlacedTimesOfChilds.bind(this));
+
+                if (toolboxElement instanceof ControlToolboxElement) {
+                    toolboxElement.decreasePlacedTimes();
+                }
+            });
+        }
+
+        private updatePreview():void {
+            this.$scope.previewUISchema = JSON.parse(this.treeService.exportUISchemaAsJSON());
+            this.$scope.previewSchema = this.dataschemaService.getDataSchema();
+            // The data introduced into the preview is not stored, as it's not relevant
+            this.$scope.previewData = {};
         }
 
     }
