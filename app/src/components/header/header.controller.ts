@@ -29,7 +29,7 @@ module app.header {
         }
 
         showConfigDialog():void {
-            var options: IDialogOptions = {
+            var options:IDialogOptions = {
                 parent: angular.element(document.body),
                 templateUrl: 'app/src/components/header/configDialog.html',
                 clickOutsideToClose: true,

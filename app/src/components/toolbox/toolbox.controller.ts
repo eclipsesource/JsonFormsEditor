@@ -3,10 +3,11 @@ module app.toolbox {
 
     //TODO change scrolling in toolbox to let bottom bar and top tabs stay static
 
-    import GeneralToolboxElement = app.core.GeneralToolboxElement;
-    import ControlToolboxElement = app.core.ControlToolboxElement;
-    import TreeElement = app.core.TreeElement;
-    import ToolboxElement = app.core.ToolboxElement;
+    import GeneralToolboxElement = app.core.model.GeneralToolboxElement;
+    import ControlToolboxElement = app.core.model.ControlToolboxElement;
+    import TreeElement = app.core.model.TreeElement;
+    import ToolboxElement = app.core.model.ToolboxElement;
+    import ConfigDialogService = app.header.ConfigDialogService;
 
 
     class ToolboxController {
@@ -15,42 +16,39 @@ module app.toolbox {
         public currentAddElementType: string = 'string';
         public elementTypes = ['string', 'number', 'boolean'];
 
+        public treeOptions:{};
 
-        static $inject = ['$scope', '$filter', 'ToolboxService', 'ConfigDialogService'];
+        static $inject = ['$filter', 'ToolboxService', 'ConfigDialogService'];
 
-        constructor($scope, public $filter, public toolboxService: ToolboxService, public configService: ConfigDialogService) {
+        constructor(public $filter, public toolboxService: ToolboxService, public configService: ConfigDialogService) {
 
-            var _this = this;
-            $scope.treeOptionsToolbox = {
-                accept: function (sourceNodeScope, destNodesScope, destIndex) {
+            this.treeOptions = {
+                accept: () => {
                     return false;
                 },
-                dropped: function(e) {
+                dropped: (event) => {
                     //if the element is being dragged into the toolbar itself, return
-                    if(e.dest.nodesScope.$modelValue == e.source.nodesScope.$modelValue) {
+                    if(event.dest.nodesScope.$modelValue == event.source.nodesScope.$modelValue) {
                         return;
                     }
 
-                    // Convert the ToolboxElement into a TreeElement
-                    var index = e.dest.index;
-                    var modelDest: ToolboxElement = e.dest.nodesScope.$modelValue[index];
-
-                    var modelSource: ToolboxElement = e.source.nodeScope.$modelValue;
-                    if(modelSource instanceof ControlToolboxElement) {
-                        var control: ControlToolboxElement = modelSource;
-                        control.increasePlacedTimes();
+                    var toolboxElement: ToolboxElement = event.source.nodeScope.$modelValue;
+                    if(toolboxElement instanceof ControlToolboxElement) {
+                        toolboxElement.increasePlacedTimes();
                     }
-                    e.dest.nodesScope.$modelValue[index] = modelDest.insertIntoTree(TreeElement.getNewId());
+
+                    // Convert the ToolboxElement into a TreeElement
+                    var index = event.dest.index;
+                    var destination: ToolboxElement = event.dest.nodesScope.$modelValue[index];
+                    event.dest.nodesScope.$modelValue[index] = destination.convertToTreeElement();
 
                 },
-                dragStart: function(e) {
+                dragStart: (event) => {
                     var h = 52;
                     var w = $('.tree-view').width() /2;
 
-                    console.log(e);
-
-                    $(e.elements.placeholder).css('height',h+'px');
-                    $(e.elements.placeholder).css('width',w+'px');
+                    $(event.elements.placeholder).css('height',h+'px');
+                    $(event.elements.placeholder).css('width',w+'px');
                 }
 
             };
@@ -68,8 +66,8 @@ module app.toolbox {
             return false;
         }
 
-        changeAddType() {
-            this.currentAddElementIndex = (this.currentAddElementIndex + 1) % this.elementTypes.length;
+        changeAddType(type: string) {
+            this.currentAddElementType = type;
         }
 
         typeOfNewElement(): string {

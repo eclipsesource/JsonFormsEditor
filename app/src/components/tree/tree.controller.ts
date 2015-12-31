@@ -5,27 +5,29 @@ module app.tree {
     import TreeElement = app.core.model.TreeElement;
     import ToolboxService = app.toolbox.ToolboxService;
     import DetailService = app.detail.DetailService;
+    import DataschemaService = app.core.dataschema.DataschemaService;
 
 
     class MyTreeController {
 
-        static $inject = ['$scope', 'TreeService', 'JsonSchemaService', 'ToolboxService', 'DetailService'];
+        static $inject = ['$scope', 'TreeService', 'DataschemaService', 'ToolboxService', 'DetailService'];
 
         public elements: any = [];
 
+        public treeOptions:{};
+
         constructor(
             public $scope, 
-            public treeService: app.tree.TreeService, 
-            public JsonSchemaService: any,
+            public treeService: TreeService,
+            public dataschemaService: DataschemaService,
             public toolboxService: ToolboxService,
             public detailService: DetailService){
 
             this.elements = treeService.elements;
 
-            var _this = this;
-            $scope.treeOptions = {
-                // no accept more than one element (layout) in the root of the tree
-                accept: function (sourceNodeScope, destNodesScope, destIndex) {
+            this.treeOptions = {
+                // don't accept more than one element (layout) in the root of the tree
+                accept: (sourceNodeScope, destNodesScope, destIndex) => {
 
                     var source:ToolboxElement = sourceNodeScope.$modelValue;
                     //var dest: TreeElement = source.insertIntoTree(TreeElement.getNewId());
@@ -44,10 +46,9 @@ module app.tree {
 
                     return accepted;
                 },
-                removed: function (node) {
-
+                removed: (node) => {
                     var treeElement:TreeElement = node.$modelValue;
-                    _this.decreasePlacedTimesOfChilds(treeElement);
+                    this.decreasePlacedTimesOfChilds(treeElement);
                 }
             };
 
@@ -71,7 +72,7 @@ module app.tree {
 
         updatePreview():void {
             this.$scope.previewUISchema = JSON.parse(this.treeService.exportUISchemaAsJSON());
-            this.$scope.previewSchema = this.JsonSchemaService.getDataSchema();
+            this.$scope.previewSchema = this.dataschemaService.getDataSchema();
             // The data introduced into the preview is not stored, as it's not relevant
             this.$scope.previewData = {};
         }

@@ -3,7 +3,7 @@
  */
 module app.header {
     export class ConfigDialogService {
-        public enableFilter: boolean = true;
+        public enableFilter:boolean = true;
     }
     angular.module('app.header').service('ConfigDialogService', ConfigDialogService);
 }

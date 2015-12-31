@@ -3,55 +3,46 @@
  */
 module app.layouts {
     import ToolboxService = app.toolbox.ToolboxService;
-    import ToolboxElement = app.core.ToolboxElement;
-    import ControlToolboxElement = app.core.ControlToolboxElement;
-    import TreeElement = app.core.TreeElement;
-
+    import ToolboxElement = app.core.model.ToolboxElement;
+    import ControlToolboxElement = app.core.model.ControlToolboxElement;
 
     class LayoutsController {
-        static $inject = ['$scope', 'ToolboxService'];
 
-        constructor($scope, public toolboxService: ToolboxService){
-            var _this = this;
-            $scope.treeOptionsToolbox = {
-                accept: function (sourceNodeScope, destNodesScope, destIndex) {
+        public treeOptions:{};
+
+        static $inject = ['ToolboxService'];
+
+        constructor(public toolboxService:ToolboxService) {
+            this.treeOptions = {
+                accept: () => {
                     return false;
                 },
-                dropped: function(e) {
+                dropped: (event) => {
                     //if the element is being dragged into the toolbar itself, return
-                    if(e.dest.nodesScope.$modelValue == e.source.nodesScope.$modelValue) {
+                    if (event.dest.nodesScope.$modelValue == event.source.nodesScope.$modelValue) {
                         return;
                     }
 
-                    // Convert the ToolboxElement into a TreeElement
-                    var index = e.dest.index;
-                    var modelDest: ToolboxElement = e.dest.nodesScope.$modelValue[index];
-
-                    var modelSource: ToolboxElement = e.source.nodeScope.$modelValue;
-                    if(modelSource instanceof ControlToolboxElement) {
-                        var control: ControlToolboxElement = modelSource;
-                        control.increasePlacedTimes();
+                    var toolboxElement:ToolboxElement = event.source.nodeScope.$modelValue;
+                    if (toolboxElement instanceof ControlToolboxElement) {
+                        toolboxElement.increasePlacedTimes();
                     }
-                    e.dest.nodesScope.$modelValue[index] = modelDest.insertIntoTree(TreeElement.getNewId());
 
+                    // Convert the ToolboxElement into a TreeElement
+                    var index = event.dest.index;
+                    var destination:ToolboxElement = event.dest.nodesScope.$modelValue[index];
+                    event.dest.nodesScope.$modelValue[index] = destination.convertToTreeElement();
                 },
-                dragStart: function(e) {
+                dragStart: (event) => {
                     var h = 52;
-                    var w = $('.tree-view').width() /2;
+                    var w = $('.tree-view').width() / 2;
 
-                    console.log(e);
-
-                    $(e.elements.placeholder).css('height',h+'px');
-                    $(e.elements.placeholder).css('width',w+'px');
+                    $(event.elements.placeholder).css('height', h + 'px');
+                    $(event.elements.placeholder).css('width', w + 'px');
                 }
-
             };
         }
-
-        getService(): ToolboxService {
-            return this.toolboxService;
-        }
     }
-    console.log(typeof LayoutsController)
+
     angular.module('app.layouts').controller('LayoutsController', LayoutsController);
 }

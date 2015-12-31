@@ -10,7 +10,7 @@ module app.toolbox {
     import ControlToolboxElement = app.core.model.ControlToolboxElement;
     import ToolboxElement = app.core.model.ToolboxElement;
     import TreeElement = app.core.model.TreeElement;
-    import JsonschemaProperty = app.core.dataschema.DataschemaProperty;
+    import DataschemaProperty = app.core.dataschema.DataschemaProperty;
     import Metaschema = app.core.metaschema.Metaschema;
     import Definition = app.core.metaschema.Definition;
     import MetaschemaService = app.core.metaschema.MetaschemaService;
@@ -59,14 +59,13 @@ module app.toolbox {
         private loadSchemaElements(jsonWithDataSchema:any) {
             this.dataschemaService.loadFromJson(jsonWithDataSchema);
 
-            var schemaProperties:JsonschemaProperty[] = this.dataschemaService.getProperties();
+            var schemaProperties:DataschemaProperty[] = this.dataschemaService.getProperties();
             for (var i = 0; i < schemaProperties.length; i++) {
                 var element:ControlToolboxElement = new ControlToolboxElement(this.convertScopeToLabel(schemaProperties[i].getName()), schemaProperties[i].getType(), schemaProperties[i].getName());
                 this.schemaElements.push(element);
-
             }
 
-
+            console.log(this.schemaElements);
         }
 
         //adds new data element into schema and into toolbox
@@ -93,7 +92,7 @@ module app.toolbox {
                 return false;
             }
             //if the addition works on the schema, the element gets added into the toolbox array
-            if (this.dataschemaService.addNewProperty(new JsonschemaProperty(name, content.type), path)) {
+            if (this.dataschemaService.addNewProperty(new DataschemaProperty(name, content.type), path)) {
 
                 var element:ControlToolboxElement = new ControlToolboxElement(this.convertScopeToLabel(scope), content.type, scope);
                 this.schemaElements.push(element);
@@ -150,6 +149,7 @@ module app.toolbox {
         }
 
         private convertScopeToLabel(scope:string):string {
+            console.log("Scope " + scope);
 
             var sc = scope.split('/').pop();
 

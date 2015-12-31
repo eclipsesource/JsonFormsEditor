@@ -1,9 +1,9 @@
 module app.tree {
 
     import GeneralToolboxElement = app.core.model.GeneralToolboxElement;
-
     import TreeElement = app.core.model.TreeElement;
     import ToolboxService = app.toolbox.ToolboxService;
+
     export class TreeService {
 
         static $inject = ['ToolboxService'];
@@ -19,9 +19,6 @@ module app.tree {
         }
 
         exportUISchemaAsJSON():string {
-
-            console.log(this.elements);
-
             return JSON.stringify(this.elements[0], function (key, value) {
 
                 if (value == "") {
@@ -33,14 +30,12 @@ module app.tree {
                 }
 
                 switch (key) {
-
                     case "id":
                     case "$$hashKey":
                     case 'root':
                     case "metaData":
                         return undefined;
                         break;
-
                 }
 
                 return value;
@@ -49,7 +44,6 @@ module app.tree {
 
     }
 
-    angular.module('app.tree')
-        .service('TreeService', TreeService);
+    angular.module('app.tree').service('TreeService', TreeService);
 
 }
