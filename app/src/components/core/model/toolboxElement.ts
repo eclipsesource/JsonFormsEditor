@@ -18,14 +18,6 @@ module app.core.model {
             return this.acceptedElements;
         }
 
-        setType(type:string):void {
-            this.type = type;
-        }
-
-        setLabel(name:string):void {
-            this.label = name;
-        }
-
         getType():string {
             return this.type;
         }
@@ -36,7 +28,10 @@ module app.core.model {
 
         abstract getIcon():string;
 
-        //returns a converted element suitable for inserting into the tree with a given id
+
+        /**
+         * Returns a converted element suitable for inserting into the tree.
+         */
         abstract convertToTreeElement():TreeElement;
 
     }

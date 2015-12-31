@@ -5,16 +5,8 @@ module app.core.model {
     export class ControlToolboxElement extends ToolboxElement {
         private alreadyPlaced:number = 0;
 
-        constructor(name:string, public datatype:string, public scope:string) {
+        constructor(name:string, public datatype:string, private scope:string) {
             super(name, 'Control');
-        }
-
-        getDatatype():string {
-            return this.datatype;
-        }
-
-        setDatatype(dt:string):void {
-            this.datatype = dt;
         }
 
         convertToTreeElement():TreeElement {

@@ -1,6 +1,6 @@
 module app.tree {
 
-    import GeneralToolboxElement = app.core.model.GeneralToolboxElement;
+    import LayoutToolboxElement = app.core.model.LayoutToolboxElement;
     import TreeElement = app.core.model.TreeElement;
     import ToolboxService = app.toolbox.ToolboxService;
 
@@ -11,7 +11,7 @@ module app.tree {
         public elements:TreeElement[] = [];
 
         constructor(private toolboxService:ToolboxService) {
-            toolboxService.getExpertElementOfType('VerticalLayout').then((element:GeneralToolboxElement) => {
+            toolboxService.getExpertElementOfType('VerticalLayout').then((element:LayoutToolboxElement) => {
                 var rootElement:TreeElement = element.convertToTreeElement();
                 rootElement['root'] = 'root';
                 this.elements.push(rootElement);

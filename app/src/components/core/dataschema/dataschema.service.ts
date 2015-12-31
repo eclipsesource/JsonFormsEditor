@@ -6,21 +6,37 @@ module app.core.dataschema {
         private properties:DataschemaProperty[] = [];
         private json:any = {};
 
+        /**
+         * Initializes the dataschema from JSON.
+         * @param json a dataschema json structure.
+         */
         loadFromJson(json:any) {
             this.json = json;
             this.properties = this.getPropertiesRecursive(json, '');
         }
 
+        /**
+         * Returns all names of all properties.
+         * @returns {string[]}
+         */
         getNames():string[] {
             return _.map(this.properties, (property:DataschemaProperty) => {
                 return property.getName();
             });
         }
 
+        /**
+         *  Returns all DataschemaProperties in the dataschema.
+          * @returns {DataschemaProperty[]}
+         */
         getProperties():DataschemaProperty[] {
             return this.properties;
         }
 
+        /**
+         * Returns the dataschema as JSON-object structure.
+         * @returns {any}
+         */
         getDataSchema():any {
             return this.json;
         }

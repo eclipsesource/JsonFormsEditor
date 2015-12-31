@@ -6,7 +6,7 @@ module app.toolbox {
 
     // TODO validation so that there cannot be 2 schema elements with the same name in the same path of the toolbox(nor in dataschema)
     import DataschemaService = app.core.dataschema.DataschemaService;
-    import GeneralToolboxElement = app.core.model.GeneralToolboxElement;
+    import LayoutToolboxElement = app.core.model.LayoutToolboxElement;
     import ControlToolboxElement = app.core.model.ControlToolboxElement;
     import ToolboxElement = app.core.model.ToolboxElement;
     import TreeElement = app.core.model.TreeElement;
@@ -21,22 +21,22 @@ module app.toolbox {
     export class ToolboxService {
         static $inject = ['DataschemaService', 'MetaschemaService', '$q'];
 
-        public expertElements:GeneralToolboxElement[] = [];
+        public expertElements:LayoutToolboxElement[] = [];
         public schemaElements:ControlToolboxElement[] = [];
 
 
         constructor(public dataschemaService:DataschemaService, private metaschemaService:MetaschemaService, private $q:IQService) {
-            this.getGeneralElements().then((elements:GeneralToolboxElement[]) => {
+            this.getGeneralElements().then((elements:LayoutToolboxElement[]) => {
                 this.expertElements = elements;
             });
             this.loadSchemaElements(demoSchema);
         }
 
-        private getGeneralElements():IPromise<GeneralToolboxElement[]> {
-            var defer:IDeferred<GeneralToolboxElement[]> = this.$q.defer();
+        private getGeneralElements():IPromise<LayoutToolboxElement[]> {
+            var defer:IDeferred<LayoutToolboxElement[]> = this.$q.defer();
 
             this.metaschemaService.getMetaschema().then((schema:Metaschema) => {
-                var result:GeneralToolboxElement[] = [];
+                var result:LayoutToolboxElement[] = [];
 
                 _.forEach(schema.getDefinitions(), (definition:Definition) => {
                     _.forEach(definition.getTypeLabels(), (type:string)=> {
@@ -44,7 +44,7 @@ module app.toolbox {
                         if (type === 'Control') {
                             return;
                         }
-                        var element = new GeneralToolboxElement(type, type);
+                        var element = new LayoutToolboxElement(type, type);
 
                         element.setAcceptedElements(definition.getAcceptedElements());
                         result.push(element);
@@ -162,11 +162,11 @@ module app.toolbox {
                 })
         }
 
-        public getExpertElementOfType(type:string):IPromise<GeneralToolboxElement> {
-            var deffered:IDeferred<GeneralToolboxElement> = this.$q.defer();
+        public getExpertElementOfType(type:string):IPromise<LayoutToolboxElement> {
+            var deffered:IDeferred<LayoutToolboxElement> = this.$q.defer();
 
-            this.getGeneralElements().then((elements:GeneralToolboxElement[]) => {
-                deffered.resolve(_.find(this.expertElements, (element:GeneralToolboxElement) => {
+            this.getGeneralElements().then((elements:LayoutToolboxElement[]) => {
+                deffered.resolve(_.find(this.expertElements, (element:LayoutToolboxElement) => {
                     return element.getType() === type;
                 }));
             });
@@ -190,11 +190,11 @@ module app.toolbox {
         //if its a layout, it only uses the type to get it
         //if its a control, it uses the scope value
         public getAssociatedToolboxElement(treeElement:TreeElement):IPromise<ToolboxElement> {
-            var deffered:IDeferred<GeneralToolboxElement> = this.$q.defer();
+            var deffered:IDeferred<LayoutToolboxElement> = this.$q.defer();
 
             if (treeElement.getType() != 'Control') {
                 //Layouts
-                this.getExpertElementOfType(treeElement.getType()).then((element:GeneralToolboxElement)=> {
+                this.getExpertElementOfType(treeElement.getType()).then((element:LayoutToolboxElement)=> {
                     deffered.resolve(element);
                 });
             } else {

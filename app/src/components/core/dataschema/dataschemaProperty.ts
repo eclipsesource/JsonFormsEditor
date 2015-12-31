@@ -4,10 +4,18 @@ module app.core.dataschema {
 
         }
 
+        /**
+         * The name of the property
+         * @returns {string}
+         */
         getName():string {
             return this.name;
         }
 
+        /**
+         * The type of the property (e.g.: 'string', 'number')
+         * @returns {string}
+         */
         getType():string {
             return this.type;
         }

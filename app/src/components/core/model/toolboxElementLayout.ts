@@ -2,7 +2,7 @@
  * Created by pancho111203 on 19/12/15.
  */
 module app.core.model {
-    export class GeneralToolboxElement extends ToolboxElement {
+    export class LayoutToolboxElement extends ToolboxElement {
         constructor(name:string, type:string) {
             super(name, type);
         }
