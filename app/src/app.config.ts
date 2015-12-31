@@ -43,6 +43,21 @@ module app {
                             templateUrl: 'app/src/components/detail/detail.html'
                         }
                     }
+                })
+                .state('preview', {
+                    url: '/preview',
+                    views: {
+                        'headerContainer': {
+                            controller: 'HeaderViewController',
+                            controllerAs: 'header',
+                            templateUrl: 'app/src/components/header/header.html'
+                        },
+                        previewContainer: {
+                            controller: 'PreviewController',
+                            controllerAs: 'preview',
+                            templateUrl: 'app/src/components/preview/preview.html'
+                        }
+                    }
                 });
 
             $urlRouterProvider.otherwise('/edit');

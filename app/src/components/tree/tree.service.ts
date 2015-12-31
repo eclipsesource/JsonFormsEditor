@@ -3,14 +3,16 @@ module app.tree {
     import LayoutToolboxElement = app.core.model.LayoutToolboxElement;
     import TreeElement = app.core.model.TreeElement;
     import LayoutsService = app.layouts.LayoutsService;
+    import PreviewUpdateEvent = app.preview.PreviewUpdateEvent;
 
-    export class TreeService {
+    export class TreeService /*extends Observable<PreviewUpdateEvent> */{
 
         static $inject = ['LayoutsService'];
 
         public elements:TreeElement[] = [];
 
         constructor(private layoutsService:LayoutsService) {
+            //super();
             layoutsService.getElementByType('VerticalLayout').then((element:LayoutToolboxElement) => {
                 var rootElement:TreeElement = element.convertToTreeElement();
                 rootElement['root'] = 'root';
@@ -19,7 +21,7 @@ module app.tree {
         }
 
         exportUISchemaAsJSON():string {
-            return JSON.stringify(this.elements[0], function (key, value) {
+            return JSON.stringify(this.elements[0], (key, value) => {
 
                 if (value == "") {
                     return undefined;

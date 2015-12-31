@@ -20,9 +20,9 @@
 
 <!-- show edit area -->
 <div class="jsonFormsEditor-Body" style="height: calc(100% - 66px);">
+    <div ui-view="previewContainer"></div>
     <div layout="row" class="bottom-border" style="height:100%;">
         <!-- toolbox -->
-
 
         <div class="toolbar-container" layout="column">
             <div ui-view="layoutsContainer"></div>
@@ -34,7 +34,6 @@
 
         <!-- properties -->
         <div class="toolbar-container" ui-view="detailContainer"></div>
-
     </div>
 </div>
 

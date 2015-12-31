@@ -1,7 +1,6 @@
 /// <reference path="../../../typings/lodash/lodash.d.ts" />
 
 interface Observer<T> {
-    data : T;
     update(data:T);
 }
 

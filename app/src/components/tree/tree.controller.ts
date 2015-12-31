@@ -6,15 +6,16 @@ module app.tree {
     import ToolboxService = app.toolbox.ToolboxService;
     import DetailService = app.detail.DetailService;
     import DataschemaService = app.core.dataschema.DataschemaService;
+    import PreviewUpdateEvent = app.preview.PreviewUpdateEvent;
 
     class MyTreeController {
 
         public elements:TreeElement[] = [];
         public treeOptions:{};
 
-        static $inject = ['$scope', 'TreeService', 'DataschemaService', 'ToolboxService', 'DetailService'];
+        static $inject = ['TreeService', 'DataschemaService', 'ToolboxService', 'DetailService'];
 
-        constructor(public $scope, private treeService:TreeService, private dataschemaService:DataschemaService, private toolboxService:ToolboxService, private detailService:DetailService) {
+        constructor(private treeService:TreeService, private dataschemaService:DataschemaService, private toolboxService:ToolboxService, private detailService:DetailService) {
             this.elements = treeService.elements;
 
             this.treeOptions = {
@@ -37,23 +38,15 @@ module app.tree {
 
                     return accepted;
                 },
+                dropped: () => {
+                   // this.treeService.notifyObservers(new PreviewUpdateEvent(JSON.parse(this.treeService.exportUISchemaAsJSON()), null));
+                },
                 removed: (node) => {
                     var treeElement:TreeElement = node.$modelValue;
+                    //this.treeService.notifyObservers(new PreviewUpdateEvent(JSON.parse(this.treeService.exportUISchemaAsJSON()), null));
                     this.decreasePlacedTimesOfChilds(treeElement);
                 }
             };
-
-            $scope.isPreview = false;
-            $scope.previewUISchema = {};
-            $scope.previewSchema = {};
-            $scope.previewData = {};
-        }
-
-        preview(bool):void {
-            if (bool) {
-                this.updatePreview();
-            }
-            this.$scope.isPreview = bool;
         }
 
         /**
@@ -89,14 +82,6 @@ module app.tree {
                 }
             });
         }
-
-        private updatePreview():void {
-            this.$scope.previewUISchema = JSON.parse(this.treeService.exportUISchemaAsJSON());
-            this.$scope.previewSchema = this.dataschemaService.getDataSchema();
-            // The data introduced into the preview is not stored, as it's not relevant
-            this.$scope.previewData = {};
-        }
-
     }
 
     angular.module('app.tree').controller('MyTreeController', MyTreeController);
