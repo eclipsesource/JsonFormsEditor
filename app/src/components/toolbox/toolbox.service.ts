@@ -31,127 +31,47 @@ module app.toolbox {
             this.loadSchemaElements(demoSchema);
         }
 
-
-        private loadSchemaElements(jsonWithDataSchema:any) {
-            this.dataschemaService.loadFromJson(jsonWithDataSchema);
-
-            var schemaProperties:DataschemaProperty[] = this.dataschemaService.getProperties();
-            _.forEach(schemaProperties, (property:DataschemaProperty) => {
-                this.elements.push(new ControlToolboxElement(this.convertScopeToLabel(property.getName()), property.getType(), property.getName()));
-            });
-        }
-
-        //adds new data element into schema and into toolbox
-        //returns if the addition was successful
-        //PARAMETERS: content has to be an object containing the property 'type'
-        public addSchemaElement(scope: string, content: any): boolean {
-
-            if(scope == ''){
+        /**
+         * Adds a new DataschemaProperty into the dataschema and adds the corresponding ToolboxElement.
+         * @param property the DataschemaProperty to add
+         * @param path the path to the property in the dataschema, e.g. ['person', 'adress']
+         * @returns {boolean} true, if the addition was successful
+         */
+        addSchemaElement(property:DataschemaProperty, path:string[]):boolean {
+            if (this.dataschemaService.containsProperty(property) || !property.isValid()) {
                 return false;
             }
 
-            if(this.dataschemaService.getNames().indexOf(scope)!=-1){
-                console.log('ERROR: Trying to add a duplicated schema element');
-                return false;
-            }
-
-            var bundle = this.convertScopeToPathAndName(scope);
-            var name = bundle.name;
-            var path = bundle.path;
-
-
-            //Schema elements always need a type property
-            if (!content.hasOwnProperty('type')) {
-                return false;
-            }
-            //if the addition works on the schema, the element gets added into the toolbox array
-            if (this.dataschemaService.addNewProperty(new DataschemaProperty(name, content.type), path)) {
-
-                var element:ControlToolboxElement = new ControlToolboxElement(this.convertScopeToLabel(scope), content.type, scope);
+            if (this.dataschemaService.addNewProperty(property, path)) {
+                var element:ControlToolboxElement = new ControlToolboxElement(property.getName(), property.getType(), property.getName());
                 this.elements.push(element);
                 return true;
-            }
-            return false;
-        }
-
-
-        public removeSchemaElement(scope:string):boolean {
-            var bundle = this.convertScopeToPathAndName(scope);
-            var name = bundle.name;
-            var path = bundle.path;
-            if (this.dataschemaService.removeProperty(name, path)) {
-
-                for (var i = 0; i < this.elements.length; i++) {
-                    if (this.elements[i].getScope() == scope) {
-
-                        this.elements.splice(i, 1);
-                        return true;
-                    }
-                }
-
             } else {
                 return false;
             }
-
-            console.log('ERROR: schema element was removed on the Json Schema, but it could not be found in the toolbox!');
-            return true;
-
         }
 
-
-        private convertScopeToPathAndName(scope:string):any {
-            var path:string[] = scope.split('/');
-            var name = path[path.length - 1];
-
-            path.splice(path.length - 1, 1);
-
-            return {
-                name: name,
-                path: path
+        /**
+         * Removes the ControlToolboxElement from the Dataschema.
+         *
+         * @param element the element to be removed.
+         * @returns {boolean} returns true, if the element was successfully removed
+         */
+        removeSchemaElement(element:ControlToolboxElement):boolean {
+            var {name, path} = this.convertScopeToPathAndName(element.getScope());
+            if (this.dataschemaService.removeProperty(name, path)) {
+                return _.remove(this.elements, element).length === 1;
+            } else {
+                return false;
             }
         }
 
-        private convertPathAndNameToScope(name:string, path:string[]):string {
-            var res = '';
-            res += path.join('/');
-            if (res != '') {
-                res += '/';
-            }
-            res += name;
-            return res;
-        }
-
-        private convertScopeToLabel(scope:string):string {
-            console.log("Scope " + scope);
-
-            var sc = scope.split('/').pop();
-
-            return sc
-            // insert a space before all caps
-                .replace(/([A-Z])/g, ' $1')
-                // uppercase the first character
-                .replace(/^./, function (str) {
-                    return str.toUpperCase();
-                })
-        }
-
-
-        public getSchemaElementWithScope(scope:string):ControlToolboxElement {
-            var element:ControlToolboxElement;
-            for (var i = 0; i < this.elements.length; i++) {
-
-                element = this.elements[i];
-                if (element.getScope() == scope) {
-                    return element;
-                }
-            }
-            return null;
-        }
-
-        //used for retrieving the data element associated with this treeelement
-        //if its a layout, it only uses the type to get it
-        //if its a control, it uses the scope value
-        public getAssociatedToolboxElement(treeElement:TreeElement):IPromise<ToolboxElement> {
+        /**
+         * Used for retrieving the data element associated with the given TreeElement.
+         * @param treeElement
+         * @returns {IPromise<ToolboxElement>}
+         */
+        getAssociatedToolboxElement(treeElement:TreeElement):IPromise<ToolboxElement> {
             var deffered:IDeferred<LayoutToolboxElement> = this.$q.defer();
 
             if (treeElement.getType() != 'Control') {
@@ -166,7 +86,47 @@ module app.toolbox {
 
             return deffered.promise;
         }
+
+        private loadSchemaElements(jsonWithDataSchema:any) {
+            this.dataschemaService.loadFromJson(jsonWithDataSchema);
+
+            var schemaProperties:DataschemaProperty[] = this.dataschemaService.getProperties();
+            _.forEach(schemaProperties, (property:DataschemaProperty) => {
+                this.elements.push(new ControlToolboxElement(this.convertScopeToLabel(property.getName()), property.getType(), property.getName()));
+            });
+        }
+
+        private convertScopeToPathAndName(scope:string):{name:string, path:string[]} {
+            var path:string[] = scope.split('/');
+            var name:string = path[path.length - 1];
+
+            path.splice(path.length - 1, 1);
+
+            return {
+                name: name,
+                path: path
+            }
+        }
+
+        private convertScopeToLabel(scope:string):string {
+            var name = scope.split('/').pop();
+
+            return _.startCase(name);
+        }
+
+        private getSchemaElementWithScope(scope:string):ControlToolboxElement {
+            var element:ControlToolboxElement;
+            for (var i = 0; i < this.elements.length; i++) {
+
+                element = this.elements[i];
+                if (element.getScope() == scope) {
+                    return element;
+                }
+            }
+            return null;
+        }
     }
+
     angular.module('app.toolbox').service('ToolboxService', ToolboxService);
 }
 

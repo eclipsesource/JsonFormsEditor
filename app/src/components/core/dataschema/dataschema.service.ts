@@ -27,10 +27,19 @@ module app.core.dataschema {
 
         /**
          *  Returns all DataschemaProperties in the dataschema.
-          * @returns {DataschemaProperty[]}
+         * @returns {DataschemaProperty[]}
          */
         getProperties():DataschemaProperty[] {
             return this.properties;
+        }
+
+        /**
+         * Checks, whether the specified property is already contained in the dataschema.
+         * @param property the property to check
+         * @returns {boolean}
+         */
+        containsProperty(property:DataschemaProperty):boolean {
+            return this.properties.indexOf(property) > -1;
         }
 
         /**
@@ -129,6 +138,8 @@ module app.core.dataschema {
 
             return currentElement;
         }
+
+
     }
 
     angular.module("app.core").service("DataschemaService", DataschemaService);

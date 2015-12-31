@@ -8,6 +8,7 @@ module app.toolbox {
     import TreeElement = app.core.model.TreeElement;
     import ToolboxElement = app.core.model.ToolboxElement;
     import ConfigDialogService = app.header.ConfigDialogService;
+    import DataschemaProperty = app.core.dataschema.DataschemaProperty;
 
 
     class ToolboxController {
@@ -73,11 +74,9 @@ module app.toolbox {
         //TODO support different scopes(inside folders)
         //TODO add more data into content(required, min chars, etc)
         addNewElement() {
-            var content = {
-                type: this.newElementTypeLabel
-            };
+            var property:DataschemaProperty = new DataschemaProperty(this.newElementLabel, this.newElementTypeLabel);
 
-            var added = this.toolboxService.addSchemaElement(this.newElementLabel, content);
+            var added = this.toolboxService.addSchemaElement(property, []);
 
             if(added==false) {
                 console.log("ERROR: failed to add the element into the schema");
@@ -88,7 +87,7 @@ module app.toolbox {
 
         removeDataElement(element: ControlToolboxElement) {
             if(element.canBeRemoved()){
-                var removed = this.toolboxService.removeSchemaElement(element.getScope());
+                var removed = this.toolboxService.removeSchemaElement(element);
 
                 if(removed==false) {
                     console.log("ERROR: failed to remove the element from the schema");
