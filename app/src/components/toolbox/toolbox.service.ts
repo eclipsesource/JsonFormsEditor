@@ -4,7 +4,6 @@
 
 module app.toolbox {
 
-    // TODO validation so that there cannot be 2 schema elements with the same name in the same path of the toolbox(nor in dataschema)
     import DataschemaService = app.core.dataschema.DataschemaService;
     import LayoutToolboxElement = app.core.model.LayoutToolboxElement;
     import ControlToolboxElement = app.core.model.ControlToolboxElement;
@@ -38,6 +37,7 @@ module app.toolbox {
          * @returns {boolean} true, if the addition was successful
          */
         addSchemaElement(property:DataschemaProperty, path:string[]):boolean {
+            // TODO Fix the validation, so that there cannot be 2 schema elements with the same name in the same path of the toolbox(nor in dataschema)
             if (this.dataschemaService.containsProperty(property) || !property.isValid()) {
                 return false;
             }
@@ -81,7 +81,7 @@ module app.toolbox {
                 });
             } else {
                 //Controls
-                deffered.resolve(this.getSchemaElementWithScope(treeElement.getScope()));
+                deffered.resolve(this.getElementByScope(treeElement.getScope()));
             }
 
             return deffered.promise;
@@ -114,16 +114,10 @@ module app.toolbox {
             return _.startCase(name);
         }
 
-        private getSchemaElementWithScope(scope:string):ControlToolboxElement {
-            var element:ControlToolboxElement;
-            for (var i = 0; i < this.elements.length; i++) {
-
-                element = this.elements[i];
-                if (element.getScope() == scope) {
-                    return element;
-                }
-            }
-            return null;
+        private getElementByScope(scope:string):ControlToolboxElement {
+            return _.find(this.elements, (element:ControlToolboxElement) => {
+                return element.getScope() === scope;
+            });
         }
     }
 
