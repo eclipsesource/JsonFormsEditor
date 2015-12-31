@@ -17,15 +17,17 @@ module app.toolbox {
     import IPromise = angular.IPromise;
     import IQService = angular.IQService;
     import IDeferred = angular.IDeferred;
+    import ElementsConfigService = app.core.elementsConfig.ElementsConfigService;
+    import ElementConfig = app.core.elementsConfig.ElementConfig;
 
     export class ToolboxService {
-        static $inject = ['DataschemaService', 'MetaschemaService', '$q'];
+        static $inject = ['DataschemaService', 'MetaschemaService', '$q', 'ElementsConfigService'];
 
         public expertElements:LayoutToolboxElement[] = [];
         public schemaElements:ControlToolboxElement[] = [];
 
 
-        constructor(public dataschemaService:DataschemaService, private metaschemaService:MetaschemaService, private $q:IQService) {
+        constructor(public dataschemaService:DataschemaService, private metaschemaService:MetaschemaService, private $q:IQService, private elementsConfigService:ElementsConfigService) {
             this.getGeneralElements().then((elements:LayoutToolboxElement[]) => {
                 this.expertElements = elements;
             });
@@ -36,22 +38,24 @@ module app.toolbox {
             var defer:IDeferred<LayoutToolboxElement[]> = this.$q.defer();
 
             this.metaschemaService.getMetaschema().then((schema:Metaschema) => {
-                var result:LayoutToolboxElement[] = [];
+                this.elementsConfigService.getElements().then((elements:ElementConfig[]) => {
+                    var result:LayoutToolboxElement[] = [];
 
-                _.forEach(schema.getDefinitions(), (definition:Definition) => {
-                    _.forEach(definition.getTypeLabels(), (type:string)=> {
-                        //Ignore control, as it's handled on the controltoolbox
-                        if (type === 'Control') {
-                            return;
-                        }
-                        var element = new LayoutToolboxElement(type, type);
+                    _.forEach(schema.getDefinitions(), (definition:Definition) => {
+                        _.forEach(definition.getTypeLabels(), (type:string)=> {
+                            //Ignore control, as it's handled on the controltoolbox
+                            if (type === 'Control') {
+                                return;
+                            }
+                            var element = new LayoutToolboxElement(type, type, _.find(elements, {typeLabel: type}));
 
-                        element.setAcceptedElements(definition.getAcceptedElements());
-                        result.push(element);
+                            element.setAcceptedElements(definition.getAcceptedElements());
+                            result.push(element);
+                        });
                     });
-                });
 
-                defer.resolve(result);
+                    defer.resolve(result);
+                });
             });
             return defer.promise;
         }

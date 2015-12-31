@@ -1,0 +1,27 @@
+[
+  {
+    "typeLabel": "VerticalLayout",
+    "description": "Text",
+    "iconFont": "view_stream"
+  },
+  {
+    "typeLabel": "HorizontalLayout",
+    "description": "Text",
+    "iconFont": "view_column"
+  },
+  {
+    "typeLabel": "Group",
+    "description": "Text",
+    "iconFont": "crop_free"
+  },
+  {
+    "typeLabel": "Categorization",
+    "description": "Text",
+    "iconFont": "view_module"
+  },
+  {
+    "typeLabel": "Category",
+    "description": "Text",
+    "iconFont": "folder_open"
+  }
+]

@@ -2,11 +2,14 @@
  * Created by pancho111203 on 19/12/15.
  */
 module app.core.model {
+
+    import ElementConfig=app.core.elementsConfig.ElementConfig;
+
     export abstract class ToolboxElement {
 
         private acceptedElements:string[];
 
-        constructor(private label:string, private type:string) {
+        constructor(private label:string, private type:string, private elementConfig:ElementConfig) {
 
         }
 
@@ -26,8 +29,13 @@ module app.core.model {
             return this.label;
         }
 
-        abstract getIcon():string;
+        getDescription():string {
+            return this.elementConfig.getDescription();
+        }
 
+        getIcon():string {
+            return this.elementConfig.getIconFont();
+        }
 
         /**
          * Returns a converted element suitable for inserting into the tree.

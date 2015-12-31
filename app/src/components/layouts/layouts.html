@@ -6,7 +6,8 @@
                           ui-tree-node>
                 <md-icon class="material-icons">{{element.getIcon()}}</md-icon>
                 <md-tooltip>
-                    {{element.tooltip}}
+                    {{element.getLabel()}} -
+                    {{element.getDescription()}}
                 </md-tooltip>
             </md-card>
         </div>
