@@ -38,13 +38,6 @@ module app.toolbox {
                     var index = event.dest.index;
                     var destination:ToolboxElement = event.dest.nodesScope.$modelValue[index];
                     event.dest.nodesScope.$modelValue[index] = destination.convertToTreeElement();
-                },
-                dragStart: (event) => {
-                    var h = 52;
-                    var w = $('.tree-view').width() / 2;
-
-                    $(event.elements.placeholder).css('height', h + 'px');
-                    $(event.elements.placeholder).css('width', w + 'px');
                 }
             };
         }

@@ -9,7 +9,7 @@
                     <md-icon class="material-icons">{{element.getIcon()}}</md-icon>
                     <p style="overflow:hidden;">{{element.getLabel()}}</p>
                     <a class="pull-right left-margin" ng-hide="!element.canBeRemoved()" ng-click="toolbox.removeDataElement(element)">
-                        <md-icon class="material-icons">delete</md-icon>
+                        <md-icon class="btn material-icons">delete</md-icon>
                     </a>
                 </md-list-item>
             </md-list>
@@ -29,9 +29,7 @@
                 </md-menu-item>
             </md-menu-content>
         </md-menu>
-
         <div layout="row" layout-align="space-around center">
-
             <input id="inputLabel" ng-enter="toolbox.addNewElement()" ng-model="toolbox.newElementLabel" flex="auto" flex-order="0" class="md-primary" type="text" />
 
             <md-button ng-click="toolbox.addNewElement()" class="md-fab md-mini" flex="none" flex-order="2">

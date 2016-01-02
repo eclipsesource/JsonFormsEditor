@@ -2,18 +2,16 @@
 <script type="text/ng-template" id="tree_renderer.html">
   <div ui-tree-handle class="tree-node tree-node-content">
     <a ng-if="node.getElements().length > 0" data-nodrag ng-click="tree.toggle(this)">
-      <md-icon class="material-icons" ng-show="collapsed">expand_more</md-icon>
-      <md-icon class="material-icons" ng-show="!collapsed">expand_less</md-icon>
+      <md-icon class="btn material-icons" ng-show="collapsed">expand_more</md-icon>
+      <md-icon class="btn material-icons" ng-show="!collapsed">expand_less</md-icon>
     </a>
     {{node.getType()}} <span ng-show="node.getLabel()">-</span>  {{node.getLabel()}}
     <a class="pull-right left-margin" hideif="node.root" data-nodrag ng-click="tree.remove(this)">
-      <md-icon class="material-icons">delete</md-icon>
+      <md-icon class="btn material-icons">delete</md-icon>
     </a>
     <a class="pull-right left-margin" data-nodrag ng-click="tree.showDetails(node);">
-      <md-icon class="material-icons">edit</md-icon>
+      <md-icon class="btn material-icons">edit</md-icon>
     </a>
-  </div>
-
   </div>
 
   <ol ui-tree-nodes="" ng-model="node.elements" ng-class="{hidden: collapsed}">
