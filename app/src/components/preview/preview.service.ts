@@ -9,8 +9,8 @@ module app.preview {
         static $inject = ['TreeService', 'DataschemaService'];
 
         constructor(private treeService:TreeService, private dataschemaService:DataschemaService) {
-            this.schema = JSON.parse(treeService.exportUISchemaAsJSON());
-            this.uiSchema = dataschemaService.getDataSchema();
+            this.schema = dataschemaService.getDataSchema();
+            this.uiSchema = JSON.parse(treeService.exportUISchemaAsJSON());
 
             //this.treeService.registerObserver(this);
             //this.dataschemaService.registerObserver(this);
