@@ -1,9 +1,10 @@
-<md-toolbar>
+<md-toolbar style="height:100%;">
     <div class="md-toolbar-tools">
         <img src="resource/jsonforms-logo.png" class="logo-img"/>
         <span>JSON Forms Editor</span>
         <!-- fill up the space between left and right area -->
         <span flex></span>
+        <md-button class="md-raised md-accent" ui-sref="preview">Preview</md-button>
         <md-button class="md-raised md-accent" ng-click="header.showExportDialog()">Export</md-button>
         <md-button class="md-raised md-accent" ng-click="header.showConfigDialog()">Configuration</md-button>
     </div>

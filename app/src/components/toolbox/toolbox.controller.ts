@@ -1,114 +1,98 @@
 module app.toolbox {
 
-
-    //TODO change scrolling in toolbox to let bottom bar and top tabs stay static
-
-    import GeneralToolboxElement = app.core.GeneralToolboxElement;
-    import ControlToolboxElement = app.core.ControlToolboxElement;
-    import TreeElement = app.core.TreeElement;
-    import ToolboxElement = app.core.ToolboxElement;
+    import LayoutToolboxElement = app.core.model.LayoutToolboxElement;
+    import ControlToolboxElement = app.core.model.ControlToolboxElement;
+    import TreeElement = app.core.model.TreeElement;
+    import ToolboxElement = app.core.model.ToolboxElement;
     import ConfigDialogService = app.header.ConfigDialogService;
-
+    import DataschemaProperty = app.core.dataschema.DataschemaProperty;
 
     class ToolboxController {
 
-        public currentAddElementLabel: string = '';
-        public currentAddElementType: string = 'string';
+        public newElementLabel:string = '';
+        public newElementTypeLabel:string = 'string';
+
         public elementTypes = ['string', 'number', 'boolean'];
 
+        public treeOptions:{};
 
-        private tab:number = 1;
+        static $inject = ['ToolboxService', 'ConfigDialogService'];
 
-        static $inject = ['$scope', '$filter', 'ToolboxService', 'ConfigDialogService'];
-
-        constructor($scope, public $filter, public toolboxService: ToolboxService, public configService: ConfigDialogService) {
-
-            var _this = this;
-            $scope.treeOptionsToolbox = {
-                accept: function (sourceNodeScope, destNodesScope, destIndex) {
+        constructor(public toolboxService:ToolboxService, private configService:ConfigDialogService) {
+            this.treeOptions = {
+                accept: () => {
                     return false;
                 },
-                dropped: function(e) {
-                    console.log(e);
+                dropped: (event) => {
                     //if the element is being dragged into the toolbar itself, return
-                    if(e.dest.nodesScope.$modelValue == e.source.nodesScope.$modelValue) {
+                    if (event.dest.nodesScope.$modelValue == event.source.nodesScope.$modelValue) {
                         return;
                     }
 
-                    // Convert the ToolboxElement into a TreeElement
-                    var index = e.dest.index;
-                    var modelDest: ToolboxElement = e.dest.nodesScope.$modelValue[index];
-
-                    var modelSource: ToolboxElement = e.source.nodeScope.$modelValue;
-                    if(modelSource instanceof ControlToolboxElement) {
-                        var control: ControlToolboxElement = modelSource;
-                        control.increasePlacedTimes();
+                    var toolboxElement:ToolboxElement = event.source.nodeScope.$modelValue;
+                    if (toolboxElement instanceof ControlToolboxElement) {
+                        toolboxElement.increasePlacedTimes();
                     }
-                    e.dest.nodesScope.$modelValue[index] = modelDest.insertIntoTree(TreeElement.getNewId());
 
+                    // Convert the ToolboxElement into a TreeElement
+                    var index = event.dest.index;
+                    var destination:ToolboxElement = event.dest.nodesScope.$modelValue[index];
+                    event.dest.nodesScope.$modelValue[index] = destination.convertToTreeElement();
                 }
-
             };
         }
 
-        shouldHide(element: ToolboxElement): boolean {
-            if(!this.configService.enableFilter){
+        /**
+         * Checks, if the element should be hidden from the toolbox, because it is already used in the tree.
+         * @param element
+         * @returns {boolean}
+         */
+        shouldHide(element:ToolboxElement):boolean {
+            if (!this.configService.enableFilter) {
                 return false;
             }
-            if(element instanceof ControlToolboxElement){
-                if(element.isAlreadyPlaced()){
+            if (element instanceof ControlToolboxElement) {
+                if (element.isAlreadyPlaced()) {
                     return true;
                 }
             }
             return false;
         }
 
-        isSet(checkTab):boolean {
-            return this.tab == checkTab;
+        /**
+         * Setter for the label of the tobe created dataschema element.
+         * @param type
+         */
+        setNewElementTypeLabel(type:string) {
+            this.newElementTypeLabel = type;
         }
-
-        setTab(activeTab) {
-            this.tab = activeTab;
-        }
-
-        changeAddType(type: string) {
-
-            this.currentAddElementType = type;
-
-        }
-
-        typeOfNewElement(): string {
-            return this.currentAddElementType;
-        }
-
 
         //TODO support different scopes(inside folders)
         //TODO add more data into content(required, min chars, etc)
+        /**
+         * Submits the current newElementLabel and newElementTypeLabel and creates a new DataschemaPropery.
+         */
         addNewElement() {
-            document.getElementById("inputLabel").focus();
+            var property:DataschemaProperty = new DataschemaProperty(this.newElementLabel, this.newElementTypeLabel);
 
-            var content = {
-                type: this.typeOfNewElement()
-            };
+            if (!this.toolboxService.addSchemaElement(property, [])) {
+                console.log("ERROR: failed to add the element into the schema");
+            }
 
-            this.toolboxService.addSchemaElement(this.currentAddElementLabel, content);
-
-            this.currentAddElementLabel = '';
+            this.newElementLabel = '';
         }
 
-        removeDataElement(element: ControlToolboxElement) {
-            if(this.canRemoveDataElement(element)){
-                this.toolboxService.removeSchemaElement(element.getScope());
+        /**
+         * Removes the specified ControlToolboxElement from the Dataschema.
+         * @param element
+         */
+        removeDataElement(element:ControlToolboxElement) {
+            if (element.canBeRemoved()) {
+                if (!this.toolboxService.removeSchemaElement(element)) {
+                    console.log("ERROR: failed to remove the element from the schema");
+                }
             }
         }
-
-        canRemoveDataElement(element: ControlToolboxElement): boolean {
-            if(element.isAlreadyPlaced()) {
-                return false;
-            }
-            return true;
-        }
-
     }
 
     angular.module('app.toolbox').controller('ToolboxController', ToolboxController)

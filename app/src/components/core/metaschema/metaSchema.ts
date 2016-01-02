@@ -1,187 +1,146 @@
 module app.core.metaschema {
 
-    import JsonSchemaService = app.core.jsonschema.JsonSchemaService;
-    export class MetaSchema {
+    export class Metaschema {
 
-        private definitions: Definition[] = [];
+        constructor(private definitions:Definition[] = []) {
 
-        constructor(public jsonSchemaService: JsonSchemaService, json: any) {
-            var schema: any;
-            var uiSchema: any;
-            var acceptedElements: string[];
-
-            // TODO derive the schema, uiSchema and initialData of the different definitions automatically from the metaschema
-            // Control definition
-            schema = {
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                          "Control"
-                        ]
-                    },
-                    "label": {
-                        "type": "string"
-                    },
-                    "scope": {
-                        "type": "string",
-                        "enum": jsonSchemaService.getNames()
-                    }
-                },
-                "required": [
-                    "type",
-                    "scope"
-                ]
-            };
-            uiSchema = {
-                "type": "VerticalLayout",
-                "elements": [
-                    {
-                        "type": "Control",
-                        "label": "Label",
-                        "scope": { "$ref": "#/properties/label" },
-                    },
-                    {
-                        "type": "Control",
-                        "label": "Type",
-                        "scope": { "$ref": "#/properties/type" },
-                    },
-                    {
-                        "type": "Control",
-                        "label": "Scope",
-                        "scope": { "$ref": "#/properties/scope" },
-                    }
-                ]
-            };
-            acceptedElements = [];
-            this.definitions.push(new Definition(schema, uiSchema, acceptedElements));
-
-            // Layout Definition
-            schema = {
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "HorizontalLayout",
-                            "VerticalLayout",
-                            "Group"
-                        ]
-                    },
-                    "label": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "type"
-                ]
-            };
-            uiSchema = {
-                "type": "VerticalLayout",
-                "elements": [
-                    {
-                        "type": "Control",
-                        "label": "Label",
-                        "scope": { "$ref": "#/properties/label" },
-                    },
-                    {
-                        "type": "Control",
-                        "label": "Type",
-                        "scope": { "$ref": "#/properties/type" },
-                    }
-                ]
-            };
-            acceptedElements = ["Control", "VerticalLayout", "HorizontalLayout", "Group", "Categorization"];
-
-            this.definitions.push(new Definition(schema, uiSchema, acceptedElements));
-
-            // Categorization Definition
-            schema = {
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "Categorization"
-                        ]
-                    }
-                },
-                "required": [
-                    "type"
-                ]
-            };
-            uiSchema = {
-                "type": "VerticalLayout",
-                "elements": [
-                    {
-                        "type": "Control",
-                        "label": "Type",
-                        "scope": { "$ref": "#/properties/type" },
-                    }
-                ]
-            };
-            acceptedElements = ["Category"];
-
-            this.definitions.push(new Definition(schema, uiSchema, acceptedElements));
-
-            // Category Definition
-            schema = {
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "Category"
-                        ]
-                    },
-                    "label": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "type"
-                ]
-            };
-            uiSchema = {
-                "type": "VerticalLayout",
-                "elements": [
-                    {
-                        "type": "Control",
-                        "label": "Label",
-                        "scope": { "$ref": "#/properties/label" },
-                    },
-                    {
-                        "type": "Control",
-                        "label": "Type",
-                        "scope": { "$ref": "#/properties/type" },
-                    }
-                ]
-            };
-            acceptedElements = ["Control", "VerticalLayout", "HorizontalLayout", "Group", "Categorization"];
-
-            this.definitions.push(new Definition(schema, uiSchema, acceptedElements));
         }
 
-        //small hack to reload data elements of the Controls. Refactor ASAP
-        reloadData() {
-            var def = this.getDefinition("Control");
-            def.schema.properties.scope.enum = this.jsonSchemaService.getNames();
+        /**
+         * Factory-Method to create a Metaschema from a json-object.
+         *
+         * @param json the json structure to create the metaschema from
+         *
+         * @returns {app.core.metaschema.Metaschema}
+         */
+        static fromJSON(json:any):Metaschema {
+            var definitions:Definition[] = [];
+
+            // array contains all names of the elements in the root scope of the json, so they can be referenced by '#'.
+            var rootElements:string[] = [];
+
+            if (json.hasOwnProperty('definitions')) {
+                _.forOwn(json['definitions'], (value:{}, name:string) => {
+                    // we are only looking at object definitions (e.g. 'label' gets sorted out)
+                    if (value.hasOwnProperty('type')) {
+                        if (value['type'] === 'object') {
+                            var definition:Definition = new Definition(name, Metaschema.cleanupDataschema(value), Metaschema.retrieveAcceptedElements(value, rootElements));
+
+                            // now continue with all child elements that the current element can accept
+                            _.forEach(Metaschema.retrieveChildElements(value, rootElements), (child:Definition) => {
+                                definitions.push(child);
+                            });
+
+                            // add everything to the result
+                            definitions.push(definition);
+                            _.forEach(definition.getTypeLabels(), (type:string) => {
+                                if (rootElements.indexOf(type) === -1) {
+                                    rootElements.push(type);
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+            return new Metaschema(definitions);
         }
 
-        getDefinitions() : Definition[] {
+        private static retrieveAcceptedElements(value:{}, rootElements:string[]):string[] {
+            var result:string[] = [];
+            if (value.hasOwnProperty('properties') && value['properties'].hasOwnProperty('elements') && value['properties']['elements'].hasOwnProperty('items')) {
+                var items = value['properties']['elements']['items'];
+
+                if (items.hasOwnProperty('$ref') && items['$ref'] === '#') {
+                    result = rootElements;
+                } else {
+                    // a new object is declared, so get its label
+                    if (items.hasOwnProperty('properties') && items['properties'].hasOwnProperty('type') && items['properties']['type'].hasOwnProperty('enum')) {
+                        result = items['properties']['type']['enum'];
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private static retrieveChildElements(schema:{}, rootElements:string[]):Definition[] {
+            var result:Definition[] = [];
+
+            if (schema.hasOwnProperty('properties') && schema['properties'].hasOwnProperty('elements')) {
+                var elements = schema['properties']['elements'];
+
+                if (elements.hasOwnProperty('type') && elements['type'] === 'array' && elements.hasOwnProperty('items')) {
+                    var items = elements['items'];
+                    if (items.hasOwnProperty('type')) {
+                        if (items['type'] === 'array') {
+                            if (!items.hasOwnProperty('$ref')) {
+                                // a new object is introduced, otherwise $ref would be used
+
+                            }
+                        } else if (items['type'] === 'object') {
+                            // we are sure that there is a new object introduced here
+                            if (items.hasOwnProperty('properties') && items['properties'].hasOwnProperty('type')) {
+                                if (items['properties']['type'].hasOwnProperty('enum')) {
+                                    _.forEach(items['properties']['type']['enum'], (name:string) => {
+                                        result.push(new Definition(name.toLowerCase(), Metaschema.cleanupDataschema(items), Metaschema.retrieveAcceptedElements(items, rootElements)));
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        private static cleanupDataschema(dataschema:{}):{} {
+            var result = {};
+
+            if (dataschema.hasOwnProperty('properties')) {
+                result['properties'] = _.omit(dataschema['properties'], ['elements']);
+
+                if (dataschema['properties'].hasOwnProperty('scope')) {
+                    result['properties']['scope'] = {'type': 'string'};
+                }
+
+                if (dataschema['properties'].hasOwnProperty('type')) {
+                    if (dataschema['properties']['type'].hasOwnProperty('enum')) {
+                        if (dataschema['properties']['type']['enum'].length > 1) {
+                            result['properties']['type'] = dataschema['properties']['type'];
+                        }
+                        else {
+                            result['properties']['type'] = _.omit(dataschema['properties']['type'], ['enum']);
+                        }
+                    }
+                }
+            }
+
+            if (dataschema.hasOwnProperty('required')) {
+                result['required'] = dataschema['required'];
+            }
+
+            return result;
+        }
+
+        /**
+         * Gets all definitions associated with the Metaschema.
+         * @returns {Definition[]}
+         */
+        getDefinitions():Definition[] {
             return this.definitions;
         }
 
-        getDefinition(type: string) {
-            var definition: Definition = null;
-            for(var i = 0; i < this.definitions.length; i++) {
-                for(var j = 0; j < this.definitions[i].getTypeEnum().length; j++) {
-                    if(type == this.definitions[i].getTypeEnum()[j]) definition = this.definitions[i];
-                }
-            }
-            return definition;
+        /**
+         * Gets all definitions with the given type label.
+         * @param typeLabel the label of the type (e.g. 'VerticalLayout')
+         * @returns {Definition} the definition or undefined if not found
+         */
+        getDefinitionByTypeLabel(typeLabel:String):Definition {
+            return _.find(this.definitions, (definition:Definition) => {
+                return _.contains(definition.getTypeLabels(), typeLabel);
+            })
         }
+
 
     }
 }

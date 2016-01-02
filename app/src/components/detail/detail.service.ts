@@ -1,23 +1,31 @@
 module app.detail {
+
+    import Metaschema = app.core.metaschema.Metaschema;
+    import TreeElement = app.core.model.TreeElement;
+    import MetaschemaService = app.core.metaschema.MetaschemaService;
+
     export class DetailService {
 
-        public currentElement : any;
+        public currentElement : TreeElement;
         public schema: any;
         public uiSchema: any;
 
-        private metaSchema: app.core.metaschema.MetaSchema;
+        static $inject = ["MetaschemaService"];
 
-        static $inject = ["MetaSchemaService"];
+        constructor(private metaschemaService: MetaschemaService) {
 
-        constructor(private metaSchemaService: app.core.metaschema.MetaSchemaService) {
-            this.metaSchema = metaSchemaService.getMetaSchema();
         }
 
-        setElement(element: any) : void {
-            this.currentElement = element;
-            this.metaSchema.reloadData();
-            this.schema = this.metaSchema.getDefinition(element.type).schema;
-            this.uiSchema = this.metaSchema.getDefinition(element.type).uiSchema;
+        setElement(element: TreeElement) : void {
+            this.metaschemaService.getMetaschema().then((metaschema:Metaschema) => {
+                this.schema = metaschema.getDefinitionByTypeLabel(element.getType()).getDataschema();
+                this.uiSchema = metaschema.getDefinitionByTypeLabel(element.getType()).getUISchema();
+                this.currentElement = element;
+            });
+        }
+
+        reset() : void {
+            this.currentElement = null;
         }
 
     }

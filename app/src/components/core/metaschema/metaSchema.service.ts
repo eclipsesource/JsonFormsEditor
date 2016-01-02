@@ -1,141 +1,37 @@
 module app.core.metaschema {
 
-  import JsonSchemaService = app.core.jsonschema.JsonSchemaService;
-  export class MetaSchemaService {
+    import IHttpPromise = angular.IHttpPromise;
+    import IPromise = angular.IPromise;
+    import IQService = angular.IQService;
+    import IDeferred = angular.IDeferred;
+    import DataschemaService = app.core.dataschema.DataschemaService;
 
-    static $inject = ['$http', 'JsonSchemaService'];
+    export class MetaschemaService {
 
-    private metaSchema: MetaSchema;
+        static $inject = ['$http', '$q'];
 
+        private metaschema:IPromise<Metaschema>;
 
-    constructor($http: ng.IHttpService, jsonSchemaService: JsonSchemaService) {
-      //TODO implement using $http and promises, to get resource from static location on the server
-      this.metaSchema = new MetaSchema(jsonSchemaService, jsonMetaSchema);
+        constructor($http:ng.IHttpService, $q:IQService) {
+            var deffered:IDeferred<Metaschema> = $q.defer();
+
+            $http.get('/resource/metaschema.json').success((json:any):void => {
+                deffered.resolve(Metaschema.fromJSON(json));
+            });
+
+            this.metaschema = deffered.promise;
+        }
+
+        /**
+         * Gets a promise of the Metaschema.
+         *
+         * @returns {IPromise<Metaschema>}
+         */
+        getMetaschema():IPromise<Metaschema> {
+            return this.metaschema;
+        }
+
     }
 
-    getMetaSchema() : MetaSchema {
-      return this.metaSchema;
-    }
-
-  }
-
-  angular.module('app.core').service('MetaSchemaService', MetaSchemaService);
+    angular.module('app.core').service('MetaschemaService', MetaschemaService);
 }
-
-var jsonMetaSchema = {
-  "definitions": {
-    "label": {
-      "properties": {
-        "text": {
-          "type": "string"
-        }
-      }
-    },
-    "control": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "enum": [
-            "Control"
-          ]
-        },
-        "label": {
-          "type": "string"
-        },
-        "scope": {
-          "type": "object",
-          "properties": {
-            "$ref": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "required": [
-        "type",
-        "scope"
-      ]
-    },
-    "layout": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "enum": [
-            "HorizontalLayout",
-            "VerticalLayout",
-            "Group"
-          ]
-        },
-        "label": {
-          "type": "string"
-        },
-        "elements": {
-          "type": "array",
-          "items": {
-            "$ref": "#"
-          }
-        }
-      },
-      "required": [
-        "type",
-        "elements"
-      ]
-    },
-    "categorization": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "enum": [
-            "Categorization"
-          ]
-        },
-        "elements": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "Category"
-                ]
-              },
-              "elements": {
-                "type": "array",
-                "items": {
-                  "$ref": "#"
-                }
-              }
-            },
-            "required": [
-              "type",
-              "elements"
-            ]
-          }
-        }
-      },
-      "required": [
-        "type",
-        "elements"
-      ]
-    }
-  },
-  "type": "object",
-  "oneOf": [
-    {
-      "$ref": "#/definitions/categorization"
-    },
-    {
-      "$ref": "#/definitions/layout"
-    },
-    {
-      "$ref": "#/definitions/control"
-    },
-    {
-      "$ref": "#/definitions/label"
-    }
-  ]
-};

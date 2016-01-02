@@ -7,10 +7,9 @@ module app.header {
 
     export class ConfigDialogController {
 
-
         static $inject = ['$mdDialog', 'ConfigDialogService'];
 
-        constructor(private $mdDialog:IDialogService, public configService: ConfigDialogService) {
+        constructor(private $mdDialog:IDialogService, public configService:ConfigDialogService) {
         }
 
         hideConfigDialog():void {

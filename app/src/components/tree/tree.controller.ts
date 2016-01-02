@@ -1,112 +1,86 @@
 module app.tree {
 
-    import ControlToolboxElement = app.core.ControlToolboxElement;
-    import ToolboxElement = app.core.ToolboxElement;
-    import TreeElement = app.core.TreeElement;
+    import ControlToolboxElement = app.core.model.ControlToolboxElement;
+    import ToolboxElement = app.core.model.ToolboxElement;
+    import TreeElement = app.core.model.TreeElement;
     import ToolboxService = app.toolbox.ToolboxService;
-
+    import DetailService = app.detail.DetailService;
+    import DataschemaService = app.core.dataschema.DataschemaService;
+    import PreviewUpdateEvent = app.preview.PreviewUpdateEvent;
 
     class MyTreeController {
 
-        static $inject = ['$scope', 'TreeService', 'JsonSchemaService', 'DetailService', 'ToolboxService'];
+        public elements:TreeElement[] = [];
+        public treeOptions:{};
 
-        public elements: any = [];
+        static $inject = ['TreeService', 'DataschemaService', 'ToolboxService', 'DetailService'];
 
-        constructor(
-            public $scope, 
-            public treeService: app.tree.TreeService, 
-            public JsonSchemaService: any,
-            private detailService: app.detail.DetailService,
-            public toolboxService: ToolboxService){
-
+        constructor(private treeService:TreeService, private dataschemaService:DataschemaService, private toolboxService:ToolboxService, private detailService:DetailService) {
             this.elements = treeService.elements;
 
-            var _this = this;
-            $scope.treeOptions = {
-                // no accept more than one element (layout) in the root of the tree
-                accept: function (sourceNodeScope, destNodesScope, destIndex) {
+            this.treeOptions = {
+                // don't accept more than one element (layout) in the root of the tree
+                accept: (sourceNodeScope, destNodesScope) => {
 
-                    var source: ToolboxElement = sourceNodeScope.$modelValue;
+                    var source:ToolboxElement = sourceNodeScope.$modelValue;
                     //var dest: TreeElement = source.insertIntoTree(TreeElement.getNewId());
 
-                    var parent: any = destNodesScope.$nodeScope;
+                    var parent:any = destNodesScope.$nodeScope;
 
-                    if(parent == null) {
+                    if (parent == null) {
                         //Means that the element has no parent and therefore is outside the root
                         return false;
                     }
 
-                    var destParent: TreeElement = parent.$modelValue;
+                    var destParent:TreeElement = parent.$modelValue;
 
-
-                    var accepted: boolean = destParent.acceptsElement(source.getType());
+                    var accepted:boolean = destParent.acceptsElement(source.getType());
 
                     return accepted;
                 },
-                removed: function(node) {
-
-                    var treeElement: TreeElement = node.$modelValue;
-                    _this.decreasePlacedTimesOfChilds(treeElement);
+                dropped: () => {
+                   // this.treeService.notifyObservers(new PreviewUpdateEvent(JSON.parse(this.treeService.exportUISchemaAsJSON()), null));
+                },
+                removed: (node) => {
+                    var treeElement:TreeElement = node.$modelValue;
+                    //this.treeService.notifyObservers(new PreviewUpdateEvent(JSON.parse(this.treeService.exportUISchemaAsJSON()), null));
+                    this.decreasePlacedTimesOfChilds(treeElement);
                 }
             };
-
-            $scope.isPreview = false;
-            $scope.previewUISchema = {};
-            $scope.previewSchema = {};
-            $scope.previewData = {};
         }
 
-        decreasePlacedTimesOfChilds(treeElement: TreeElement) {
-            var toolboxElement: ToolboxElement = this.toolboxService.getAssociatedToolboxElement(treeElement);
-
-            for(var i=0; i<treeElement.elements.length; i++) {
-                this.decreasePlacedTimesOfChilds(treeElement.elements[i]);
-            }
-
-            if(toolboxElement instanceof ControlToolboxElement) {
-               toolboxElement.decreasePlacedTimes();
-            }
-        }
-
-        updatePreview() : void {
-            this.$scope.previewUISchema = JSON.parse(this.treeService.exportUISchemaAsJSON());
-            this.$scope.previewSchema = this.JsonSchemaService.getDataSchema();
-            // The data introduced into the preview is not stored, as it's not relevant
-            this.$scope.previewData = {};
-        }
-
-        preview(bool) : void {
-            if (bool) {
-                this.updatePreview();
-            }
-            this.$scope.isPreview = bool;
-        }
-
-        remove(scope) : void {
+        /**
+         * Removes the element from the tree.
+         * @param scope Scope Element from ui.tree.
+         */
+        remove(scope):void {
             scope.removeNode(scope);
-
         }
 
-        newSubItem(scope) : void {
-            var node: any = scope.$modelValue;
-            //TODO borrar esta functionalidad si quito scope binding
-            node.elements.push(new ControlToolboxElement('', '', ''));
+        /**
+         * Shows the Detail-Window for the given element.
+         * @param node
+         */
+        showDetails(node:TreeElement):void {
+            this.detailService.setElement(node);
         }
 
-        toggle(scope) : void {
+        /**
+         * Collapses or expands the current element.
+         * @param scope Scope Element from ui.tree.
+         */
+        toggle(scope):void {
             scope.toggle();
         }
 
-        collapseAll() : void {
-            this.$scope.$broadcast('collapseAll');
-        }
+        private decreasePlacedTimesOfChilds(treeElement:TreeElement) {
+            this.toolboxService.getAssociatedToolboxElement(treeElement).then((toolboxElement:ToolboxElement) => {
+                _.forEach(treeElement.elements, this.decreasePlacedTimesOfChilds.bind(this));
 
-        expandAll() : void {
-            this.$scope.$broadcast('expandAll');
-        }
-
-        showDetails(node: any) : void {
-            this.detailService.setElement(node);
+                if (toolboxElement instanceof ControlToolboxElement) {
+                    toolboxElement.decreasePlacedTimes();
+                }
+            });
         }
     }
 

@@ -18,6 +18,7 @@
 /* Header / Body styles */
 .jsonFormsEditor-Header {
   height: @header-size;
+  min-height: @header-size;
 }
 
 .jsonFormsEditor-Body {
@@ -174,8 +175,9 @@ md-list-item:hover {
   padding: 0px;
 }
 
-.toolbox-container {
+.toolbar-container {
   width: @toolbox-width;
+  min-width: @toolbox-width;
 }
 
 .toolbox-bottom-control {
@@ -185,4 +187,16 @@ md-list-item:hover {
   width: @toolbox-width;
   padding:5px;
   background-color:@soft-bg;
+}
+
+.layouts-element {
+  margin-left:5px;
+  margin-right: 5px;
+  height:40px;
+  width:40px;
+
+}
+
+.layouts-view {
+  background-color: @soft-bg;
 }

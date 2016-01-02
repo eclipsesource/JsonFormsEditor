@@ -4,14 +4,13 @@ module app.detail {
 
         static $inject = ['DetailService'];
 
-        constructor(public detailService:app.detail.DetailService) {}
+        constructor(public detailService:DetailService) {}
 
         reset() : void {
-            this.detailService.currentElement = null;
+            this.detailService.reset();
         }
 
     }
 
     angular.module('app.detail').controller('DetailController', DetailController);
 }
-
