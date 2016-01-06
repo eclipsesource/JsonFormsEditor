@@ -3,7 +3,7 @@
 module app.core.dataschema {
 
     import PreviewUpdateEvent = app.preview.PreviewUpdateEvent;
-    export class DataschemaService /*extends Observable<PreviewUpdateEvent> */{
+    export class DataschemaService extends Observable<PreviewUpdateEvent> {
         private properties:DataschemaProperty[] = [];
         private json:any = {};
 
@@ -69,7 +69,7 @@ module app.core.dataschema {
 
             parent[property.getName()] = property;
             this.properties.push(property);
-            //this.notifyObservers(new PreviewUpdateEvent(null, this.getDataSchema()));
+            this.notifyObservers(new PreviewUpdateEvent(null, this.getDataSchema()));
             return true;
         }
 
@@ -87,7 +87,7 @@ module app.core.dataschema {
                 return false;
             }
 
-            //this.notifyObservers(new PreviewUpdateEvent(null, this.getDataSchema()));
+            this.notifyObservers(new PreviewUpdateEvent(null, this.getDataSchema()));
 
             return delete parent[name];
         }

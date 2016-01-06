@@ -23,7 +23,6 @@ module app.tree {
                 accept: (sourceNodeScope, destNodesScope) => {
 
                     var source:ToolboxElement = sourceNodeScope.$modelValue;
-                    //var dest: TreeElement = source.insertIntoTree(TreeElement.getNewId());
 
                     var parent:any = destNodesScope.$nodeScope;
 
@@ -38,12 +37,9 @@ module app.tree {
 
                     return accepted;
                 },
-                dropped: () => {
-                   // this.treeService.notifyObservers(new PreviewUpdateEvent(JSON.parse(this.treeService.exportUISchemaAsJSON()), null));
-                },
                 removed: (node) => {
                     var treeElement:TreeElement = node.$modelValue;
-                    //this.treeService.notifyObservers(new PreviewUpdateEvent(JSON.parse(this.treeService.exportUISchemaAsJSON()), null));
+                    this.treeService.notifyObservers(new PreviewUpdateEvent(JSON.parse(this.treeService.exportUISchemaAsJSON()), null));
                     this.decreasePlacedTimesOfChilds(treeElement);
                 }
             };

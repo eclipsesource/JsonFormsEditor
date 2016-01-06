@@ -5,14 +5,14 @@ module app.tree {
     import LayoutsService = app.layouts.LayoutsService;
     import PreviewUpdateEvent = app.preview.PreviewUpdateEvent;
 
-    export class TreeService /*extends Observable<PreviewUpdateEvent> */{
+    export class TreeService extends Observable<PreviewUpdateEvent> {
 
         static $inject = ['LayoutsService'];
 
         public elements:TreeElement[] = [];
 
         constructor(private layoutsService:LayoutsService) {
-            //super();
+            super();
             layoutsService.getElementByType('VerticalLayout').then((element:LayoutToolboxElement) => {
                 var rootElement:TreeElement = element.convertToTreeElement();
                 rootElement['root'] = 'root';

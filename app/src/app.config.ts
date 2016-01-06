@@ -52,7 +52,7 @@ module app {
                             controllerAs: 'header',
                             templateUrl: 'app/src/components/header/header.html'
                         },
-                        previewContainer: {
+                        contentContainer: {
                             controller: 'PreviewController',
                             controllerAs: 'preview',
                             templateUrl: 'app/src/components/preview/preview.html'

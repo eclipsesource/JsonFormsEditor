@@ -12,8 +12,8 @@ module app.preview {
             this.schema = dataschemaService.getDataSchema();
             this.uiSchema = JSON.parse(treeService.exportUISchemaAsJSON());
 
-            //this.treeService.registerObserver(this);
-            //this.dataschemaService.registerObserver(this);
+            this.treeService.registerObserver(this);
+            this.dataschemaService.registerObserver(this);
         }
 
         update(update:PreviewUpdateEvent) {
@@ -23,7 +23,6 @@ module app.preview {
                 this.uiSchema = update.getUiSchema();
             }
         }
-
 
     }
 

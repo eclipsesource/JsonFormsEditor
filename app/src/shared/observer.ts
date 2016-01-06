@@ -5,7 +5,7 @@ interface Observer<T> {
 }
 
 abstract class Observable<T> {
-    private observers:Observer<T>[];
+    private observers:Observer<T>[] = [];
 
     registerObserver(observer:Observer<T>):void {
         this.observers.push(observer);
