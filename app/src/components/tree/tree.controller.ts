@@ -39,7 +39,7 @@ module app.tree {
                 },
                 removed: (node) => {
                     var treeElement:TreeElement = node.$modelValue;
-                    this.treeService.notifyObservers(new PreviewUpdateEvent(JSON.parse(this.treeService.exportUISchemaAsJSON()), null));
+                    this.treeService.notifyObservers(new PreviewUpdateEvent(null, JSON.parse(this.treeService.exportUISchemaAsJSON())));
                     this.decreasePlacedTimesOfChilds(treeElement);
                 }
             };

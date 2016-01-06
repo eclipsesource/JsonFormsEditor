@@ -1,3 +1,26 @@
-<md-content class="md-padding jsf">
+Schema : {{preview.previewService.schema}}
+UiSchema: {{preview.previewService.uiSchema}}
+<script>
+    window.addEventListener('message', function(event) {
+        var service = angular.element('html').injector().get('PreviewService');
+        console.log('before');
+        console.log(service);
+        if(event.data.schema){
+            service.schema = event.data.schema;
+            console.log('schema');
+            console.log(service.schema);
+        }
+        if(event.data.uiSchema){
+            service.uiSchema = event.data.uiSchema;
+            console.log('uiSchema');
+            console.log(service.uiSchema);
+        }
+        console.log(event);
+        console.log('after');
+        console.log(service);
+    }, false);
+</script>
+<md-content class="md-padding jsf" ng-if="preview.previewService.schema">
     <jsonforms schema="preview.previewService.schema" ui-schema="preview.previewService.uiSchema" data="preview.data"></jsonforms>
 </md-content>
+<md-button ng-click="preview.openInNewTab()" class="md-fab accent md-fab-bottom-right"><md-icon class="material-icons">open_in_new</md-icon></md-button>

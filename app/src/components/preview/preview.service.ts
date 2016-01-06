@@ -6,11 +6,16 @@ module app.preview {
         public schema:{};
         public uiSchema:{};
 
-        static $inject = ['TreeService', 'DataschemaService'];
+        private tab:any;
 
-        constructor(private treeService:TreeService, private dataschemaService:DataschemaService) {
+        static $inject = ['$state', 'TreeService', 'DataschemaService'];
+
+        constructor(private $state, private treeService:TreeService, private dataschemaService:DataschemaService) {
             this.schema = dataschemaService.getDataSchema();
-            this.uiSchema = JSON.parse(treeService.exportUISchemaAsJSON());
+            var stringifiedSchema:string = treeService.exportUISchemaAsJSON();
+            if(stringifiedSchema){
+                this.uiSchema = JSON.parse(stringifiedSchema);
+            }
 
             this.treeService.registerObserver(this);
             this.dataschemaService.registerObserver(this);
@@ -22,8 +27,18 @@ module app.preview {
             } else if (update.containsUiSchema()) {
                 this.uiSchema = update.getUiSchema();
             }
+
+            this.tab.postMessage(update, '*');
         }
 
+        openInNewTab():void {
+            this.tab = window.open('#preview');
+            this.tab.addEventListener('load', () => {
+                this.tab.postMessage(new PreviewUpdateEvent(this.schema, this.uiSchema), '*');
+            }, false);
+
+            this.$state.go('edit');
+        }
     }
 
     angular.module('app.preview').service('PreviewService', PreviewService);

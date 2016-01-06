@@ -69,7 +69,7 @@ module app.core.dataschema {
 
             parent[property.getName()] = property;
             this.properties.push(property);
-            this.notifyObservers(new PreviewUpdateEvent(null, this.getDataSchema()));
+            this.notifyObservers(new PreviewUpdateEvent(this.getDataSchema(), null));
             return true;
         }
 
@@ -87,7 +87,7 @@ module app.core.dataschema {
                 return false;
             }
 
-            this.notifyObservers(new PreviewUpdateEvent(null, this.getDataSchema()));
+            this.notifyObservers(new PreviewUpdateEvent(this.getDataSchema(), null));
 
             return delete parent[name];
         }

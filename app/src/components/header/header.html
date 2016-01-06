@@ -8,6 +8,8 @@
         <md-button class="md-raised md-accent" ui-sref="edit" ui-sref-active="hidden">Edit</md-button>
 
         <md-button class="md-raised md-accent" ng-click="header.showExportDialog()">Export</md-button>
-        <md-button class="md-raised md-accent" ng-click="header.showConfigDialog()">Configuration</md-button>
+        <i ng-click="header.showConfigDialog()" class="material-icons">
+            <md-tooltip md-direction="left">Configuration</md-tooltip>
+            settings</i>
     </div>
 </md-toolbar>
