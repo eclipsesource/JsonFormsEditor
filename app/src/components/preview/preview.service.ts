@@ -28,7 +28,9 @@ module app.preview {
                 this.uiSchema = update.getUiSchema();
             }
 
-            this.tab.postMessage(update, '*');
+            if(this.tab){
+                this.tab.postMessage(update, '*');
+            }
         }
 
         openInNewTab():void {

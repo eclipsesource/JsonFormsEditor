@@ -6,6 +6,8 @@ module app.toolbox {
     import ToolboxElement = app.core.model.ToolboxElement;
     import ConfigDialogService = app.header.ConfigDialogService;
     import DataschemaProperty = app.core.dataschema.DataschemaProperty;
+    import TreeService = app.tree.TreeService;
+    import PreviewUpdateEvent = app.preview.PreviewUpdateEvent;
 
     class ToolboxController {
 
@@ -16,9 +18,9 @@ module app.toolbox {
 
         public treeOptions:{};
 
-        static $inject = ['ToolboxService', 'ConfigDialogService'];
+        static $inject = ['ToolboxService', 'ConfigDialogService', 'TreeService'];
 
-        constructor(public toolboxService:ToolboxService, private configService:ConfigDialogService) {
+        constructor(public toolboxService:ToolboxService, private configService:ConfigDialogService, private treeService:TreeService) {
             this.treeOptions = {
                 accept: () => {
                     return false;
@@ -38,6 +40,8 @@ module app.toolbox {
                     var index = event.dest.index;
                     var destination:ToolboxElement = event.dest.nodesScope.$modelValue[index];
                     event.dest.nodesScope.$modelValue[index] = destination.convertToTreeElement();
+
+                    this.treeService.notifyObservers(new PreviewUpdateEvent(null, JSON.parse(treeService.exportUISchemaAsJSON())));
                 }
             };
         }
