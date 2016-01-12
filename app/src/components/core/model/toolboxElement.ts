@@ -9,7 +9,7 @@ module app.core.model {
 
         private acceptedElements:string[];
 
-        constructor(private label:string, private type:string, private elementConfig:ElementConfig) {
+        constructor(public label:string, public type:string, public elementConfig:ElementConfig) {
 
         }
 

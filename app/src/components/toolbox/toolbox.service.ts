@@ -9,7 +9,6 @@ module app.toolbox {
     import ControlToolboxElement = app.core.model.ControlToolboxElement;
     import ToolboxElement = app.core.model.ToolboxElement;
     import TreeElement = app.core.model.TreeElement;
-    import DataschemaProperty = app.core.dataschema.DataschemaProperty;
     import Metaschema = app.core.metaschema.Metaschema;
     import Definition = app.core.metaschema.Definition;
     import MetaschemaService = app.core.metaschema.MetaschemaService;
@@ -24,10 +23,11 @@ module app.toolbox {
         static $inject = ['DataschemaService', '$q', 'LayoutsService'];
 
         public elements:ControlToolboxElement[] = [];
-
+        public currentPath: string[] = [];
 
         constructor(public dataschemaService:DataschemaService, private $q:IQService, private layoutsService:LayoutsService) {
-            this.loadSchemaElements(demoSchema);
+            this.loadSchema(demoSchema);
+            this.loadSchemaElements();
         }
 
         /**
@@ -36,19 +36,34 @@ module app.toolbox {
          * @param path the path to the property in the dataschema, e.g. ['person', 'adress']
          * @returns {boolean} true, if the addition was successful
          */
-        addSchemaElement(property:DataschemaProperty, path:string[]):boolean {
-            // TODO Fix the validation, so that there cannot be 2 schema elements with the same name in the same path of the toolbox(nor in dataschema)
-            if (this.dataschemaService.containsProperty(property) || !property.isValid()) {
-                return false;
-            }
+        addSchemaElement(label: string, type: string):boolean {
 
-            if (this.dataschemaService.addNewProperty(property, path)) {
-                var element:ControlToolboxElement = new ControlToolboxElement(property.getName(), property.getType(), property.getName());
+            if (this.dataschemaService.addNewProperty(label, type, this.currentPath)) {
+                var element:ControlToolboxElement = new ControlToolboxElement(label, type, label);
                 this.elements.push(element);
                 return true;
             } else {
                 return false;
             }
+        }
+
+        accessFolder(folderName: string){
+
+
+            this.currentPath.push(folderName);
+
+            //If folder exists
+            if(this.dataschemaService.getFolderAt(this.currentPath)){
+                this.loadSchemaElements();
+            }else{
+                this.currentPath.pop();
+            }
+
+        }
+
+        previousFolder(){
+            this.currentPath.pop();
+            this.loadSchemaElements();
         }
 
         /**
@@ -58,7 +73,10 @@ module app.toolbox {
          * @returns {boolean} returns true, if the element was successfully removed
          */
         removeSchemaElement(element:ControlToolboxElement):boolean {
-            var {name, path} = this.convertScopeToPathAndName(element.getScope());
+
+            var name = element.getScope();
+            var path = this.currentPath;
+            
             if (this.dataschemaService.removeProperty(name, path)) {
                 return _.remove(this.elements, element).length === 1;
             } else {
@@ -87,32 +105,23 @@ module app.toolbox {
             return deffered.promise;
         }
 
-        private loadSchemaElements(jsonWithDataSchema:any) {
-            this.dataschemaService.loadFromJson(jsonWithDataSchema);
-
-            var schemaProperties:DataschemaProperty[] = this.dataschemaService.getProperties();
-            _.forEach(schemaProperties, (property:DataschemaProperty) => {
-                this.elements.push(new ControlToolboxElement(this.convertScopeToLabel(property.getName()), property.getType(), property.getName()));
-            });
+        /*
+        * Used to load a schema into the dataschemaservice(without loading the elements for the toolbar)
+        * @param json the json file to load
+        */
+        private loadSchema(json: any){
+            this.dataschemaService.loadFromJson(json);
         }
 
-        private convertScopeToPathAndName(scope:string):{name:string, path:string[]} {
-            var path:string[] = scope.split('/');
-            var name:string = path[path.length - 1];
 
-            path.splice(path.length - 1, 1);
-
-            return {
-                name: name,
-                path: path
-            }
+        /*
+        * Used to load the schema elements for the toolbar from a specified folder (uses currentPath)
+        *
+        * */
+        private loadSchemaElements() {
+            this.elements = this.dataschemaService.convertPropertiesToControls(this.currentPath);
         }
 
-        private convertScopeToLabel(scope:string):string {
-            var name = scope.split('/').pop();
-
-            return _.startCase(name);
-        }
 
         private getElementByScope(scope:string):ControlToolboxElement {
             return _.find(this.elements, (element:ControlToolboxElement) => {
@@ -140,6 +149,17 @@ var demoSchema = {
         },
         "height": {
             "type": "number"
+        },
+        "father": {
+            "type": "folder",
+            "properties": {
+                "age": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
         }
     }
 };

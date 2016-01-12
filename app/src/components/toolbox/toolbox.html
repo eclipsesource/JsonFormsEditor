@@ -1,12 +1,15 @@
 <md-content style="height:100%;" layout="column">
-    <md-content flex class="md-padding" style="margin-bottom:100px;">
+    <div style="height: 20px">
+        <md-icon class="material-icons" ng-if="!toolbox.isParentFolder()" ng-click="toolbox.clickedBack()">arrow_back</md-icon>
+    </div>
 
+    <md-content flex class="md-padding" style="margin-bottom:100px;">
         <div ui-tree="toolbox.treeOptions" data-drag-delay="100" data-clone-enabled="true" data-nodrop-enabled="true">
             <md-list ui-tree-nodes data-clone-enabled="true" data-nodrop-enabled="true"
                      ng-model="toolbox.toolboxService.elements">
                 <md-list-item ng-repeat="element in toolbox.toolboxService.elements" ui-tree-handle
                               ui-tree-node ng-hide="toolbox.shouldHide(element)">
-                    <md-icon class="material-icons">{{element.getIcon()}}</md-icon>
+                    <md-icon ng-click="toolbox.clickedIcon(element)" class="material-icons">{{element.getIcon()}}</md-icon>
                     <p style="overflow:hidden;">{{element.getLabel()}}</p>
                     <a class="pull-right left-margin" ng-hide="!element.canBeRemoved()" ng-click="toolbox.removeDataElement(element)">
                         <md-icon class="btn material-icons">delete</md-icon>

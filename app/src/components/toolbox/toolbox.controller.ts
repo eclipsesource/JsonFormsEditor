@@ -5,7 +5,6 @@ module app.toolbox {
     import TreeElement = app.core.model.TreeElement;
     import ToolboxElement = app.core.model.ToolboxElement;
     import ConfigService = app.core.ConfigService;
-    import DataschemaProperty = app.core.dataschema.DataschemaProperty;
     import TreeService = app.tree.TreeService;
     import PreviewUpdateEvent = app.preview.PreviewUpdateEvent;
 
@@ -14,7 +13,7 @@ module app.toolbox {
         public newElementLabel:string = '';
         public newElementTypeLabel:string = 'string';
 
-        public elementTypes = ['string', 'number', 'boolean'];
+        public elementTypes = ['string', 'number', 'boolean', 'folder'];
 
         public treeOptions:{};
 
@@ -77,9 +76,8 @@ module app.toolbox {
          * Submits the current newElementLabel and newElementTypeLabel and creates a new DataschemaPropery.
          */
         addNewElement() {
-            var property:DataschemaProperty = new DataschemaProperty(this.newElementLabel, this.newElementTypeLabel);
 
-            if (!this.toolboxService.addSchemaElement(property, [])) {
+            if (!this.toolboxService.addSchemaElement(this.newElementLabel, this.newElementTypeLabel)) {
                 console.log("ERROR: failed to add the element into the schema");
             }
 
@@ -96,6 +94,21 @@ module app.toolbox {
                     console.log("ERROR: failed to remove the element from the schema");
                 }
             }
+        }
+
+        clickedBack(){
+            this.toolboxService.previousFolder();
+        }
+
+        clickedIcon(element: ControlToolboxElement){
+            if(element.datatype == 'folder'){
+                this.toolboxService.accessFolder(element.getScope());
+            }
+        }
+
+        isParentFolder(){
+            var res = this.toolboxService.currentPath.length == 0;
+            return res;
         }
     }
 

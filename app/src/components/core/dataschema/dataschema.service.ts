@@ -1,10 +1,12 @@
 /// <reference path="../../../../../typings/angular-ui-router/angular-ui-router.d.ts" />
+/// <reference path="../model/toolboxElementControl.ts" />
 
 module app.core.dataschema {
 
     import PreviewUpdateEvent = app.preview.PreviewUpdateEvent;
+    import ControlToolboxElement = app.core.model.ControlToolboxElement;
+
     export class DataschemaService extends Observable<PreviewUpdateEvent> {
-        private properties:DataschemaProperty[] = [];
         private json:any = {};
 
         /**
@@ -13,35 +15,46 @@ module app.core.dataschema {
          */
         loadFromJson(json:any) {
             this.json = json;
-            this.properties = this.getPropertiesRecursive(json, '');
         }
 
         /**
-         * Returns all names of all properties.
-         * @returns {string[]}
+         * Converts all properties of the current foldeer into control elements
+         * @param path - an array of strings indicating the position in the folder hierarchy
+         * @returns {ControlToolboxElement[]}
          */
-        getNames():string[] {
-            return _.map(this.properties, (property:DataschemaProperty) => {
-                return property.getName();
+        convertPropertiesToControls(path?: string[]): ControlToolboxElement[] {
+
+
+            if(path == null || path == undefined){
+                path = [];
+            }
+
+            var result: ControlToolboxElement[] = [];
+
+            var parent: any = this.getFolderAt(path);
+
+            if(!parent.hasOwnProperty('properties')){
+                return [];
+            }
+
+            parent = parent.properties;
+
+
+            _.forEach(parent, (property:any, name:string) => {
+
+                result.push(new ControlToolboxElement(this.convertScopeToLabel(name), property.type, name));
             });
+
+
+            return result;
         }
 
-        /**
-         *  Returns all DataschemaProperties in the dataschema.
-         * @returns {DataschemaProperty[]}
-         */
-        getProperties():DataschemaProperty[] {
-            return this.properties;
+        private convertScopeToLabel(scope:string):string {
+            var name = scope.split('/').pop();
+
+            return _.startCase(name);
         }
 
-        /**
-         * Checks, whether the specified property is already contained in the dataschema.
-         * @param property the property to check
-         * @returns {boolean}
-         */
-        containsProperty(property:DataschemaProperty):boolean {
-            return this.properties.indexOf(property) > -1;
-        }
 
         /**
          * Returns the dataschema as JSON-object structure.
@@ -58,17 +71,34 @@ module app.core.dataschema {
          * @param path path is an array of string containing the name of the parent properties in order eg. : ['person', 'appearance', 'head']
          * @returns {boolean} indicating if the addition was succesful(when false, it means the element was not added)
          */
-        addNewProperty(property:DataschemaProperty, path:string[]):boolean {
-            if (!property.isValid()) {
+        addNewProperty(label: string, type: string, path:string[]):boolean {
+            var property: any = {};
+            property.type = type;
+
+            if (!(label&&type)) {
+                console.log('ERROR: label or type undefined');
                 return false;
             }
-            var parent = this.getPropertyAt(path);
-            if (parent === null) {
+            var parent = this.getFolderAt(path);
+
+            if(parent === null || !parent.hasOwnProperty('properties')){
+                console.log('ERROR: the path accessed is not a folder');
                 return false;
+            }
+            parent = parent.properties;
+
+            // Check if there is a property with same name already
+            if(parent.hasOwnProperty(label)){
+                console.log('ERROR: a property with the same name exists already in the current folder');
+                return false;
+            }
+            //Initialize properties object if its a folder
+            if(type == 'folder'){
+                property.properties = {};
             }
 
-            parent[property.getName()] = property;
-            this.properties.push(property);
+            parent[label] = property;
+            console.log(this.getDataSchema());
             this.notifyObservers(new PreviewUpdateEvent(this.getDataSchema(), null));
             return true;
         }
@@ -81,58 +111,38 @@ module app.core.dataschema {
          * @returns {boolean} indicating if the removal was succesful(when false, it means the element was not added)
          */
         removeProperty(name:string, path:string[]):boolean {
-            var parent = this.getPropertyAt(path);
+            var parent = this.getFolderAt(path);
 
-            if (parent === null || !parent.hasOwnProperty(name)) {
+            if (parent === null || !parent.hasOwnProperty('properties') || !parent.properties.hasOwnProperty(name)) {
                 return false;
             }
 
+            var res = delete parent.properties[name];
             this.notifyObservers(new PreviewUpdateEvent(this.getDataSchema(), null));
 
-            return delete parent[name];
-        }
-
-        /**
-         * From a json object, returns all the property names inside it recursively and by adding a prefix with its location
-         */
-        private getPropertiesRecursive(json:any, prefix:string):DataschemaProperty[] {
-            var result:DataschemaProperty[] = [];
-
-            if (json.hasOwnProperty('properties')) {
-                for (var key in json['properties']) {
-                    if (json['properties'].hasOwnProperty(key)) {
-                        var name = prefix == '' ? key : prefix + '/' + key;
-
-                        var childProps = this.getPropertiesRecursive(json['properties'][key], name);
-                        if (childProps.length > 0) {
-                            result = result.concat(childProps);
-                        } else {
-                            result.push(new DataschemaProperty(name, json['properties'][key].type));
-                        }
-                    }
-
-                }
-            }
-            return result;
+            return res;
         }
 
 
         /**
-         * Retrieves the property at the specified path in the data-schema.
-         * @param path the path to the property: e.g. ['person','adress','street']
+         * Retrieves the folder at the specified path in the data-schema.
+         * @param path the path to the folder: e.g. ['person','adress','street']
          * @returns {DataschemaProperty} the property or null, if no property was found at the path
          */
-        private getPropertyAt(path:string[]):DataschemaProperty {
+        getFolderAt(path:string[]):any {
             var currentElement = this.json;
             var index = 0;
 
             if (path.length === 0) {
-                return currentElement.properties
+                return currentElement;
             }
 
             while (index < path.length) {
                 if (currentElement.hasOwnProperty('properties') && currentElement.properties.hasOwnProperty(path[index])) {
                     currentElement = currentElement.properties[path[index]];
+                    if(currentElement.type != 'folder'){
+                        return null;
+                    }
                     index++;
                 } else {
                     // path doesnt exist

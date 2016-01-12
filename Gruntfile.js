@@ -52,6 +52,8 @@ module.exports = function (grunt) {
                 src: [
                     '<%= temp_dir %>/ts/**/*.module.js',
                     '<%= temp_dir %>/ts/shared/**/*.js',
+                    '<%= temp_dir %>/ts/components/core/elementsConfig/*.js',
+                    '<%= temp_dir %>/ts/components/core/model/*.js',
                     '<%= temp_dir %>/ts/components/**/*.js',
                     '<%= temp_dir %>/ts/app.config.js'
                 ],

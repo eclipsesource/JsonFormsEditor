@@ -7,7 +7,18 @@ module app.core.model {
         private alreadyPlaced:number = 0;
 
         constructor(name:string, public datatype:string, private scope:string) {
-            super(name, 'Control', new ElementConfig('Control', '', 'code'));
+            super(name, "", null);
+            var config, type;
+            if(datatype == 'folder'){
+                config = new ElementConfig('Folder', '', 'folder');
+                type = 'Folder';
+            } else {
+                config = new ElementConfig('Control', '', 'code');
+                type = 'Control';
+            }
+            this.elementConfig = config;
+            this.type = type;
+
         }
 
         convertToTreeElement():TreeElement {
