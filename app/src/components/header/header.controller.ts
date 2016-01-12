@@ -3,12 +3,13 @@ module app.header {
     import TreeService = app.tree.TreeService;
     import IDialogService = angular.material.IDialogService;
     import IDialogOptions = angular.material.IDialogOptions;
+    import ConfigService = app.core.ConfigService;
 
     class HeaderViewController {
 
-        static $inject = ['TreeService', '$mdDialog'];
+        static $inject = ['TreeService', '$mdDialog', 'ConfigService'];
 
-        constructor(private treeService:TreeService, private $mdDialog:IDialogService) {
+        constructor(private treeService:TreeService, private $mdDialog:IDialogService, public configService:ConfigService) {
         }
 
         showExportDialog():void {

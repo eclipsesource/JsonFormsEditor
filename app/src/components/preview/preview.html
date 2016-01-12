@@ -1,3 +1,10 @@
+<md-content class="md-padding jsf" ng-if="preview.previewService.schema">
+    <jsonforms schema="preview.previewService.schema" ui-schema="preview.previewService.uiSchema"
+               data="preview.data"></jsonforms>
+</md-content>
+<md-button ng-if="!preview.configService.isPreviewTab()" ng-click="preview.openInNewTab()" class="md-fab accent md-fab-bottom-right">
+    <md-icon class="material-icons">open_in_new</md-icon>
+</md-button>
 <script>
     window.addEventListener('message', function (event) {
         var injector = angular.element('html').injector();
@@ -9,15 +16,12 @@
             service.uiSchema = event.data.uiSchema;
         }
 
+        // set to preview Mode
+        var config = injector.get('ConfigService');
+        config.setIsPreviewTab();
+
         // update everything
         var scope = injector.get('$rootScope');
         scope.$apply();
     }, false);
 </script>
-<md-content class="md-padding jsf" ng-if="preview.previewService.schema">
-    <jsonforms schema="preview.previewService.schema" ui-schema="preview.previewService.uiSchema"
-               data="preview.data"></jsonforms>
-</md-content>
-<md-button ng-click="preview.openInNewTab()" class="md-fab accent md-fab-bottom-right">
-    <md-icon class="material-icons">open_in_new</md-icon>
-</md-button>

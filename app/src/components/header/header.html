@@ -4,11 +4,17 @@
         <span>JSON Forms Editor</span>
         <!-- fill up the space between left and right area -->
         <span flex></span>
-        <md-button class="md-raised md-accent" ui-sref="preview" ui-sref-active="hidden">Preview</md-button>
-        <md-button class="md-raised md-accent" ui-sref="edit" ui-sref-active="hidden">Edit</md-button>
+        <md-button ng-if="!header.configService.isPreviewTab()" class="md-raised md-accent" ui-sref="preview"
+                   ui-sref-active="hidden">Preview
+        </md-button>
+        <md-button ng-if="!header.configService.isPreviewTab()" class="md-raised md-accent" ui-sref="edit"
+                   ui-sref-active="hidden">Edit
+        </md-button>
 
-        <md-button class="md-raised md-accent" ng-click="header.showExportDialog()">Export</md-button>
-        <i ng-click="header.showConfigDialog()" class="material-icons">
+        <md-button ng-if="!header.configService.isPreviewTab()" class="md-raised md-accent"
+                   ng-click="header.showExportDialog()">Export
+        </md-button>
+        <i ng-if="!header.configService.isPreviewTab()" ng-click="header.showConfigDialog()" class="material-icons">
             <md-tooltip md-direction="left">Configuration</md-tooltip>
             settings</i>
     </div>

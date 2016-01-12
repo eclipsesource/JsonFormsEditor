@@ -4,12 +4,13 @@
 module app.header {
 
     import IDialogService = angular.material.IDialogService;
+    import ConfigService = app.core.ConfigService;
 
     export class ConfigDialogController {
 
-        static $inject = ['$mdDialog', 'ConfigDialogService'];
+        static $inject = ['$mdDialog', 'ConfigService'];
 
-        constructor(private $mdDialog:IDialogService, public configService:ConfigDialogService) {
+        constructor(private $mdDialog:IDialogService, public configService:ConfigService) {
         }
 
         hideConfigDialog():void {

@@ -4,7 +4,7 @@ module app.toolbox {
     import ControlToolboxElement = app.core.model.ControlToolboxElement;
     import TreeElement = app.core.model.TreeElement;
     import ToolboxElement = app.core.model.ToolboxElement;
-    import ConfigDialogService = app.header.ConfigDialogService;
+    import ConfigService = app.core.ConfigService;
     import DataschemaProperty = app.core.dataschema.DataschemaProperty;
     import TreeService = app.tree.TreeService;
     import PreviewUpdateEvent = app.preview.PreviewUpdateEvent;
@@ -18,9 +18,9 @@ module app.toolbox {
 
         public treeOptions:{};
 
-        static $inject = ['ToolboxService', 'ConfigDialogService', 'TreeService'];
+        static $inject = ['ToolboxService', 'ConfigService', 'TreeService'];
 
-        constructor(public toolboxService:ToolboxService, private configService:ConfigDialogService, private treeService:TreeService) {
+        constructor(public toolboxService:ToolboxService, private configService:ConfigService, private treeService:TreeService) {
             this.treeOptions = {
                 accept: () => {
                     return false;
