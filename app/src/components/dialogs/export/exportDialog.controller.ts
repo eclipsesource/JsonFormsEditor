@@ -1,4 +1,4 @@
-module app.header {
+module app.dialogs {
 
     import IDialogService = angular.material.IDialogService;
 

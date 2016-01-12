@@ -53,7 +53,8 @@ module.exports = function (grunt) {
                     '<%= temp_dir %>/ts/**/*.module.js',
                     '<%= temp_dir %>/ts/shared/**/*.js',
                     '<%= temp_dir %>/ts/components/**/*.js',
-                    '<%= temp_dir %>/ts/app.config.js'
+                    '<%= temp_dir %>/ts/app.config.js',
+                    '<%= temp_dir %>/ts/app.run.js'
                 ],
                 filter: 'isFile',
                 dest: '<%= build_dir %>/js/app.js'
