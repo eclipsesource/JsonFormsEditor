@@ -15,7 +15,7 @@ module app.core.metaschema {
         constructor($http:ng.IHttpService, $q:IQService) {
             var deffered:IDeferred<Metaschema> = $q.defer();
 
-            $http.get('/resource/metaschema.json').success((json:any):void => {
+            $http.get('resource/metaschema.json').success((json:any):void => {
                 deffered.resolve(Metaschema.fromJSON(json));
             });
 
