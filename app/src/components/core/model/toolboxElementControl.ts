@@ -11,7 +11,7 @@ module app.core.model {
             var config, type;
             if(datatype == 'folder'){
                 config = new ElementConfig('Folder', '', 'folder');
-                type = 'Folder';
+                type = 'folder';
             } else {
                 config = new ElementConfig('Control', '', 'code');
                 type = 'Control';
@@ -19,6 +19,13 @@ module app.core.model {
             this.elementConfig = config;
             this.type = type;
 
+        }
+
+        isFolder(): boolean {
+            if(this.datatype == 'folder'){
+                return true;
+            }
+            return false;
         }
 
         convertToTreeElement():TreeElement {

@@ -22,12 +22,8 @@ module app.core.dataschema {
          * @param path - an array of strings indicating the position in the folder hierarchy
          * @returns {ControlToolboxElement[]}
          */
-        convertPropertiesToControls(path?: string[]): ControlToolboxElement[] {
+        convertPropertiesToControls(path: string[] = []): ControlToolboxElement[] {
 
-
-            if(path == null || path == undefined){
-                path = [];
-            }
 
             var result: ControlToolboxElement[] = [];
 

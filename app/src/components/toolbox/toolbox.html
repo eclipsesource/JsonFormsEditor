@@ -10,7 +10,7 @@
                 <md-list-item ng-repeat="element in toolbox.toolboxService.elements" ui-tree-handle
                               ui-tree-node ng-hide="toolbox.shouldHide(element)">
                     <md-icon ng-click="toolbox.clickedIcon(element)" class="material-icons">{{element.getIcon()}}</md-icon>
-                    <p style="overflow:hidden;">{{element.getLabel()}}</p>
+                    <p ng-click="toolbox.clickedIcon(element)" style="overflow:hidden;">{{element.getLabel()}}</p>
                     <a class="pull-right left-margin" ng-hide="!element.canBeRemoved()" ng-click="toolbox.removeDataElement(element)">
                         <md-icon class="btn material-icons">delete</md-icon>
                     </a>
