@@ -8,6 +8,8 @@ module app.dialogs.dataschemaimport {
 
         static $inject = ['$mdDialog', '$http', 'ToolboxService'];
 
+        public selectedIndex = 0;
+
         public username:string;
         public password:string;
         public workspaces:any = [];
@@ -31,6 +33,7 @@ module app.dialogs.dataschemaimport {
                 headers: {'Authorization': 'Basic ' + encodedLoginData}
             }).success((response:any) => {
                 this.workspaces = response;
+                this.selectedIndex++;
             }).error((error:any) => {
                 console.log(error);
             });
@@ -48,6 +51,7 @@ module app.dialogs.dataschemaimport {
                     if (response[i].name != "Text Page")
                         this.entityTypes.push(response[i]);
                 }
+                this.selectedIndex++;
             }).error((error:any) => {
                 console.log(error);
             })
@@ -66,9 +70,14 @@ module app.dialogs.dataschemaimport {
                         this.$http.get('http://server.sociocortex.com/api/v1/attributeDefinitions/' + propertiesReduced[i].id)
                             .success((response:any) => {
                                 this.attributes.push(response);
-                            })
+                            }).error((error:any) => {
+                                console.log(error);
+                        });
                     }
-                });
+                    this.selectedIndex++;
+                }).error((error:any) => {
+                    console.log(error);
+            });
         }
 
         complete():void {
@@ -78,6 +87,47 @@ module app.dialogs.dataschemaimport {
             }).error((error:any) => {
                 console.log(error);
             });*/
+            var json:any = this.generateJSONFromAttributes();
+            this.toolboxService.loadSchemaElements(json);
+            console.log(json);
+            this.$mdDialog.hide();
+        }
+
+        private generateJSONFromAttributes():any {
+            var json:any = {
+                "type": "object",
+                "properties": {}
+            };
+
+            for (var i = 0; i < this.attributes.length; i++) {
+                json = this.generatePropertyFromAttribute(json, this.attributes[i]);
+            }
+
+            return json;
+        }
+
+        private generatePropertyFromAttribute(json:any, attribute:any):any {
+            var propertyName:string = attribute.name.toLowerCase().replace(/\s+/g, '_');
+
+            var propertyValue:any = {};
+            switch (attribute.attributeType) {
+                case "Text":
+                    propertyValue.type = "string";
+                    break;
+                case "Number":
+                    propertyValue.type = "number";
+                    break;
+                case "Date":
+                    propertyValue.type = "string";
+                    propertyValue.format = "date-time";
+                    break;
+                default:
+                    propertyValue.type = "string";
+            }
+
+            json.properties[propertyName] = propertyValue;
+
+            return json;
         }
     }
 }

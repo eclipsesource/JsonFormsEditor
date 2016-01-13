@@ -24,7 +24,8 @@ module app.dialogs.dataschemaimport {
                 parent: angular.element(document.body),
                 templateUrl: 'app/src/components/dialogs/dataschemaImport/fromUrlHook/fromUrlHook.html',
                 controller: FromUrlHookController,
-                controllerAs: 'dialog'
+                controllerAs: 'dialog',
+                clickOutsideToClose:true
             };
 
             this.$mdDialog.show(options);

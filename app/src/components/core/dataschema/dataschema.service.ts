@@ -5,7 +5,10 @@ module app.core.dataschema {
     import PreviewUpdateEvent = app.preview.PreviewUpdateEvent;
     export class DataschemaService extends Observable<PreviewUpdateEvent> {
         private properties:DataschemaProperty[] = [];
-        private json:any = {};
+        private json:any = {
+            "type": "object",
+            "properties": {}
+        };
 
         /**
          * Initializes the dataschema from JSON.
@@ -63,7 +66,7 @@ module app.core.dataschema {
                 return false;
             }
             var parent = this.getPropertyAt(path);
-            if (parent === null) {
+            if (!parent) {
                 return false;
             }
 
