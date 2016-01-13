@@ -1,0 +1,43 @@
+<md-dialog>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Generate Dataschema from SocioCortex</h2>
+    </div>
+  </md-toolbar>
+  <md-dialog-content class="md-padding">
+      <md-content layout="row" layout-padding>
+        <div layout-gt-sm="column">
+          <md-input-container class="md-block">
+            <label>Username</label>
+            <input required type="text" name="username" ng-model="dialog.username"/>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Password</label>
+            <input required type="password" name="password" ng-model="dialog.password"/>
+          </md-input-container>
+          <md-button ng-click="dialog.login()">Login</md-button>
+        </div>
+        <div layout-gt-sm="column">
+          <h5>Choose Workspace</h5>
+          <div ng-repeat="workspace in dialog.workspaces">
+            <a href="" ng-click="dialog.workspaceOnClick(workspace)">{{workspace.name}}</a>
+          </div>
+        </div>
+        <div layout-gt-sm="column">
+          <h5>Choose EntityType</h5>
+          <div ng-repeat="entityType in dialog.entityTypes">
+            <a href="" ng-click="dialog.entityTypeOnClick(entityType)">{{entityType.name}}</a>
+          </div>
+        </div>
+        <div layout-gt-sm="column">
+          <h5>Attributes</h5>
+          <div ng-repeat="attribute in dialog.attributes">
+            <p>{{attribute.name}}</p>
+          </div>
+        </div>
+      </md-content>
+  </md-dialog-content>
+  <md-dialog-actions>
+    <md-button ng-click="dialog.complete()">OK</md-button>
+  </md-dialog-actions>
+</md-dialog>
