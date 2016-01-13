@@ -27,7 +27,7 @@ module app.toolbox {
 
 
         constructor(public dataschemaService:DataschemaService, private $q:IQService, private layoutsService:LayoutsService) {
-            this.loadSchemaElements(demoSchema);
+
         }
 
         /**
@@ -87,7 +87,7 @@ module app.toolbox {
             return deffered.promise;
         }
 
-        private loadSchemaElements(jsonWithDataSchema:any) {
+        loadSchemaElements(jsonWithDataSchema:any) {
             this.dataschemaService.loadFromJson(jsonWithDataSchema);
 
             var schemaProperties:DataschemaProperty[] = this.dataschemaService.getProperties();
@@ -123,23 +123,3 @@ module app.toolbox {
 
     angular.module('app.toolbox').service('ToolboxService', ToolboxService);
 }
-
-var demoSchema = {
-    "type": "object",
-    "properties": {
-        "name": {
-            "type": "string",
-            "minLength": 3
-        },
-        "age": {
-            "type": "integer"
-        },
-        "gender": {
-            "type": "string",
-            "enum": ["Male", "Female"]
-        },
-        "height": {
-            "type": "number"
-        }
-    }
-};
