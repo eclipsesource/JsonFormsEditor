@@ -22,5 +22,9 @@ module app.dialogs.dataschemaimport {
                 console.log(error);
             });
         }
+
+        cancel():void {
+            this.$mdDialog.hide();
+        }
     }
 }

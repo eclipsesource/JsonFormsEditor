@@ -24,8 +24,7 @@ module app.dialogs.dataschemaimport {
                 parent: angular.element(document.body),
                 templateUrl: 'app/src/components/dialogs/dataschemaImport/uploadHook/uploadHook.html',
                 controller: UploadHookController,
-                controllerAs: 'dialog',
-                clickOutsideToClose:true
+                controllerAs: 'dialog'
             };
 
             this.$mdDialog.show(options);

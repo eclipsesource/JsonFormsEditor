@@ -31,5 +31,9 @@ module app.dialogs.dataschemaimport {
                 this.$mdDialog.hide();
             }
         }
+
+        cancel():void {
+            this.$mdDialog.hide();
+        }
     }
 }

@@ -24,8 +24,7 @@ module app.dialogs.dataschemaimport {
                 parent: angular.element(document.body),
                 templateUrl: 'app/src/components/dialogs/dataschemaImport/sociocortexHook/sociocortexHook.html',
                 controller: SociocortexHookController,
-                controllerAs: 'dialog',
-                clickOutsideToClose:true
+                controllerAs: 'dialog'
             };
 
             this.$mdDialog.show(options);

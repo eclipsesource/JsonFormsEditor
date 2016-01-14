@@ -64,7 +64,7 @@ module app.dialogs.dataschemaimport {
 
             this.$http.get('http://server.sociocortex.com/api/v1/entityTypes/' + entityType.id)
                 .success((response:any) => {
-                    this.attributes.push({'name': response.name + 'Name', 'attributeType': 'Text'});
+                    this.attributes.push({'name': response.name + ' Name', 'attributeType': 'Text'});
                     var propertiesReduced = response.attributeDefinitions;
                     for (var i = 0; i < propertiesReduced.length; i++) {
                         this.$http.get('http://server.sociocortex.com/api/v1/attributeDefinitions/' + propertiesReduced[i].id)
@@ -93,6 +93,10 @@ module app.dialogs.dataschemaimport {
             this.$mdDialog.hide();
         }
 
+        cancel():void {
+            this.$mdDialog.hide();
+        }
+
         private generateJSONFromAttributes():any {
             var json:any = {
                 "type": "object",
@@ -116,6 +120,10 @@ module app.dialogs.dataschemaimport {
                     break;
                 case "Number":
                     propertyValue.type = "number";
+                    break;
+                case "Enumeration":
+                    propertyValue.type = "string";
+                    propertyValue.enum = attribute.options.enumerationValues;
                     break;
                 case "Date":
                     propertyValue.type = "string";
