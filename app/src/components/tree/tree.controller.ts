@@ -70,11 +70,12 @@ module app.tree {
         }
 
         private decreasePlacedTimesOfChilds(treeElement:TreeElement) {
+            var __this = this;
             this.toolboxService.getAssociatedToolboxElement(treeElement).then((toolboxElement:ToolboxElement) => {
                 _.forEach(treeElement.elements, this.decreasePlacedTimesOfChilds.bind(this));
 
                 if (toolboxElement instanceof ControlToolboxElement) {
-                    toolboxElement.decreasePlacedTimes();
+                    __this.toolboxService.decreasePlacedTimes(toolboxElement);
                 }
             });
         }

@@ -19,11 +19,14 @@ module app.toolbox {
     import ElementConfig = app.core.elementsConfig.ElementConfig;
     import LayoutsService = app.layouts.LayoutsService;
 
+
     export class ToolboxService {
         static $inject = ['DataschemaService', '$q', 'LayoutsService'];
 
         public elements:ControlToolboxElement[] = [];
         public currentPath: string[] = [];
+
+        private placedTimes: any = {};
 
         constructor(public dataschemaService:DataschemaService, private $q:IQService, private layoutsService:LayoutsService) {
             this.loadSchema(demoSchema);
@@ -39,12 +42,25 @@ module app.toolbox {
         addSchemaElement(label: string, type: string):boolean {
 
             if (this.dataschemaService.addNewProperty(label, type, this.currentPath)) {
-                var element:ControlToolboxElement = new ControlToolboxElement(label, type, label);
+                var element:ControlToolboxElement = new ControlToolboxElement(label, type, this.generateScope(label, this.currentPath));
                 this.elements.push(element);
                 return true;
             } else {
                 return false;
             }
+        }
+
+        generateScope(label: string, path: string[]) : string{
+            var scope = '';
+            if(path.length<=0){
+                scope = label;
+            }else {
+                scope = path.join('/') + '/' + label;
+            }
+
+            console.log(scope);
+            return scope;
+
         }
 
         accessFolder(folderName: string){
@@ -82,6 +98,34 @@ module app.toolbox {
             } else {
                 return false;
             }
+        }
+
+        decreasePlacedTimes(element: ControlToolboxElement){
+            if(!this.placedTimes.hasOwnProperty(element.getScope())){
+                console.log("ERROR: Placed times of the element is -1")
+                this.placedTimes[element.getScope()] = -1;
+            }else{
+                this.placedTimes[element.getScope()] = this.placedTimes[element.getScope()] + 1;
+            }
+        }
+        increasePlacedTimes(element: ControlToolboxElement){
+            //if the element hasnt been added yet to the placedTimesArray
+            if(!this.placedTimes.hasOwnProperty(element.getScope())){
+                this.placedTimes[element.getScope()] = 1;
+            }else{
+                this.placedTimes[element.getScope()] = this.placedTimes[element.getScope()] + 1;
+            }
+        }
+        canBeRemoved(element: ControlToolboxElement): boolean {
+            if(this.placedTimes[element.getScope()] > 0){
+                return false;
+            }else {
+                return true;
+            }
+        }
+
+        isAlreadyPlaced(element: ControlToolboxElement): boolean {
+            return !this.canBeRemoved(element);
         }
 
         /**

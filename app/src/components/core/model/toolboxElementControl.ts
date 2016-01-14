@@ -4,7 +4,6 @@
 module app.core.model {
     import ElementConfig = app.core.elementsConfig.ElementConfig;
     export class ControlToolboxElement extends ToolboxElement {
-        private alreadyPlaced:number = 0;
 
         constructor(name:string, public datatype:string, private scope:string) {
             super(name, "", null);
@@ -37,24 +36,9 @@ module app.core.model {
             return treeElement;
         }
 
-        decreasePlacedTimes():void {
-            this.alreadyPlaced--;
-        }
-
-        increasePlacedTimes():void {
-            this.alreadyPlaced++;
-        }
-
-        isAlreadyPlaced():boolean {
-            return this.alreadyPlaced > 0;
-        }
-
         getScope():string {
             return this.scope;
         }
 
-        canBeRemoved():boolean {
-            return !this.isAlreadyPlaced();
-        }
     }
 }

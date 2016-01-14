@@ -38,11 +38,24 @@ module app.core.dataschema {
 
             _.forEach(parent, (property:any, name:string) => {
 
-                result.push(new ControlToolboxElement(this.convertScopeToLabel(name), property.type, name));
+                result.push(new ControlToolboxElement(name, property.type, this.generateScope(name, path)));
             });
 
 
             return result;
+        }
+
+        generateScope(label: string, path: string[]) : string{
+            var scope = '';
+            if(path.length<=0){
+                scope = label;
+            }else {
+                scope = path.join('/') + '/' + label;
+            }
+
+            console.log(scope);
+            return scope;
+
         }
 
         private convertScopeToLabel(scope:string):string {

@@ -32,7 +32,7 @@ module app.toolbox {
 
                     var toolboxElement:ToolboxElement = event.source.nodeScope.$modelValue;
                     if (toolboxElement instanceof ControlToolboxElement) {
-                        toolboxElement.increasePlacedTimes();
+                        this.toolboxService.increasePlacedTimes(toolboxElement);
                     }
 
                     // Convert the ToolboxElement into a TreeElement
@@ -55,7 +55,7 @@ module app.toolbox {
                 return false;
             }
             if (element instanceof ControlToolboxElement) {
-                if (element.isAlreadyPlaced()) {
+                if (this.toolboxService.isAlreadyPlaced(element)) {
                     return true;
                 }
             }
@@ -89,7 +89,7 @@ module app.toolbox {
          * @param element
          */
         removeDataElement(element:ControlToolboxElement) {
-            if (element.canBeRemoved()) {
+            if (this.toolboxService.canBeRemoved(element)) {
                 if (!this.toolboxService.removeSchemaElement(element)) {
                     console.log("ERROR: failed to remove the element from the schema");
                 }
