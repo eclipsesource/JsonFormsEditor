@@ -27,7 +27,7 @@ module app.dialogs.dataschemaimport {
 
         complete():void {
             if(this.json){
-                this.toolboxService.loadSchemaElements(this.json);
+                this.toolboxService.loadSchema(this.json);
                 this.$mdDialog.hide();
             }
         }

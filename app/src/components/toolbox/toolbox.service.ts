@@ -19,6 +19,7 @@ module app.toolbox {
     import ElementConfig = app.core.elementsConfig.ElementConfig;
     import LayoutsService = app.layouts.LayoutsService;
 
+
     export class ToolboxService {
         static $inject = ['DataschemaService', '$q', 'LayoutsService'];
 
@@ -29,7 +30,6 @@ module app.toolbox {
 
         constructor(public dataschemaService:DataschemaService, private $q:IQService, private layoutsService:LayoutsService) {
             this.loadSchema(demoSchema);
-            this.loadSchemaElements();
         }
 
         /**
@@ -41,6 +41,7 @@ module app.toolbox {
         addSchemaElement(label: string, type: string):boolean {
 
             if (this.dataschemaService.addNewProperty(label, type, this.currentPath)) {
+                console.log("ASDF: " + this.generateScope(label,this.currentPath));
                 var element:ControlToolboxElement = new ControlToolboxElement(label, type, this.generateScope(label, this.currentPath));
                 this.elements.push(element);
                 return true;
@@ -54,7 +55,7 @@ module app.toolbox {
             if(path.length<=0){
                 scope = label;
             }else {
-                scope = path.join('/') + '/' + label;
+                scope = path.join('/properties/') + '/properties/' + label;
             }
 
             console.log(scope);
@@ -64,7 +65,7 @@ module app.toolbox {
 
         accessFolder(folderName: string){
 
-
+            console.log(folderName);
             this.currentPath.push(folderName);
 
             //If folder exists
@@ -91,7 +92,7 @@ module app.toolbox {
 
             var name = element.getScope();
             var path = this.currentPath;
-
+            
             if (this.dataschemaService.removeProperty(name, path)) {
                 return _.remove(this.elements, element).length === 1;
             } else {
@@ -152,10 +153,10 @@ module app.toolbox {
         * Used to load a schema into the dataschemaservice(without loading the elements for the toolbar)
         * @param json the json file to load
         */
-        private loadSchema(json: any){
+        loadSchema(json: any){
             this.dataschemaService.loadFromJson(json);
+            this.loadSchemaElements();
         }
-
 
         /*
         * Used to load the schema elements for the toolbar from a specified folder (uses currentPath)
@@ -175,3 +176,34 @@ module app.toolbox {
 
     angular.module('app.toolbox').service('ToolboxService', ToolboxService);
 }
+
+var demoSchema = {
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "minLength": 3
+        },
+        "age": {
+            "type": "integer"
+        },
+        "gender": {
+            "type": "string",
+            "enum": ["Male", "Female"]
+        },
+        "height": {
+            "type": "number"
+        },
+        "father": {
+            "type": "folder",
+            "properties": {
+                "age": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+};

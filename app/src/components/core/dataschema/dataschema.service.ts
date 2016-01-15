@@ -1,4 +1,5 @@
 /// <reference path="../../../../../typings/angular-ui-router/angular-ui-router.d.ts" />
+/// <reference path="../model/toolboxElementControl.ts" />
 
 module app.core.dataschema {
 
@@ -6,6 +7,7 @@ module app.core.dataschema {
     import ControlToolboxElement = app.core.model.ControlToolboxElement;
 
     export class DataschemaService extends Observable<PreviewUpdateEvent> {
+
         private json:any = {
             "type": "object",
             "properties": {}
@@ -39,7 +41,7 @@ module app.core.dataschema {
 
 
             _.forEach(parent, (property:any, name:string) => {
-
+                console.log("ASDF: " + this.generateScope(name,path));
                 result.push(new ControlToolboxElement(name, property.type, this.generateScope(name, path)));
             });
 
@@ -52,7 +54,7 @@ module app.core.dataschema {
             if(path.length<=0){
                 scope = label;
             }else {
-                scope = path.join('/') + '/' + label;
+                scope = path.join('/properties/') + '/properties/' + label;
             }
 
             console.log(scope);
@@ -92,7 +94,7 @@ module app.core.dataschema {
             }
             var parent = this.getFolderAt(path);
 
-            if(parent === null || typeof parent === 'undefined' || !parent.hasOwnProperty('properties')){
+            if(!parent || !parent.hasOwnProperty('properties')){
                 console.log('ERROR: the path accessed is not a folder');
                 return false;
             }

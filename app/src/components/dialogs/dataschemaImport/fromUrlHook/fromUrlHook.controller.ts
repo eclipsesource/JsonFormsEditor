@@ -16,7 +16,7 @@ module app.dialogs.dataschemaimport {
 
         complete():void {
             this.$http.get(this.url).success((json:any) => {
-                this.toolboxService.loadSchemaElements(json);
+                this.toolboxService.loadSchema(json);
                 this.$mdDialog.hide();
             }).error((error:any) => {
                 console.log(error);

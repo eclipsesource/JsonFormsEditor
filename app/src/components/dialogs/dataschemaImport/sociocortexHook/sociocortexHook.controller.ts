@@ -88,7 +88,7 @@ module app.dialogs.dataschemaimport {
                 console.log(error);
             });*/
             var json:any = this.generateJSONFromAttributes();
-            this.toolboxService.loadSchemaElements(json);
+            this.toolboxService.loadSchema(json);
             console.log(json);
             this.$mdDialog.hide();
         }
