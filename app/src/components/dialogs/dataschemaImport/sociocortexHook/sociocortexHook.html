@@ -1,0 +1,66 @@
+<md-dialog flex="65">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Generate Dataschema from SocioCortex</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="dialog.cancel()">
+        <md-icon class="material-icons">close</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content>
+        <md-tabs md-border-bottom md-selected="dialog.selectedIndex" >
+          <md-tab id="login">
+            <md-tab-label>1. Login</md-tab-label>
+            <md-tab-body>
+              <div layout-gt-xs="row">
+              <md-input-container class="md-block" flex-gt-xs>
+                <label>Username</label>
+                <input type="text" name="username" ng-model="dialog.username"/>
+              </md-input-container>
+              <md-input-container class="md-block" flex-gt-xs>
+                <label>Password</label>
+                <input type="password" name="password" ng-model="dialog.password"/>
+              </md-input-container>
+              </div>
+              <div align="center">
+                <md-button class="md-raised md-accent" ng-click="dialog.login()">Login</md-button>
+              </div>
+            </md-tab-body>
+          </md-tab>
+          <md-tab id="workspaces" ng-disabled="dialog.selectedIndex < 1">
+            <md-tab-label>2. Choose Workspace</md-tab-label>
+            <md-tab-body>
+            <md-list>
+              <md-list-item ng-repeat="workspace in dialog.workspaces" ng-click="dialog.workspaceOnClick(workspace)">
+                <p>{{workspace.name}}</p>
+              </md-list-item>
+            </md-list>
+            </md-tab-body>
+          </md-tab>
+          <md-tab id="entityTypes" ng-disabled="dialog.selectedIndex < 2">
+            <md-tab-label>3. Choose EntityType</md-tab-label>
+            <md-tab-body>
+              <md-list>
+                <md-list-item ng-repeat="entityType in dialog.entityTypes" ng-click="dialog.entityTypeOnClick(entityType)">
+                  <p>{{entityType.name}}</p>
+                </md-list-item>
+              </md-list>
+            </md-tab-body>
+          </md-tab>
+          <md-tab id="attributes" ng-disabled="dialog.selectedIndex < 3">
+            <md-tab-label>4. Attributes</md-tab-label>
+            <md-tab-body>
+              <md-list>
+                <md-list-item ng-repeat="attribute in dialog.attributes">
+                  <p>{{attribute.name}} - {{attribute.attributeType}}</p>
+                </md-list-item>
+              </md-list>
+            </md-tab-body>
+          </md-tab>
+        </md-tabs>
+  </md-dialog-content>
+  <md-dialog-actions>
+    <md-button ng-click="dialog.complete()" ng-disabled="dialog.selectedIndex < 3">OK</md-button>
+  </md-dialog-actions>
+</md-dialog>

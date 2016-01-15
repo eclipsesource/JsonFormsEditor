@@ -1,0 +1,28 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Upload Dataschema</h2>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="md-padding">
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.<p/>
+        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<p/>
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.<p/>
+        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<p/>
+        <div layout="row">
+            <md-card ng-repeat="hook in dialog.importService.getHooks()" ng-click="hook.openDialog()">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{{hook.getTitle()}}</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    {{hook.getDescription()}}
+                </md-card-content>
+            </md-card>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="dialog.hideDialog()">Skip</md-button>
+    </md-dialog-actions>
+</md-dialog>

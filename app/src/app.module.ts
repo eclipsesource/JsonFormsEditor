@@ -12,6 +12,7 @@ module app {
         'app.toolbox',
         'app.layouts',
         'app.preview',
+        'app.dialogs',
         'ui.router',
         'ngMaterial',
         'ngClipboard'

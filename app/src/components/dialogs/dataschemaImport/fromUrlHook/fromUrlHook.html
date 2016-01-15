@@ -1,0 +1,25 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Upload Dataschema from URL</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="dialog.cancel()">
+                <md-icon class="material-icons">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="md-padding">
+        <md-input-container class="md-block">
+        <label>URL</label>
+        <md-input required type="url" name="url" ng-model="dialog.url"/>
+        <div ng-messages="dialog.url.$error" role="alert">
+            <div ng-message-exp="['required']">
+                Please enter a valid URL.
+            </div>
+        </div>
+        </md-input-container>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="dialog.complete()">OK</md-button>
+    </md-dialog-actions>
+</md-dialog>

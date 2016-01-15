@@ -19,7 +19,6 @@ module app.toolbox {
     import ElementConfig = app.core.elementsConfig.ElementConfig;
     import LayoutsService = app.layouts.LayoutsService;
 
-
     export class ToolboxService {
         static $inject = ['DataschemaService', '$q', 'LayoutsService'];
 
@@ -92,7 +91,7 @@ module app.toolbox {
 
             var name = element.getScope();
             var path = this.currentPath;
-            
+
             if (this.dataschemaService.removeProperty(name, path)) {
                 return _.remove(this.elements, element).length === 1;
             } else {
@@ -176,34 +175,3 @@ module app.toolbox {
 
     angular.module('app.toolbox').service('ToolboxService', ToolboxService);
 }
-
-var demoSchema = {
-    "type": "object",
-    "properties": {
-        "name": {
-            "type": "string",
-            "minLength": 3
-        },
-        "age": {
-            "type": "integer"
-        },
-        "gender": {
-            "type": "string",
-            "enum": ["Male", "Female"]
-        },
-        "height": {
-            "type": "number"
-        },
-        "father": {
-            "type": "folder",
-            "properties": {
-                "age": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                }
-            }
-        }
-    }
-};

@@ -1,7 +1,7 @@
 /**
  * Created by pancho111203 on 22/12/15.
  */
-module app.header {
+module app.dialogs {
 
     import IDialogService = angular.material.IDialogService;
     import ConfigService = app.core.ConfigService;

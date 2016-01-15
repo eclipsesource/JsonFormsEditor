@@ -4,6 +4,8 @@ module app.header {
     import IDialogService = angular.material.IDialogService;
     import IDialogOptions = angular.material.IDialogOptions;
     import ConfigService = app.core.ConfigService;
+    import ExportDialogController = app.dialogs.ExportDialogController;
+    import ConfigDialogController = app.dialogs.ConfigDialogController;
 
     class HeaderViewController {
 
@@ -17,7 +19,7 @@ module app.header {
 
             var options:IDialogOptions = {
                 parent: angular.element(document.body),
-                templateUrl: 'app/src/components/header/exportDialog.html',
+                templateUrl: 'app/src/components/dialogs/export/exportDialog.html',
                 clickOutsideToClose: true,
                 controller: ExportDialogController,
                 controllerAs: 'dialog',
@@ -32,7 +34,7 @@ module app.header {
         showConfigDialog():void {
             var options:IDialogOptions = {
                 parent: angular.element(document.body),
-                templateUrl: 'app/src/components/header/configDialog.html',
+                templateUrl: 'app/src/components/dialogs/config/configDialog.html',
                 clickOutsideToClose: true,
                 controller: ConfigDialogController,
                 controllerAs: 'config'
