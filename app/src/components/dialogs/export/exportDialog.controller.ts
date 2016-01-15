@@ -2,15 +2,12 @@ module app.dialogs {
 
     import IDialogService = angular.material.IDialogService;
 
-    export class ExportDialogController {
+    export class ExportDialogController extends AbstractDialog {
 
         static $inject = ['$mdDialog', 'content'];
 
-        constructor(private $mdDialog:IDialogService, public content:string) {
-        }
-
-        hideExportDialog():void {
-            this.$mdDialog.hide();
+        constructor($mdDialog:IDialogService, public content:string) {
+            super($mdDialog);
         }
     }
 }

@@ -6,15 +6,13 @@ module app.dialogs {
     import IDialogService = angular.material.IDialogService;
     import ConfigService = app.core.ConfigService;
 
-    export class ConfigDialogController {
+    export class ConfigDialogController extends AbstractDialog {
 
         static $inject = ['$mdDialog', 'ConfigService'];
 
-        constructor(private $mdDialog:IDialogService, public configService:ConfigService) {
+        constructor($mdDialog:IDialogService, public configService:ConfigService) {
+            super($mdDialog);
         }
 
-        hideConfigDialog():void {
-            this.$mdDialog.hide();
-        }
     }
 }

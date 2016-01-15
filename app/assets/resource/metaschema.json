@@ -1,12 +1,5 @@
 {
   "definitions": {
-    "label": {
-      "properties": {
-        "text": {
-          "type": "string"
-        }
-      }
-    },
     "control": {
       "type": "object",
       "properties": {
@@ -28,10 +21,8 @@
           }
         }
       },
-      "required": [
-        "type",
-        "scope"
-      ]
+      "required": ["type", "scope"],
+      "additionalProperties": false
     },
     "layout": {
       "type": "object",
@@ -40,9 +31,25 @@
           "type": "string",
           "enum": [
             "HorizontalLayout",
-            "VerticalLayout",
-            "Group"
+            "VerticalLayout"
           ]
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#"
+          }
+        }
+      },
+      "required": ["type", "elements"],
+      "additionalProperties": false
+    },
+    "group": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["Group"]
         },
         "label": {
           "type": "string"
@@ -54,10 +61,8 @@
           }
         }
       },
-      "required": [
-        "type",
-        "elements"
-      ]
+      "required": ["type", "elements"],
+      "additionalProperties": false
     },
     "categorization": {
       "type": "object",
@@ -79,42 +84,33 @@
                   "Category"
                 ]
               },
+              "label": {
+                "type": "string"
+              },
               "elements": {
                 "type": "array",
                 "items": {
                   "$ref": "#"
                 }
-              },
-              "label": {
-                "type": "string"
               }
             },
-            "required": [
-              "type",
-              "elements"
-            ]
+            "required": ["type", "elements"],
+            "additionalProperties": false
           }
         }
       },
-      "required": [
-        "type",
-        "elements"
-      ]
+      "required": ["type", "elements"],
+      "additionalProperties": false
     }
   },
   "type": "object",
-  "oneOf": [
-    {
-      "$ref": "#/definitions/categorization"
-    },
-    {
-      "$ref": "#/definitions/layout"
-    },
-    {
-      "$ref": "#/definitions/control"
-    },
-    {
-      "$ref": "#/definitions/label"
-    }
-  ]
+  "oneOf": [{
+    "$ref": "#/definitions/categorization"
+  }, {
+    "$ref": "#/definitions/layout"
+  }, {
+    "$ref": "#/definitions/group"
+  }, {
+    "$ref": "#/definitions/control"
+  }]
 }
