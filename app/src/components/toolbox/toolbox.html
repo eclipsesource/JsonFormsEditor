@@ -1,21 +1,30 @@
 <md-content style="height:100%;" layout="column">
     <div style="height: 20px">
-        <md-icon class="material-icons" ng-if="!toolbox.isParentFolder()" ng-click="toolbox.clickedBack()">arrow_back</md-icon>
+        <md-icon class="material-icons" ng-if="!toolbox.isParentFolder()" ng-click="toolbox.clickedBack()">arrow_back
+        </md-icon>
     </div>
 
-    <md-content flex class="md-padding" style="margin-bottom:100px;">
+    <md-content flex class="md-padding tree-view" style="margin-bottom:100px;">
         <div ui-tree="toolbox.treeOptions" data-drag-delay="100" data-clone-enabled="true" data-nodrop-enabled="true">
-            <md-list ui-tree-nodes data-clone-enabled="true" data-nodrop-enabled="true"
-                     ng-model="toolbox.toolboxService.elements">
-                <md-list-item ng-repeat="element in toolbox.toolboxService.elements" ui-tree-handle
-                              ui-tree-node ng-hide="toolbox.shouldHide(element)">
-                    <md-icon ng-click="toolbox.clickedIcon(element)" class="material-icons">{{element.getIcon()}}</md-icon>
-                    <p ng-click="toolbox.clickedIcon(element)" style="overflow:hidden;">{{element.getLabel()}}</p>
-                    <a class="pull-right left-margin" ng-hide="!element.canBeRemoved()" ng-click="toolbox.removeDataElement(element)">
-                        <md-icon class="btn material-icons">delete</md-icon>
-                    </a>
-                </md-list-item>
-            </md-list>
+            <ol ui-tree-nodes
+                ng-model="toolbox.toolboxService.elements">
+                <li ng-repeat="element in toolbox.toolboxService.elements"
+                    ui-tree-node ng-hide="toolbox.shouldHide(element)">
+                    <div ui-tree-handle class="tree-node tree-node-content">
+
+                        <md-icon ng-if="element.isFolder()" ng-click="toolbox.clickedIcon(element)" class="material-icons">{{element.getIcon()}}
+                        </md-icon>
+                        <span ng-if="element.isFolder()" ng-click="toolbox.clickedIcon(element)" style="overflow:hidden;" class="left-margin">{{element.getLabel()}}</span>
+                        <md-icon ng-if="!element.isFolder()" ng-click="toolbox.clickedIcon(element)" class="material-icons">{{element.getIcon()}}
+                        </md-icon>
+                        <span ng-if="!element.isFolder()" ng-click="toolbox.clickedIcon(element)" style="overflow:hidden;" class="left-margin">{{element.getLabel()}}</span>
+                        <a class="pull-right left-margin" ng-hide="!element.canBeRemoved()"
+                           ng-click="toolbox.removeDataElement(element)">
+                            <md-icon class="btn material-icons">delete</md-icon>
+                        </a>
+                    </div>
+                </li>
+            </ol>
         </div>
     </md-content>
     <md-content class="toolbox-bottom-control top-border">
@@ -33,7 +42,8 @@
             </md-menu-content>
         </md-menu>
         <div layout="row" layout-align="space-around center">
-            <input id="inputLabel" ng-enter="toolbox.addNewElement()" ng-model="toolbox.newElementLabel" flex="auto" flex-order="0" class="md-primary" type="text" />
+            <input id="inputLabel" ng-enter="toolbox.addNewElement()" ng-model="toolbox.newElementLabel" flex="auto"
+                   flex-order="0" class="md-primary" type="text"/>
 
             <md-button ng-click="toolbox.addNewElement()" class="md-fab md-mini" flex="none" flex-order="2">
                 <md-icon class="material-icons">add</md-icon>

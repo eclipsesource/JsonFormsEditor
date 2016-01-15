@@ -1,6 +1,5 @@
 module app.preview {
 
-    import ConfigDialogController = app.header.ConfigDialogController;
     import ConfigService = app.core.ConfigService;
     class PreviewController {
 

@@ -30,7 +30,6 @@ module app.toolbox {
 
         constructor(public dataschemaService:DataschemaService, private $q:IQService, private layoutsService:LayoutsService) {
             this.loadSchema(demoSchema);
-            this.loadSchemaElements();
         }
 
         /**
@@ -154,10 +153,10 @@ module app.toolbox {
         * Used to load a schema into the dataschemaservice(without loading the elements for the toolbar)
         * @param json the json file to load
         */
-        private loadSchema(json: any){
+        loadSchema(json: any){
             this.dataschemaService.loadFromJson(json);
+            this.loadSchemaElements();
         }
-
 
         /*
         * Used to load the schema elements for the toolbar from a specified folder (uses currentPath)

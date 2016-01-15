@@ -1,0 +1,17 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Upload Dataschema</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="dialog.cancel()">
+                <md-icon class="material-icons">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="md-padding">
+        <input type="file" nv-file-select uploader="dialog.uploader">
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="dialog.complete()">OK</md-button>
+    </md-dialog-actions>
+</md-dialog>
