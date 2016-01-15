@@ -41,7 +41,6 @@ module app.toolbox {
         addSchemaElement(label: string, type: string):boolean {
 
             if (this.dataschemaService.addNewProperty(label, type, this.currentPath)) {
-                console.log("ASDF: " + this.generateScope(label,this.currentPath));
                 var element:ControlToolboxElement = new ControlToolboxElement(label, type, this.generateScope(label, this.currentPath));
                 this.elements.push(element);
                 return true;
@@ -58,14 +57,12 @@ module app.toolbox {
                 scope = path.join('/properties/') + '/properties/' + label;
             }
 
-            console.log(scope);
             return scope;
 
         }
 
         accessFolder(folderName: string){
 
-            console.log(folderName);
             this.currentPath.push(folderName);
 
             //If folder exists
@@ -105,7 +102,7 @@ module app.toolbox {
                 console.log("ERROR: Placed times of the element is -1")
                 this.placedTimes[element.getScope()] = -1;
             }else{
-                this.placedTimes[element.getScope()] = this.placedTimes[element.getScope()] + 1;
+                this.placedTimes[element.getScope()] = this.placedTimes[element.getScope()] - 1;
             }
         }
         increasePlacedTimes(element: ControlToolboxElement){
@@ -195,7 +192,7 @@ var demoSchema = {
             "type": "number"
         },
         "father": {
-            "type": "folder",
+            "type": "object",
             "properties": {
                 "age": {
                     "type": "integer"
