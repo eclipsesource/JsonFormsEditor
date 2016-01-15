@@ -42,6 +42,7 @@ module app.toolbox {
         addSchemaElement(label: string, type: string):boolean {
 
             if (this.dataschemaService.addNewProperty(label, type, this.currentPath)) {
+                console.log("ASDF: " + this.generateScope(label,this.currentPath));
                 var element:ControlToolboxElement = new ControlToolboxElement(label, type, this.generateScope(label, this.currentPath));
                 this.elements.push(element);
                 return true;
@@ -55,7 +56,7 @@ module app.toolbox {
             if(path.length<=0){
                 scope = label;
             }else {
-                scope = path.join('/') + '/' + label;
+                scope = path.join('/properties/') + '/properties/' + label;
             }
 
             console.log(scope);
@@ -65,7 +66,7 @@ module app.toolbox {
 
         accessFolder(folderName: string){
 
-
+            console.log(folderName);
             this.currentPath.push(folderName);
 
             //If folder exists

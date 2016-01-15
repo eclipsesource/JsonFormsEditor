@@ -37,7 +37,7 @@ module app.core.dataschema {
 
 
             _.forEach(parent, (property:any, name:string) => {
-
+                console.log("ASDF: " + this.generateScope(name,path));
                 result.push(new ControlToolboxElement(name, property.type, this.generateScope(name, path)));
             });
 
@@ -50,7 +50,7 @@ module app.core.dataschema {
             if(path.length<=0){
                 scope = label;
             }else {
-                scope = path.join('/') + '/' + label;
+                scope = path.join('/properties/') + '/properties/' + label;
             }
 
             console.log(scope);
