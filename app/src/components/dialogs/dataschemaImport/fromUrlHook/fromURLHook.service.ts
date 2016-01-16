@@ -2,12 +2,13 @@ module app.dialogs.dataschemaimport {
 
     import IDialogService = angular.material.IDialogService;
     import IDialogOptions = angular.material.IDialogOptions;
+    import IHttpService = angular.IHttpService;
 
     export class FromUrlHookService implements ImportHook {
 
-        static $inject = ['DataschemaImportService', '$mdDialog'];
+        static $inject = ['DataschemaImportService', '$http'];
 
-        constructor(importService:DataschemaImportService, private $mdDialog:IDialogService){
+        constructor(importService:DataschemaImportService, private $http:IHttpService){
             importService.registerImportHook(this);
         }
 
@@ -19,15 +20,9 @@ module app.dialogs.dataschemaimport {
             return "language";
         }
 
-        openDialog():void {
-            var options:IDialogOptions = {
-                parent: angular.element(document.body),
-                templateUrl: 'app/src/components/dialogs/dataschemaImport/fromUrlHook/fromUrlHook.html',
-                controller: FromUrlHookController,
-                controllerAs: 'dialog'
-            };
-
-            this.$mdDialog.show(options);
+        openDialog(wizard:AbstractWizard):void {
+            wizard.addSteps([new FromUrlHookController(wizard, this.$http)]);
+            wizard.next();
         }
     }
 

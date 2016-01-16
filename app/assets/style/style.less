@@ -27,6 +27,48 @@
   height: 32px
 }
 
+.modalDialog {
+  width: 50%;
+}
+
+.wizardStepContainer {
+  text-align: justify;
+
+  &:after {
+    content: "";
+    width: 100%;
+    display: inline-block;
+  }
+}
+
+.wizardStep {
+  width: 20%;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: grey;
+  &:hover {
+    background-color: #2196f3;
+    color: white;
+  }
+}
+
+.wizardStepActive {
+  width: 20%;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: white;
+  pointer-events: none;
+  cursor: default;
+}
+
 /* HTML element styles */
 
 body {
@@ -122,13 +164,14 @@ md-grid-list {
 }
 
 md-grid-tile {
+  cursor: pointer;
+
   md-icon {
     padding-bottom: 60px;
   }
 }
 
-
-  /* bootstrap framework style overrides */
+/* bootstrap framework style overrides */
 .row {
   padding: 0 !important;
   margin: 0;

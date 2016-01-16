@@ -19,7 +19,7 @@ module app.dialogs.dataschemaimport {
             return "cloud_download";
         }
 
-        openDialog():void {
+        openDialog(wizard:AbstractWizard):void {
             var options:IDialogOptions = {
                 parent: angular.element(document.body),
                 templateUrl: 'app/src/components/dialogs/dataschemaImport/sociocortexHook/sociocortexHook.html',

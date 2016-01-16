@@ -2,12 +2,13 @@ module app.dialogs.dataschemaimport {
 
     import IDialogService = angular.material.IDialogService;
     import IDialogOptions = angular.material.IDialogOptions;
+    import IQService = angular.IQService;
 
     export class UploadHookService implements ImportHook {
 
-        static $inject = ['DataschemaImportService', '$mdDialog'];
+        static $inject = ['DataschemaImportService', 'FileUploader', '$q'];
 
-        constructor(importService:DataschemaImportService, private $mdDialog:IDialogService){
+        constructor(importService:DataschemaImportService, private FileUploader, private $q:IQService){
             importService.registerImportHook(this);
         }
 
@@ -19,15 +20,9 @@ module app.dialogs.dataschemaimport {
             return "file_upload";
         }
 
-        openDialog():void {
-            var options:IDialogOptions = {
-                parent: angular.element(document.body),
-                templateUrl: 'app/src/components/dialogs/dataschemaImport/uploadHook/uploadHook.html',
-                controller: UploadHookController,
-                controllerAs: 'dialog'
-            };
-
-            this.$mdDialog.show(options);
+        openDialog(wizard:AbstractWizard):void {
+            wizard.addSteps([new UploadHookController(wizard, this.FileUploader, this.$q)]);
+            wizard.next();
         }
     }
 

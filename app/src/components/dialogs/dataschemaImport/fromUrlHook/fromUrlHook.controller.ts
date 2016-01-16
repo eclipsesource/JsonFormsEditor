@@ -2,29 +2,31 @@ module app.dialogs.dataschemaimport {
 
     import IDialogService = angular.material.IDialogService;
     import IHttpService = angular.IHttpService;
-    import ToolboxService = app.toolbox.ToolboxService;
+    import IPromise = angular.IPromise;
 
-    export class FromUrlHookController {
-
-        static $inject = ['$mdDialog', '$http', 'ToolboxService'];
+    export class FromUrlHookController extends AbstractWizardStep {
 
         public url:string;
 
-        constructor(private $mdDialog:IDialogService, private $http:IHttpService, private toolboxService:ToolboxService) {
-
+        constructor(wizard:AbstractWizard, private $http:IHttpService){
+            super(wizard);
         }
 
-        complete():void {
-            this.$http.get(this.url).success((json:any) => {
-                this.toolboxService.loadSchema(json);
-                this.$mdDialog.hide();
-            }).error((error:any) => {
-                console.log(error);
-            });
+        getTitle():string {
+            return "URL";
         }
 
-        cancel():void {
-            this.$mdDialog.hide();
+        getTemplate():string {
+            return "app/src/components/dialogs/dataschemaImport/fromUrlHook/fromUrlHook.html";
+        }
+
+        hasNavigation():boolean {
+            return true;
+        }
+
+        submit():IPromise<any> {
+            return this.$http.get(this.url);1
         }
     }
+
 }

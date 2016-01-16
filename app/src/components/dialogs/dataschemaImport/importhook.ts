@@ -5,6 +5,6 @@ module app.dialogs.dataschemaimport {
 
         getIconFont():string;
 
-        openDialog():void;
+        openDialog(wizard:AbstractWizard):void;
     }
 }

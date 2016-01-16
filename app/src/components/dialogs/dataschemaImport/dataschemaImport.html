@@ -1,32 +1,17 @@
-<md-dialog>
+<md-dialog class="modalDialog">
     <md-toolbar>
-        <div class="md-toolbar-tools">
-            <h2>Upload Dataschema</h2>
+        <div class="md-toolbar-tools wizardStepsContainer">
+            <span ng-class="(step.isActive() ? 'wizardStepActive' : 'wizardStep')" ng-click="dialog.goTo(step)" ng-repeat="step in dialog.getSteps()">
+                <h2>{{step.getTitle()}}</h2>
+            </span>
         </div>
     </md-toolbar>
     <md-dialog-content class="md-padding">
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-        dolore magna aliquyam erat, sed diam voluptua.<p/>
-        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-        Lorem ipsum dolor sit amet.<p/>
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-        dolore magna aliquyam erat, sed diam voluptua.<p/>
-        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-        Lorem ipsum dolor sit amet.<p/>
-        <div ng-cloak>
-            <md-grid-list
-                    md-cols-xs="4" md-cols-sm="4" md-cols-md="4" md-cols-gt-md="4"
-                    md-row-height-gt-md="2:1" md-row-height="2:1"
-                    md-gutter="10px" md-gutter-gt-sm="8px">
-                <md-grid-tile ng-repeat="hook in dialog.importService.getHooks()" ng-click="hook.openDialog()"
-                              style="background-color: #03a9f4"
-                              md-rowspan="1" md-colspan="1" md-colspan-sm="1">
-                    <md-icon class="material-icons" style="color:white">{{hook.getIconFont()}}</md-icon>
-                    <md-grid-tile-footer>
-                        <h3>{{hook.getTitle()}}</h3>
-                    </md-grid-tile-footer>
-                </md-grid-tile>
-            </md-grid-list>
-        </div>
+        <ng-include src="dialog.currentStep().getTemplate()"/>
     </md-dialog-content>
+    <md-dialog-actions ng-if="dialog.currentStep().hasNavigation()">
+        <md-button ng-if="dialog.hasPrevious()" ng-click="dialog.previous()">Previous</md-button>
+        <md-button ng-if="dialog.hasNext()" class="md-primary" ng-click="dialog.next()">Next</md-button>
+        <md-button ng-if="dialog.isLastStep()" class="md-primary" ng-click="dialog.submit()">OK</md-button>
+    </md-dialog-actions>
 </md-dialog>

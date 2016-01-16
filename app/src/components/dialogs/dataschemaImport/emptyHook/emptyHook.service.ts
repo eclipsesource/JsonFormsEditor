@@ -19,7 +19,7 @@ module app.dialogs.dataschemaimport {
             return "crop_square";
         }
 
-        openDialog():void {
+        openDialog(wizard:AbstractWizard):void {
             this.$mdDialog.hide();
         }
 
