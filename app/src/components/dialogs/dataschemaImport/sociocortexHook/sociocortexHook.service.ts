@@ -15,8 +15,8 @@ module app.dialogs.dataschemaimport {
             return "SocioCortex";
         }
 
-        getDescription():string {
-            return "Generate a DataSchema from SocioCortex";
+        getIconFont():string {
+            return "cloud_download";
         }
 
         openDialog():void {

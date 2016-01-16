@@ -15,8 +15,8 @@ module app.dialogs.dataschemaimport {
             return "Upload";
         }
 
-        getDescription():string {
-            return "Upload a file from your computer.";
+        getIconFont():string {
+            return "file_upload";
         }
 
         openDialog():void {

@@ -3,7 +3,7 @@ module app.dialogs.dataschemaimport {
     export interface ImportHook {
         getTitle():string;
 
-        getDescription():string;
+        getIconFont():string;
 
         openDialog():void;
     }

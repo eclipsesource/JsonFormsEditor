@@ -5,24 +5,28 @@
         </div>
     </md-toolbar>
     <md-dialog-content class="md-padding">
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.<p/>
-        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<p/>
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.<p/>
-        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<p/>
-        <div layout="row">
-            <md-card ng-repeat="hook in dialog.importService.getHooks()" ng-click="hook.openDialog()">
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">{{hook.getTitle()}}</span>
-                    </md-card-title-text>
-                </md-card-title>
-                <md-card-content>
-                    {{hook.getDescription()}}
-                </md-card-content>
-            </md-card>
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+        dolore magna aliquyam erat, sed diam voluptua.<p/>
+        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+        Lorem ipsum dolor sit amet.<p/>
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+        dolore magna aliquyam erat, sed diam voluptua.<p/>
+        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+        Lorem ipsum dolor sit amet.<p/>
+        <div ng-cloak>
+            <md-grid-list
+                    md-cols-xs="4" md-cols-sm="4" md-cols-md="4" md-cols-gt-md="4"
+                    md-row-height-gt-md="2:1" md-row-height="2:1"
+                    md-gutter="10px" md-gutter-gt-sm="8px">
+                <md-grid-tile ng-repeat="hook in dialog.importService.getHooks()" ng-click="hook.openDialog()"
+                              style="background-color: #03a9f4"
+                              md-rowspan="1" md-colspan="1" md-colspan-sm="1">
+                    <md-icon class="material-icons" style="color:white">{{hook.getIconFont()}}</md-icon>
+                    <md-grid-tile-footer>
+                        <h3>{{hook.getTitle()}}</h3>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
+            </md-grid-list>
         </div>
     </md-dialog-content>
-    <md-dialog-actions>
-        <md-button ng-click="dialog.hideDialog()">Skip</md-button>
-    </md-dialog-actions>
 </md-dialog>

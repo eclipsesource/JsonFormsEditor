@@ -1,16 +1,13 @@
 module app.dialogs.dataschemaimport {
     import IDialogService = angular.material.IDialogService;
 
-    export class DataschemaImportController {
+    export class DataschemaImportController extends AbstractDialog {
 
         static $inject = ['$mdDialog', 'DataschemaImportService'];
 
-        constructor(private $mdDialog:IDialogService, public importService:DataschemaImportService) {
+        constructor($mdDialog:IDialogService, public importService:DataschemaImportService) {
+            super($mdDialog);
 
-        }
-
-        hideDialog():void {
-            this.$mdDialog.hide();
         }
 
     }
