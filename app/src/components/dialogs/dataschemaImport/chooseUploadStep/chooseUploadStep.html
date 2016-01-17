@@ -13,7 +13,7 @@ Lorem ipsum dolor sit amet.<p/>
             md-gutter="10px" md-gutter-gt-sm="8px">
         <md-grid-tile ng-repeat="hook in dialog.importService.getHooks()" ng-click="hook.openDialog(dialog)"
                       style="background-color: #03a9f4"
-                      md-rowspan="1" md-colspan="1" md-colspan-sm="1">
+                      md-rowspan="1" md-colspan="1" md-colspan-sm="1" md-ink-ripple>
             <md-icon class="material-icons" style="color:white">{{hook.getIconFont()}}</md-icon>
             <md-grid-tile-footer>
                 <h3>{{hook.getTitle()}}</h3>
