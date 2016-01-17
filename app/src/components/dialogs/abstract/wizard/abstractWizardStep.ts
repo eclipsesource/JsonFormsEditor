@@ -18,6 +18,8 @@ module app.dialogs {
 
         abstract hasNavigation():boolean;
 
+        abstract shallSubmit():boolean;
+
         abstract submit():IPromise<any>;
     }
 }

@@ -1,13 +1,16 @@
 module app.dialogs.dataschemaimport {
 
+    import SocioCortexConnector = app.core.connectors.SocioCortexConnector;
     import IDialogService = angular.material.IDialogService;
     import IDialogOptions = angular.material.IDialogOptions;
+    import IHttpService = angular.IHttpService;
+    import IQService = angular.IQService;
 
     export class SociocortexHookService implements ImportHook {
 
-        static $inject = ['DataschemaImportService', '$mdDialog'];
+        static $inject = ['DataschemaImportService', '$mdDialog', 'SocioCortexConnector', '$q'];
 
-        constructor(importService:DataschemaImportService, private $mdDialog:IDialogService){
+        constructor(importService:DataschemaImportService, private $mdDialog:IDialogService, private socioCortexConnector:SocioCortexConnector, private $q:IQService){
             importService.registerImportHook(this);
         }
 
@@ -20,14 +23,8 @@ module app.dialogs.dataschemaimport {
         }
 
         openDialog(wizard:AbstractWizard):void {
-            var options:IDialogOptions = {
-                parent: angular.element(document.body),
-                templateUrl: 'app/src/components/dialogs/dataschemaImport/sociocortexHook/sociocortexHook.html',
-                controller: SociocortexHookController,
-                controllerAs: 'dialog'
-            };
-
-            this.$mdDialog.show(options);
+            wizard.addSteps([new SocioCortexLoginStepController(wizard, this.socioCortexConnector), new SocioCortexWorkspaceStepController(wizard, this.socioCortexConnector, this.$q)]);
+            wizard.next();
         }
     }
 

@@ -17,15 +17,19 @@ module app.dialogs.dataschemaimport {
         }
 
         getTemplate():string {
-            return "app/src/components/dialogs/dataschemaImport/fromUrlHook/fromUrlHook.html";
+            return "app/src/components/dialogs/dataschemaImport/fromUrlHook/fromUrlStep.html";
         }
 
         hasNavigation():boolean {
             return true;
         }
 
+        shallSubmit():boolean {
+            return true;
+        }
+
         submit():IPromise<any> {
-            return this.$http.get(this.url);1
+            return this.$http.get(this.url);
         }
     }
 

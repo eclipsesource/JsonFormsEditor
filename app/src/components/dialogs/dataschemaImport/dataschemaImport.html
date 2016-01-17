@@ -1,8 +1,10 @@
 <md-dialog class="modalDialog">
     <md-toolbar>
         <div class="md-toolbar-tools wizardStepsContainer">
-            <span ng-class="(step.isActive() ? 'wizardStepActive' : 'wizardStep')" ng-click="dialog.goTo(step)" md-ink-ripple ng-repeat="step in dialog.getSteps()">
-                <h2>{{step.getTitle()}}</h2>
+            <span ng-repeat="step in dialog.getSteps()"
+                  ng-class="(step.isActive() ? 'wizardStepActive' : (dialog.isNavigatableStep(step) ? 'wizardStep' : 'wizardStepNotNavigatable'))"
+                  ng-style="dialog.getStyle()" ng-click="dialog.goTo(step)" md-ink-ripple>
+                    <h2>{{step.getTitle()}}</h2>
             </span>
         </div>
     </md-toolbar>

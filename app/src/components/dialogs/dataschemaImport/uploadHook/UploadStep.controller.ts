@@ -34,7 +34,7 @@ module app.dialogs.dataschemaimport {
         }
 
         getTemplate():string {
-            return "app/src/components/dialogs/dataschemaImport/uploadHook/uploadHook.html";
+            return "app/src/components/dialogs/dataschemaImport/uploadHook/uploadStep.html";
         }
 
         hasNavigation():boolean {
@@ -50,5 +50,8 @@ module app.dialogs.dataschemaimport {
 
         }
 
+        shallSubmit():boolean {
+            return true;
+        }
     }
 }

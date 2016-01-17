@@ -26,10 +26,12 @@ module app.dialogs {
         }
 
         goTo(step:AbstractWizardStep):void {
-            this.stepNumber = this.steps.indexOf(step);
+            if (this.isNavigatableStep(step)) {
+                this.stepNumber = this.steps.indexOf(step);
 
-            if(this.shallReset() && !this.hasPrevious()){
-                this.steps = [_.head(this.steps)];
+                if (this.shallReset() && !this.hasPrevious()) {
+                    this.steps = [_.head(this.steps)];
+                }
             }
         }
 
@@ -49,8 +51,18 @@ module app.dialogs {
 
         next():void {
             if (this.hasNext()) {
-                this.stepNumber++;
+                if (this.currentStep().shallSubmit()) {
+                    this.currentStep().submit().then(() => {
+                        this.stepNumber++;
+                    });
+                } else {
+                    this.stepNumber++;
+                }
             }
+        }
+
+        isNavigatableStep(step:AbstractWizardStep):boolean {
+            return this.steps.indexOf(step) < this.stepNumber;
         }
 
         hasPrevious():boolean {
@@ -62,9 +74,16 @@ module app.dialogs {
                 this.stepNumber--;
 
                 // if we are on the first step, and resetting is configured, remove all steps except the first
-                if(this.shallReset() && !this.hasPrevious()){
+                if (this.shallReset() && !this.hasPrevious()) {
                     this.steps = [_.head(this.steps)];
                 }
+            }
+        }
+
+        getStyle():{} {
+            return {
+                'width': '' + 100/this.steps.length + '%',
+                'text-align': this.steps.length > 1 ? 'center' : 'left'
             }
         }
 

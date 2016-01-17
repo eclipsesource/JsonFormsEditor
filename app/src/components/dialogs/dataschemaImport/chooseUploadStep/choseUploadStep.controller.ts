@@ -17,6 +17,10 @@ module app.dialogs.dataschemaimport {
             return "app/src/components/dialogs/dataschemaImport/chooseUploadStep/chooseUploadStep.html";
         }
 
+        shallSubmit():boolean {
+            return false;
+        }
+
         submit():IPromise<any> {
             return undefined;
         }
