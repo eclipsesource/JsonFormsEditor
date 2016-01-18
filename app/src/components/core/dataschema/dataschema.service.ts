@@ -75,6 +75,10 @@ module app.core.dataschema {
             return this.json;
         }
 
+        exportDataSchemaAsString():string {
+            return JSON.stringify(this.json, (key, value) => {return value;}, 2);
+        }
+
         /**
          * Adds a new Property to the data-schema.
          *

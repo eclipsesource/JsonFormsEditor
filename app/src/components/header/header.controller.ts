@@ -6,16 +6,19 @@ module app.header {
     import ConfigService = app.core.ConfigService;
     import ExportDialogController = app.dialogs.ExportDialogController;
     import ConfigDialogController = app.dialogs.ConfigDialogController;
+    import DataschemaImportService = app.dialogs.dataschemaimport.DataschemaImportService;
+    import DataschemaService = app.core.dataschema.DataschemaService;
 
     class HeaderViewController {
 
-        static $inject = ['TreeService', '$mdDialog', 'ConfigService'];
+        static $inject = ['TreeService', 'DataschemaService', '$mdDialog'];
 
-        constructor(private treeService:TreeService, private $mdDialog:IDialogService, public configService:ConfigService) {
+        constructor(private treeService:TreeService, private dataschemaService:DataschemaService, private $mdDialog:IDialogService) {
         }
 
         showExportDialog():void {
-            var exportDialogContent = this.treeService.exportUISchemaAsJSON();
+            var uiSchema:string = this.treeService.exportUISchemaAsJSON();
+            var dataSchema:string = this.dataschemaService.exportDataSchemaAsString();
 
             var options:IDialogOptions = {
                 parent: angular.element(document.body),
@@ -24,7 +27,8 @@ module app.header {
                 controller: ExportDialogController,
                 controllerAs: 'dialog',
                 locals: {
-                    content: exportDialogContent
+                    uiSchema: uiSchema,
+                    dataSchema: dataSchema
                 }
             };
 
