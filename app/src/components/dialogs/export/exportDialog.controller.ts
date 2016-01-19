@@ -4,10 +4,25 @@ module app.dialogs {
 
     export class ExportDialogController extends AbstractDialog {
 
-        static $inject = ['$mdDialog', 'content'];
+        static $inject = ['$mdDialog', 'uiSchema', 'dataSchema'];
 
-        constructor($mdDialog:IDialogService, public content:string) {
+        public selectedIndex:number = 0;
+
+        constructor(public $mdDialog:IDialogService, public uiSchema:string, public dataSchema:string) {
             super($mdDialog);
+        }
+
+        getActiveSchema():string {
+            switch (this.selectedIndex) {
+                case 1:
+                    return this.dataSchema;
+                default:
+                    return this.uiSchema;
+            }
+        }
+
+        hideExportDialog():void {
+            this.$mdDialog.hide();
         }
     }
 }

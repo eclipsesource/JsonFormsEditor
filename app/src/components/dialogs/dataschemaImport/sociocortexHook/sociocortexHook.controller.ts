@@ -8,7 +8,7 @@ module app.dialogs.dataschemaimport {
 
         static $inject = ['$mdDialog', '$http', 'ToolboxService'];
 
-        public selectedIndex = 0;
+        public selectedIndex:number = 0;
 
         public username:string;
         public password:string;

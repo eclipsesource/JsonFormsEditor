@@ -1,18 +1,33 @@
-<md-dialog>
+<md-dialog flex="65">
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <h2>UI Schema Output</h2>
+            <h2>Export Dialog</h2>
             <span flex></span>
             <md-button class="md-icon-button" ng-click="dialog.hideDialog()">
                 <md-icon class="material-icons">close</md-icon>
             </md-button>
         </div>
     </md-toolbar>
-    <md-dialog-content class="md-padding">
-        <textarea id="output" class="textarea">{{dialog.content}}</textarea>
+    <md-dialog-content>
+        <md-tabs md-border-bottom md-selected="dialog.selectedIndex">
+            <md-tab id="uiSchema" label="UI Schema">
+                <md-content class="md-padding">
+                    <md-input-container class="md-block">
+                        <textarea ng-model="dialog.uiSchema"></textarea>
+                    </md-input-container>
+                </md-content>
+            </md-tab>
+            <md-tab id="dataSchema" label="Data Schema">
+                <md-content class="md-padding">
+                    <md-input-container class="md-block">
+                        <textarea ng-model="dialog.dataSchema"></textarea>
+                    </md-input-container>
+                </md-content>
+            </md-tab>
+        </md-tabs>
     </md-dialog-content>
 
     <md-dialog-actions>
-        <md-button clip-copy="dialog.content" class="md-primary">Copy to clipboard</md-button>
+        <md-button clip-copy="dialog.getActiveSchema()" class="md-primary">Copy to clipboard</md-button>
     </md-dialog-actions>
 </md-dialog>

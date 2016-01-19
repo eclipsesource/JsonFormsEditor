@@ -8,9 +8,9 @@ module app.core.model {
         constructor(name:string, public datatype:string, private scope:string) {
             super(name, "", null);
             var config, type;
-            if(datatype == 'folder'){
-                config = new ElementConfig('Folder', '', 'folder');
-                type = 'folder';
+            if(datatype == 'object'){
+                config = new ElementConfig('object', '', 'folder');
+                type = 'object';
             } else {
                 config = new ElementConfig('Control', '', 'code');
                 type = 'Control';
@@ -21,11 +21,12 @@ module app.core.model {
         }
 
         isFolder(): boolean {
-            if(this.datatype == 'folder'){
+            if(this.datatype == 'object'){
                 return true;
             }
             return false;
         }
+
 
         convertToTreeElement():TreeElement {
             var treeElement = new TreeElement();

@@ -41,7 +41,6 @@ module app.core.dataschema {
 
 
             _.forEach(parent, (property:any, name:string) => {
-                console.log("ASDF: " + this.generateScope(name,path));
                 result.push(new ControlToolboxElement(name, property.type, this.generateScope(name, path)));
             });
 
@@ -57,7 +56,6 @@ module app.core.dataschema {
                 scope = path.join('/properties/') + '/properties/' + label;
             }
 
-            console.log(scope);
             return scope;
 
         }
@@ -75,6 +73,10 @@ module app.core.dataschema {
          */
         getDataSchema():any {
             return this.json;
+        }
+
+        exportDataSchemaAsString():string {
+            return JSON.stringify(this.json, (key, value) => {return value;}, 2);
         }
 
         /**
@@ -106,12 +108,11 @@ module app.core.dataschema {
                 return false;
             }
             //Initialize properties object if its a folder
-            if(type == 'folder'){
+            if(type == 'object'){
                 property.properties = {};
             }
 
             parent[label] = property;
-            console.log(this.getDataSchema());
             this.notifyObservers(new PreviewUpdateEvent(this.getDataSchema(), null));
             return true;
         }
@@ -153,7 +154,7 @@ module app.core.dataschema {
             while (index < path.length) {
                 if (currentElement.hasOwnProperty('properties') && currentElement.properties.hasOwnProperty(path[index])) {
                     currentElement = currentElement.properties[path[index]];
-                    if(currentElement.type != 'folder'){
+                    if(currentElement.type != 'object'){
                         return null;
                     }
                     index++;

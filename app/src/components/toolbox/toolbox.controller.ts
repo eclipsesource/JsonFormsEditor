@@ -13,7 +13,7 @@ module app.toolbox {
         public newElementLabel:string = '';
         public newElementTypeLabel:string = 'string';
 
-        public elementTypes = ['string', 'number', 'boolean', 'folder'];
+        public elementTypes = ['string', 'number', 'boolean', 'object'];
 
         public treeOptions:{};
 
@@ -51,6 +51,7 @@ module app.toolbox {
          * @returns {boolean}
          */
         shouldHide(element:ToolboxElement):boolean {
+
             if (!this.configService.enableFilter) {
                 return false;
             }
@@ -102,11 +103,14 @@ module app.toolbox {
 
         clickedIcon(element: ControlToolboxElement){
 
-            if(element.datatype == 'folder'){
+            if(element.datatype == 'object'){
                 this.toolboxService.accessFolder(element.getLabel());
             }
         }
 
+        canBeRemoved(element: ControlToolboxElement): boolean{
+            return this.toolboxService.canBeRemoved(element);
+        }
         isParentFolder(){
             var res = this.toolboxService.currentPath.length == 0;
             return res;
