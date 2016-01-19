@@ -41,7 +41,7 @@ module app.toolbox {
         addSchemaElement(label: string, type: string):boolean {
 
             if (this.dataschemaService.addNewProperty(label, type, this.currentPath)) {
-                var element:ControlToolboxElement = new ControlToolboxElement(label, type, this.generateScope(label, this.currentPath));
+                var element:ControlToolboxElement = new ControlToolboxElement(this.dataschemaService.convertNameToLabel(label), type, this.generateScope(label, this.currentPath));
                 this.elements.push(element);
                 return true;
             } else {

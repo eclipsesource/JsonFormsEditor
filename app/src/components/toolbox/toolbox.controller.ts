@@ -104,7 +104,7 @@ module app.toolbox {
         clickedIcon(element: ControlToolboxElement){
 
             if(element.datatype == 'object'){
-                this.toolboxService.accessFolder(element.getLabel());
+                this.toolboxService.accessFolder(element.getScope().split('/').pop());
             }
         }
 

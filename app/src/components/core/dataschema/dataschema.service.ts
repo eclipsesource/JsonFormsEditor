@@ -41,7 +41,7 @@ module app.core.dataschema {
 
 
             _.forEach(parent, (property:any, name:string) => {
-                result.push(new ControlToolboxElement(name, property.type, this.generateScope(name, path)));
+                result.push(new ControlToolboxElement(this.convertNameToLabel(name), property.type, this.generateScope(name, path)));
             });
 
 
@@ -60,8 +60,8 @@ module app.core.dataschema {
 
         }
 
-        private convertScopeToLabel(scope:string):string {
-            var name = scope.split('/').pop();
+        convertNameToLabel(name:string):string {
+
 
             return _.startCase(name);
         }
