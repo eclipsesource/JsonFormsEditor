@@ -7,7 +7,7 @@ module app.dialogs {
         static $inject = ['$mdDialog', 'uiSchema', 'dataSchema'];
 
         public selectedIndex:number = 0;
-
+        
         constructor(public $mdDialog:IDialogService, public uiSchema:string, public dataSchema:string) {
             super($mdDialog);
         }
