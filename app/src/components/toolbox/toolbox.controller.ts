@@ -11,7 +11,7 @@ module app.toolbox {
     class ToolboxController {
 
         public newElementLabel:string = '';
-        public newElementTypeLabel:string = 'string';
+        public newElementTypeLabel:string = 'type...';
 
         public elementTypes = ['string', 'number', 'boolean', 'object'];
 

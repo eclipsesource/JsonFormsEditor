@@ -97,12 +97,12 @@ module app.toolbox {
             }
         }
 
-        decreasePlacedTimes(element: ControlToolboxElement){
-            if(!this.placedTimes.hasOwnProperty(element.getScope())){
+        decreasePlacedTimes(scope: string){
+            if(!this.placedTimes.hasOwnProperty(scope)){
                 console.log("ERROR: Placed times of the element is -1")
-                this.placedTimes[element.getScope()] = -1;
+                this.placedTimes[scope] = -1;
             }else{
-                this.placedTimes[element.getScope()] = this.placedTimes[element.getScope()] - 1;
+                this.placedTimes[scope] = this.placedTimes[scope] - 1;
             }
         }
         increasePlacedTimes(element: ControlToolboxElement){
@@ -114,6 +114,7 @@ module app.toolbox {
             }
         }
         canBeRemoved(element: ControlToolboxElement): boolean {
+
             if(this.placedTimes[element.getScope()] > 0){
                 return false;
             }else {

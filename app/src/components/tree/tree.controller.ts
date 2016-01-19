@@ -70,14 +70,13 @@ module app.tree {
         }
 
         private decreasePlacedTimesOfChilds(treeElement:TreeElement) {
-            var __this = this;
-            this.toolboxService.getAssociatedToolboxElement(treeElement).then((toolboxElement:ToolboxElement) => {
-                _.forEach(treeElement.elements, this.decreasePlacedTimesOfChilds.bind(this));
+            for(var i = 0; i <treeElement.elements.length; i++){
+                this.decreasePlacedTimesOfChilds(treeElement.elements[i]);
+            }
+            if(treeElement.getType() === 'Control'){
+                this.toolboxService.decreasePlacedTimes(treeElement.getScope());
+            }
 
-                if (toolboxElement instanceof ControlToolboxElement) {
-                    __this.toolboxService.decreasePlacedTimes(toolboxElement);
-                }
-            });
         }
     }
 

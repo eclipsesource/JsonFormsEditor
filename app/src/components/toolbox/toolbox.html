@@ -28,26 +28,33 @@
         </div>
     </md-content>
     <md-content class="toolbox-bottom-control top-border">
-        <md-menu>
-            <md-button ng-click="$mdOpenMenu($event)" class="md-raised md-primary">
-                {{toolbox.newElementTypeLabel}}
-                <md-icon class="material-icons">keyboard_arrow_down</md-icon>
-            </md-button>
-            <md-menu-content>
-                <md-menu-item ng-repeat="typeLabel in toolbox.elementTypes">
-                    <md-button ng-click="toolbox.setNewElementTypeLabel(typeLabel)">
-                        {{typeLabel}}
-                    </md-button>
-                </md-menu-item>
-            </md-menu-content>
-        </md-menu>
         <div layout="row" layout-align="space-around center">
-            <input id="inputLabel" ng-enter="toolbox.addNewElement()" ng-model="toolbox.newElementLabel" flex="auto"
-                   flex-order="0" class="md-primary" type="text"/>
 
-            <md-button ng-click="toolbox.addNewElement()" class="md-fab md-mini" flex="none" flex-order="2">
-                <md-icon class="material-icons">add</md-icon>
-            </md-button>
+            <md-input-container flex="60" style="margin-top:20px; margin-bottom:0px;">
+                <input id="inputLabel" ng-enter="toolbox.addNewElement()" ng-model="toolbox.newElementLabel" flex="auto"
+                       flex-order="0" class="md-primary" type="text" placeholder="Add new attribute..."/>
+            </md-input-container>
+            <div flex="40">
+
+                <md-menu>
+                    <md-button ng-click="$mdOpenMenu($event)" class="md-raised md-primary">
+                        {{toolbox.newElementTypeLabel}}
+                        <md-icon class="material-icons">keyboard_arrow_down</md-icon>
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item ng-repeat="typeLabel in toolbox.elementTypes">
+                            <md-button ng-click="toolbox.setNewElementTypeLabel(typeLabel)">
+                                {{typeLabel}}
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+                <!--<md-button flex="50" ng-click="toolbox.addNewElement()" class="md-fab md-mini" flex="none" flex-order="2">
+                    <md-icon class="material-icons">add</md-icon>
+                </md-button>-->
+            </div>
+
+
         </div>
     </md-content>
 </md-content>
