@@ -23,7 +23,9 @@ module app.dialogs.dataschemaimport {
         }
 
         openDialog(wizard:AbstractWizard):void {
-            wizard.addSteps([new SocioCortexLoginStepController(wizard, this.socioCortexConnector), new SocioCortexWorkspaceStepController(wizard, this.socioCortexConnector, this.$q)]);
+            wizard.addSteps([new SocioCortexLoginStepController(wizard, this.socioCortexConnector)
+                , new SocioCortexWorkspaceStepController(wizard, this.socioCortexConnector, this.$q)
+                , new SocioCortexEntityTypeStepController(wizard, this.socioCortexConnector, this.$q)]);
             wizard.next();
         }
     }

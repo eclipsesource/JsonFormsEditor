@@ -1,5 +1,5 @@
 <md-list>
-    <md-list-item ng-repeat="workspace in dialog.currentStep().sociocortexConnector.getWorkspaces()" ng-click="dialog.currentStep().selectWorkspace(workspace)" ng-style="(dialog.currentStep().selectedWorkspace === workspace ? {background:grey} : {})">
+    <md-list-item ng-repeat="workspace in dialog.currentStep().sociocortexConnector.getWorkspaces()" ng-click="dialog.currentStep().selectWorkspace(workspace)" ng-class="{selectedListItem: dialog.currentStep().selectedWorkspace === workspace}">
         {{workspace.name}}
     </md-list-item>
 </md-list>

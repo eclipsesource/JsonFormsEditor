@@ -5,8 +5,12 @@ module app.dialogs.dataschemaimport {
 
     export class SocioCortexLoginStepController extends AbstractWizardStep {
 
+        public serverURL:string = 'http://server.sociocortex.com/api/v1';
         public username:string;
         public password:string;
+
+        public loginError:boolean = false;
+        public loginErrorMessage:string = "Login error. Check that the entered values are correct and try again."
 
         constructor(wizard:AbstractWizard, private sociocortexConnector:SocioCortexConnector){
             super(wizard);
@@ -25,7 +29,14 @@ module app.dialogs.dataschemaimport {
         }
 
         submit():angular.IPromise<any> {
-            return this.sociocortexConnector.login(this.username, this.password);
+            this.loginError = false;
+            var catchedError:any;
+            return this.sociocortexConnector.login(this.serverURL, this.username, this.password).catch((error) => {
+                catchedError = error;
+                this.loginError = true;
+            }).then(() => {
+                if (this.loginError) throw catchedError;
+            });
         }
 
         shallSubmit():boolean {

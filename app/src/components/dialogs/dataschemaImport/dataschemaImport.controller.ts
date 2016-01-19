@@ -20,7 +20,7 @@ module app.dialogs.dataschemaimport {
             this.currentStep().submit().then((json:any) => {
                 this.toolboxService.loadSchema(json);
                 this.hideDialog();
-            })
+            });
         }
     }
 

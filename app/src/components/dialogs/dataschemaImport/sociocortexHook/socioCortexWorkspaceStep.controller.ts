@@ -25,11 +25,7 @@ module app.dialogs.dataschemaimport {
         }
 
         submit():angular.IPromise<any> {
-            var deffered :IDeferred<any>= this.$q.defer();
-
-            deffered.resolve({});
-
-            return deffered.promise;
+            return this.sociocortexConnector.selectWorkspace(this.selectedWorkspace);
         }
 
         shallSubmit():boolean {

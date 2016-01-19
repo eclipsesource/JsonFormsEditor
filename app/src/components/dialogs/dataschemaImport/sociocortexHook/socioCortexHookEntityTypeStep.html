@@ -1,0 +1,5 @@
+<md-list>
+  <md-list-item ng-repeat="entityType in dialog.currentStep().sociocortexConnector.getEntityTypes()" ng-click="dialog.currentStep().selectEntityType(entityType)" ng-class="{selectedListItem: dialog.currentStep().selectedEntityType === entityType}">
+    {{entityType.name}}
+  </md-list-item>
+</md-list>
