@@ -49,46 +49,34 @@ module app.tree {
         }
 
         generateTreeFromExistingUISchema(uiSchema:any) {
-            this.elements = [];
+            this.elements.splice(0, this.elements.length);
             this.layoutsService.getElementByType(uiSchema.type).then((element:LayoutToolboxElement) => {
                 var rootElement:TreeElement = element.convertToTreeElement();
                 rootElement['root'] = 'root';
                 for(var i = 0; i < uiSchema.elements.length; i++) {
-                    this.generateTreeElement(uiSchema.elements[i]).then((childElement:TreeElement) => {
-                        rootElement.addElement(childElement);
-                    });
+                    this.generateTreeElement(rootElement, uiSchema.elements[i]);
                 }
                 this.elements.push(rootElement);
             });
         }
 
-        private generateTreeElement(uiSchema:any):IPromise<TreeElement> {
+        private generateTreeElement(parent:TreeElement, uiSchema:any) {
             var treeElement:TreeElement;
             if (uiSchema.type == "Control") {
-                treeElement = this.toolboxService.getElementByScope(uiSchema.scope.$ref).convertToTreeElement();
+                this.toolboxService.increasePlacedTimes(this.toolboxService.getElementByScope(uiSchema.scope.$ref.substring(13)));
+                treeElement = this.toolboxService.getElementByScope(uiSchema.scope.$ref.substring(13)).convertToTreeElement();
                 treeElement.setLabel(uiSchema.label);
-                var deffered:IDeferred<TreeElement> = this.$q.defer();
-
-                deffered.resolve(treeElement);
-
-                return deffered.promise;
+                parent.addElement(treeElement);
             } else {
                 this.layoutsService.getElementByType(uiSchema.type).then((element:LayoutToolboxElement) => {
                     treeElement = element.convertToTreeElement();
                     for(var i = 0; i < uiSchema.elements.length; i++) {
-                        this.generateTreeElement(uiSchema.elements[i]).then((childElement:TreeElement) => {
-                            treeElement.addElement(childElement);
-                            if (i == uiSchema.elements.length - 1) {
-                                var deffered:IDeferred<TreeElement> = this.$q.defer();
-
-                                deffered.resolve(treeElement);
-
-                                return deffered.promise;
-                            }
-                        });
+                        this.generateTreeElement(treeElement, uiSchema.elements[i]);
                     }
+                    parent.addElement(treeElement);
                 });
             }
+
         }
 
     }

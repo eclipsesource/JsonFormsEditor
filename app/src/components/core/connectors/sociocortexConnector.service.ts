@@ -120,7 +120,7 @@ module app.core.connectors {
         }
 
         getViewModel() {
-            return this.selectedEntityType.viewModel;
+            return JSON.parse(this.selectedEntityType.viewModel);
         }
 
         saveViewModel(uiSchema:string):IPromise<any> {
