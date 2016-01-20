@@ -165,7 +165,7 @@ module app.toolbox {
         }
 
 
-        private getElementByScope(scope:string):ControlToolboxElement {
+        public getElementByScope(scope:string):ControlToolboxElement {
             return _.find(this.elements, (element:ControlToolboxElement) => {
                 return element.getScope() === scope;
             });

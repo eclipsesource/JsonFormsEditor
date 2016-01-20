@@ -119,6 +119,10 @@ module app.core.connectors {
             return json;
         }
 
+        getViewModel() {
+            return this.selectedEntityType.viewModel;
+        }
+
         saveViewModel(uiSchema:string):IPromise<any> {
             this.selectedEntityType.viewModel = uiSchema;
             return this.$http.put(this.serverURL + '/entityTypes/' + this.selectedEntityType.id, this.selectedEntityType, {
