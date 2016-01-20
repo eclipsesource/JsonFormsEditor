@@ -8,12 +8,17 @@ module app.core.connectors {
 
         private workspaces;
         private entityTypes;
+        private selectedEntityType:any = null;
         private attributes;
 
         static $inject = ['$http'];
 
         constructor(private $http:IHttpService) {
 
+        }
+
+        isLoggedWithSocioCortex():boolean {
+            return this.selectedEntityType != null;
         }
 
         login(serverURL:string, username:string, password:string):IPromise<any> {
@@ -53,12 +58,14 @@ module app.core.connectors {
         }
 
         selectEntityType(entityType:any):IPromise<any> {
+            this.selectedEntityType = null;
             this.attributes = [];
 
             return this.$http.get(this.serverURL + '/entityTypes/' + entityType.id, {
                     headers: {'Authorization': 'Basic ' + this.encodedLoginData}
                 }).then((response:any) => {
-                    this.attributes.push({'name': response.name + ' Name', 'attributeType': 'Text'});
+                    this.selectedEntityType = response.data;
+                    //this.attributes.push({'name': response.data.name + ' Name', 'attributeType': 'Text'});
                     var propertiesReduced = response.data.attributeDefinitions;
                     for (var i = 0; i < propertiesReduced.length; i++) {
                         var nestedPromise:IPromise<any> = this.$http.get(this.serverURL + '/attributeDefinitions/' + propertiesReduced[i].id, {
@@ -72,7 +79,6 @@ module app.core.connectors {
         }
 
         public generateJSONFromAttributes():any {
-            console.log(this.attributes.length);
             var json:any = {
                 "type": "object",
                 "properties": {}
@@ -111,6 +117,13 @@ module app.core.connectors {
             json.properties[propertyName] = propertyValue;
 
             return json;
+        }
+
+        saveViewModel(uiSchema:string):IPromise<any> {
+            this.selectedEntityType.viewModel = uiSchema;
+            return this.$http.put(this.serverURL + '/entityTypes/' + this.selectedEntityType.id, this.selectedEntityType, {
+                headers: {'Authorization': 'Basic ' + this.encodedLoginData}
+            });
         }
     }
 

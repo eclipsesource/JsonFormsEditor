@@ -10,12 +10,16 @@
         <md-button ng-if="!header.configService.isPreviewTab()" class="md-raised md-accent" ui-sref="edit"
                    ui-sref-active="hidden">Edit
         </md-button>
+        <md-button ng-if="header.socioCortexConnector.isLoggedWithSocioCortex()" class="md-raised md-accent" ng-click="header.saveToSocioCortex()">
+            <md-tooltip md-direction="down">Save to SocioCortex</md-tooltip>
+            Save
+        </md-button>
 
-        <md-button ng-if="!header.configService.isPreviewTab()" class="md-raised md-accent"
+        <md-button ng-if="!header.configService.isPreviewTab() && !header.socioCortexConnector.isLoggedWithSocioCortex()" class="md-raised md-accent"
                    ng-click="header.showExportDialog()">Export
         </md-button>
         <i ng-if="!header.configService.isPreviewTab()" ng-click="header.showConfigDialog()" class="material-icons">
-            <md-tooltip md-direction="left">Configuration</md-tooltip>
+            <md-tooltip md-direction="down">Configuration</md-tooltip>
             settings</i>
     </div>
 </md-toolbar>
