@@ -29,5 +29,7 @@
 
     <md-dialog-actions>
         <md-button clip-copy="dialog.getActiveSchema()" class="md-primary">Copy to clipboard</md-button>
+        <md-button ng-click="dialog.downloadSchema()" class="md-primary">Download</md-button>
+        <a id="a" style="display: none;" ng-href="{{dialog.url}}" download="{{dialog.activeSchemaName}}"></a>
     </md-dialog-actions>
 </md-dialog>
