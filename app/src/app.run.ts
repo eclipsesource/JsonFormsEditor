@@ -10,7 +10,7 @@ module app {
         static $inject = ['$mdDialog', '$location'];
 
         constructor($mdDialog:IDialogService, $location:ILocationService) {
-            if ($location.path() === '/edit') {
+            if ($location.path() === '') {
                 var options:IDialogOptions = {
                     parent: angular.element(document.body),
                     templateUrl: 'app/src/components/dialogs/dataschemaImport/dataschemaImport.html',

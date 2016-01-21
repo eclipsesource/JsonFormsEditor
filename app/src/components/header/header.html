@@ -18,8 +18,5 @@
         <md-button ng-if="!header.configService.isPreviewTab() && !header.socioCortexConnector.isLoggedWithSocioCortex()" class="md-raised md-accent"
                    ng-click="header.showExportDialog()">Export
         </md-button>
-        <i ng-if="!header.configService.isPreviewTab()" ng-click="header.showConfigDialog()" class="material-icons">
-            <md-tooltip md-direction="down">Configuration</md-tooltip>
-            settings</i>
     </div>
 </md-toolbar>
