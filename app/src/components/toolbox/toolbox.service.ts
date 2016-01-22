@@ -18,15 +18,16 @@ module app.toolbox {
     import ElementsConfigService = app.core.elementsConfig.ElementsConfigService;
     import ElementConfig = app.core.elementsConfig.ElementConfig;
     import LayoutsService = app.layouts.LayoutsService;
+    import ToolboxServiceMemento = app.core.undo.ToolboxServiceMemento;
 
 
-    export class ToolboxService {
+    export class ToolboxService implements Originator<ToolboxServiceMemento> {
         static $inject = ['DataschemaService', '$q', 'LayoutsService'];
 
         public elements:ControlToolboxElement[] = [];
-        public currentPath: string[] = [];
+        public currentPath:string[] = [];
 
-        private placedTimes: any = {};
+        private placedTimes:any = {};
 
         constructor(public dataschemaService:DataschemaService, private $q:IQService, private layoutsService:LayoutsService) {
             this.loadSchema(demoSchema);
@@ -38,7 +39,7 @@ module app.toolbox {
          * @param path the path to the property in the dataschema, e.g. ['person', 'adress']
          * @returns {boolean} true, if the addition was successful
          */
-        addSchemaElement(label: string, type: string):boolean {
+        addSchemaElement(label:string, type:string):boolean {
 
             if (this.dataschemaService.addNewProperty(label, type, this.currentPath)) {
                 var element:ControlToolboxElement = new ControlToolboxElement(this.dataschemaService.convertNameToLabel(label), type, this.generateScope(label, this.currentPath));
@@ -49,11 +50,11 @@ module app.toolbox {
             }
         }
 
-        generateScope(label: string, path: string[]) : string{
+        generateScope(label:string, path:string[]):string {
             var scope = '';
-            if(path.length<=0){
+            if (path.length <= 0) {
                 scope = label;
-            }else {
+            } else {
                 scope = path.join('/properties/') + '/properties/' + label;
             }
 
@@ -61,20 +62,20 @@ module app.toolbox {
 
         }
 
-        accessFolder(folderName: string){
+        accessFolder(folderName:string) {
 
             this.currentPath.push(folderName);
 
             //If folder exists
-            if(this.dataschemaService.getFolderAt(this.currentPath)){
+            if (this.dataschemaService.getFolderAt(this.currentPath)) {
                 this.loadSchemaElements();
-            }else{
+            } else {
                 this.currentPath.pop();
             }
 
         }
 
-        previousFolder(){
+        previousFolder() {
             this.currentPath.pop();
             this.loadSchemaElements();
         }
@@ -89,7 +90,7 @@ module app.toolbox {
 
             var name = element.getScope();
             var path = this.currentPath;
-            
+
             if (this.dataschemaService.removeProperty(name, path)) {
                 return _.remove(this.elements, element).length === 1;
             } else {
@@ -97,24 +98,25 @@ module app.toolbox {
             }
         }
 
-        decreasePlacedTimes(scope: string){
-            if(!this.placedTimes.hasOwnProperty(scope)){
+        decreasePlacedTimes(scope:string) {
+            if (!this.placedTimes.hasOwnProperty(scope)) {
                 console.log("ERROR: Placed times of the element is -1")
                 this.placedTimes[scope] = -1;
-            }else{
+            } else {
                 this.placedTimes[scope] = this.placedTimes[scope] - 1;
             }
         }
-        increasePlacedTimes(element: ControlToolboxElement){
+
+        increasePlacedTimes(element:ControlToolboxElement) {
             //if the element hasnt been added yet to the placedTimesArray
-            if(!this.placedTimes.hasOwnProperty(element.getScope())){
+            if (!this.placedTimes.hasOwnProperty(element.getScope())) {
                 this.placedTimes[element.getScope()] = 1;
-            }else{
+            } else {
                 this.placedTimes[element.getScope()] = this.placedTimes[element.getScope()] + 1;
             }
         }
-        canBeRemoved(element: ControlToolboxElement): boolean {
 
+        canBeRemoved(element:ControlToolboxElement):boolean {
             if(this.placedTimes[element.getScope()] > 0){
                 return false;
             }else {
@@ -122,7 +124,7 @@ module app.toolbox {
             }
         }
 
-        isAlreadyPlaced(element: ControlToolboxElement): boolean {
+        isAlreadyPlaced(element:ControlToolboxElement):boolean {
             return !this.canBeRemoved(element);
         }
 
@@ -147,19 +149,18 @@ module app.toolbox {
             return deffered.promise;
         }
 
-        /*
-        * Used to load a schema into the dataschemaservice(without loading the elements for the toolbar)
-        * @param json the json file to load
-        */
-        loadSchema(json: any){
+        /**
+         * Used to load a schema into the dataschemaservice(without loading the elements for the toolbar)
+         * @param json the json file to load
+         */
+        loadSchema(json:any) {
             this.dataschemaService.loadFromJson(json);
             this.loadSchemaElements();
         }
 
-        /*
-        * Used to load the schema elements for the toolbar from a specified folder (uses currentPath)
-        *
-        * */
+        /**
+         * Used to load the schema elements for the toolbar from a specified folder (uses currentPath)
+         */
         private loadSchemaElements() {
             this.elements = this.dataschemaService.convertPropertiesToControls(this.currentPath);
         }
@@ -169,6 +170,22 @@ module app.toolbox {
             return _.find(this.elements, (element:ControlToolboxElement) => {
                 return element.getScope() === scope;
             });
+        }
+
+        setMemento(memento:ToolboxServiceMemento) {
+            this.elements = memento.getElements();
+            this.placedTimes = memento.getPlacedTimes();
+        }
+
+        createMemento():ToolboxServiceMemento {
+            // we cannot just clone the whole array, since this doesn't preserve the functions on ControlToolboxElement
+            var elementsCopy:ControlToolboxElement[] = [];
+
+            _.forEach(this.elements, (element:ControlToolboxElement) => {
+                elementsCopy.push(element.clone());
+            });
+
+            return new ToolboxServiceMemento(elementsCopy, _.clone(this.placedTimes, true));
         }
     }
 

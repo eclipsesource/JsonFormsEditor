@@ -68,10 +68,23 @@ module app.core.model {
         }
 
         public hasLabel() : boolean {
-            if(this.type=='HorizontalLayout' || this.type == 'VerticalLayout' || this.type == 'Categorization') {
-                return false;
-            }
-            return true;
+            return !(this.type == 'HorizontalLayout' || this.type == 'VerticalLayout' || this.type == 'Categorization');
+
+        }
+
+        public clone():TreeElement{
+            var result:TreeElement = new TreeElement();
+
+            result.type = _.clone(this.type);
+            result.label = _.clone(this.label);
+            result.scope = _.clone(this.scope);
+            result.elements = [];
+            _.forEach(this.elements, (element:TreeElement) => {
+                result.elements.push(element.clone());
+            });
+            result.metaData = _.clone(this.metaData);
+
+            return result;
         }
 
     }

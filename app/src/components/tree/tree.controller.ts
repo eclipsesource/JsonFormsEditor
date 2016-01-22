@@ -7,17 +7,14 @@ module app.tree {
     import DetailService = app.detail.DetailService;
     import DataschemaService = app.core.dataschema.DataschemaService;
     import PreviewUpdateEvent = app.preview.PreviewUpdateEvent;
+    import UndoService = app.core.undo.UndoService;
 
     class MyTreeController {
-
-        public elements:TreeElement[] = [];
         public treeOptions:{};
 
-        static $inject = ['TreeService', 'DataschemaService', 'ToolboxService', 'DetailService'];
+        static $inject = ['TreeService', 'DataschemaService', 'ToolboxService', 'DetailService', 'UndoService'];
 
-        constructor(private treeService:TreeService, private dataschemaService:DataschemaService, private toolboxService:ToolboxService, private detailService:DetailService) {
-            this.elements = treeService.elements;
-
+        constructor(private treeService:TreeService, private dataschemaService:DataschemaService, private toolboxService:ToolboxService, private detailService:DetailService, private undoService:UndoService) {
             this.treeOptions = {
                 // don't accept more than one element (layout) in the root of the tree
                 accept: (sourceNodeScope, destNodesScope) => {
@@ -37,6 +34,9 @@ module app.tree {
 
                     return accepted;
                 },
+                beforeDrop: () => {
+                    this.undoService.snapshot();
+                },
                 removed: (node) => {
                     var treeElement:TreeElement = node.$modelValue;
                     this.treeService.notifyObservers(new PreviewUpdateEvent(null, JSON.parse(this.treeService.exportUISchemaAsJSON())));
@@ -50,6 +50,7 @@ module app.tree {
          * @param scope Scope Element from ui.tree.
          */
         remove(scope):void {
+            this.undoService.snapshot();
             scope.removeNode(scope);
         }
 
@@ -76,7 +77,6 @@ module app.tree {
             if(treeElement.getType() === 'Control'){
                 this.toolboxService.decreasePlacedTimes(treeElement.getScope());
             }
-
         }
     }
 

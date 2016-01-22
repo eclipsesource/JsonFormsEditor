@@ -8,12 +8,13 @@ module app.header {
     import DataschemaImportService = app.dialogs.dataschemaimport.DataschemaImportService;
     import DataschemaService = app.core.dataschema.DataschemaService;
     import SocioCortexConnector = app.core.connectors.SocioCortexConnector;
+    import UndoService = app.core.undo.UndoService;
 
     class HeaderViewController {
 
-        static $inject = ['TreeService', 'DataschemaService', 'SocioCortexConnector', '$mdDialog'];
+        static $inject = ['TreeService', 'DataschemaService', 'SocioCortexConnector', '$mdDialog', 'UndoService'];
 
-        constructor(private treeService:TreeService, private dataschemaService:DataschemaService, public socioCortexConnector:SocioCortexConnector, private $mdDialog:IDialogService) {
+        constructor(private treeService:TreeService, private dataschemaService:DataschemaService, public socioCortexConnector:SocioCortexConnector, private $mdDialog:IDialogService, public undoService:UndoService) {
         }
 
         showExportDialog():void {
