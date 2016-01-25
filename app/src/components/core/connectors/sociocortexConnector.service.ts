@@ -120,6 +120,7 @@ module app.core.connectors {
         }
 
         getViewModel() {
+            if (!this.selectedEntityType.viewModel) return null;
             return JSON.parse(this.selectedEntityType.viewModel);
         }
 
