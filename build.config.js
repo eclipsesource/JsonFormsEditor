@@ -68,8 +68,8 @@ module.exports = {
             'app/assets/libs/angular-animate/angular-animate.js',
             'app/assets/libs/angular-aria/angular-aria.js',
             'app/assets/libs/angular-material/angular-material.js',
-            'app/assets/libs/zeroclipboard/dist/ZeroClipboard.js',
-            'app/assets/libs/ng-clip/src/ngClip.js',
+            'app/assets/libs/clipboard/dist/clipboard.min.js',
+            'app/assets/libs/ngclipboard/dist/ngclipboard.js',
             'app/assets/libs/angular-file-upload/dist/angular-file-upload.js'
         ],
         test: [

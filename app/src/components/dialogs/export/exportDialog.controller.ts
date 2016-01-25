@@ -9,7 +9,7 @@ module app.dialogs {
         public selectedIndex:number = 0;
 
         public url;
-        public activeSchemaName:string;
+        public activeSchemaFileName:string;
         
         constructor($scope, public $mdDialog:IDialogService, public uiSchema:string, public dataSchema:string) {
             super($mdDialog);
@@ -28,7 +28,7 @@ module app.dialogs {
             }
         }
 
-        getActiveSchemaName():string {
+        getActiveSchemaFileName():string {
             switch (this.selectedIndex) {
                 case 1:
                     return "data_schema.json";
@@ -42,7 +42,7 @@ module app.dialogs {
             var blob = new Blob([schema], {type: 'text/plain'});
             this.url = window.URL.createObjectURL(blob);
 
-            this.activeSchemaName = this.getActiveSchemaName();
+            this.activeSchemaFileName = this.getActiveSchemaFileName();
         }
 
         downloadSchema() {

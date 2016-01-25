@@ -28,8 +28,8 @@
     </md-dialog-content>
 
     <md-dialog-actions>
-        <md-button clip-copy="dialog.getActiveSchema()" class="md-primary">Copy to clipboard</md-button>
+        <md-button ngclipboard data-clipboard-text="{{dialog.getActiveSchema()}}" class="md-primary">Copy to clipboard</md-button>
         <md-button ng-click="dialog.downloadSchema()" class="md-primary">Download</md-button>
-        <a id="a" style="display: none;" ng-href="{{dialog.url}}" download="{{dialog.activeSchemaName}}"></a>
+        <a id="a" style="display: none;" ng-href="{{dialog.url}}" download="{{dialog.activeSchemaFileName}}"></a>
     </md-dialog-actions>
 </md-dialog>

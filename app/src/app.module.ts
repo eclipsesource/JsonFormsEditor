@@ -15,7 +15,7 @@ module app {
         'app.dialogs',
         'ui.router',
         'ngMaterial',
-        'ngClipboard'
+        'ngclipboard'
     ]);
 }
 

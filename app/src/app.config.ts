@@ -6,12 +6,11 @@ module app {
 
     class AppConfig {
 
-        static $inject = ['$stateProvider', '$urlRouterProvider', '$mdThemingProvider', 'ngClipProvider', '$compileProvider'];
+        static $inject = ['$stateProvider', '$urlRouterProvider', '$mdThemingProvider', '$compileProvider'];
 
         constructor($stateProvider:ng.ui.IStateProvider,
                     $urlRouterProvider:ng.ui.IUrlRouterProvider,
                     $mdThemingProvider:ng.material.IThemingProvider,
-                    ngClipProvider,
                     $compileProvider) {
 
             $stateProvider
@@ -67,8 +66,6 @@ module app {
                 .primaryPalette('indigo', {'default': '800'})
                 .accentPalette('blue', {'default': '500'})
                 .warnPalette('red', {'default': '600'});
-
-            ngClipProvider.setPath("resource/ZeroClipboard.swf");
 
             $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);
         }
