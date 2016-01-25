@@ -172,7 +172,7 @@ module.exports = function (grunt) {
         clean: {
             build: ['<%= build_dir %>'],
             temp: ['<%= temp_dir %>'],
-            dist: ['<%= dist_dir'],
+            dist: ['<%= dist_dir %>'],
             lib: ["node_modules", "app/assets/libs"]
         },
 

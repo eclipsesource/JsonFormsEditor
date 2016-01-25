@@ -5,7 +5,6 @@ module app.header {
     import IDialogOptions = angular.material.IDialogOptions;
     import ConfigService = app.core.ConfigService;
     import ExportDialogController = app.dialogs.ExportDialogController;
-    import ConfigDialogController = app.dialogs.ConfigDialogController;
     import DataschemaImportService = app.dialogs.dataschemaimport.DataschemaImportService;
     import DataschemaService = app.core.dataschema.DataschemaService;
     import SocioCortexConnector = app.core.connectors.SocioCortexConnector;
@@ -57,18 +56,6 @@ module app.header {
                         .ok('Close')
                 );
             });
-        }
-
-        showConfigDialog():void {
-            var options:IDialogOptions = {
-                parent: angular.element(document.body),
-                templateUrl: 'app/src/components/dialogs/config/configDialog.html',
-                clickOutsideToClose: true,
-                controller: ConfigDialogController,
-                controllerAs: 'config'
-            };
-
-            this.$mdDialog.show(options);
         }
     }
 

@@ -10,7 +10,7 @@ module app.dialogs.dataschemaimport {
 
 
         getTitle():string {
-            return "Choose Upload";
+            return "Select your JSON data model";
         }
 
         getTemplate():string {
