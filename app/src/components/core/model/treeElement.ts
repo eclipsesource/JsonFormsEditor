@@ -74,5 +74,25 @@ module app.core.model {
             return true;
         }
 
+        public toJSONString():string {
+            var json:any = {};
+            json.type = this.type;
+            if (this.label && this.label.length > 0) {
+                json.label = this.label;
+            }
+            if (this.scope && this.scope.length > 0) {
+                json.scope = {};
+                json.scope.$ref = "#/properties/" + this.scope;
+            }
+            if (this.elements && this.elements.length > 0) {
+                json.elements = [];
+                for (var i = 0; i < this.elements.length; i++) {
+                    json.elements.push(JSON.parse(this.elements[i].toJSONString()));
+                }
+            }
+            return JSON.stringify(json, (key, value) => {
+                return value;
+            }, 2);
+        }
     }
 }

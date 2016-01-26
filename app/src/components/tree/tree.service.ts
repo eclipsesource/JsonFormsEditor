@@ -25,27 +25,7 @@ module app.tree {
         }
 
         exportUISchemaAsJSON():string {
-            return JSON.stringify(this.elements[0], (key, value) => {
-
-                if (value == "") {
-                    return undefined;
-                }
-
-                if (key == "scope") {
-                    return {"$ref": "#/properties/" + value};
-                }
-
-                switch (key) {
-                    case "id":
-                    case "$$hashKey":
-                    case 'root':
-                    case "metaData":
-                        return undefined;
-                        break;
-                }
-
-                return value;
-            }, 2 /* two spaces as indentation */);
+            return this.elements[0].toJSONString();
         }
 
         generateTreeFromExistingUISchema(uiSchema:any) {
@@ -53,7 +33,7 @@ module app.tree {
             this.layoutsService.getElementByType(uiSchema.type).then((element:LayoutToolboxElement) => {
                 var rootElement:TreeElement = element.convertToTreeElement();
                 rootElement['root'] = 'root';
-                for(var i = 0; i < uiSchema.elements.length; i++) {
+                for (var i = 0; i < uiSchema.elements.length; i++) {
                     this.generateTreeElement(rootElement, uiSchema.elements[i]);
                 }
                 this.elements.push(rootElement);
@@ -70,7 +50,7 @@ module app.tree {
             } else {
                 this.layoutsService.getElementByType(uiSchema.type).then((element:LayoutToolboxElement) => {
                     treeElement = element.convertToTreeElement();
-                    for(var i = 0; i < uiSchema.elements.length; i++) {
+                    for (var i = 0; i < uiSchema.elements.length; i++) {
                         this.generateTreeElement(treeElement, uiSchema.elements[i]);
                     }
                     parent.addElement(treeElement);
