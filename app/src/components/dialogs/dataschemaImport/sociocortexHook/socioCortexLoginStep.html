@@ -1,13 +1,16 @@
 <div class="loginError" ng-show="dialog.currentStep().loginError">{{dialog.currentStep().loginErrorMessage}}</div>
-<md-input-container class="md-block">
+<form ng-submit="dialog.next()">
+  <md-input-container class="md-block">
     <label>SocioCortex Server URL</label>
     <input type="text" name="username" ng-model="dialog.currentStep().serverURL"/>
-</md-input-container>
-<md-input-container class="md-block">
+  </md-input-container>
+  <md-input-container class="md-block">
     <label>Username</label>
     <input type="text" name="username" ng-model="dialog.currentStep().username"/>
-</md-input-container>
-<md-input-container class="md-block">
+  </md-input-container>
+  <md-input-container class="md-block">
     <label>Password</label>
     <input type="password" name="password" ng-model="dialog.currentStep().password"/>
-</md-input-container>
+  </md-input-container>
+  <button style="display: none;" type="submit">Login</button>
+</form>

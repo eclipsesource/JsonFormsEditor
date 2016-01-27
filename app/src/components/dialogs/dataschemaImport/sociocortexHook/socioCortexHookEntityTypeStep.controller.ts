@@ -40,6 +40,7 @@ module app.dialogs.dataschemaimport {
 
         selectEntityType(entityType):void {
             this.selectedEntityType = entityType;
+            this.wizard.next();
         }
     }
 }

@@ -34,6 +34,7 @@ module app.dialogs.dataschemaimport {
 
         selectWorkspace(workspace):void {
             this.selectedWorkspace = workspace;
+            this.wizard.next();
         }
     }
 }

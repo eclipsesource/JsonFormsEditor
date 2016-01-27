@@ -58,6 +58,8 @@ module app.dialogs {
                 } else {
                     this.stepNumber++;
                 }
+            } else {
+                this.submit();
             }
         }
 

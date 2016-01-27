@@ -4,7 +4,7 @@ module app.dialogs {
 
     export abstract class AbstractWizardStep {
 
-        constructor(private wizard:AbstractWizard) {
+        constructor(public wizard:AbstractWizard) {
 
         }
 
