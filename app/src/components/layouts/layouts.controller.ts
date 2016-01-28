@@ -4,17 +4,23 @@
 module app.layouts {
     import ToolboxElement = app.core.model.ToolboxElement;
     import ControlToolboxElement = app.core.model.ControlToolboxElement;
+    import UndoService = app.core.undo.UndoService;
 
     class LayoutsController {
 
         public treeOptions:{};
 
-        static $inject = ['LayoutsService'];
+        static $inject = ['LayoutsService', 'UndoService'];
 
-        constructor(public layoutsService:LayoutsService) {
+        constructor(public layoutsService:LayoutsService, private undoService:UndoService) {
             this.treeOptions = {
                 accept: () => {
                     return false;
+                },
+                beforeDrop: (event) => {
+                    if(event['pos']['moving']){
+                        this.undoService.snapshot();
+                    }
                 },
                 dropped: (event) => {
                     //if the element is being dragged into the toolbar itself, return

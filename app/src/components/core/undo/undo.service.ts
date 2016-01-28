@@ -10,7 +10,7 @@ module app.core.undo {
 
         static $inject = ['TreeService', 'ToolboxService'];
 
-        constructor(private treeService:TreeService, private toolboxService:ToolboxService){
+        constructor(private treeService:TreeService, private toolboxService:ToolboxService) {
 
         }
 
@@ -24,7 +24,7 @@ module app.core.undo {
         }
 
         undo():void {
-            if(this.canUndo()){
+            if (this.canUndo()) {
                 this.treeService.setMemento(this.treeServiceMementoStack.pop());
                 this.toolboxService.setMemento(this.toolboxServiceMementoStack.pop());
                 this.treeService.notifyObservers(new PreviewUpdateEvent(null, JSON.parse(this.treeService.exportUISchemaAsJSON())));

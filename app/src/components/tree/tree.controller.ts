@@ -34,8 +34,10 @@ module app.tree {
 
                     return accepted;
                 },
-                beforeDrop: () => {
-                    this.undoService.snapshot();
+                beforeDrop: (event) => {
+                    if(event['pos']['moving']){
+                        this.undoService.snapshot();
+                    }
                 },
                 dropped: () => {
                     this.treeService.notifyObservers(new PreviewUpdateEvent(null, JSON.parse(this.treeService.exportUISchemaAsJSON())));

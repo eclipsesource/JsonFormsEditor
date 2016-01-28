@@ -25,8 +25,10 @@ module app.toolbox {
                 accept: () => {
                     return false;
                 },
-                beforeDrop: () => {
-                    this.undoService.snapshot();
+                beforeDrop: (event) => {
+                    if(event['pos']['moving']){
+                        this.undoService.snapshot();
+                    }
                 },
                 dropped: (event) => {
                     //if the element is being dragged into the toolbar itself, return
