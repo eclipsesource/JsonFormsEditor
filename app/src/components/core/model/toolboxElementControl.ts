@@ -1,8 +1,7 @@
-/**
- * Created by pancho111203 on 19/12/15.
- */
 module app.core.model {
+
     import ElementConfig = app.core.elementsConfig.ElementConfig;
+
     export class ControlToolboxElement extends ToolboxElement {
 
         constructor(name:string, public datatype:string, private scope:string) {
@@ -20,11 +19,8 @@ module app.core.model {
 
         }
 
-        isFolder(): boolean {
-            if(this.datatype == 'object'){
-                return true;
-            }
-            return false;
+        isObject(): boolean {
+            return this.datatype == 'object';
         }
 
 
@@ -39,6 +35,10 @@ module app.core.model {
 
         getScope():string {
             return this.scope;
+        }
+
+        clone():ControlToolboxElement {
+            return new ControlToolboxElement(this.label, this.datatype, this.scope);
         }
 
     }

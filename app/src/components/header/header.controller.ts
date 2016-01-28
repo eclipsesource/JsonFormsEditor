@@ -3,17 +3,18 @@ module app.header {
     import TreeService = app.tree.TreeService;
     import IDialogService = angular.material.IDialogService;
     import IDialogOptions = angular.material.IDialogOptions;
+    import ConfigService = app.core.ConfigService;
     import ExportDialogController = app.dialogs.ExportDialogController;
     import DataschemaImportService = app.dialogs.dataschemaimport.DataschemaImportService;
     import DataschemaService = app.core.dataschema.DataschemaService;
     import SocioCortexConnector = app.core.connectors.SocioCortexConnector;
-    import ConfigService = app.core.ConfigService;
+    import UndoService = app.core.undo.UndoService;
 
     class HeaderViewController {
 
-        static $inject = ['TreeService', 'DataschemaService', 'SocioCortexConnector', '$mdDialog', 'ConfigService'];
+        static $inject = ['TreeService', 'DataschemaService', 'SocioCortexConnector', '$mdDialog', 'UndoService', 'ConfigService'];
 
-        constructor(private treeService:TreeService, private dataschemaService:DataschemaService, public socioCortexConnector:SocioCortexConnector, private $mdDialog:IDialogService, public configService:ConfigService) {
+        constructor(private treeService:TreeService, private dataschemaService:DataschemaService, public socioCortexConnector:SocioCortexConnector, private $mdDialog:IDialogService, public undoService:UndoService, public configService:ConfigService) {
         }
 
         showExportDialog():void {

@@ -8,9 +8,9 @@ module app.tree {
     import IDeferred = angular.IDeferred;
     import ToolboxService = app.toolbox.ToolboxService;
     import IQService = angular.IQService;
+    import TreeServiceMemento = app.core.undo.TreeServiceMemento;
 
-    export class TreeService extends Observable<PreviewUpdateEvent> {
-
+    export class TreeService extends Observable<PreviewUpdateEvent> implements Originator<TreeServiceMemento> {
         static $inject = ['LayoutsService', 'ToolboxService', '$q'];
 
         public elements:TreeElement[] = [];
@@ -61,6 +61,21 @@ module app.tree {
             }
 
         }
+
+        setMemento(memento:TreeServiceMemento) {
+            this.elements[0]['elements']=memento.getElements()[0]['elements'];
+        }
+
+        createMemento():TreeServiceMemento {
+            var elements:TreeElement[] = [];
+
+            _.forEach(this.elements, (element:TreeElement) => {
+               elements.push(element.clone());
+            });
+
+            return new TreeServiceMemento(elements);
+        }
+
 
     }
 

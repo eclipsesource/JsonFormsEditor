@@ -7,6 +7,7 @@ module app.toolbox {
     import ConfigService = app.core.ConfigService;
     import TreeService = app.tree.TreeService;
     import PreviewUpdateEvent = app.preview.PreviewUpdateEvent;
+    import UndoService = app.core.undo.UndoService;
 
     class ToolboxController {
 
@@ -17,12 +18,15 @@ module app.toolbox {
 
         public treeOptions:{};
 
-        static $inject = ['ToolboxService', 'ConfigService', 'TreeService'];
+        static $inject = ['ToolboxService', 'ConfigService', 'TreeService', 'UndoService'];
 
-        constructor(public toolboxService:ToolboxService, private configService:ConfigService, private treeService:TreeService) {
+        constructor(public toolboxService:ToolboxService, private configService:ConfigService, private treeService:TreeService, private undoService:UndoService) {
             this.treeOptions = {
                 accept: () => {
                     return false;
+                },
+                beforeDrop: () => {
+                    this.undoService.snapshot();
                 },
                 dropped: (event) => {
                     //if the element is being dragged into the toolbar itself, return
@@ -112,8 +116,7 @@ module app.toolbox {
             return this.toolboxService.canBeRemoved(element);
         }
         isParentFolder(){
-            var res = this.toolboxService.currentPath.length == 0;
-            return res;
+            return this.toolboxService.currentPath.length == 0;
         }
     }
 
