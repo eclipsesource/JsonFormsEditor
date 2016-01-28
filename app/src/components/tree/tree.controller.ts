@@ -37,6 +37,9 @@ module app.tree {
 
                     return accepted;
                 },
+                dropped: () => {
+                    this.treeService.notifyObservers(new PreviewUpdateEvent(null, JSON.parse(this.treeService.exportUISchemaAsJSON())));
+                },
                 beforeDrag: (sourceNodeScope) => {
                     var dragElement:TreeElement = sourceNodeScope.$modelValue;
                     return !dragElement['root'];

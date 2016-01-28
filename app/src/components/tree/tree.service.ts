@@ -25,6 +25,9 @@ module app.tree {
         }
 
         exportUISchemaAsJSON():string {
+            if(this.elements[0] === null || typeof this.elements[0] === "undefined"){
+                return "";
+            }
             return this.elements[0].toJSONString();
         }
 
