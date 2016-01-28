@@ -25,6 +25,10 @@ module app.toolbox {
                 accept: () => {
                     return false;
                 },
+                beforeDrag: (sourceNodeScope) => {
+                    var dragElement:ControlToolboxElement = sourceNodeScope.$modelValue;
+                    return !dragElement.isObject();
+                },
                 beforeDrop: (event) => {
                     if(event['pos']['moving']){
                         this.undoService.snapshot();
@@ -108,7 +112,6 @@ module app.toolbox {
         }
 
         clickedIcon(element: ControlToolboxElement){
-
             if(element.datatype == 'object'){
                 this.toolboxService.accessFolder(element.getScope().split('/').pop());
             }

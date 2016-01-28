@@ -16,14 +16,13 @@
                 ng-model="toolbox.toolboxService.elements">
                 <li ng-repeat="element in toolbox.toolboxService.elements"
                     ui-tree-node ng-hide="toolbox.shouldHide(element)">
-                    <div ui-tree-handle class="tree-node tree-node-content">
-
+                    <div ui-tree-handle class="tree-node tree-node-content" ng-style="{cursor: (element.isObject() ? 'default' : 'move')}">
                         <md-icon ng-if="element.isObject()" ng-click="toolbox.clickedIcon(element)" class="material-icons">{{element.getIcon()}}
                         </md-icon>
                         <span ng-if="element.isObject()" ng-click="toolbox.clickedIcon(element)" style="overflow:hidden;" class="left-margin">{{element.getLabel()}}</span>
-                        <md-icon ng-if="!element.isObject()" ng-click="toolbox.clickedIcon(element)" class="material-icons">{{element.getIcon()}}
+                        <md-icon ng-if="!element.isObject()" class="material-icons">{{element.getIcon()}}
                         </md-icon>
-                        <span ng-if="!element.isObject()" ng-click="toolbox.clickedIcon(element)" style="overflow:hidden;" class="left-margin">{{element.getLabel()}}</span>
+                        <span ng-if="!element.isObject()" style="overflow:hidden;" class="left-margin">{{element.getLabel()}}</span>
                         <a class="pull-right left-margin" ng-hide="!toolbox.canBeRemoved(element)"
                            ng-click="toolbox.removeDataElement(element)">
                             <md-icon class="btn material-icons">delete</md-icon>
@@ -55,9 +54,6 @@
                         </md-menu-item>
                     </md-menu-content>
                 </md-menu>
-                <!--<md-button flex="50" ng-click="toolbox.addNewElement()" class="md-fab md-mini" flex="none" flex-order="2">
-                    <md-icon class="material-icons">add</md-icon>
-                </md-button>-->
             </div>
 
 
