@@ -1,13 +1,11 @@
 <md-content style="height:100%;">
-  <md-subheader class="md-primary bottom-border">PROPERTIES</md-subheader>
-  <md-content class="md-padding" ng-if="detail.detailService.currentElement">
-    <section class="jsf" layout="row">
-      <jsonforms schema="detail.detailService.schema" ui-schema="detail.detailService.uiSchema" data="detail.detailService.currentElement"></jsonforms>
-    </section>
-    <section layout="row">
-      <md-button class="md-raised md-accent" flex ng-click="detail.reset()">Close</md-button>
-    </section>
-  </md-content>
+    <md-subheader class="md-primary bottom-border">PROPERTIES</md-subheader>
+    <md-content class="md-padding" ng-if="detail.detailService.currentElement">
+        <section class="jsf" layout="row">
+            <jsonforms schema="detail.detailService.schema" ui-schema="detail.detailService.uiSchema"
+                       data="detail.detailService.currentElement"></jsonforms>
+        </section>
+    </md-content>
 </md-content>
 
 

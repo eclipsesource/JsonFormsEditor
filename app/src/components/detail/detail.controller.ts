@@ -14,10 +14,6 @@ module app.detail {
             });
         }
 
-        reset():void {
-            this.detailService.reset();
-        }
-
     }
 
     angular.module('app.detail').controller('DetailController', DetailController);
