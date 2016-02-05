@@ -1,9 +1,11 @@
 <md-input-container class="md-block">
-    <label>URL</label>
-    <input required type="url" name="url" ng-model="dialog.currentStep().url"/>
-    <div ng-messages="dialog.currentStep().url.$error" role="alert">
-        <div ng-message-exp="['required']">
-            Please enter a valid URL.
+    <form ng-submit="dialog.next()">
+        <label>URL</label>
+        <input required type="url" name="url" ng-model="dialog.currentStep().url"/>
+        <div ng-messages="dialog.currentStep().url.$error" role="alert">
+            <div ng-message-exp="['required']">
+                Please enter a valid URL.
+            </div>
         </div>
-    </div>
+    </form>
 </md-input-container>
