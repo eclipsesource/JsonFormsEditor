@@ -2,12 +2,12 @@
     <md-subheader class="md-primary bottom-border">CONTROLS</md-subheader>
     <md-content style="padding-top: 10px">
         <div layout="row" style="padding-right: 17px; padding-left: 17px;">
-            <md-icon class="material-icons" ng-if="!toolbox.isParentFolder()" ng-click="toolbox.clickedBack()">arrow_back
-            </md-icon>
-            <span flex></span>
             <md-switch class="md-primary" style="margin-top: 0px; margin-bottom: 0px;" md-no-ink ng-model="toolbox.configService.enableFilter">
                 Hide used elements
             </md-switch>
+            <span flex></span>
+            <md-icon class="material-icons" ng-if="!toolbox.isParentFolder()" ng-click="toolbox.clickedBack()">arrow_upward
+            </md-icon>
         </div>
     </md-content>
 
