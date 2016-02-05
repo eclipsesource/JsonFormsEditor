@@ -65,7 +65,6 @@ module app.core.connectors {
                     headers: {'Authorization': 'Basic ' + this.encodedLoginData}
                 }).then((response:any) => {
                     this.selectedEntityType = response.data;
-                    //this.attributes.push({'name': response.data.name + ' Name', 'attributeType': 'Text'});
                     var propertiesReduced = response.data.attributeDefinitions;
                     for (var i = 0; i < propertiesReduced.length; i++) {
                         var nestedPromise:IPromise<any> = this.$http.get(this.serverURL + '/attributeDefinitions/' + propertiesReduced[i].id, {

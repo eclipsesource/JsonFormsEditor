@@ -5,7 +5,7 @@ module app.dialogs.dataschemaimport {
 
     export class SocioCortexLoginStepController extends AbstractWizardStep {
 
-        public serverURL:string = 'http://server.sociocortex.com/api/v1';
+        public serverURL:string = 'https://server.sociocortex.com/api/v1';
         public username:string;
         public password:string;
 
