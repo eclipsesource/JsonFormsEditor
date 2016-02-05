@@ -9,6 +9,7 @@ module app.header {
     import DataschemaService = app.core.dataschema.DataschemaService;
     import SocioCortexConnector = app.core.connectors.SocioCortexConnector;
     import UndoService = app.core.undo.UndoService;
+    import DataschemaImportController = app.dialogs.dataschemaimport.DataschemaImportController;
 
     class HeaderViewController {
 
@@ -36,7 +37,7 @@ module app.header {
             this.$mdDialog.show(options);
         }
 
-        saveToSocioCortex() {
+        saveToSocioCortex():void {
             var uiSchema:string = this.treeService.exportUISchemaAsJSON();
             this.socioCortexConnector.saveViewModel(uiSchema).then(() => {
                 this.$mdDialog.show(
@@ -57,6 +58,18 @@ module app.header {
                         .ok('Close')
                 );
             });
+        }
+
+        showImportDialog():void {
+            var options:IDialogOptions = {
+                parent: angular.element(document.body),
+                templateUrl: 'app/src/components/dialogs/dataschemaImport/dataschemaImport.html',
+                controller: DataschemaImportController,
+                controllerAs: 'dialog',
+                clickOutsideToClose: true
+            };
+
+            this.$mdDialog.show(options);
         }
     }
 
