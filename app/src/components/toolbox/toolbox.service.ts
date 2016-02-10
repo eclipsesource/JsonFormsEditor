@@ -30,7 +30,6 @@ module app.toolbox {
         private placedTimes:any = {};
 
         constructor(public dataschemaService:DataschemaService, private $q:IQService, private layoutsService:LayoutsService) {
-            this.loadSchema(demoSchema);
         }
 
         /**
@@ -191,34 +190,3 @@ module app.toolbox {
 
     angular.module('app.toolbox').service('ToolboxService', ToolboxService);
 }
-
-var demoSchema = {
-    "type": "object",
-    "properties": {
-        "name": {
-            "type": "string",
-            "minLength": 3
-        },
-        "age": {
-            "type": "integer"
-        },
-        "gender": {
-            "type": "string",
-            "enum": ["Male", "Female"]
-        },
-        "height": {
-            "type": "number"
-        },
-        "father": {
-            "type": "object",
-            "properties": {
-                "age": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                }
-            }
-        }
-    }
-};
