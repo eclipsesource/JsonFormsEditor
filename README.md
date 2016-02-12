@@ -3,7 +3,7 @@ A web-based editor to create and modify UI Schemata and Data Schemata for JsonFo
 
 Checkout [JsonForms](http://github.eclipsesource.com/jsonforms) for further information.
 
-[![Build Status](https://travis-ci.org/FelixThieleTUM/JsonFormsEditor.svg?branch=master)](https://travis-ci.org/FelixThieleTUM/JsonFormsEditor)
+[![Build Status](https://travis-ci.org/eclipsesource/JsonFormsEditor.svg?branch=master)](https://travis-ci.org/FelixThieleTUM/JsonFormsEditor)
 
 ## Working with TypeScript
 #### Definitely Typed

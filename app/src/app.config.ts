@@ -63,9 +63,7 @@ module app {
                     url: '/githublogin',
                     views: {
                         contentContainer: {
-                            template: '<div></div>',
-                            controller: 'GithubLoginController',
-                            controllerAs: 'githubLogin'
+                            template: '<div></div>'
                         }
                     }
                 });
