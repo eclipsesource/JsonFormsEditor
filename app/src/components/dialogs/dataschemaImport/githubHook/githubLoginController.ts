@@ -5,7 +5,8 @@
 module app.dialogs.dataschemaimport{
     class GithubLoginController{
         constructor(){
-            opener.postMessage(window.location.href, "github_login");
+            //TODO make it more secure and put identifier
+            opener.postMessage(window.location.href, "*");
         }
     }
     angular.module('app.dialogs').controller('GithubLoginController', GithubLoginController);
