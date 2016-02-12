@@ -21,7 +21,6 @@ module app.dialogs.dataschemaimport {
             return "cloud_download";
         }
 
-
         openDialog(wizard:AbstractWizard):void {
             this.showPopupGithub();
         }
