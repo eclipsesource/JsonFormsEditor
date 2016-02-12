@@ -3,6 +3,7 @@ module app.dialogs.dataschemaimport {
     import ImportHook = app.dialogs.dataschemaimport.ImportHook;
     import IDialogService = angular.material.IDialogService;
     import GithubConnector = app.core.connectors.GithubConnector;
+    import IQService = angular.IQService;
 
     export class GithubHookService implements ImportHook {
 

@@ -21,23 +21,36 @@ module app.core.connectors {
             var popup = this.$window.open('https://github.com/login/oauth/authorize?client_id='+this.clientId+'&scope=repos', '', "top="+top+", left="+left+", width=400, height=500");
             var interval = 1000;
 
-            var i = this.$interval(function(){
-                var code = this.getAuthCode(window.location.href);
-                if (code) {
-                    popup.close();
-                    this.$interval.cancel(i);
-                    this.getToken(code, callback);
-                }else {
-                    if (popup.closed) this.$interval.cancel(i);
-                }
 
-            }, interval);
+            window.onmessage = (event) => {
+                console.log(event);
+                if(event.origin==="github_login"){
+                    var code = this.getAuthCode(event.data);
+                    if(code){
+                        popup.close();
+                        this.getToken(code,callback);
+                    }
+                }
+            };
+
+            //var i = this.$interval(() => {
+            //    var code = this.getAuthCode(popup.location.href);
+            //    if (code) {
+            //        popup.close();
+            //        this.$interval.cancel(i);
+            //        this.getToken(code, callback);
+            //    }else {
+            //        if (popup.closed) this.$interval.cancel(i);
+            //    }
+            //
+            //}, interval);
         }
 
         getAuthCode(url:string) {
             var error = url.match("/[&\?]error=([^&]+)/");
             if (error) return null;
-            return url.match("/[&\?]code=([\w\/\-]+)/")[1];
+            var match = url.match("/[&\?]code=([\w\/\-]+)/")[1];
+            return match;
         }
 
         getToken(code:string, callback):void{
