@@ -6,11 +6,11 @@ module app.dialogs.dataschemaimport {
 
     export class GithubHookService implements ImportHook {
 
-        static $inject = ['$mdDialog', 'DataschemaImportService', 'GithubConnector'];
+        static $inject = ['$mdDialog', 'DataschemaImportService', 'GithubConnector', '$q'];
 
 
 
-        constructor(private $mdDialog:IDialogService, importService:DataschemaImportService, private githubConnector:GithubConnector){
+        constructor(private $mdDialog:IDialogService, importService:DataschemaImportService, private githubConnector:GithubConnector, private $q:IQService){
             importService.registerImportHook(this);
         }
 
@@ -23,11 +23,15 @@ module app.dialogs.dataschemaimport {
         }
 
         openDialog(wizard:AbstractWizard):void {
-            this.githubConnector.showPopupGithub();
+            this.githubConnector.showPopupGithub(function(res) {
+                if (!res) {
+                    //TODO show error
+                    return;
+                }
+                wizard.addSteps([new GithubHookRepoStepController(wizard, this.socioCortexConnector, this.$q)]);
+                wizard.next();
+            });
         }
-
-
-
     }
 
     angular.module('app.dialogs').service('GithubHookService', GithubHookService);

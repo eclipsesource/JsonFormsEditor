@@ -1,0 +1,5 @@
+<md-list>
+  <md-list-item ng-repeat="repo in dialog.currentStep().githubConnector.getRepos()" ng-click="dialog.currentStep().selectRepo(repo)" ng-class="{selectedListItem: dialog.currentStep().selectedRepo === repo}">
+    {{repo.name}}
+  </md-list-item>
+</md-list>
