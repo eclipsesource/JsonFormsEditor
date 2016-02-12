@@ -8,8 +8,8 @@ module app.core.connectors {
     export class GithubConnector {
 
         static $inject = ['$http', '$window', '$interval'];
-        private clientId = "eb3f6d895c1d6b03d2c0";
-        private clientSecret = "b487be2a04025ca68c25dadcde394d83e241b907";
+        private clientId = "e259d761d8d0805e29ad";
+        private clientSecret = "d34f0f9034dfdf25739e12c3f1861d084d5021ff";
 
         constructor(private $http:IHttpService, private $window:IWindowService, private $interval:IIntervalService) {
 
