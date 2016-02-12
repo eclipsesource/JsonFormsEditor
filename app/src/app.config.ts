@@ -58,6 +58,14 @@ module app {
                             templateUrl: 'app/src/components/preview/preview.html'
                         }
                     }
+                })
+                .state('githublogin', {
+                    url: '/githublogin',
+                    views: {
+                        contentContainer: {
+                            template: '<div></div>'
+                        }
+                    }
                 });
 
             $urlRouterProvider.otherwise('/edit');
