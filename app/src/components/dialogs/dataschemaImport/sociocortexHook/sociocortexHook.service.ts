@@ -11,7 +11,8 @@ module app.dialogs.dataschemaimport {
         static $inject = ['DataschemaImportService', '$mdDialog', 'SocioCortexConnector', '$q'];
 
         constructor(importService:DataschemaImportService, private $mdDialog:IDialogService, private socioCortexConnector:SocioCortexConnector, private $q:IQService){
-            importService.registerImportHook(this);
+            // sociocortex integration disabled by default
+            //importService.registerImportHook(this);
         }
 
         getTitle():string {
