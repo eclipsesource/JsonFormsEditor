@@ -23,47 +23,11 @@ module app.core.connectors {
 
             window.onmessage = (event) => {
 	    //TODO detect only pertinent message
-                  var code = this.getAuthCode(event.data);
-                  if(code){
-                      popup.close();
-                      this.getToken(code,callback);
-                  }
+                  popup.close();		
+		  var code = event.data;
+		  callback(code);  
             };
 
-        }
-
-        getAuthCode(url:string) {
-            var error = url.match(/[&\?]error=([^&]+)/);
-            if (error) return null;
-            var match = url.match(/[&\?]code=([\w\/\-]+)/)[1];
-            return match;
-        }
-
-        getToken(code:string, callback):void{
-            console.log(code);
-            var req = {
-                "method": "POST",
-                "url": "https://github.com/login/oauth/access_token",
-                "headers": {
-                    "Access-Control-Allow-Origin":"*"
-                },
-                "data": {
-                    "code":code,
-                    "client_id": this.clientId,
-                    "client_secret": this.clientSecret
-                }
-            } as ng.IRequestConfig;
-
-
-            this.$http(req).then((response) => {
-                console.log('response');
-                console.log(response);
-                callback(response);
-            }, (error) => {
-                console.log('error');
-                console.log(error);
-                callback(null);
-            });
         }
 
         selectRepo(repo:any):IPromise<any> {

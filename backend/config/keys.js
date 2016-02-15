@@ -4,7 +4,7 @@
 
 var keys = {};
 
-keys.clientId = "1f521ab4bb6cab4c9a76";
-keys.clientSecret = "9462d1e8907d057d1be96695d67c2c79ebff4fbd";
+keys.clientId = "5546933a86952d67f3c0";
+keys.clientSecret = "71a524daac2a72d20a94a28ae13032f77ea19170";
 
 module.exports = keys;
