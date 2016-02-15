@@ -4,18 +4,17 @@ module app.dialogs.dataschemaimport {
     import IQService = angular.IQService;
     import IDeferred = angular.IDeferred;
     import GithubConnector = app.core.connectors.GithubConnector;
-    import GithubConnector = app.core.connectors.GithubConnector;
 
     export class GithubHookRepoStepController extends AbstractWizardStep {
 
         public selectedRepo;
 
-        constructor(wizard:AbstractWizard, private githubConnector: GithubConnector, private repoList: any, private $q:ng.IQService){
+        constructor(wizard:AbstractWizard, private githubConnector: GithubConnector, private $q:ng.IQService){
             super(wizard);
         }
 
         getRepos(): any {
-            return this.repoList;
+            return this.githubConnector.getRepoList();
         }
 
         getTitle():string {
@@ -23,7 +22,7 @@ module app.dialogs.dataschemaimport {
         }
 
         getTemplate():string {
-            return "app/src/components/dialogs/dataschemaImport/sociocortexHook/githubHookRepoStep.html";
+            return "app/src/components/dialogs/dataschemaImport/githubHook/githubHookRepoStep.html";
         }
 
         hasNavigation():boolean {
@@ -31,7 +30,9 @@ module app.dialogs.dataschemaimport {
         }
 
         submit():angular.IPromise<any> {
-            return this.githubConnector.selectRepo(this.selectedRepo);
+	    var deferred = this.$q.defer();
+	    deferred.resolve();
+	    return deferred.promise;
         }
 
         shallSubmit():boolean {

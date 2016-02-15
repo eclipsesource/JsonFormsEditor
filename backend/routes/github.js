@@ -42,8 +42,9 @@ github.get('/getRepoList', passport.authenticate('github', {failureRedirect: '/l
 	       var code = req.user.accessToken;  
 	       connector.getRepoList(code, function(error, result){
 		       	       var response = "<script>";
-			       response+= "opener.postMessage("+"'"+result+"'"+", '*');";
+			       response+= "opener.postMessage("+JSON.stringify(result)+", '*');";
 			       response+= "</script>";
+			       console.log(response);
 			       res.writeHead(200, {"Content-Type": "text/html"});
 			       res.end(response);
 	       });

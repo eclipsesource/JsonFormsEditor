@@ -14,8 +14,6 @@ api.getRepoList = function(token, callback){
 	}
     }
     request(options, function(error, response, body){
-	    console.log('Body');
-	    console.log(body);
 	    if(error){
 		callback(error);
 	    }else{

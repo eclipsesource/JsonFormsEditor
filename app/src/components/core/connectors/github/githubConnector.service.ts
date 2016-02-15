@@ -5,30 +5,41 @@ module app.core.connectors {
     import IWindowService = angular.IWindowService;
     import IPromise = angular.IPromise;
 
+    import IQService = angular.IQService;
+
     export class GithubConnector {
 
-        static $inject = ['$http', '$window'];
-
-        constructor(private $http:IHttpService, private $window:IWindowService) {
+        static $inject = ['$http', '$window', '$q'];
+	
+	private repoList;
+	
+        constructor(private $http:IHttpService, private $window:IWindowService, private $q: IQService) {
         }
 
-        showPopupGithub(callback): void {
+        showPopupGithub(): IPromise<any> {
             var left = screen.width / 2 - 200;
             var top = screen.height /2 - 200;
             var popup = this.$window.open('/github/login', '', "top="+top+", left="+left+", width=400, height=500");
-
-
+	    
+	    var deferred = this.$q.defer();
+	    
             window.onmessage = (event) => {
                 //TODO detect only pertinent message
                 popup.close();
                 var data = event.data;
-                callback(data);
+		this.repoList = JSON.parse(data.body);
+		console.log(this.repoList);
+		deferred.resolve();
             };
+	    return deferred.promise;
 
         }
 
+	getRepoList(): any{
+	    return this.repoList;
+	}
+
         selectRepo(repo:any):IPromise<any> {
-            console.log('select Repo');
             return this.$http.get("/repos/:owner/:repo/contents/:path", {
             });
         }

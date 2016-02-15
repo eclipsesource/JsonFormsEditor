@@ -50,9 +50,13 @@ module app.dialogs {
         }
 
         next():void {
-            if (this.hasNext()) {
+	
+          if (this.hasNext()) {
+	        console.log('hasNext');
                 if (this.currentStep().shallSubmit()) {
+		    console.log('shallsubmit');
                     this.currentStep().submit().then(() => {
+		        console.log('submittedddddddd');
                         this.stepNumber++;
                     });
                 } else {
