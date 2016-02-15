@@ -4,13 +4,18 @@ module app.dialogs.dataschemaimport {
     import IQService = angular.IQService;
     import IDeferred = angular.IDeferred;
     import GithubConnector = app.core.connectors.GithubConnector;
+    import GithubConnector = app.core.connectors.GithubConnector;
 
     export class GithubHookRepoStepController extends AbstractWizardStep {
 
         public selectedRepo;
 
-        constructor(wizard:AbstractWizard, public githubConnector:GithubConnector, private $q:IQService){
+        constructor(wizard:AbstractWizard, private githubConnector: GithubConnector, private repoList: any, private $q:ng.IQService){
             super(wizard);
+        }
+
+        getRepos(): any {
+            return this.repoList;
         }
 
         getTitle():string {

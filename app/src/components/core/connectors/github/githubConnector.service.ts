@@ -7,12 +7,9 @@ module app.core.connectors {
 
     export class GithubConnector {
 
-        static $inject = ['$http', '$window', '$interval'];
-        private clientId = "e259d761d8d0805e29ad";
-        private clientSecret = "d34f0f9034dfdf25739e12c3f1861d084d5021ff";
+        static $inject = ['$http', '$window'];
 
-        constructor(private $http:IHttpService, private $window:IWindowService, private $interval:IIntervalService) {
-
+        constructor(private $http:IHttpService, private $window:IWindowService) {
         }
 
         showPopupGithub(callback): void {
@@ -22,10 +19,10 @@ module app.core.connectors {
 
 
             window.onmessage = (event) => {
-	    //TODO detect only pertinent message
-                  popup.close();		
-		  var code = event.data;
-		  callback(code);  
+                //TODO detect only pertinent message
+                popup.close();
+                var data = event.data;
+                callback(data);
             };
 
         }

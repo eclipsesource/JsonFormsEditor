@@ -25,15 +25,14 @@ module app.dialogs.dataschemaimport {
 
         openDialog(wizard:AbstractWizard):void {
             this.githubConnector.showPopupGithub(function(res) {
-		if (!res) {
+                if (!res) {
                     console.log('show error');
                     //TODO show error
                     return;
                 }
-                console.log('next step');
-		console.log(res);
-                //wizard.addSteps([new GithubHookRepoStepController(wizard, this.socioCortexConnector, this.$q)]);
-                //wizard.next();
+
+                wizard.addSteps([new GithubHookRepoStepController(wizard, this.githubConnector, res, this.$q)]);
+                wizard.next();
             });
         }
     }
