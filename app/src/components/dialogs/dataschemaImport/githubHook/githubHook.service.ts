@@ -26,9 +26,11 @@ module app.dialogs.dataschemaimport {
         openDialog(wizard:AbstractWizard):void {
             this.githubConnector.showPopupGithub(function(res) {
                 if (!res) {
+                    console.log('show error');
                     //TODO show error
                     return;
                 }
+                console.log('next step');
                 wizard.addSteps([new GithubHookRepoStepController(wizard, this.socioCortexConnector, this.$q)]);
                 wizard.next();
             });

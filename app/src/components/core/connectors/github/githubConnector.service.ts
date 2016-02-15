@@ -18,8 +18,7 @@ module app.core.connectors {
         showPopupGithub(callback): void {
             var left = screen.width / 2 - 200;
             var top = screen.height /2 - 200;
-            var popup = this.$window.open('https://github.com/login/oauth/authorize?client_id='+this.clientId+'&scope=repos', '', "top="+top+", left="+left+", width=400, height=500");
-            var interval = 1000;
+            var popup = this.$window.open('/github/login', '', "top="+top+", left="+left+", width=400, height=500");
 
 
             window.onmessage = (event) => {
@@ -41,37 +40,34 @@ module app.core.connectors {
         }
 
         getToken(code:string, callback):void{
-	console.log(code);
-	var req = {
-	"method": "POST",
-	"url": "https://github.com/login/oauth/access_token",
-        "headers": {
-	    "Access-Control-Allow-Origin":"*"
-	  
-	},
-	"data": {
-            "code":code,
-            "client_id": this.clientId,
-            "client_secret": this.clientSecret
-        } 
-	} as ng.IRequestConfig;
+            console.log(code);
+            var req = {
+                "method": "POST",
+                "url": "https://github.com/login/oauth/access_token",
+                "headers": {
+                    "Access-Control-Allow-Origin":"*"
+                },
+                "data": {
+                    "code":code,
+                    "client_id": this.clientId,
+                    "client_secret": this.clientSecret
+                }
+            } as ng.IRequestConfig;
 
 
-	this.$http(req).then((response) => {
-					console.log('response');
-				   console.log(response);
-				   callback(response);
-				   }, (error) => {
-				   console.log('error');
-				   console.log(error);
-				   callback(null);
-				   });
-
-
-
+            this.$http(req).then((response) => {
+                console.log('response');
+                console.log(response);
+                callback(response);
+            }, (error) => {
+                console.log('error');
+                console.log(error);
+                callback(null);
+            });
         }
 
         selectRepo(repo:any):IPromise<any> {
+            console.log('select Repo');
             return this.$http.get("/repos/:owner/:repo/contents/:path", {
             });
         }
