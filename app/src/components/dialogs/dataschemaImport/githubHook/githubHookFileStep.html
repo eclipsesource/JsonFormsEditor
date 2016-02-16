@@ -1,0 +1,5 @@
+<md-list>
+    <md-list-item ng-repeat="file in dialog.currentStep().getFiles() track by $index" ng-click="dialog.currentStep().selectFile(file)" ng-class="{selectedListItem: dialog.currentStep().selectedFile === file}">
+        {{file.name}}
+    </md-list-item>
+</md-list>

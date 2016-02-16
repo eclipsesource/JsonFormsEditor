@@ -40,16 +40,61 @@ github.get('/login', passport.authenticate('github'));
 github.get('/getRepoList', passport.authenticate('github', {failureRedirect: '/login'}),
 	   function(req, res, next){
 	       var code = req.user.accessToken;  
-	       connector.getRepoList(code, function(error, result){
-		       	       var response = "<script>";
-			       response+= "opener.postMessage("+JSON.stringify(result)+", '*');";
-			       response+= "</script>";
-			       console.log(response);
-			       res.writeHead(200, {"Content-Type": "text/html"});
-			       res.end(response);
+		   connector.getRepoList(code, function(error, result){
+			   if(error){
+				   return next(error);
+			   }
+			   var response = "<script>";
+			   response+= "opener.postMessage("+JSON.stringify(result)+", '*');";
+			   response+= "</script>";
+			   res.writeHead(200, {"Content-Type": "text/html"});
+			   res.end(response);
 	       });
 
            }
+);
+
+github.get('/getBranchList', passport.authenticate('github', {failureRedirect: '/login'}),
+		function(req, res, next){
+			var code = req.user.accessToken;
+			var repoName = req.query.repoName;
+			console.log('THE FOLLOWING SHOULD BE REPONAME');
+			console.log(repoName);
+			var userName = req.user.username;
+			console.log('THE FOLLOWING SHOULD BE USERNAME');
+			console.log(userName);
+
+			connector.getBranchList(code, userName, repoName, function(error, result){
+				if(error){
+					return next(error);
+				}
+				res.json(result);
+			});
+
+
+		}
+);
+github.get('/getFilesFromBranch', passport.authenticate('github', {failureRedirect: '/login'}),
+		function(req, res, next){
+			var code = req.user.accessToken;
+			var repoName = req.query.repoName;
+			console.log('THE FOLLOWING SHOULD BE REPONAME');
+			console.log(repoName);
+			var userName = req.user.username;
+			console.log('THE FOLLOWING SHOULD BE USERNAME');
+			console.log(userName);
+			var branchName = req.query.branchName;
+			console.log('THE FOLLOWING SHOULD BE BRANCHNAME');
+			console.log(branchName);
+			connector.getFilesFromBranch(code, userName, repoName, branchName, function(error, result){
+				if(error){
+					return next(error);
+				}
+				res.json(result);
+			});
+
+
+		}
 );
 
 module.exports = github;

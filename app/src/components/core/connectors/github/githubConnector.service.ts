@@ -6,42 +6,51 @@ module app.core.connectors {
     import IPromise = angular.IPromise;
 
     import IQService = angular.IQService;
+    import ILocationService = angular.ILocationService;
 
     export class GithubConnector {
 
-        static $inject = ['$http', '$window', '$q'];
+        static $inject = ['$http', '$window', '$q', '$location'];
 	
-	private repoList;
-	
-        constructor(private $http:IHttpService, private $window:IWindowService, private $q: IQService) {
+        private repoList;
+        private fileList;
+
+        constructor(private $http:IHttpService, private $window:IWindowService, private $q: IQService, private $location: ILocationService) {
         }
 
         showPopupGithub(): IPromise<any> {
             var left = screen.width / 2 - 200;
             var top = screen.height /2 - 200;
             var popup = this.$window.open('/github/login', '', "top="+top+", left="+left+", width=400, height=500");
-	    
-	    var deferred = this.$q.defer();
+            var deferred = this.$q.defer();
 	    
             window.onmessage = (event) => {
                 //TODO detect only pertinent message
                 popup.close();
                 var data = event.data;
-		this.repoList = JSON.parse(data.body);
-		console.log(this.repoList);
-		deferred.resolve();
+                this.repoList = JSON.parse(data.body);
+                deferred.resolve();
             };
-	    return deferred.promise;
+            return deferred.promise;
 
         }
 
-	getRepoList(): any{
-	    return this.repoList;
-	}
+        getRepoList(): any{
+            return this.repoList;
+        }
 
-        selectRepo(repo:any):IPromise<any> {
-            return this.$http.get("/repos/:owner/:repo/contents/:path", {
-            });
+        getBranchList(repoName: string): IPromise<any>{
+            return this.$http.get(this.$location.path()+"/getBranchList?repoName="+repoName, {});
+        }
+
+        getFilesFromBranch(repoName: string, branchName: string): IPromise<any>{
+            return this.$http.get(this.$location.path()+"/getFilesFromBranch?repoName="+repoName+"&branchName="+branchName, {})
+                .success((result) => {
+                    this.fileList = result;
+                });
+        }
+        getFileList():any {
+            return this.fileList;
         }
     }
 
