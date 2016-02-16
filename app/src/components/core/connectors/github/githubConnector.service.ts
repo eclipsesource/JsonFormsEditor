@@ -12,10 +12,13 @@ module app.core.connectors {
 
         static $inject = ['$http', '$window', '$q', '$location'];
 	
+	private url;
+
         private repoList;
-        private fileList;
+        private fileTree;
 
         constructor(private $http:IHttpService, private $window:IWindowService, private $q: IQService, private $location: ILocationService) {
+			    this.url = $location.protocol() + "://" + $location.host() + ":" + $location.port();
         }
 
         showPopupGithub(): IPromise<any> {
@@ -40,17 +43,19 @@ module app.core.connectors {
         }
 
         getBranchList(repoName: string): IPromise<any>{
-            return this.$http.get(this.$location.path()+"/getBranchList?repoName="+repoName, {});
+	    return this.$http.get(this.url+"/github/getBranchList?repoName="+repoName, {});
         }
 
         getFilesFromBranch(repoName: string, branchName: string): IPromise<any>{
-            return this.$http.get(this.$location.path()+"/getFilesFromBranch?repoName="+repoName+"&branchName="+branchName, {})
+            return this.$http.get(this.url+"/github/getFilesFromBranch?repoName="+repoName+"&branchName="+branchName, {})
                 .success((result) => {
-                    this.fileList = result;
+				 console.log('SHOWING FILE TREE RESULT');
+	            console.log(result);
+                    this.fileTree = result;
                 });
         }
-        getFileList():any {
-            return this.fileList;
+        getFileTree():any {
+            return this.fileTree;
         }
     }
 

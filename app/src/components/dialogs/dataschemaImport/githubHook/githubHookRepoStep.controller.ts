@@ -52,7 +52,7 @@ module app.dialogs.dataschemaimport {
                 (result) => {
                     console.log('Loaded branches');
                     console.log(result);
-                    this.branches=result;
+                    this.branches=JSON.parse(result.data);
                 },
                 (error) => {
                     console.log(error);

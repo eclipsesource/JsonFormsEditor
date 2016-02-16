@@ -4,7 +4,7 @@ module app.dialogs.dataschemaimport {
     import IPromise = angular.IPromise;
     import IDialogService = angular.material.IDialogService;
     import GithubConnector = app.core.connectors.GithubConnector;
-    export class GithubHookLoginStepController extends AbstractWizardStep {
+    export class GithubHookFileStepController extends AbstractWizardStep {
 
         public selectedFile;
 
@@ -33,7 +33,7 @@ module app.dialogs.dataschemaimport {
         }
 
         getFiles(): any{
-            return this.githubConnector.getFileList();
+            return this.githubConnector.getFileTree();
         }
 
         selectFile(file:any):void{

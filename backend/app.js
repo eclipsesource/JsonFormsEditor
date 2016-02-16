@@ -1,19 +1,27 @@
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
+var keys = require('./config/keys.js');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var session = require('express-session');
 var github = require('./routes/github.js');
-
 var app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+	        secret: keys.sessionSecret,
+		cookie: { maxAge: 60000 },
+		resave: true,
+		saveUninitialized:true
+	}));
 
 app.use('/github', github);
+
+
 
 app.use(express.static(path.join(__dirname, '../build')));
 

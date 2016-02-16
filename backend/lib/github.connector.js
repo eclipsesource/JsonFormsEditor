@@ -48,7 +48,7 @@ api.getFilesFromBranch = function(token, ownerName, repoName, branchName, callba
 		return;
 	}
 	var options = {
-		url: "https://api.github.com/repos/"+ownerName+"/"+repoName+"/commits/?access_token="+token+"&sha="+branchName,
+                url: "https://api.github.com/repos/"+ownerName+"/"+repoName+"/commits/"+branchName+"?access_token="+token,
 		headers: {
 			"User-Agent": config.appName
 		}
@@ -57,9 +57,29 @@ api.getFilesFromBranch = function(token, ownerName, repoName, branchName, callba
 		if(error){
 			callback(error);
 		}else{
+		        
 			callback(null, response);
 		}
 	});
+};
+
+api.getFilesFromTree = function(token, treeUrl, callback){
+    if(!token || !treeUrl){
+	callback('Missing data');
+    }
+    var options = {
+	url: treeUrl+"?access_token="+token,
+	headers: {
+	    "User-Agent":config.appName
+	}
+    };
+    request(options, function(error, response, body){
+	    if(error){
+		callback(error);
+	    }else{
+		callback(null, response);
+	    }
+    });
 };
 
 module.exports = api;

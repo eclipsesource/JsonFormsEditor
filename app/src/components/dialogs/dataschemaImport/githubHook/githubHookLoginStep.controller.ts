@@ -4,6 +4,7 @@ module app.dialogs.dataschemaimport {
     import IPromise = angular.IPromise;
     import IDialogService = angular.material.IDialogService;
     import GithubConnector = app.core.connectors.GithubConnector;
+
     export class GithubHookLoginStepController extends AbstractWizardStep {
 
         public url:string;
