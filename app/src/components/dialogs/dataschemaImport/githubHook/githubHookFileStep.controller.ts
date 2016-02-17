@@ -11,7 +11,7 @@ module app.dialogs.dataschemaimport {
 
         public selectedFile: GithubFile;
 
-        constructor(wizard:AbstractWizard, public githubConnector: GithubConnector){
+        constructor(private wizard:AbstractWizard, public githubConnector: GithubConnector){
             super(wizard);
         }
 
@@ -32,7 +32,10 @@ module app.dialogs.dataschemaimport {
         }
 
         submit():IPromise<any> {
-            return this.githubConnector.loadFile(this.selectedFile);
+            return this.githubConnector.loadFile(this.selectedFile).catch((error)=>{
+                //SEND NOTIFICATION -> "Invalid file selected, try with a json file."
+                this.wizard.showNotification("Invalid file selected, try with a json file.", 3000);
+            });
         }
 	
         getFiles(): GithubFile[]{

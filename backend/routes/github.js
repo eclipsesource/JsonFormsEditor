@@ -121,7 +121,7 @@ github.get('/loadFile',
 				if(error){
 					return next(error);
 				}
-				res.json(JSON.parse(result.body).content);
+				res.json(JSON.parse(result.body));
 			});
 		}
 );

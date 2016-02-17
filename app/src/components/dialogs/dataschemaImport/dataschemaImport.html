@@ -6,6 +6,7 @@
                   ng-style="dialog.getStyle()" ng-click="dialog.goTo(step)" md-ink-ripple>
                     <h2>{{step.getTitle()}}</h2>
             </span>
+            <p ng-if="dialog.shouldDisplayNotification()">{{dialog.getNotification()}}</p>
         </div>
     </md-toolbar>
     <md-dialog-content class="md-padding">

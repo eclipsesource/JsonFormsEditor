@@ -8,6 +8,7 @@ module app.dialogs.dataschemaimport {
 
         static $inject = ['$mdDialog', 'DataschemaImportService', 'ToolboxService', 'SocioCortexConnector', 'TreeService'];
 
+
         constructor($mdDialog:IDialogService, public importService:DataschemaImportService, private toolboxService:ToolboxService, private socioCortexConnector:SocioCortexConnector, private treeService:TreeService) {
             super($mdDialog);
             this.addSteps([new ChooseUploadStepController(this)]);
