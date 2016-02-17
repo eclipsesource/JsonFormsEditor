@@ -4,9 +4,10 @@ module app.dialogs.dataschemaimport {
     import IPromise = angular.IPromise;
     import IDialogService = angular.material.IDialogService;
     import GithubConnector = app.core.connectors.GithubConnector;
+    import GithubFile = app.core.connectors.GithubFile;
     export class GithubHookFileStepController extends AbstractWizardStep {
 
-        public selectedFile;
+        public selectedFile: GithubFile;
 
         constructor(wizard:AbstractWizard, private githubConnector: GithubConnector){
             super(wizard);
@@ -29,18 +30,22 @@ module app.dialogs.dataschemaimport {
         }
 
         submit():IPromise<any> {
-            return undefined;
+            return this.githubConnector.loadFile(this.selectedFile);
         }
 
-        getFiles(): any{
-            return this.githubConnector.getFileTree();
+        getFiles(): GithubFile[]{
+            return this.githubConnector.getFileLevel();
         }
 
-        selectFile(file:any):void{
-            this.selectedFile = file;
-            console.log('selected File');
-            console.log(file);
-            console.log('TODO FROM HERE IN githubHookFileStep');
+        selectFile(file:GithubFile):void{
+            if(file.getType()==='tree'){
+                //The file selected was a folder, go into it
+                this.githubConnector.goIntoFolder(file);
+            }else{
+                this.selectedFile = file;
+                // Instead of going to next step when clicking the file, the user has to click OK
+                //this.wizard.next();
+            }
         }
 
     }

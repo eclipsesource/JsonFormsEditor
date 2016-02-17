@@ -50,8 +50,6 @@ module app.dialogs.dataschemaimport {
             this.branches = [];
             this.githubConnector.getBranchList(this.selectedRepo.name).then(
                 (result) => {
-                    console.log('Loaded branches');
-                    console.log(result);
                     this.branches=JSON.parse(result.data);
                 },
                 (error) => {
@@ -66,10 +64,9 @@ module app.dialogs.dataschemaimport {
         }
 
         selectBranch(branch): void{
-            console.log('branch selected');
-            console.log(branch);
             this.selectedBranch = branch;
-            this.wizard.next();
+
+            //this.wizard.next();
         }
     }
 }

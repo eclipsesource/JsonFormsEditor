@@ -98,7 +98,33 @@ github.get('/getFilesFromBranch',
 		}
 );
 
+github.get('/getFileLevel',
+		function(req,res,next){
+			var code = req.user.accessToken;
+			var url = req.query.url;
 
+			connector.getFilesFromTree(code, url, function(error, result){
+				if(error){
+					return next(error);
+				}
+				res.json(JSON.parse(result.body).tree);
+			});
+		}
+);
+
+github.get('/loadFile',
+		function(req, res, next) {
+			var code = req.user.accessToken;
+			var url = req.query.url;
+
+			connector.getFilesFromTree(code, url, function(error, result){
+				if(error){
+					return next(error);
+				}
+				res.json(JSON.parse(result.body).content);
+			});
+		}
+);
 
 
 module.exports = github;
