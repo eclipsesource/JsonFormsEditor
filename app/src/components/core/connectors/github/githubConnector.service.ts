@@ -14,7 +14,7 @@ module app.core.connectors {
         private url;
 
         private repoList;
-        private fileLevel:GithubFile[];
+        private fileLevel:GithubFileLevel;
         private loadedFileContents;
 
         constructor(private $http:IHttpService, private $window:IWindowService, private $q:IQService, private $location:ILocationService) {
@@ -48,14 +48,12 @@ module app.core.connectors {
 
         getFilesFromBranch(repoName:string, branchName:string):IPromise<any> {
             return this.$http.get(this.url + "/github/getFilesFromBranch?repoName=" + repoName + "&branchName=" + branchName, {})
-                .success((result) => {
-                    this.fileLevel = result.map(function (obj) {
-                        return new GithubFile(obj);
-                    });
+                .success((result: Array<any>) => {
+			this.fileLevel = new GithubFileLevel(result, null);
                 });
         }
 
-        getFileLevel():GithubFile[] {
+        getFileLevel():GithubFileLevel {
             return this.fileLevel;
         }
 
@@ -63,20 +61,38 @@ module app.core.connectors {
             if(file.getType()!=='tree'){
                 throw new Error('Calling method "goIntoFolder" with a regular file instead of a folder!');
             }
+	    // Here I'm reusing previously loaded fileLevels
+	    if(this.fileLevel){
+		var child = this.fileLevel.getChild(file.getName());
+		if(child){
+		    this.fileLevel = child;
+		
+		    var deferred = this.$q.defer();
+		    deferred.resolve(child);
+		    return deferred.promise;
+		}
+	    }
             return this.$http.get(this.url + "/github/getFileLevel?url="+file.getUrl())
-                .success((result) => {
-                    this.fileLevel = result.map(function(obj){
-                        return new GithubFile(obj);
-                    })
+                .success((result: Array<any>) => {
+			var previousLevel = this.fileLevel;
+			this.fileLevel = new GithubFileLevel(result, previousLevel);
+			previousLevel.addChild(file.getName(), this.fileLevel);
                 });
         }
+	goToParentFolder():void{
+	    this.fileLevel = this.fileLevel.getParent();
+	}
+	
+	hasParentFolder():boolean{
+	    return this.fileLevel.hasParent();
+	}
 
         loadFile(file:GithubFile):IPromise<any> {
             return this.$http.get(this.url + "/github/loadFile?url=" + file.getUrl())
-                .success((result) => {
-                    console.log('this is the loaded file contents, directly stored in the connector');
-                    console.log(result);
-                    this.loadedFileContents = result;
+                .then((result: any) => {
+			
+			this.loadedFileContents = atob(result.data);
+			return this.loadedFileContents;
                 });
         }
     }

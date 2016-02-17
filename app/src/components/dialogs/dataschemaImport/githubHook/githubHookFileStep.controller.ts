@@ -5,11 +5,13 @@ module app.dialogs.dataschemaimport {
     import IDialogService = angular.material.IDialogService;
     import GithubConnector = app.core.connectors.GithubConnector;
     import GithubFile = app.core.connectors.GithubFile;
+    import GithubFileLevel = app.core.connectors.GithubFileLevel;
+
     export class GithubHookFileStepController extends AbstractWizardStep {
 
         public selectedFile: GithubFile;
 
-        constructor(wizard:AbstractWizard, private githubConnector: GithubConnector){
+        constructor(wizard:AbstractWizard, public githubConnector: GithubConnector){
             super(wizard);
         }
 
@@ -32,10 +34,10 @@ module app.dialogs.dataschemaimport {
         submit():IPromise<any> {
             return this.githubConnector.loadFile(this.selectedFile);
         }
-
+	
         getFiles(): GithubFile[]{
-            return this.githubConnector.getFileLevel();
-        }
+            return this.githubConnector.getFileLevel().getFiles();
+        }	
 
         selectFile(file:GithubFile):void{
             if(file.getType()==='tree'){

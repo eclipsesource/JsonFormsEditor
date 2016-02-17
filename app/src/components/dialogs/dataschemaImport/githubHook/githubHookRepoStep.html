@@ -6,7 +6,7 @@
 
   </md-list>
   <md-list ng-if="dialog.currentStep().someRepoIsSelected" flex="20">
-    <md-list-item ng-repeat="branch in dialog.currentStep().getBranches() track by $index" ng-click="dialog.currentStep().selectBranch(branch)">
+    <md-list-item ng-repeat="branch in dialog.currentStep().getBranches() track by $index" ng-click="dialog.currentStep().selectBranch(branch)" ng-class="{selectedListItem: dialog.currentStep().selectedBranch === branch}">
       {{branch.name}}
     </md-list-item>
   </md-list>

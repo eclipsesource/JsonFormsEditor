@@ -1,0 +1,13 @@
+module app.core.connectors{
+       export class GithubFileLevel{
+       	      private files[]: GithubFile[];
+       	      constructor(initialData: Array<any>, private parentLevel: GithubFileLevel){
+		  this.files = initialData.map(function (obj) {
+			  return new GithubFile(obj);
+		  });
+	      }	      		
+	      getParent():GithubFileLevel{
+		return this.parentLevel;
+	      }	      	       
+       }
+}
