@@ -6,10 +6,10 @@ module app.dialogs.dataschemaimport {
 
     export class DataschemaImportController extends AbstractWizard {
 
-        static $inject = ['$mdDialog', 'DataschemaImportService', 'ToolboxService', 'SocioCortexConnector', 'TreeService'];
+        static $inject = ['$mdDialog', 'DataschemaImportService', 'ToolboxService', 'SocioCortexConnector', 'TreeService', '$scope'];
+	
 
-
-        constructor($mdDialog:IDialogService, public importService:DataschemaImportService, private toolboxService:ToolboxService, private socioCortexConnector:SocioCortexConnector, private treeService:TreeService) {
+        constructor($mdDialog:IDialogService, public importService:DataschemaImportService, private toolboxService:ToolboxService, private socioCortexConnector:SocioCortexConnector, private treeService:TreeService, private $scope: any) {
             super($mdDialog);
             this.addSteps([new ChooseUploadStepController(this)]);
         }
@@ -18,7 +18,19 @@ module app.dialogs.dataschemaimport {
             return true;
         }
 
+	showNotification(text: string, time: number):void{
+            clearTimeout(this.notificationTimerId);
+            this.currentNotification = text;
+	    console.log(this.currentNotification);
+            this.notificationTimerId = setTimeout(()=>{
 
+		this.$scope.$apply(()=>{
+			this.currentNotification = "";
+		});
+            }, time);
+        }
+
+        
         submit():void {
             this.currentStep().submit().then((json:any) => {
                 this.toolboxService.loadSchema(json);

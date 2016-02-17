@@ -10,9 +10,10 @@ module app.dialogs.dataschemaimport {
     export class GithubHookFileStepController extends AbstractWizardStep {
 
         public selectedFile: GithubFile;
-
-        constructor(private wizard:AbstractWizard, public githubConnector: GithubConnector){
+	private wiz: AbstractWizard;
+        constructor(wizard:AbstractWizard, public githubConnector: GithubConnector){
             super(wizard);
+	    this.wiz = wizard;
         }
 
         getTitle():string {
@@ -33,8 +34,7 @@ module app.dialogs.dataschemaimport {
 
         submit():IPromise<any> {
             return this.githubConnector.loadFile(this.selectedFile).catch((error)=>{
-                //SEND NOTIFICATION -> "Invalid file selected, try with a json file."
-                this.wizard.showNotification("Invalid file selected, try with a json file.", 3000);
+                this.wiz.showNotification("Invalid file selected, try with a json file.", 3000);
             });
         }
 	

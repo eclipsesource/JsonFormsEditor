@@ -94,7 +94,7 @@ module app.core.connectors {
                 .then((result:any) => {
                     try{
                         this.loadedFile = result.data;
-                        this.loadedFileContents = JSON.parse(atob(result.data));
+                        this.loadedFileContents = JSON.parse(atob(result.data.content));
                         return this.loadedFileContents;
                     }catch(error){
 
