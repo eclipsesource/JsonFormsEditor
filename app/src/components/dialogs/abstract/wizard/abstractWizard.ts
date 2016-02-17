@@ -47,6 +47,20 @@ module app.dialogs {
             return this.stepNumber === this.steps.length - 1;
         }
 
+        getTextNextButton():string{
+            if(this.isLastStep()){
+                return 'OK';
+            }else{
+                return 'Next';
+            }
+        }
+
+        canSkip():boolean{
+            return false;
+        }
+        skip():void{
+        }
+
         submit():void {
             this.currentStep().submit().then(() => {
                 this.hideDialog();

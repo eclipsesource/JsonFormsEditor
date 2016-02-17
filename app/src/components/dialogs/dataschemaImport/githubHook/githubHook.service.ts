@@ -24,7 +24,7 @@ module app.dialogs.dataschemaimport {
         }
 
         openDialog(wizard:AbstractWizard):void {
-            wizard.addSteps([new GithubHookLoginStepController(wizard, this.githubConnector), new GithubHookRepoStepController(wizard, this.githubConnector, this.$q), new GithubHookFileStepController(wizard, this.githubConnector)]);
+            wizard.addSteps([new GithubHookLoginStepController(wizard, this.githubConnector), new GithubHookRepoStepController(wizard, this.githubConnector, this.$q), new GithubHookFileStepController(wizard, this.githubConnector), new GithubHookUISchemaStepController(wizard, this.githubConnector, this.$q)]);
             wizard.next();
         }
     }

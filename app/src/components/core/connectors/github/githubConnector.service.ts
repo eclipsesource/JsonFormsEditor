@@ -14,12 +14,19 @@ module app.core.connectors {
         private url;
 
         private repoList;
-        private fileLevel:GithubFileLevel;
-        private loadedFile: GithubFile;
-        private loadedFileContents;
+
+        private fileLoaders: FileLoader[];
 
         constructor(private $http:IHttpService, private $window:IWindowService, private $q:IQService, private $location:ILocationService) {
             this.url = $location.protocol() + "://" + $location.host() + ":" + $location.port();
+        }
+
+        addFileLoader(): number{
+            return this.fileLoaders.push(new FileLoader());
+        }
+
+        getFileLoader(index:number):FileLoader{
+            return this.fileLoaders[index];
         }
 
         showPopupGithub():IPromise<any> {
@@ -47,26 +54,28 @@ module app.core.connectors {
             return this.$http.get(this.url + "/github/getBranchList?repoName=" + repoName, {});
         }
 
-        getFilesFromBranch(repoName:string, branchName:string):IPromise<any> {
+        getFilesFromBranch(repoName:string, branchName:string, fileSelectorId):IPromise<any> {
+
             return this.$http.get(this.url + "/github/getFilesFromBranch?repoName=" + repoName + "&branchName=" + branchName, {})
                 .success((result:Array<any>) => {
-                    this.fileLevel = new GithubFileLevel(result, null);
+                    this.fileLoaders[fileSelectorId].fileLevel = new GithubFileLevel(result, null);
                 });
         }
 
-        getFileLevel():GithubFileLevel {
-            return this.fileLevel;
+        getFileLevel(fileSelectorId):GithubFileLevel {
+            return this.fileLoaders[fileSelectorId].fileLevel;
         }
 
-        goIntoFolder(file:GithubFile):IPromise<any> {
+        goIntoFolder(file:GithubFile, fileSelectorId: string):IPromise<any> {
+
             if (file.getType() !== 'tree') {
                 throw new Error('Calling method "goIntoFolder" with a regular file instead of a folder!');
             }
             // Here I'm reusing previously loaded fileLevels
-            if (this.fileLevel) {
-                var child = this.fileLevel.getChild(file.getName());
+            if (this.fileLoaders[fileSelectorId].fileLevel) {
+                var child = this.fileLoaders[fileSelectorId].fileLevel.getChild(file.getName());
                 if (child) {
-                    this.fileLevel = child;
+                    this.fileLoaders[fileSelectorId].fileLevel = child;
 
                     var deferred = this.$q.defer();
                     deferred.resolve(child);
@@ -75,27 +84,28 @@ module app.core.connectors {
             }
             return this.$http.get(this.url + "/github/getFileLevel?url=" + file.getUrl())
                 .success((result:Array<any>) => {
-                    var previousLevel = this.fileLevel;
-                    this.fileLevel = new GithubFileLevel(result, previousLevel);
-                    previousLevel.addChild(file.getName(), this.fileLevel);
+                    var previousLevel = this.fileLoaders[fileSelectorId].fileLevel;
+                    this.fileLoaders[fileSelectorId].fileLevel = new GithubFileLevel(result, previousLevel);
+                    previousLevel.addChild(file.getName(), this.fileLoaders[fileSelectorId].fileLevel);
                 });
         }
 
-        goToParentFolder():void {
-            this.fileLevel = this.fileLevel.getParent();
+        goToParentFolder(fileSelectorId):void {
+
+            this.fileLoaders[fileSelectorId].fileLevel = this.fileLoaders[fileSelectorId].fileLevel.getParent();
         }
 
-        hasParentFolder():boolean {
-            return this.fileLevel.hasParent();
+        hasParentFolder(fileSelectorId):boolean {
+            return this.fileLoaders[fileSelectorId].fileLevel.hasParent();
         }
 
-        loadFile(file:GithubFile):IPromise<any> {
+        loadFile(file:GithubFile, fileSelectorId):IPromise<any> {
             return this.$http.get(this.url + "/github/loadFile?url=" + file.getUrl())
                 .then((result:any) => {
                     try{
-                        this.loadedFile = result.data;
-                        this.loadedFileContents = JSON.parse(atob(result.data.content));
-                        return this.loadedFileContents;
+                        this.fileLoaders[fileSelectorId].loadedFile = result.data;
+                        this.fileLoaders[fileSelectorId].loadedFileContents = JSON.parse(atob(result.data.content));
+                        return this.fileLoaders[fileSelectorId].loadedFileContents;
                     }catch(error){
 
                         throw new Error('Invalid Json Object! Select another one');

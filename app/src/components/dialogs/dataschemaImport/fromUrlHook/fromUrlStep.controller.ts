@@ -29,7 +29,12 @@ module app.dialogs.dataschemaimport {
         }
 
         submit():IPromise<any> {
-            return this.$http.get(this.url);
+            return this.$http.get(this.url).then((res)=>{
+                var result = {
+                    dataSchema: res
+                };
+                return result;
+            });
         }
     }
 
