@@ -127,7 +127,7 @@ module app.core.dataschema {
         removeProperty(name:string, path:string[]):boolean {
             var parent = this.getFolderAt(path);
 
-            if (parent === null || !parent.hasOwnProperty('properties') || !parent.properties.hasOwnProperty(name)) {
+            if (parent === null || !parent.hasOwnProperty('properties') || !parent.properties.hasOwnProperty(name.split('/').pop())) {
                 return false;
             }
 
