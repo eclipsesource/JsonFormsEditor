@@ -33,3 +33,12 @@ The following tasks can be run from the command line:
 **> grunt** is currently a shortcut to start the `grunt dev` task.
 
 
+## Setup Server
+
+The web server runs with the NodeJS technology. To run it execute the file /backend/bin/www with node.
+
+    node backend/bin/www
+    
+### Config
+
+To be able to use the GitHub integration, the file backend/config/keys.js should be changed to contain the actual Application OAuth keys.

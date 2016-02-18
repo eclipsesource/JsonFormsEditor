@@ -15,21 +15,23 @@ module app.core.connectors {
 
         private repoList;
 
-        private fileLoaders: FileLoader[];
-	private fileLevel: GithubFileLevel;
+        private fileLoaders:FileLoader[];
+        private fileLevel:GithubFileLevel;
+
         constructor(private $http:IHttpService, private $window:IWindowService, private $q:IQService, private $location:ILocationService) {
             this.url = $location.protocol() + "://" + $location.host() + ":" + $location.port();
-	    this.fileLoaders = [];
+            this.fileLoaders = [];
 
-	    this.addFileLoader();
-	    this.addFileLoader();
+            // We need one fileLoader per schema (ui-schema and data-schema)
+            this.addFileLoader();
+            this.addFileLoader();
         }
 
-        addFileLoader(): number{
+        addFileLoader():number {
             return this.fileLoaders.push(new FileLoader());
         }
 
-        getFileLoader(index:number):FileLoader{
+        getFileLoader(index:number):FileLoader {
             return this.fileLoaders[index];
         }
 
@@ -104,13 +106,11 @@ module app.core.connectors {
         loadFile(file:GithubFile, fileSelectorId):IPromise<any> {
             return this.$http.get(this.url + "/github/loadFile?url=" + file.getUrl())
                 .then((result:any) => {
-                    try{
+                    try {
                         this.fileLoaders[fileSelectorId].loadedFile = result.data;
                         this.fileLoaders[fileSelectorId].loadedFileContents = JSON.parse(atob(result.data.content));
-			console.log(this.fileLoaders[fileSelectorId].loadedFileContents);
-			console.log(result.data.content);
                         return this.fileLoaders[fileSelectorId].loadedFileContents;
-                    }catch(error){
+                    } catch (error) {
 
                         throw new Error('Invalid Json Object! Select another one');
                     }

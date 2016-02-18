@@ -4,9 +4,9 @@
 
 var keys = {};
 
-keys.clientId = "5546933a86952d67f3c0";
-keys.clientSecret = "71a524daac2a72d20a94a28ae13032f77ea19170";
-keys.sessionSecret = "23hncnmd2B@)X:hdsCL#M";
+keys.clientId = "clientId_key_from_github_oauth_api";
+keys.clientSecret = "clientSecret_key_from_github_oauth_api";
+keys.sessionSecret = "random_key_to_encode_sessions";
 
 
 module.exports = keys;
