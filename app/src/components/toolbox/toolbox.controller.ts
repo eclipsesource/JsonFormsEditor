@@ -87,7 +87,9 @@ module app.toolbox {
          * Submits the current newElementLabel and newElementTypeLabel and creates a new DataschemaPropery.
          */
         addNewElement() {
-
+            if(this.elementTypes.indexOf(this.newElementTypeLabel)===-1){
+                return false;
+            }
             if (!this.toolboxService.addSchemaElement(this.newElementLabel, this.newElementTypeLabel)) {
                 console.log("ERROR: failed to add the element into the schema");
             }
