@@ -19,7 +19,8 @@
               "type": "string"
             }
           }
-        }
+        },
+        "readOnly": { "type": "boolean" }
       },
       "required": ["type", "scope"],
       "additionalProperties": false
