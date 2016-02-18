@@ -3,7 +3,7 @@ module app.core.connectors{
 	private files: GithubFile[];
 	private childs: any = {};
 	constructor(initialData: Array<any>, private parentLevel: GithubFileLevel){
-	    this.files = initialData.map(function (obj) {
+	    this.files = initialData.map((obj) => {
 		    return new GithubFile(obj);
 		});
 	}	      	

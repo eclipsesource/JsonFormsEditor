@@ -81,9 +81,7 @@ module app.core.connectors {
                 if (child) {
                     this.fileLevel = child;
 
-                    var deferred = this.$q.defer();
-                    deferred.resolve(child);
-                    return deferred.promise;
+                    return this.$q.when(child);
                 }
             }
             return this.$http.get(this.url + "/github/getFileLevel?url=" + file.getUrl())

@@ -1,6 +1,5 @@
 module app.dialogs.dataschemaimport {
 
-    import SocioCortexConnector = app.core.connectors.SocioCortexConnector;
     import IQService = angular.IQService;
     import IDeferred = angular.IDeferred;
     import GithubConnector = app.core.connectors.GithubConnector;
@@ -65,8 +64,6 @@ module app.dialogs.dataschemaimport {
 
         selectBranch(branch): void{
             this.selectedBranch = branch;
-
-            //this.wizard.next();
         }
     }
 }

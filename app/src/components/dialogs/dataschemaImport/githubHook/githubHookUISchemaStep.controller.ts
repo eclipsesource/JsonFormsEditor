@@ -48,17 +48,14 @@ module app.dialogs.dataschemaimport {
             if(this.gonnaSkip){
                 var result = {
                     dataSchema: this.githubConnector.getFileLoader(0).loadedFileContents
-                }
-                var deferred = this.$q.defer();
-                deferred.resolve(result);
-                return deferred.promise;
+                };
+                return this.$q.when(result);
             }
             return this.githubConnector.loadFile(this.selectedFile, this.fileSelectorID).then((res)=> {
-                var result = {
+                return {
                     dataSchema: this.githubConnector.getFileLoader(0).loadedFileContents,
                     uiSchema: res
-                }
-		return result;
+                };
             }, (error)=> {
                 this.wiz.showNotification("Invalid file selected, try with a json file.", 3000);
             });

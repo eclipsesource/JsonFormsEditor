@@ -59,7 +59,7 @@ module app.dialogs.dataschemaimport {
                 this.githubConnector.goIntoFolder(file);
             } else {
                 this.selectedFile = file;
-                // Instead of going to next step when clicking the file, the user has to click OK
+                // Uncomment this if you want to move to next step when clicking on the file
                 //this.wizard.next();
             }
         }
