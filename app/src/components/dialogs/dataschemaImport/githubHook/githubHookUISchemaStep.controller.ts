@@ -12,14 +12,12 @@ module app.dialogs.dataschemaimport {
 
         public selectedFile:GithubFile;
         private wiz:AbstractWizard;
-        private fileSelectorID;
+        private fileSelectorID = 1;
         private gonnaSkip = false;
 
         constructor(wizard:AbstractWizard, public githubConnector:GithubConnector, private $q: IQService) {
             super(wizard);
             this.wiz = wizard;
-
-            this.fileSelectorID = githubConnector.addFileLoader();
         }
 
         getTitle():string {
@@ -39,17 +37,17 @@ module app.dialogs.dataschemaimport {
         }
 
         hasParentFolder():boolean{
-            return this.githubConnector.hasParentFolder(this.fileSelectorID);
+            return this.githubConnector.hasParentFolder();
         }
 
         goToParentFolder():void{
-            this.githubConnector.goToParentFolder(this.fileSelectorID);
+            this.githubConnector.goToParentFolder();
         }
 
         submit():IPromise<any> {
             if(this.gonnaSkip){
                 var result = {
-                    dataSchema: this.githubConnector.getFileLoader(this.fileSelectorID).loadedFileContents
+                    dataSchema: this.githubConnector.getFileLoader(0).loadedFileContents
                 }
                 var deferred = this.$q.defer();
                 deferred.resolve(result);
@@ -57,22 +55,23 @@ module app.dialogs.dataschemaimport {
             }
             return this.githubConnector.loadFile(this.selectedFile, this.fileSelectorID).then((res)=> {
                 var result = {
-                    dataSchema: this.githubConnector.getFileLoader(this.fileSelectorID).loadedFileContents,
+                    dataSchema: this.githubConnector.getFileLoader(0).loadedFileContents,
                     uiSchema: res
                 }
+		return result;
             }, (error)=> {
                 this.wiz.showNotification("Invalid file selected, try with a json file.", 3000);
             });
         }
 
         getFiles():GithubFile[] {
-            return this.githubConnector.getFileLevel(this.fileSelectorID).getFiles();
+            return this.githubConnector.getFileLevel().getFiles();
         }
 
         selectFile(file:GithubFile):void {
             if (file.getType() === 'tree') {
                 //The file selected was a folder, go into it
-                this.githubConnector.goIntoFolder(file, this.fileSelectorID);
+                this.githubConnector.goIntoFolder(file);
             } else {
                 this.selectedFile = file;
                 // Instead of going to next step when clicking the file, the user has to click OK

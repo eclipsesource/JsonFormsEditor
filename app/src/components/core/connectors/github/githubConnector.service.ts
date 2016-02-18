@@ -16,9 +16,13 @@ module app.core.connectors {
         private repoList;
 
         private fileLoaders: FileLoader[];
-
+	private fileLevel: GithubFileLevel;
         constructor(private $http:IHttpService, private $window:IWindowService, private $q:IQService, private $location:ILocationService) {
             this.url = $location.protocol() + "://" + $location.host() + ":" + $location.port();
+	    this.fileLoaders = [];
+
+	    this.addFileLoader();
+	    this.addFileLoader();
         }
 
         addFileLoader(): number{
@@ -54,28 +58,28 @@ module app.core.connectors {
             return this.$http.get(this.url + "/github/getBranchList?repoName=" + repoName, {});
         }
 
-        getFilesFromBranch(repoName:string, branchName:string, fileSelectorId):IPromise<any> {
+        getFilesFromBranch(repoName:string, branchName:string):IPromise<any> {
 
             return this.$http.get(this.url + "/github/getFilesFromBranch?repoName=" + repoName + "&branchName=" + branchName, {})
                 .success((result:Array<any>) => {
-                    this.fileLoaders[fileSelectorId].fileLevel = new GithubFileLevel(result, null);
+                    this.fileLevel = new GithubFileLevel(result, null);
                 });
         }
 
-        getFileLevel(fileSelectorId):GithubFileLevel {
-            return this.fileLoaders[fileSelectorId].fileLevel;
+        getFileLevel():GithubFileLevel {
+            return this.fileLevel;
         }
 
-        goIntoFolder(file:GithubFile, fileSelectorId: string):IPromise<any> {
+        goIntoFolder(file:GithubFile):IPromise<any> {
 
             if (file.getType() !== 'tree') {
                 throw new Error('Calling method "goIntoFolder" with a regular file instead of a folder!');
             }
             // Here I'm reusing previously loaded fileLevels
-            if (this.fileLoaders[fileSelectorId].fileLevel) {
-                var child = this.fileLoaders[fileSelectorId].fileLevel.getChild(file.getName());
+            if (this.fileLevel) {
+                var child = this.fileLevel.getChild(file.getName());
                 if (child) {
-                    this.fileLoaders[fileSelectorId].fileLevel = child;
+                    this.fileLevel = child;
 
                     var deferred = this.$q.defer();
                     deferred.resolve(child);
@@ -84,19 +88,19 @@ module app.core.connectors {
             }
             return this.$http.get(this.url + "/github/getFileLevel?url=" + file.getUrl())
                 .success((result:Array<any>) => {
-                    var previousLevel = this.fileLoaders[fileSelectorId].fileLevel;
-                    this.fileLoaders[fileSelectorId].fileLevel = new GithubFileLevel(result, previousLevel);
-                    previousLevel.addChild(file.getName(), this.fileLoaders[fileSelectorId].fileLevel);
+                    var previousLevel = this.fileLevel;
+                    this.fileLevel = new GithubFileLevel(result, previousLevel);
+                    previousLevel.addChild(file.getName(), this.fileLevel);
                 });
         }
 
-        goToParentFolder(fileSelectorId):void {
+        goToParentFolder():void {
 
-            this.fileLoaders[fileSelectorId].fileLevel = this.fileLoaders[fileSelectorId].fileLevel.getParent();
+            this.fileLevel = this.fileLevel.getParent();
         }
 
-        hasParentFolder(fileSelectorId):boolean {
-            return this.fileLoaders[fileSelectorId].fileLevel.hasParent();
+        hasParentFolder():boolean {
+            return this.fileLevel.hasParent();
         }
 
         loadFile(file:GithubFile, fileSelectorId):IPromise<any> {
@@ -105,6 +109,8 @@ module app.core.connectors {
                     try{
                         this.fileLoaders[fileSelectorId].loadedFile = result.data;
                         this.fileLoaders[fileSelectorId].loadedFileContents = JSON.parse(atob(result.data.content));
+			console.log(this.fileLoaders[fileSelectorId].loadedFileContents);
+			console.log(result.data.content);
                         return this.fileLoaders[fileSelectorId].loadedFileContents;
                     }catch(error){
 
