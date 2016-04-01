@@ -1,6 +1,6 @@
 module app.core.model {
 
-    export class TreeElement {
+    export class TreeElement{
 
         private type:string;
         public label:string;

@@ -21,6 +21,7 @@ module app.toolbox {
     import ToolboxServiceMemento = app.core.undo.ToolboxServiceMemento;
 
 
+
     export class ToolboxService implements Originator<ToolboxServiceMemento> {
         static $inject = ['DataschemaService', '$q', 'LayoutsService'];
 
@@ -98,21 +99,38 @@ module app.toolbox {
         }
 
         decreasePlacedTimes(scope:string) {
-            if (!this.placedTimes.hasOwnProperty(scope)) {
+            var splitted = scope.split('/');
+            if(splitted.length > 1){
+                splitted.pop();
+                // The second pop is to remove the properties subfolder from the scope string
+                splitted.pop();
+
+                this.decreasePlacedTimes(splitted.join('/'));
+            }
+            if (!this.placedTimes.hasOwnProperty( scope)) {
                 console.log("ERROR: Placed times of the element is -1")
                 this.placedTimes[scope] = -1;
             } else {
                 this.placedTimes[scope] = this.placedTimes[scope] - 1;
             }
+            console.log(this.placedTimes);
         }
 
-        increasePlacedTimes(element:ControlToolboxElement) {
-            //if the element hasnt been added yet to the placedTimesArray
-            if (!this.placedTimes.hasOwnProperty(element.getScope())) {
-                this.placedTimes[element.getScope()] = 1;
-            } else {
-                this.placedTimes[element.getScope()] = this.placedTimes[element.getScope()] + 1;
+        increasePlacedTimes(scope:string) {
+            var splitted = scope.split('/');
+            if(splitted.length > 1){
+                splitted.pop();
+                // The second pop is to remove the properties subfolder from the scope string
+                splitted.pop();
+                this.increasePlacedTimes(splitted.join('/'));
             }
+            //if the element hasnt been added yet to the placedTimesArray
+            if (!this.placedTimes.hasOwnProperty(scope)) {
+                this.placedTimes[scope] = 1;
+            } else {
+                this.placedTimes[scope] = this.placedTimes[scope] + 1;
+            }
+            console.log(this.placedTimes);
         }
 
         canBeRemoved(element:ControlToolboxElement):boolean {

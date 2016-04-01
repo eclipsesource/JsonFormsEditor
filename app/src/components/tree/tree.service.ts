@@ -46,7 +46,7 @@ module app.tree {
         private generateTreeElement(parent:TreeElement, uiSchema:any) {
             var treeElement:TreeElement;
             if (uiSchema.type == "Control") {
-                this.toolboxService.increasePlacedTimes(this.toolboxService.getElementByScope(uiSchema.scope.$ref.substring(13)));
+                this.toolboxService.increasePlacedTimes(this.toolboxService.getElementByScope(uiSchema.scope.$ref.substring(13)).getScope());
                 treeElement = this.toolboxService.getElementByScope(uiSchema.scope.$ref.substring(13)).convertToTreeElement();
                 treeElement.setLabel(uiSchema.label);
                 parent.addElement(treeElement);

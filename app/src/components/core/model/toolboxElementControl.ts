@@ -2,7 +2,7 @@ module app.core.model {
 
     import ElementConfig = app.core.elementsConfig.ElementConfig;
 
-    export class ControlToolboxElement extends ToolboxElement {
+    export class ControlToolboxElement extends ToolboxElement{
 
         constructor(name:string, public datatype:string, private scope:string) {
             super(name, "", null);

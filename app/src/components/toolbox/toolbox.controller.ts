@@ -42,7 +42,7 @@ module app.toolbox {
 
                     var toolboxElement:ToolboxElement = event.source.nodeScope.$modelValue;
                     if (toolboxElement instanceof ControlToolboxElement) {
-                        this.toolboxService.increasePlacedTimes(toolboxElement);
+                        this.toolboxService.increasePlacedTimes(toolboxElement.getScope());
                     }
 
                     // Convert the ToolboxElement into a TreeElement
