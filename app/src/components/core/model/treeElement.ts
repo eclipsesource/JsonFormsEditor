@@ -1,7 +1,5 @@
 module app.core.model {
 
-    import DataschemaService = app.core.dataschema.DataschemaService;
-
     export class TreeElement {
 
         private type:string;

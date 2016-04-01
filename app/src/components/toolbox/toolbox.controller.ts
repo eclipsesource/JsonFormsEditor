@@ -42,7 +42,7 @@ module app.toolbox {
 
                     var toolboxElement:ToolboxElement = event.source.nodeScope.$modelValue;
                     if (toolboxElement instanceof ControlToolboxElement) {
-                        this.toolboxService.increasePlacedTimes(toolboxElement);
+                        this.toolboxService.increasePlacedTimes(toolboxElement.getScope());
                     }
 
                     // Convert the ToolboxElement into a TreeElement
@@ -65,6 +65,15 @@ module app.toolbox {
             if (!this.configService.enableFilter) {
                 return false;
             }
+            if (this.isPlaced(element)) {
+                return true;
+            }
+            return false;
+        }
+        /*
+        * Returns true if the element is placed on the tree
+        * */
+        isPlaced(element: ToolboxElement):boolean{
             if (element instanceof ControlToolboxElement) {
                 if (this.toolboxService.isAlreadyPlaced(element)) {
                     return true;
