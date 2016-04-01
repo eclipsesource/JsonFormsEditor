@@ -6,6 +6,8 @@ module app.dialogs {
 
         private steps:AbstractWizardStep[] = [];
         private stepNumber:number = 0;
+        public currentNotification:string = "";
+        protected notificationTimerId:number;
 
         constructor($mdDialog:IDialogService) {
             super($mdDialog);
@@ -25,6 +27,12 @@ module app.dialogs {
             return this.steps[this.stepNumber];
         }
 
+        shouldDisplayNotification(): boolean{
+            return this.currentNotification !== "";
+        }
+
+	abstract showNotification(text: string, time: number):void;
+
         goTo(step:AbstractWizardStep):void {
             if (this.isNavigatableStep(step)) {
                 this.stepNumber = this.steps.indexOf(step);
@@ -39,6 +47,20 @@ module app.dialogs {
             return this.stepNumber === this.steps.length - 1;
         }
 
+        getTextNextButton():string{
+            if(this.isLastStep()){
+                return 'OK';
+            }else{
+                return 'Next';
+            }
+        }
+
+        canSkip():boolean{
+            return false;
+        }
+        skip():void{
+        }
+
         submit():void {
             this.currentStep().submit().then(() => {
                 this.hideDialog();
@@ -50,7 +72,8 @@ module app.dialogs {
         }
 
         next():void {
-            if (this.hasNext()) {
+	
+          if (this.hasNext()) {
                 if (this.currentStep().shallSubmit()) {
                     this.currentStep().submit().then(() => {
                         this.stepNumber++;

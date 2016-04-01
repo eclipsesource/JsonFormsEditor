@@ -127,7 +127,7 @@ module app.core.dataschema {
         removeProperty(name:string, path:string[]):boolean {
             var parent = this.getFolderAt(path);
 
-            if (parent === null || !parent.hasOwnProperty('properties') || !parent.properties.hasOwnProperty(name)) {
+            if (parent === null || !parent.hasOwnProperty('properties') || !parent.properties.hasOwnProperty(this.getElementNameFromScope(name))) {
                 return false;
             }
 
@@ -137,6 +137,10 @@ module app.core.dataschema {
             return res;
         }
 
+
+        getElementNameFromScope(scope: string): string {
+            return scope.split('/').pop();
+        }
 
         /**
          * Retrieves the folder at the specified path in the data-schema.

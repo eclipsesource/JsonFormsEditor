@@ -76,7 +76,8 @@ module app.core.metaschema {
                         "label": _.capitalize(key),
                         "scope": {
                             "$ref": "#/properties/" + key
-                        }
+                        },
+                        "readOnly": !value['enum'] && (key === 'type' || key === 'scope')
                     })
                 });
             }

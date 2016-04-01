@@ -2,14 +2,16 @@ module app.dialogs.dataschemaimport {
 
     import ImportHook = app.dialogs.dataschemaimport.ImportHook;
     import IDialogService = angular.material.IDialogService;
+    import GithubConnector = app.core.connectors.GithubConnector;
+    import IQService = angular.IQService;
 
     export class GithubHookService implements ImportHook {
 
-        static $inject = ['$mdDialog', 'DataschemaImportService', '$interval', '$window'];
+        static $inject = ['$mdDialog', 'DataschemaImportService', 'GithubConnector', '$q'];
 
-        private clientId = "0a4cb7fe05a491636df6";
 
-        constructor(private $mdDialog:IDialogService, importService:DataschemaImportService, private $interval:any, private $window:any){
+
+        constructor(private $mdDialog:IDialogService, importService:DataschemaImportService, private githubConnector:GithubConnector, private $q:IQService){
             importService.registerImportHook(this);
         }
 
@@ -22,20 +24,9 @@ module app.dialogs.dataschemaimport {
         }
 
         openDialog(wizard:AbstractWizard):void {
-            this.showPopupGithub();
+            wizard.addSteps([new GithubHookLoginStepController(wizard, this.githubConnector), new GithubHookRepoStepController(wizard, this.githubConnector, this.$q), new GithubHookFileStepController(wizard, this.githubConnector), new GithubHookUISchemaStepController(wizard, this.githubConnector, this.$q)]);
+            wizard.next();
         }
-
-        showPopupGithub(): void{
-            var left = screen.width / 2 - 200;
-            var top = screen.height /2 - 200;
-            var popup = this.$window.open('https://github.com/login/oauth/authorize?client_id='+this.clientId+'&scope=repos&redirect_uri='+this.$window.location.host+'/#/githublogin', '', "top="+top+", left="+left+", width=400, height=500");
-            var interval = 1000;
-
-            var i = this.$interval(function(){
-                console.log(popup);
-            }, interval);
-        }
-
     }
 
     angular.module('app.dialogs').service('GithubHookService', GithubHookService);

@@ -2,13 +2,14 @@ module app.dialogs.dataschemaimport {
     import IDialogService = angular.material.IDialogService;
     import ToolboxService = app.toolbox.ToolboxService;
     import TreeService = app.tree.TreeService;
-    import SocioCortexConnector = app.core.connectors.SocioCortexConnector;
+
 
     export class DataschemaImportController extends AbstractWizard {
 
-        static $inject = ['$mdDialog', 'DataschemaImportService', 'ToolboxService', 'SocioCortexConnector', 'TreeService'];
+        static $inject = ['$mdDialog', 'DataschemaImportService', 'ToolboxService', 'TreeService', '$scope'];
 
-        constructor($mdDialog:IDialogService, public importService:DataschemaImportService, private toolboxService:ToolboxService, private socioCortexConnector:SocioCortexConnector, private treeService:TreeService) {
+
+        constructor($mdDialog:IDialogService, public importService:DataschemaImportService, private toolboxService:ToolboxService, private treeService:TreeService, private $scope:any) {
             super($mdDialog);
             this.addSteps([new ChooseUploadStepController(this)]);
         }
@@ -17,16 +18,31 @@ module app.dialogs.dataschemaimport {
             return true;
         }
 
+        showNotification(text:string, time:number):void {
+            clearTimeout(this.notificationTimerId);
+            this.currentNotification = text;
+            this.notificationTimerId = setTimeout(()=> {
+
+                this.$scope.$apply(()=> {
+                    this.currentNotification = "";
+                });
+            }, time);
+        }
+
 
         submit():void {
             this.currentStep().submit().then((json:any) => {
-                this.toolboxService.loadSchema(json);
-                if (this.socioCortexConnector.isLoggedWithSocioCortex()) {
-                    var uiSchema:any = this.socioCortexConnector.getViewModel();
-                    if (uiSchema) {
-                        this.treeService.generateTreeFromExistingUISchema(uiSchema);
-                    }
+                var dataSchema = json.dataSchema;
+                var uiSchema = json.uiSchema;
+                if(!dataSchema){
+                    throw new Error('DataSchema is undefined!');
                 }
+                this.toolboxService.loadSchema(dataSchema);
+
+                if (uiSchema) {
+                    this.treeService.generateTreeFromExistingUISchema(uiSchema);
+                }
+
                 this.hideDialog();
             });
         }

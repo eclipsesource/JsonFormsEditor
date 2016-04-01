@@ -43,8 +43,10 @@ module app.dialogs.dataschemaimport {
 
         submit():angular.IPromise<any> {
             var deferred:IDeferred<any> = this.$q.defer();
-
-            deferred.resolve(this.json);
+            var result = {
+                dataSchema: this.json
+            };
+            deferred.resolve(result);
 
             return deferred.promise;
 

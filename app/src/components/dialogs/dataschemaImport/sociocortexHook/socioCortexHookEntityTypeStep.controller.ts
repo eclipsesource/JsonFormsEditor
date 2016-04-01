@@ -27,8 +27,13 @@ module app.dialogs.dataschemaimport {
         submit():angular.IPromise<any> {
             return this.sociocortexConnector.selectEntityType(this.selectedEntityType).then(() => {
                 var deffered :IDeferred<any>= this.$q.defer();
-
-                deffered.resolve(this.sociocortexConnector.generateJSONFromAttributes());
+                var uiSchema = this.sociocortexConnector.getViewModel();
+                var dataSchema = this.sociocortexConnector.generateJSONFromAttributes();
+                var result = {
+                    uiSchema: uiSchema,
+                    dataSchema: dataSchema
+                };
+                deffered.resolve(result);
 
                 return deffered.promise;
             });

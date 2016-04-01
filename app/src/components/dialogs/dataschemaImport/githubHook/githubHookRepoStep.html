@@ -1,0 +1,14 @@
+<md-content layout="rows">
+  <md-list flex="80">
+    <md-list-item ng-repeat="repo in dialog.currentStep().getRepos() track by $index" ng-click="dialog.currentStep().selectRepo(repo)" ng-class="{selectedListItem: dialog.currentStep().selectedRepo === repo}">
+      {{repo.name}}
+    </md-list-item>
+
+  </md-list>
+  <md-list ng-if="dialog.currentStep().someRepoIsSelected" flex="20">
+    <md-list-item ng-repeat="branch in dialog.currentStep().getBranches() track by $index" ng-click="dialog.currentStep().selectBranch(branch)" ng-class="{selectedListItem: dialog.currentStep().selectedBranch === branch}">
+      {{branch.name}}
+    </md-list-item>
+  </md-list>
+
+</md-content>
