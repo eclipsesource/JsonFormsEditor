@@ -65,6 +65,15 @@ module app.toolbox {
             if (!this.configService.enableFilter) {
                 return false;
             }
+            if (this.isPlaced(element)) {
+                return true;
+            }
+            return false;
+        }
+        /*
+        * Returns true if the element is placed on the tree
+        * */
+        isPlaced(element: ToolboxElement):boolean{
             if (element instanceof ControlToolboxElement) {
                 if (this.toolboxService.isAlreadyPlaced(element)) {
                     return true;
