@@ -1,8 +1,11 @@
 module app.core.model {
 
+    import DataschemaService = app.core.dataschema.DataschemaService;
+
     export class TreeElement {
 
         private type:string;
+        private dataType:string;
         public label:string;
         private scope:string;
         public elements:TreeElement[] = [];
@@ -14,6 +17,22 @@ module app.core.model {
 
         public setType(newType:string):void {
             this.type = newType;
+        }
+
+        public getDataType():string {
+            return this.dataType;
+        }
+
+        public setDataType(newDataType:string):void {
+            this.dataType = newDataType;
+        }
+
+        public getLongType() {
+            if (this.type == 'Control') {
+                return this.type + " (" + this.dataType + ")";
+            } else {
+                return this.type;
+            }
         }
 
         public getLabel():string {
@@ -76,6 +95,7 @@ module app.core.model {
             var result:TreeElement = new TreeElement();
 
             result.type = _.clone(this.type);
+            result.dataType = _.clone(this.dataType);
             result.label = _.clone(this.label);
             result.scope = _.clone(this.scope);
             result.elements = [];

@@ -171,7 +171,28 @@ module app.core.dataschema {
             return currentElement;
         }
 
+        /*getPropertyFromScope(scope:string):any {
+            var path:string[] = this.convertScopeToPath(scope);
+            return this.getPropertyAt(path);
+        }
 
+        convertScopeToPath(scope:string):string[] {
+            return scope.split('/properties/');
+        }
+
+        getPropertyAt(path:string[]):any {
+            var currentElement = this.json;
+
+            for (var i = 0; i < path.length; i++) {
+                if (currentElement.hasOwnProperty('properties') && currentElement.properties.hasOwnProperty(path[i])) {
+                    currentElement = currentElement.properties[path[i]];
+                } else {
+                    return null;
+                }
+            }
+
+            return currentElement;
+        }*/
     }
 
     angular.module("app.core").service("DataschemaService", DataschemaService);

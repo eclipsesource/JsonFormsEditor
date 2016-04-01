@@ -27,6 +27,7 @@ module app.core.model {
         convertToTreeElement():TreeElement {
             var treeElement = new TreeElement();
             treeElement.setType("Control");
+            treeElement.setDataType(this.datatype);
             treeElement.setScope(this.scope);
             treeElement.setLabel(this.getLabel());
             treeElement.setAcceptedElements(this.getAcceptedElements());
