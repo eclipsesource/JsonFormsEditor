@@ -1,18 +1,14 @@
 /// <reference path="../../../../typings/jasmine/jasmine.d.ts" />
 /// <reference path="../../../../typings/angularjs/angular-mocks.d.ts" />
-/*
+
 'use strict';
 
 
 describe('toolbox', ()=> {
-    beforeAll(inject(($rootScope) => {
-        var scope = $rootScope.$new();
-        console.log(scope);
-    }));
 
-    it('should delete element when clicking on delete', () => {
+    it('should delete element when clicking on delete', (inject(($rootScope, $compile) => {
 
-    });
+    })));
     it('should add element when creating new one', () => {
 
     });
@@ -26,4 +22,4 @@ describe('toolbox', ()=> {
 
     });
 
-});*/
+});
