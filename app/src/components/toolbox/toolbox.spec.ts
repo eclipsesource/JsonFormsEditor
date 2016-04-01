@@ -6,8 +6,14 @@
 
 describe('toolbox', ()=> {
 
-    it('should delete element when clicking on delete', (inject(($rootScope, $compile) => {
+    //beforeEach(angular.mock.module('temp/ts/templates.js'));
+    beforeEach(angular.mock.module('app'));
 
+    it('should delete element when clicking on delete', (inject(($rootScope, $templateCache) => {
+
+        console.log($rootScope);
+        console.log($templateCache.get('app/src/components/toolbox/toolbox.html'));
+        console.log($templateCache.info());
     })));
     it('should add element when creating new one', () => {
 

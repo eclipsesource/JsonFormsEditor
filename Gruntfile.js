@@ -115,6 +115,14 @@ module.exports = function (grunt) {
                     htmlmin: {collapseWhitespace: true, collapseBooleanAttributes: true},
                     module: "app"
                 }
+            },
+            test: {
+                src: '<%= app_files.html %>',
+                dest: '<%= temp_dir %>/ts/templates.js',
+                options: {
+                    htmlmin: {collapseWhitespace: true, collapseBooleanAttributes: true},
+                    module: "app"
+                }
             }
         },
 
@@ -189,8 +197,8 @@ module.exports = function (grunt) {
             unit: {
                 options: {
                     frameworks: ['jasmine'],
-                    singleRun: true,
-                    browsers: ['PhantomJS'],
+                    singleRun: false,
+                    browsers: ['Chrome'],
                     files: [
                         '<%= vendor_files.js %>',
                         '<%= vendor_files.test %>',
@@ -201,8 +209,10 @@ module.exports = function (grunt) {
                         '<%= temp_dir %>/ts/components/**/*.js',
                         '<%= temp_dir %>/ts/app.config.js',
                         '<%= temp_dir %>/ts/app.run.js',
-                        '<%= temp_dir %>/ts/**/*.js'
-                    ]
+                        '<%= temp_dir %>/ts/**/*.js',
+
+                    ],
+                    basePath: ''
                 }
             }
         }
@@ -253,6 +263,7 @@ module.exports = function (grunt) {
     grunt.registerTask('test', [
         'clean:temp',
         'typescript:test',
+        'ngtemplates:test',
         'karma',
         'clean:temp'
     ]);
