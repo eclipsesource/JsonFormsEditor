@@ -7,21 +7,39 @@ import ControlToolboxElement = app.core.model.ControlToolboxElement;
 
 
 describe('toolbox', ()=> {
+    var service;
 
-    //beforeEach(angular.mock.module('temp/ts/templates.js'));
     beforeEach(angular.mock.module('app'));
     beforeEach(angular.mock.module('app.toolbox'));
+    beforeEach(angular.mock.module('app.tree'));
+    beforeEach(angular.mock.module('app.core'));
+    beforeEach(angular.mock.module('app.layouts'));
 
-    it('should delete element when clicking on delete', (inject(($rootScope, $templateCache) => {
+    beforeEach(inject((ToolboxService)=>{
+        service = ToolboxService;
+    }));
 
-        console.log($rootScope);
-        console.log($templateCache.get('app/src/components/toolbox/toolbox.html'));
-        console.log($templateCache.info());
-    })));
-    it('should add element when creating new one', () => {
-
+    beforeEach(function(){
+        service.elements = [];
     });
-    it('when adding element to tree, should not be deletable', (inject(($rootScope, ToolboxService) => {
+
+    it('should add element when creating new one', () => {
+        service.addSchemaElement('test', 'string');
+        expect(service.elements.length).toEqual(1);
+    });
+
+    it('should delete element when clicking on delete', (inject(($rootScope, $controller) => {
+        var scope = $rootScope.$new();
+        var controller = $controller('ToolboxController', {$scope: scope});
+
+        service.addSchemaElement('test', 'string');
+
+        controller.removeDataElement(service.elements[0]);
+
+        expect(service.elements.length).toEqual(0);
+    })));
+
+    it('when adding element to tree, should not be deletable', (inject(($rootScope) => {
         var scope = $rootScope.$new();
         scope.schema = {
             "type": "object",
@@ -29,14 +47,14 @@ describe('toolbox', ()=> {
                 "name": { "type": "string" }
             }
         };
+        service.loadSchema(scope.schema);
+        service.increasePlacedTimes("name");
+        scope.nameControl = service.getElementByScope("name");
 
-        ToolboxService.loadSchema(scope.schema);
-        ToolboxService.increasePlacedTimes("name");
-        scope.nameControl = ToolboxService.getElementByScope("name");
-
-        expect(ToolboxService.canBeRemoved(scope.nameControl)).toBeFalsy();
+        expect(service.removeSchemaElement(scope.nameControl)).toBeFalsy();
     })));
-    it("if object has non-deletable childs, it shouldn't be deletable either", (inject(($rootScope, ToolboxService) => {
+
+    it("if object has non-deletable childs, it shouldn't be deletable either", (inject(($rootScope) => {
         var scope = $rootScope.$new();
         scope.schema = {
             "type": "object",
@@ -51,16 +69,13 @@ describe('toolbox', ()=> {
             }
         };
 
-        ToolboxService.loadSchema(scope.schema);
-        ToolboxService.accessFolder("address");
-        ToolboxService.increasePlacedTimes("address/properties/street");
-        ToolboxService.previousFolder();
-        scope.addressControl = ToolboxService.getElementByScope("address");
+        service.loadSchema(scope.schema);
+        service.accessFolder("address");
+        service.increasePlacedTimes("address/properties/street");
+        service.previousFolder();
+        scope.addressControl = service.getElementByScope("address");
 
-        expect(ToolboxService.canBeRemoved(scope.addressControl)).toBeFalsy();
+        expect(service.removeSchemaElement(scope.addressControl)).toBeFalsy();
     })));
-    it('when dragging element to the tree, it should be added to it', () => {
-
-    });
 
 });
