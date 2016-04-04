@@ -198,6 +198,7 @@ module.exports = function (grunt) {
                 options: {
                     frameworks: ['jasmine'],
                     singleRun: false,
+                    autoWatch: true,
                     browsers: ['Chrome'],
                     files: [
                         '<%= vendor_files.js %>',

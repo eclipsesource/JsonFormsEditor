@@ -1,23 +1,43 @@
 /// <reference path="../../../../typings/jasmine/jasmine.d.ts" />
 /// <reference path="../../../../typings/angularjs/angular-mocks.d.ts" />
 
+import ToolboxService = app.toolbox.ToolboxService;
 'use strict';
 
 
 describe('toolbox', ()=> {
+    var service;
 
-    //beforeEach(angular.mock.module('temp/ts/templates.js'));
-    beforeEach(angular.mock.module('app'));
+    beforeEach(angular.mock.module('app.toolbox'));
+    beforeEach(angular.mock.module('app.tree'));
+    beforeEach(angular.mock.module('app.core'));
+    beforeEach(angular.mock.module('app.layouts'));
 
-    it('should delete element when clicking on delete', (inject(($rootScope, $templateCache) => {
+    beforeEach(inject((ToolboxService)=>{
+        service = ToolboxService;
+    }));
 
-        console.log($rootScope);
-        console.log($templateCache.get('app/src/components/toolbox/toolbox.html'));
-        console.log($templateCache.info());
-    })));
-    it('should add element when creating new one', () => {
-
+    beforeEach(function(){
+        service.elements = [];
     });
+
+    it('should add element when creating new one', () => {
+        service.addSchemaElement('test', 'string');
+        expect(service.elements.length).toEqual(1);
+    });
+
+    it('should delete element when clicking on delete', (inject(($rootScope, $controller, ToolboxService) => {
+        var scope = $rootScope.$new();
+        var controller = $controller('ToolboxController', {$scope: scope});
+        var service = ToolboxService;
+
+        service.addSchemaElement('test', 'string');
+
+        controller.removeDataElement(service.elements[0]);
+
+        expect(service.elements.length).toEqual(0);
+    })));
+
     it('when adding element to tree, should not be deletable', () => {
 
     });
