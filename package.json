@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.2",
   "description": "An editor for jsonforms",
-  "repository": "https://github.com/FelixThieleTUM/JsonFormsEditor",
+  "repository": "https://github.com/eclipsesource/JsonFormsEditor",
   "license": "MIT",
   "devDependencies": {
     "bower": "^1.3.1",

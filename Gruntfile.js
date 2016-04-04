@@ -232,41 +232,10 @@ module.exports = function (grunt) {
                 regExp: false
             }
         },
-
-        gitcheckout: {
+        run: {
             deploy: {
-                options: {
-                    branch: 'deploy-v<%= pkg.version %>',
-                    overwrite: true
-                }
-            }
-        },
-
-        gitcommit: {
-            deploy: {
-                options: {
-                    message: "Release Version v<%= pkg.version %>"
-                },
-                files: {
-                }
-            }
-        },
-
-        gittag: {
-            deploy: {
-                options: {
-                    tag: 'v<%= pkg.version %>',
-                    message: 'Release version v<%= pkg.version %>'
-                }
-            }
-        },
-
-        gitpush: {
-            deploy: {
-                options: {
-                    remote: 'upstream',
-                    tags: true
-                }
+                cmd: './deploy.sh',
+                args: ['<%= pkg.version %>']
             }
         }
     };
@@ -284,8 +253,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-bump');
-    grunt.loadNpmTasks('grunt-file-append');
-    grunt.loadNpmTasks('grunt-git');
+    grunt.loadNpmTasks('grunt-run');
 
     // Initialize the config and add the build configuration file
     grunt.initConfig(grunt.util._.extend(taskConfig, buildConfig));
@@ -348,10 +316,7 @@ module.exports = function (grunt) {
         'dist',
         'bump-only:patch',
         'bump-commit',
-        'gitcheckout:deploy',
-        'gitcommit:deploy',
-        'gittag:deploy',
-        'gitpush:deploy'
+        'run:deploy'
     ]);
 
     /**
