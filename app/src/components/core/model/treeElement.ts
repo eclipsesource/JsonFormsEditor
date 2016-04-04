@@ -2,12 +2,17 @@ module app.core.model {
 
     export class TreeElement {
 
+
+        private checks: Check[] = [];
+        private errors: TreeError[] = [];
+
         private type:string;
         private dataType:string;
         public label:string;
         private scope:string;
         public elements:TreeElement[] = [];
         public metaData:any = {};
+
 
         public getType():string {
             return this.type;
@@ -125,5 +130,19 @@ module app.core.model {
                 return value;
             }, 2);
         }
+
+        // VALIDATION
+        public validate(): TreeError[]{
+            var errors = [];
+            for(var i=0; i<this.checks.length; i++){
+                var error = this.checks[i].validate();
+                if(error!=null){
+                    errors.push(error);
+                }
+            }
+            this.errors = errors;
+            return errors;
+        }
+
     }
 }
