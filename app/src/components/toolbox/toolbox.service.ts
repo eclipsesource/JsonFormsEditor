@@ -113,7 +113,6 @@ module app.toolbox {
             } else {
                 this.placedTimes[scope] = this.placedTimes[scope] - 1;
             }
-            console.log(this.placedTimes);
         }
 
         increasePlacedTimes(scope:string) {
@@ -130,7 +129,6 @@ module app.toolbox {
             } else {
                 this.placedTimes[scope] = this.placedTimes[scope] + 1;
             }
-            console.log(this.placedTimes);
         }
 
         canBeRemoved(element:ControlToolboxElement):boolean {
