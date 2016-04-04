@@ -91,7 +91,7 @@ module app.toolbox {
             var name = element.getScope();
             var path = this.currentPath;
 
-            if (this.dataschemaService.removeProperty(name, path)) {
+            if (this.canBeRemoved(element) && this.dataschemaService.removeProperty(name, path)) {
                 return _.remove(this.elements, element).length === 1;
             } else {
                 return false;

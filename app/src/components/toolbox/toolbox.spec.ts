@@ -2,12 +2,14 @@
 /// <reference path="../../../../typings/angularjs/angular-mocks.d.ts" />
 
 import ToolboxService = app.toolbox.ToolboxService;
+import ControlToolboxElement = app.core.model.ControlToolboxElement;
 'use strict';
 
 
 describe('toolbox', ()=> {
     var service;
 
+    beforeEach(angular.mock.module('app'));
     beforeEach(angular.mock.module('app.toolbox'));
     beforeEach(angular.mock.module('app.tree'));
     beforeEach(angular.mock.module('app.core'));
@@ -26,10 +28,9 @@ describe('toolbox', ()=> {
         expect(service.elements.length).toEqual(1);
     });
 
-    it('should delete element when clicking on delete', (inject(($rootScope, $controller, ToolboxService) => {
+    it('should delete element when clicking on delete', (inject(($rootScope, $controller) => {
         var scope = $rootScope.$new();
         var controller = $controller('ToolboxController', {$scope: scope});
-        var service = ToolboxService;
 
         service.addSchemaElement('test', 'string');
 
@@ -38,14 +39,43 @@ describe('toolbox', ()=> {
         expect(service.elements.length).toEqual(0);
     })));
 
-    it('when adding element to tree, should not be deletable', () => {
+    it('when adding element to tree, should not be deletable', (inject(($rootScope) => {
+        var scope = $rootScope.$new();
+        scope.schema = {
+            "type": "object",
+            "properties": {
+                "name": { "type": "string" }
+            }
+        };
+        service.loadSchema(scope.schema);
+        service.increasePlacedTimes("name");
+        scope.nameControl = service.getElementByScope("name");
 
-    });
-    it("if object has non-deletable childs, it shouldn't be deletable either", () => {
+        expect(service.removeSchemaElement(scope.nameControl)).toBeFalsy();
+    })));
 
-    });
-    it('when dragging element to the tree, it should be added to it', () => {
+    it("if object has non-deletable childs, it shouldn't be deletable either", (inject(($rootScope) => {
+        var scope = $rootScope.$new();
+        scope.schema = {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "object",
+                    "properties": {
+                        "street": { "type": "string" },
+                        "number": { "type": "integer" }
+                    }
+                }
+            }
+        };
 
-    });
+        service.loadSchema(scope.schema);
+        service.accessFolder("address");
+        service.increasePlacedTimes("address/properties/street");
+        service.previousFolder();
+        scope.addressControl = service.getElementByScope("address");
+
+        expect(service.removeSchemaElement(scope.addressControl)).toBeFalsy();
+    })));
 
 });
