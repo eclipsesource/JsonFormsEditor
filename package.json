@@ -1,9 +1,9 @@
 {
   "name": "jsonforms-editor",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "An editor for jsonforms",
-  "repository": "https://github.com/FelixThieleTUM/JsonFormsEditor",
+  "repository": "https://github.com/eclipsesource/JsonFormsEditor",
   "license": "MIT",
   "devDependencies": {
     "bower": "^1.3.1",
@@ -24,7 +24,9 @@
     "karma": "^0.13.15",
     "karma-jasmine": "^0.3.6",
     "karma-chrome-launcher": "latest",
-    "phantomjs": "^1.9.18"
+    "grunt-bump": "latest",
+    "grunt-file-append": "latest",
+    "grunt-git": "latest"
   },
   "scripts": {
     "postinstall": "bower install"

@@ -216,9 +216,28 @@ module.exports = function (grunt) {
                     basePath: ''
                 }
             }
+        },
+        bump: {
+            options: {
+                files: ['package.json', 'bower.json'],
+                updateConfigs: ['pkg'],
+                commit: true,
+                commitMessage: 'Bump version to v%VERSION%',
+                commitFiles: ['package.json', 'bower.json'],
+                createTag: false,
+                push: false,
+                globalReplace: false,
+                prereleaseName: false,
+                metadata: '',
+                regExp: false
+            }
+        },
+        run: {
+            deploy: {
+                cmd: './deploy.sh',
+                args: ['<%= pkg.version %>']
+            }
         }
-
-
     };
 
     // load all grunt-tasks
@@ -233,6 +252,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-index-html-template');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-bump');
+    grunt.loadNpmTasks('grunt-run');
 
     // Initialize the config and add the build configuration file
     grunt.initConfig(grunt.util._.extend(taskConfig, buildConfig));
@@ -289,6 +310,13 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('default', [
         'dev'
+    ]);
+
+    grunt.registerTask('deploy', [
+        'dist',
+        'bump-only:patch',
+        'bump-commit',
+        'run:deploy'
     ]);
 
     /**

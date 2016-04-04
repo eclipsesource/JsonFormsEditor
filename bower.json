@@ -1,8 +1,8 @@
 {
   "name": "jsonforms-editor",
   "description": "An editor for jsonforms",
-  "version": "0.0.0",
-  "homepage": "https://github.com/FelixThieleTUM/JsonFormsEditor",
+  "version": "0.0.2",
+  "homepage": "https://github.com/eclipsesource/JsonFormsEditor",
   "license": "MIT",
   "private": true,
   "dependencies": {
