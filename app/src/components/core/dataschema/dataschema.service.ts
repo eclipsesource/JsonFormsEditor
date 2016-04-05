@@ -117,6 +117,10 @@ module app.core.dataschema {
                 this.addPropertyToRequired(label, parent);
             }
 
+            if(config['enum']!==undefined){
+                property['enum'] = config['enum'];
+            }
+
             parent[label] = property;
             this.notifyObservers(new PreviewUpdateEvent(this.getDataSchema(), null));
             return true;

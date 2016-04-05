@@ -47,7 +47,7 @@
         <div layout="row" layout-align="space-around center">
 
             <md-input-container flex="70" style="margin-top:20px; margin-bottom:0px;">
-                <input ng-switch-type id="inputLabel" ng-enter="toolboxBottom.addNewElement()" ng-model="toolboxBottom.newElementLabel" class="md-primary" type="text" placeholder="Add new attribute..."/>
+                <input id="inputLabel" ng-enter="toolboxBottom.addNewElement()" ng-model="toolboxBottom.newElementLabel" class="md-primary" type="text" placeholder="Add new attribute..."/>
             </md-input-container>
             <div flex="30">
                 <md-button class="md-raised md-primary toolbox-button-create" ng-click="toolboxBottom.addNewElement()">
@@ -66,6 +66,27 @@
         <!-- Templates for the advanced menus -->
         <script type="text/ng-template" id="basicProperties.html">
             <md-checkbox ng-model="$parent.toolboxBottom.newElementConfig.required">Required</md-checkbox>
+        </script>
+
+        <script type="text/ng-template" id="enumProperties.html">
+            <md-checkbox ng-model="$parent.toolboxBottom.newElementConfig.required">Required</md-checkbox>
+            <div layout="row" layout-align="space-around center">
+
+                <md-input-container flex="70" style="margin-top:20px; margin-bottom:0px;">
+                    <input ng-enter="$parent.toolboxBottom.addEnumElement()" ng-model="$parent.toolboxBottom.currentEnumElementLabel" class="md-primary" type="text" placeholder="Add new enum element..."/>
+                </md-input-container>
+                <div flex="30">
+                    <md-button class="md-raised md-primary toolbox-button-create" ng-click="$parent.toolboxBottom.addEnumElement()">
+                        Add
+                    </md-button>
+                </div>
+            </div>
+
+            <md-select ng-model="$parent.toolboxBottom.newElementConfig.enum" multiple placeholder="Current elements">
+                <md-option selected="true" ng-repeat="elem in $parent.toolboxBottom.newEnumElements">{{elem}}</md-option>
+            </md-select>
+
+
         </script>
 
 
