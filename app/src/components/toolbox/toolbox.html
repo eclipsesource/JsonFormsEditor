@@ -33,31 +33,42 @@
             </ol>
         </div>
     </md-content>
-    <md-content class="toolbox-bottom-control top-border">
+    <md-content class="toolbox-bottom-control top-border" ng-controller="ToolboxBottomController as toolboxBottom">
+
+        <div layout="row">
+            <div flex class="toolbox-input-datatype-box" ng-repeat="(typeLabel, typeTemplate) in toolboxBottom.elementTypes" ng-click="toolboxBottom.changeType(typeLabel, typeTemplate)"
+                 ng-class="{'toolbox-input-datatype-box-active': toolboxBottom.newElementTypeLabel===typeLabel}">
+                {{typeLabel}}
+            </div>
+        </div>
+
+
+
         <div layout="row" layout-align="space-around center">
 
-            <md-input-container flex="60" style="margin-top:20px; margin-bottom:0px;">
-                <input id="inputLabel" ng-enter="toolbox.addNewElement()" ng-model="toolbox.newElementLabel" flex="auto"
-                       flex-order="0" class="md-primary" type="text" placeholder="Add new attribute..."/>
+            <md-input-container flex="70" style="margin-top:20px; margin-bottom:0px;">
+                <input ng-switch-type id="inputLabel" ng-enter="toolboxBottom.addNewElement()" ng-model="toolboxBottom.newElementLabel" class="md-primary" type="text" placeholder="Add new attribute..."/>
             </md-input-container>
-            <div flex="40">
-
-                <md-menu>
-                    <md-button ng-click="$mdOpenMenu($event)" class="md-raised md-primary">
-                        {{toolbox.newElementTypeLabel}}
-                        <md-icon class="material-icons">keyboard_arrow_down</md-icon>
-                    </md-button>
-                    <md-menu-content>
-                        <md-menu-item ng-repeat="typeLabel in toolbox.elementTypes">
-                            <md-button ng-click="toolbox.setNewElementTypeLabel(typeLabel)">
-                                {{typeLabel}}
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
+            <div flex="30">
+                <md-button class="md-raised md-primary toolbox-button-create" ng-click="toolboxBottom.addNewElement()">
+                    Create
+                </md-button>
             </div>
-
-
         </div>
+
+
+        <div ng-show="toolboxBottom.showAdvanced" ng-include="toolboxBottom.advancedTemplate"></div>
+
+        <md-button ng-show="toolboxBottom.advancedTemplate!=null" class="md-primary md-ink-ripple toolbox-advanced-button" ng-click="toolboxBottom.showAdvanced = !toolboxBottom.showAdvanced">
+            Advanced
+        </md-button>
+
+        <!-- Templates for the advanced menus -->
+        <script type="text/ng-template" id="basicProperties.html">
+            <md-checkbox ng-model="$parent.toolboxBottom.newElementConfig.required">Required</md-checkbox>
+        </script>
+
+
+
     </md-content>
 </md-content>

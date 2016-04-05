@@ -21,7 +21,7 @@ module app.detail {
             this.metaschemaService.getMetaschema().then((metaschema:Metaschema) => {
                 this.schema = metaschema.getDefinitionByTypeLabel(element.getType()).getDataschema();
                 this.uiSchema = metaschema.getDefinitionByTypeLabel(element.getType()).getUISchema();
-                this.currentElement = element.clone();
+                this.currentElement = element;
                 if (this.currentElement.getType() == 'Control') {
                     this.currentElement.setType(this.currentElement.getLongType());
                 }
