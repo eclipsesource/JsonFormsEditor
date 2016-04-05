@@ -22,9 +22,9 @@ module app.detail {
                 this.schema = metaschema.getDefinitionByTypeLabel(element.getType()).getDataschema();
                 this.uiSchema = metaschema.getDefinitionByTypeLabel(element.getType()).getUISchema();
                 this.currentElement = element;
-                if (this.currentElement.getType() == 'Control') {
+                /*if (this.currentElement.getType() == 'Control') {
                     this.currentElement.setType(this.currentElement.getLongType());
-                }
+                }*/
 
             });
         }

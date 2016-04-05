@@ -16,10 +16,16 @@ module app.toolbox {
         public newElementLabel:string = '';
         public newElementTypeLabel:string = null;
 
+
+        public newEnumElements = [];
+        public currentEnumElementLabel = '';
+
+
         public elementTypes = {
             'string': 'basicProperties.html',
             'number': 'basicProperties.html',
             'boolean': 'basicProperties.html',
+            'enum': 'enumProperties.html',
             'object': null
         };
 
@@ -62,6 +68,8 @@ module app.toolbox {
             }
 
             this.newElementLabel = '';
+            this.newElementConfig = {};
+            this.newEnumElements = [];
         }
 
         /**
@@ -74,6 +82,19 @@ module app.toolbox {
                     console.log("ERROR: failed to remove the element from the schema");
                 }
             }
+        }
+
+
+
+        addEnumElement(){
+            console.log(this.newElementConfig);
+            if(~this.newEnumElements.indexOf(this.currentEnumElementLabel)){
+                console.log("ERROR: element already exists");
+                this.currentEnumElementLabel = "";
+                return;
+            }
+            this.newEnumElements.push(this.currentEnumElementLabel);
+            this.currentEnumElementLabel = "";
         }
     }
 
