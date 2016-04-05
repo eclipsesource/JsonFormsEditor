@@ -78,7 +78,7 @@ module app.core.model {
         }
 
         public acceptsElement(type:string):boolean {
-            if (!this.metaData.hasOwnProperty('acceptedElements')) {
+            if (!this.metaData['acceptedElements']) {
                 return false;
             }
             return this.metaData.acceptedElements.indexOf(type) >= 0;
@@ -128,7 +128,11 @@ module app.core.model {
                 json.scope.$ref = "#/properties/" + this.scope;
             }
             json.rule = JSON.parse(JSON.stringify(this.rule));
-            json.rule.condition.scope.$ref = "#/properties/" + json.rule.condition.scope.$ref;
+            console.log(JSON.stringify(this.rule));
+            if (json.rule.condition.scope.$ref) {
+                json.rule.condition.scope = {};
+                json.rule.condition.scope.$ref = "#/properties/" + this.rule['condition'].scope.$ref;
+            }
             if (this.elements && this.elements.length > 0) {
                 json.elements = [];
                 for (var i = 0; i < this.elements.length; i++) {
