@@ -34,7 +34,7 @@ module app.preview {
         }
 
         openInNewTab():void {
-            this.tab = window.open('#preview');
+            this.tab = window.open('#preview?newTab');
             this.tab.addEventListener('load', () => {
                 this.tab.postMessage(new PreviewUpdateEvent(this.schema, this.uiSchema), '*');
             }, false);
