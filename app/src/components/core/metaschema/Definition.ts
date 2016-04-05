@@ -77,11 +77,18 @@ module app.core.metaschema {
                             "label": _.capitalize(key),
                             "elements": [
                                 {
+                                    "type": "Control",
+                                    "label": "Effect",
+                                    "scope": {
+                                        "$ref": "#/properties/rule/properties/effect"
+                                    }
+                                },
+                                {
                                     "type": "Group",
                                     "label": "Condition",
                                     "elements": [
                                         {
-                                            "type": "HorizontalLayout",
+                                            "type": "VerticalLayout",
                                             "elements": [
                                                 {
                                                     "type": "Control",
@@ -101,13 +108,6 @@ module app.core.metaschema {
                                         }
                                     ]
 
-                                },
-                                {
-                                    "type": "Control",
-                                    "label": "Effect",
-                                    "scope": {
-                                        "$ref": "#/properties/rule/properties/effect"
-                                    }
                                 }
                             ]
                         });

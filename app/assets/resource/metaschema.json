@@ -6,7 +6,7 @@
       "properties": {
         "effect": {
           "type": "string",
-          "enum": ["HIDE"]
+          "enum": ["", "HIDE"]
         },
         "condition": {
           "type": "object",

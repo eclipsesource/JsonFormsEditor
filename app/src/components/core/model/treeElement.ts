@@ -10,6 +10,13 @@ module app.core.model {
         private dataType:string;
         public label:string;
         private scope:string;
+        private rule:{} = {
+            "effect": "",
+            "condition": {
+                "scope": "",
+                "expectedValue": ""
+            }
+        };
         public elements:TreeElement[] = [];
         public metaData:any = {};
 
@@ -120,6 +127,9 @@ module app.core.model {
                 json.scope = {};
                 json.scope.$ref = "#/properties/" + this.scope;
             }
+            json.rule = JSON.parse(JSON.stringify(this.rule));
+            json.rule.condition.scope.$ref = "#/properties/" + json.rule.condition.scope.$ref;
+            console.log(JSON.stringify(this.rule));
             if (this.elements && this.elements.length > 0) {
                 json.elements = [];
                 for (var i = 0; i < this.elements.length; i++) {
