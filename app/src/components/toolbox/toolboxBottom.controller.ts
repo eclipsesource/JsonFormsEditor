@@ -25,7 +25,6 @@ module app.toolbox {
             'string': 'basicProperties.html',
             'number': 'basicProperties.html',
             'boolean': 'basicProperties.html',
-            'enum': 'enumProperties.html',
             'object': null
         };
 
@@ -61,8 +60,6 @@ module app.toolbox {
          * Submits the current newElementLabel and newElementTypeLabel and creates a new DataschemaPropery.
          */
         addNewElement() {
-            console.log(this.newElementConfig);
-
             if (!this.toolboxService.addSchemaElement(this.newElementLabel, this.newElementTypeLabel, this.newElementConfig)) {
                 console.log("ERROR: failed to add the element into the schema");
             }
@@ -72,22 +69,7 @@ module app.toolbox {
             this.newEnumElements = [];
         }
 
-        /**
-         * Removes the specified ControlToolboxElement from the Dataschema.
-         * @param element
-         */
-        removeDataElement(element:ControlToolboxElement) {
-            if (this.toolboxService.canBeRemoved(element)) {
-                if (!this.toolboxService.removeSchemaElement(element)) {
-                    console.log("ERROR: failed to remove the element from the schema");
-                }
-            }
-        }
-
-
-
         addEnumElement(){
-            console.log(this.newElementConfig);
             if(~this.newEnumElements.indexOf(this.currentEnumElementLabel)){
                 console.log("ERROR: element already exists");
                 this.currentEnumElementLabel = "";

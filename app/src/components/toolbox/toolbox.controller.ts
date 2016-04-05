@@ -96,6 +96,19 @@ module app.toolbox {
         isParentFolder(){
             return this.toolboxService.currentPath.length == 0;
         }
+
+
+        /**
+         * Removes the specified ControlToolboxElement from the Dataschema.
+         * @param element
+         */
+        removeDataElement(element:ControlToolboxElement) {
+            if (this.toolboxService.canBeRemoved(element)) {
+                if (!this.toolboxService.removeSchemaElement(element)) {
+                    console.log("ERROR: failed to remove the element from the schema");
+                }
+            }
+        }
     }
 
     angular.module('app.toolbox').controller('ToolboxController', ToolboxController)

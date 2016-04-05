@@ -117,7 +117,7 @@ module app.core.dataschema {
                 this.addPropertyToRequired(label, parent);
             }
 
-            if(config['enum']!==undefined){
+            if(config['hasEnum']===true){
                 property['enum'] = config['enum'];
             }
 
