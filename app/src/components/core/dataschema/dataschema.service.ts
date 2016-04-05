@@ -86,7 +86,8 @@ module app.core.dataschema {
          * @param path path is an array of string containing the name of the parent properties in order eg. : ['person', 'appearance', 'head']
          * @returns {boolean} indicating if the addition was succesful(when false, it means the element was not added)
          */
-        addNewProperty(label: string, type: string, path:string[]):boolean {
+        addNewProperty(label: string, type: string, config: any, path:string[]):boolean {
+
             var property: any = {};
             property.type = type;
 
@@ -112,9 +113,24 @@ module app.core.dataschema {
                 property.properties = {};
             }
 
+            if(config['required'] === true){
+                this.addPropertyToRequired(label, parent);
+            }
+
             parent[label] = property;
             this.notifyObservers(new PreviewUpdateEvent(this.getDataSchema(), null));
             return true;
+        }
+
+
+        addPropertyToRequired(label: string, parent: any){
+
+            if(!parent['required']){
+                parent.required = [];
+            }
+            if(!~parent.required.indexOf(label)){
+                parent.required.push(label);
+            }
         }
 
         /**

@@ -39,9 +39,9 @@ module app.toolbox {
          * @param path the path to the property in the dataschema, e.g. ['person', 'adress']
          * @returns {boolean} true, if the addition was successful
          */
-        addSchemaElement(label:string, type:string):boolean {
+        addSchemaElement(label:string, type:string, config: any):boolean {
 
-            if (this.dataschemaService.addNewProperty(label, type, this.currentPath)) {
+            if (this.dataschemaService.addNewProperty(label, type, config, this.currentPath)) {
                 var element:ControlToolboxElement = new ControlToolboxElement(this.dataschemaService.convertNameToLabel(label), type, this.generateScope(label, this.currentPath));
                 this.elements.push(element);
                 return true;
