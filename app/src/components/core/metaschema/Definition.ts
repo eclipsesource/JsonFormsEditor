@@ -123,7 +123,6 @@ module app.core.metaschema {
                     }
                 });
             }
-            console.log(JSON.stringify(elements));
             return {
                 "type": "VerticalLayout",
                 "elements": elements

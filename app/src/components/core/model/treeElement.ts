@@ -129,7 +129,6 @@ module app.core.model {
             }
             json.rule = JSON.parse(JSON.stringify(this.rule));
             json.rule.condition.scope.$ref = "#/properties/" + json.rule.condition.scope.$ref;
-            console.log(JSON.stringify(this.rule));
             if (this.elements && this.elements.length > 0) {
                 json.elements = [];
                 for (var i = 0; i < this.elements.length; i++) {
