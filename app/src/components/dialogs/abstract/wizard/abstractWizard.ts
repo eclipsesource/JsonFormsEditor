@@ -71,9 +71,13 @@ module app.dialogs {
             return this.stepNumber < this.steps.length - 1;
         }
 
+        isAllowedToContinue(): boolean {
+            return this.currentStep().isAllowedToContinue();
+        }
+
         next():void {
 	
-          if (this.hasNext()) {
+          if (this.hasNext() && this.isAllowedToContinue()) {
                 if (this.currentStep().shallSubmit()) {
                     this.currentStep().submit().then(() => {
                         this.stepNumber++;

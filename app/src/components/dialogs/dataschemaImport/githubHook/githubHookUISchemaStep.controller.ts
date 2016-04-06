@@ -20,6 +20,10 @@ module app.dialogs.dataschemaimport {
             this.wiz = wizard;
         }
 
+        isAllowedToContinue(): boolean {
+            return (this.selectedFile == true);
+        }
+
         getTitle():string {
             return "Select UI Schema (optional)";
         }
