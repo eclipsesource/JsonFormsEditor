@@ -112,9 +112,30 @@
         }
       }]
     },
+    "category": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Category"
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#"
+          }
+        }
+      },
+      "required": ["type", "elements"],
+      "additionalProperties": false
+    },
     "categorization": {
       "type": "object",
-
       "required": ["type", "elements"],
       "additionalProperties": false,
       "allOf": [{
@@ -130,26 +151,7 @@
           "elements": {
             "type": "array",
             "items": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "enum": [
-                    "Category"
-                  ]
-                },
-                "label": {
-                  "type": "string"
-                },
-                "elements": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#"
-                  }
-                }
-              },
-              "required": ["type", "elements"],
-              "additionalProperties": false
+              "$ref": "#/definitions/category"
             }
           }
         }
