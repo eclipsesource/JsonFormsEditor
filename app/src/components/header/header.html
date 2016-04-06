@@ -2,12 +2,12 @@
     <div class="md-toolbar-tools">
         <div class="md-toolbar-tools" style="height: 100%;padding-left: 0px;" ng-click="header.showImportDialog()">
             <img src="resource/jsonforms-logo.png" class="logo-img"/>
-            <span>JSON Forms Editor</span>
+            <span>JSON Forms Editor v0.0.2</span>
         </div>
         <!-- fill up the space between left and right area -->
         <span flex></span>
-        <i ng-if="header.undoService.canUndo()" ng-click="header.undoService.undo()" class="material-icons"
-           style="padding-right: 6px; margin: 4px">undo</i>
+        <!--<i ng-if="header.undoService.canUndo()" ng-click="header.undoService.undo()" class="material-icons"
+           style="padding-right: 6px; margin: 4px">undo</i>-->
         <md-button ng-if="!header.configService.isPreviewTab()" class="md-raised md-accent" ui-sref="preview"
                    ui-sref-active="hidden">Preview
         </md-button>

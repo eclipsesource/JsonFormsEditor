@@ -11,10 +11,6 @@ module app.toolbox {
 
     class ToolboxController {
 
-        public newElementLabel:string = '';
-        public newElementTypeLabel:string = 'type...';
-
-        public elementTypes = ['string', 'number', 'boolean', 'object'];
 
         public treeOptions:{};
 
@@ -42,7 +38,7 @@ module app.toolbox {
 
                     var toolboxElement:ToolboxElement = event.source.nodeScope.$modelValue;
                     if (toolboxElement instanceof ControlToolboxElement) {
-                        this.toolboxService.increasePlacedTimes(toolboxElement);
+                        this.toolboxService.increasePlacedTimes(toolboxElement.getScope());
                     }
 
                     // Convert the ToolboxElement into a TreeElement
@@ -65,6 +61,15 @@ module app.toolbox {
             if (!this.configService.enableFilter) {
                 return false;
             }
+            if (this.isPlaced(element)) {
+                return true;
+            }
+            return false;
+        }
+        /*
+        * Returns true if the element is placed on the tree
+        * */
+        isPlaced(element: ToolboxElement):boolean{
             if (element instanceof ControlToolboxElement) {
                 if (this.toolboxService.isAlreadyPlaced(element)) {
                     return true;
@@ -73,41 +78,7 @@ module app.toolbox {
             return false;
         }
 
-        /**
-         * Setter for the label of the tobe created dataschema element.
-         * @param type
-         */
-        setNewElementTypeLabel(type:string) {
-            this.newElementTypeLabel = type;
-        }
 
-        //TODO support different scopes(inside folders)
-        //TODO add more data into content(required, min chars, etc)
-        /**
-         * Submits the current newElementLabel and newElementTypeLabel and creates a new DataschemaPropery.
-         */
-        addNewElement() {
-            if(this.elementTypes.indexOf(this.newElementTypeLabel)===-1){
-                return false;
-            }
-            if (!this.toolboxService.addSchemaElement(this.newElementLabel, this.newElementTypeLabel)) {
-                console.log("ERROR: failed to add the element into the schema");
-            }
-
-            this.newElementLabel = '';
-        }
-
-        /**
-         * Removes the specified ControlToolboxElement from the Dataschema.
-         * @param element
-         */
-        removeDataElement(element:ControlToolboxElement) {
-            if (this.toolboxService.canBeRemoved(element)) {
-                if (!this.toolboxService.removeSchemaElement(element)) {
-                    console.log("ERROR: failed to remove the element from the schema");
-                }
-            }
-        }
 
         clickedBack(){
             this.toolboxService.previousFolder();
@@ -124,6 +95,19 @@ module app.toolbox {
         }
         isParentFolder(){
             return this.toolboxService.currentPath.length == 0;
+        }
+
+
+        /**
+         * Removes the specified ControlToolboxElement from the Dataschema.
+         * @param element
+         */
+        removeDataElement(element:ControlToolboxElement) {
+            if (this.toolboxService.canBeRemoved(element)) {
+                if (!this.toolboxService.removeSchemaElement(element)) {
+                    console.log("ERROR: failed to remove the element from the schema");
+                }
+            }
         }
     }
 

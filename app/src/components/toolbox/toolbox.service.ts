@@ -21,6 +21,7 @@ module app.toolbox {
     import ToolboxServiceMemento = app.core.undo.ToolboxServiceMemento;
 
 
+
     export class ToolboxService implements Originator<ToolboxServiceMemento> {
         static $inject = ['DataschemaService', '$q', 'LayoutsService'];
 
@@ -38,9 +39,9 @@ module app.toolbox {
          * @param path the path to the property in the dataschema, e.g. ['person', 'adress']
          * @returns {boolean} true, if the addition was successful
          */
-        addSchemaElement(label:string, type:string):boolean {
+        addSchemaElement(label:string, type:string, config: any):boolean {
 
-            if (this.dataschemaService.addNewProperty(label, type, this.currentPath)) {
+            if (this.dataschemaService.addNewProperty(label, type, config, this.currentPath)) {
                 var element:ControlToolboxElement = new ControlToolboxElement(this.dataschemaService.convertNameToLabel(label), type, this.generateScope(label, this.currentPath));
                 this.elements.push(element);
                 return true;
@@ -90,7 +91,7 @@ module app.toolbox {
             var name = element.getScope();
             var path = this.currentPath;
 
-            if (this.dataschemaService.removeProperty(name, path)) {
+            if (this.canBeRemoved(element) && this.dataschemaService.removeProperty(name, path)) {
                 return _.remove(this.elements, element).length === 1;
             } else {
                 return false;
@@ -98,7 +99,15 @@ module app.toolbox {
         }
 
         decreasePlacedTimes(scope:string) {
-            if (!this.placedTimes.hasOwnProperty(scope)) {
+            var splitted = scope.split('/');
+            if(splitted.length > 1){
+                splitted.pop();
+                // The second pop is to remove the properties subfolder from the scope string
+                splitted.pop();
+
+                this.decreasePlacedTimes(splitted.join('/'));
+            }
+            if (!this.placedTimes.hasOwnProperty( scope)) {
                 console.log("ERROR: Placed times of the element is -1")
                 this.placedTimes[scope] = -1;
             } else {
@@ -106,12 +115,19 @@ module app.toolbox {
             }
         }
 
-        increasePlacedTimes(element:ControlToolboxElement) {
+        increasePlacedTimes(scope:string) {
+            var splitted = scope.split('/');
+            if(splitted.length > 1){
+                splitted.pop();
+                // The second pop is to remove the properties subfolder from the scope string
+                splitted.pop();
+                this.increasePlacedTimes(splitted.join('/'));
+            }
             //if the element hasnt been added yet to the placedTimesArray
-            if (!this.placedTimes.hasOwnProperty(element.getScope())) {
-                this.placedTimes[element.getScope()] = 1;
+            if (!this.placedTimes.hasOwnProperty(scope)) {
+                this.placedTimes[scope] = 1;
             } else {
-                this.placedTimes[element.getScope()] = this.placedTimes[element.getScope()] + 1;
+                this.placedTimes[scope] = this.placedTimes[scope] + 1;
             }
         }
 

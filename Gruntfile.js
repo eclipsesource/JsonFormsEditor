@@ -115,6 +115,14 @@ module.exports = function (grunt) {
                     htmlmin: {collapseWhitespace: true, collapseBooleanAttributes: true},
                     module: "app"
                 }
+            },
+            test: {
+                src: '<%= app_files.html %>',
+                dest: '<%= temp_dir %>/ts/templates.js',
+                options: {
+                    htmlmin: {collapseWhitespace: true, collapseBooleanAttributes: true},
+                    module: "app"
+                }
             }
         },
 
@@ -189,19 +197,47 @@ module.exports = function (grunt) {
             unit: {
                 options: {
                     frameworks: ['jasmine'],
-                    singleRun: true,
-                    browsers: ['PhantomJS'],
+                    singleRun: false,
+                    autoWatch: true,
+                    browsers: ['Chrome'],
                     files: [
                         '<%= vendor_files.js %>',
                         '<%= vendor_files.test %>',
                         '<%= temp_dir %>/ts/**/*.module.js',
-                        '<%= temp_dir %>/ts/**/*.js'
-                    ]
+                        '<%= temp_dir %>/ts/shared/**/*.js',
+                        '<%= temp_dir %>/ts/components/core/elementsConfig/*.js',
+                        '<%= temp_dir %>/ts/components/core/model/*.js',
+                        '<%= temp_dir %>/ts/components/**/*.js',
+                        '<%= temp_dir %>/ts/app.config.js',
+                        '<%= temp_dir %>/ts/app.run.js',
+                        '<%= temp_dir %>/ts/**/*.js',
+
+                    ],
+                    basePath: ''
                 }
             }
+        },
+        bump: {
+            options: {
+                files: ['package.json', 'bower.json'],
+                updateConfigs: ['pkg'],
+                commit: true,
+                commitMessage: 'Bump version to v%VERSION%',
+                commitFiles: ['package.json', 'bower.json'],
+                createTag: false,
+                push: false,
+                globalReplace: false,
+                prereleaseName: false,
+                metadata: '',
+                regExp: false
+            }
+        },
+        run: {
+            deploy: {
+                cmd: './deploy.sh',
+                args: ['<%= pkg.version %>']
+            }
         }
-
-
     };
 
     // load all grunt-tasks
@@ -216,6 +252,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-index-html-template');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-bump');
+    grunt.loadNpmTasks('grunt-run');
 
     // Initialize the config and add the build configuration file
     grunt.initConfig(grunt.util._.extend(taskConfig, buildConfig));
@@ -247,6 +285,7 @@ module.exports = function (grunt) {
     grunt.registerTask('test', [
         'clean:temp',
         'typescript:test',
+        'ngtemplates:test',
         'karma',
         'clean:temp'
     ]);
@@ -271,6 +310,13 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('default', [
         'dev'
+    ]);
+
+    grunt.registerTask('deploy', [
+        'dist',
+        'bump-only:patch',
+        'bump-commit',
+        'run:deploy'
     ]);
 
     /**

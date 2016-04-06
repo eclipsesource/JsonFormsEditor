@@ -86,7 +86,8 @@ module app.core.dataschema {
          * @param path path is an array of string containing the name of the parent properties in order eg. : ['person', 'appearance', 'head']
          * @returns {boolean} indicating if the addition was succesful(when false, it means the element was not added)
          */
-        addNewProperty(label: string, type: string, path:string[]):boolean {
+        addNewProperty(label: string, type: string, config: any, path:string[]):boolean {
+
             var property: any = {};
             property.type = type;
 
@@ -112,9 +113,28 @@ module app.core.dataschema {
                 property.properties = {};
             }
 
+            if(config['required'] === true){
+                this.addPropertyToRequired(label, parent);
+            }
+
+            if(config['hasEnum']===true){
+                property['enum'] = config['enum'];
+            }
+
             parent[label] = property;
             this.notifyObservers(new PreviewUpdateEvent(this.getDataSchema(), null));
             return true;
+        }
+
+
+        addPropertyToRequired(label: string, parent: any){
+
+            if(!parent['required']){
+                parent.required = [];
+            }
+            if(!~parent.required.indexOf(label)){
+                parent.required.push(label);
+            }
         }
 
         /**
@@ -171,7 +191,28 @@ module app.core.dataschema {
             return currentElement;
         }
 
+        /*getPropertyFromScope(scope:string):any {
+            var path:string[] = this.convertScopeToPath(scope);
+            return this.getPropertyAt(path);
+        }
 
+        convertScopeToPath(scope:string):string[] {
+            return scope.split('/properties/');
+        }
+
+        getPropertyAt(path:string[]):any {
+            var currentElement = this.json;
+
+            for (var i = 0; i < path.length; i++) {
+                if (currentElement.hasOwnProperty('properties') && currentElement.properties.hasOwnProperty(path[i])) {
+                    currentElement = currentElement.properties[path[i]];
+                } else {
+                    return null;
+                }
+            }
+
+            return currentElement;
+        }*/
     }
 
     angular.module("app.core").service("DataschemaService", DataschemaService);

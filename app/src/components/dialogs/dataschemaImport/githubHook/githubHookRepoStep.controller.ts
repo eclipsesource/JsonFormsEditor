@@ -15,6 +15,10 @@ module app.dialogs.dataschemaimport {
             super(wizard);
         }
 
+        isAllowedToContinue(): boolean {
+            return (this.selectedRepo && this.selectedBranch);
+        }
+
         getRepos(): any {
             return this.githubConnector.getRepoList();
         }

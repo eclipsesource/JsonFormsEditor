@@ -11,13 +11,13 @@
         </div>
     </md-content>
 
-    <md-content flex class="md-padding tree-view" style="margin-bottom:100px; padding-top: 0px;">
+    <md-content flex class="md-padding tree-view" style="margin-bottom:150px; padding-top: 0px;">
         <div ui-tree="toolbox.treeOptions" data-drag-delay="100" data-clone-enabled="true" data-nodrop-enabled="true">
             <ol ui-tree-nodes
                 ng-model="toolbox.toolboxService.elements">
                 <li ng-repeat="element in toolbox.toolboxService.elements"
                     ui-tree-node ng-hide="toolbox.shouldHide(element)">
-                    <div ui-tree-handle class="tree-node tree-node-content" ng-style="{cursor: (element.isObject() ? 'default' : 'move')}">
+                    <div ui-tree-handle class="tree-node tree-node-content" ng-class="{'toolbox-element-placed': toolbox.isPlaced(element)}" ng-style="{cursor: (element.isObject() ? 'default' : 'move')}">
                         <md-icon ng-if="element.isObject()" ng-click="toolbox.clickedIcon(element)" class="material-icons">{{element.getIcon()}}
                         </md-icon>
                         <span ng-if="element.isObject()" ng-click="toolbox.clickedIcon(element)" style="overflow:hidden;" class="left-margin">{{element.getLabel()}}</span>
@@ -33,31 +33,63 @@
             </ol>
         </div>
     </md-content>
-    <md-content class="toolbox-bottom-control top-border">
+    <md-content class="toolbox-bottom-control top-border" ng-controller="ToolboxBottomController as toolboxBottom">
+
+        <div ng-show="toolboxBottom.newElementConfig.hasEnum" ng-include="'enumProperties.html'"></div>
+        <div ng-show="toolboxBottom.showAdvanced" ng-include="toolboxBottom.advancedTemplate"></div>
+
+        <md-button ng-show="toolboxBottom.advancedTemplate!=null" class="md-primary md-ink-ripple toolbox-advanced-button" ng-click="toolboxBottom.showAdvanced = !toolboxBottom.showAdvanced">
+            Advanced
+        </md-button>
+
+        <div layout="row">
+            <div flex class="toolbox-input-datatype-box" ng-repeat="(typeLabel, typeTemplate) in toolboxBottom.elementTypes" ng-click="toolboxBottom.changeType(typeLabel, typeTemplate)"
+                 ng-class="{'toolbox-input-datatype-box-active': toolboxBottom.newElementTypeLabel===typeLabel}">
+                {{typeLabel}}
+            </div>
+        </div>
+
+
+
         <div layout="row" layout-align="space-around center">
 
-            <md-input-container flex="60" style="margin-top:20px; margin-bottom:0px;">
-                <input id="inputLabel" ng-enter="toolbox.addNewElement()" ng-model="toolbox.newElementLabel" flex="auto"
-                       flex-order="0" class="md-primary" type="text" placeholder="Add new attribute..."/>
+            <md-input-container flex="70" style="margin-top:20px; margin-bottom:0px;">
+                <input id="inputLabel" ng-enter="toolboxBottom.addNewElement()" ng-model="toolboxBottom.newElementLabel" class="md-primary" type="text" placeholder="Add new attribute..."/>
             </md-input-container>
-            <div flex="40">
+            <div flex="30">
+                <md-button class="md-raised md-primary toolbox-button-create" ng-click="toolboxBottom.addNewElement()">
+                    Create
+                </md-button>
+            </div>
+        </div>
 
-                <md-menu>
-                    <md-button ng-click="$mdOpenMenu($event)" class="md-raised md-primary">
-                        {{toolbox.newElementTypeLabel}}
-                        <md-icon class="material-icons">keyboard_arrow_down</md-icon>
+        <!-- Templates for the advanced menus -->
+        <script type="text/ng-template" id="basicProperties.html">
+            <md-checkbox ng-model="$parent.toolboxBottom.newElementConfig.required">Required</md-checkbox>
+            <md-checkbox ng-model="$parent.toolboxBottom.newElementConfig.hasEnum">Enum</md-checkbox>
+        </script>
+
+        <script type="text/ng-template" id="enumProperties.html">
+            <div layout="row" layout-align="space-around center">
+
+                <md-input-container flex="70" style="margin-top:20px; margin-bottom:0px;">
+                    <input ng-enter="$parent.toolboxBottom.addEnumElement()" ng-model="$parent.toolboxBottom.currentEnumElementLabel" class="md-primary" type="text" placeholder="Add new enum element..."/>
+                </md-input-container>
+                <div flex="30">
+                    <md-button class="md-raised md-primary toolbox-button-create" ng-click="$parent.toolboxBottom.addEnumElement()">
+                        Add
                     </md-button>
-                    <md-menu-content>
-                        <md-menu-item ng-repeat="typeLabel in toolbox.elementTypes">
-                            <md-button ng-click="toolbox.setNewElementTypeLabel(typeLabel)">
-                                {{typeLabel}}
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
+                </div>
             </div>
 
+            <md-select ng-model="$parent.toolboxBottom.newElementConfig.enum" multiple placeholder="Current elements">
+                <md-option selected="true" ng-repeat="elem in $parent.toolboxBottom.newEnumElements">{{elem}}</md-option>
+            </md-select>
 
-        </div>
+
+        </script>
+
+
+
     </md-content>
 </md-content>

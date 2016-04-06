@@ -1,8 +1,8 @@
 {
   "name": "jsonforms-editor",
   "description": "An editor for jsonforms",
-  "version": "0.0.0",
-  "homepage": "https://github.com/FelixThieleTUM/JsonFormsEditor",
+  "version": "0.0.2",
+  "homepage": "https://github.com/eclipsesource/JsonFormsEditor",
   "license": "MIT",
   "private": true,
   "dependencies": {
@@ -11,7 +11,7 @@
     "angular-ui-tree": "~2.13.0",
     "bootstrap": "~3.3.5",
     "jquery": "~2.1.4",
-    "jsonforms": "latest",
+    "jsonforms": "0.0.15",
     "material-design-lite": "~1.0.6",
     "angular-material": "~1.0.1",
     "ngclipboard": "latest",

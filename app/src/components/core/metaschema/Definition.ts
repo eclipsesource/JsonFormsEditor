@@ -71,14 +71,56 @@ module app.core.metaschema {
                 var properties = dataschema['properties'];
 
                 _.forOwn(properties, (value, key) => {
-                    elements.push({
-                        "type": "Control",
-                        "label": _.capitalize(key),
-                        "scope": {
-                            "$ref": "#/properties/" + key
-                        },
-                        "readOnly": !value['enum'] && (key === 'type' || key === 'scope')
-                    })
+                    if (key == 'rule') {
+                        elements.push({
+                            "type": "Group",
+                            "label": _.capitalize(key),
+                            "elements": [
+                                {
+                                    "type": "Control",
+                                    "label": "Effect",
+                                    "scope": {
+                                        "$ref": "#/properties/rule/properties/effect"
+                                    }
+                                },
+                                {
+                                    "type": "Group",
+                                    "label": "Condition",
+                                    "elements": [
+                                        {
+                                            "type": "VerticalLayout",
+                                            "elements": [
+                                                {
+                                                    "type": "Control",
+                                                    "label": "Scope",
+                                                    "scope": {
+                                                        "$ref": "#/properties/rule/properties/condition/properties/scope/properties/$ref"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "Control",
+                                                    "label": "Expected Value",
+                                                    "scope": {
+                                                        "$ref": "#/properties/rule/properties/condition/properties/expectedValue"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+
+                                }
+                            ]
+                        });
+                    } else {
+                        elements.push({
+                            "type": "Control",
+                            "label": _.capitalize(key),
+                            "scope": {
+                                "$ref": "#/properties/" + key
+                            },
+                            "readOnly": !value['enum'] && (key === 'type' || key === 'scope')
+                        });
+                    }
                 });
             }
             return {

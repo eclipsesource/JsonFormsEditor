@@ -15,8 +15,8 @@ module app.core.undo {
         }
 
         snapshot():void {
-            this.treeServiceMementoStack.push(this.treeService.createMemento());
-            this.toolboxServiceMementoStack.push(this.toolboxService.createMemento());
+            //this.treeServiceMementoStack.push(this.treeService.createMemento());
+            //this.toolboxServiceMementoStack.push(this.toolboxService.createMemento());
         }
 
         canUndo():boolean {

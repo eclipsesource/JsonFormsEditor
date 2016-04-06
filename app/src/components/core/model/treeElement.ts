@@ -2,11 +2,24 @@ module app.core.model {
 
     export class TreeElement {
 
+
+        private checks: Check[] = [];
+        private errors: TreeError[] = [];
+
         private type:string;
+        private dataType:string;
         public label:string;
         private scope:string;
+        private rule:{} = {
+            "effect": "",
+            "condition": {
+                "scope": "",
+                "expectedValue": ""
+            }
+        };
         public elements:TreeElement[] = [];
         public metaData:any = {};
+
 
         public getType():string {
             return this.type;
@@ -14,6 +27,22 @@ module app.core.model {
 
         public setType(newType:string):void {
             this.type = newType;
+        }
+
+        public getDataType():string {
+            return this.dataType;
+        }
+
+        public setDataType(newDataType:string):void {
+            this.dataType = newDataType;
+        }
+
+        public getLongType() {
+            if (this.type == 'Control') {
+                return this.type + " (" + this.dataType + ")";
+            } else {
+                return this.type;
+            }
         }
 
         public getLabel():string {
@@ -49,7 +78,7 @@ module app.core.model {
         }
 
         public acceptsElement(type:string):boolean {
-            if (!this.metaData.hasOwnProperty('acceptedElements')) {
+            if (!this.metaData['acceptedElements']) {
                 return false;
             }
             return this.metaData.acceptedElements.indexOf(type) >= 0;
@@ -76,6 +105,7 @@ module app.core.model {
             var result:TreeElement = new TreeElement();
 
             result.type = _.clone(this.type);
+            result.dataType = _.clone(this.dataType);
             result.label = _.clone(this.label);
             result.scope = _.clone(this.scope);
             result.elements = [];
@@ -97,6 +127,11 @@ module app.core.model {
                 json.scope = {};
                 json.scope.$ref = "#/properties/" + this.scope;
             }
+            json.rule = JSON.parse(JSON.stringify(this.rule));
+            if (json.rule.condition.scope.$ref) {
+                json.rule.condition.scope = {};
+                json.rule.condition.scope.$ref = "#/properties/" + this.rule['condition'].scope.$ref;
+            }
             if (this.elements && this.elements.length > 0) {
                 json.elements = [];
                 for (var i = 0; i < this.elements.length; i++) {
@@ -107,5 +142,19 @@ module app.core.model {
                 return value;
             }, 2);
         }
+
+        // VALIDATION
+        public validate(): TreeError[]{
+            var errors = [];
+            for(var i=0; i<this.checks.length; i++){
+                var error = this.checks[i].validate();
+                if(error!=null){
+                    errors.push(error);
+                }
+            }
+            this.errors = errors;
+            return errors;
+        }
+
     }
 }

@@ -5,7 +5,7 @@
       <md-icon class="btn material-icons" ng-show="collapsed">expand_more</md-icon>
       <md-icon class="btn material-icons" ng-show="!collapsed">expand_less</md-icon>
     </a>
-    {{node.getType()}} <span ng-show="node.getLabel()">-</span>  {{node.getLabel()}}
+    {{node.getLongType()}} <span ng-show="node.getLabel()">-</span>  {{node.getLabel()}}
     <a class="pull-right left-margin" hideif="node.root" data-nodrag ng-click="tree.remove(this)">
       <md-icon class="btn material-icons">delete</md-icon>
     </a>

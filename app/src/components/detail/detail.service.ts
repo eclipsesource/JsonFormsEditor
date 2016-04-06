@@ -3,6 +3,7 @@ module app.detail {
     import Metaschema = app.core.metaschema.Metaschema;
     import TreeElement = app.core.model.TreeElement;
     import MetaschemaService = app.core.metaschema.MetaschemaService;
+    import DataschemaService = app.core.dataschema.DataschemaService;
 
     export class DetailService {
 
@@ -10,7 +11,7 @@ module app.detail {
         public schema:any;
         public uiSchema:any;
 
-        static $inject = ["MetaschemaService"];
+        static $inject = ['MetaschemaService'];
 
         constructor(private metaschemaService:MetaschemaService) {
 
@@ -21,6 +22,10 @@ module app.detail {
                 this.schema = metaschema.getDefinitionByTypeLabel(element.getType()).getDataschema();
                 this.uiSchema = metaschema.getDefinitionByTypeLabel(element.getType()).getUISchema();
                 this.currentElement = element;
+                /*if (this.currentElement.getType() == 'Control') {
+                    this.currentElement.setType(this.currentElement.getLongType());
+                }*/
+
             });
         }
     }

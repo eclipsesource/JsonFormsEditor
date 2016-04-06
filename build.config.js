@@ -26,7 +26,7 @@ module.exports = {
         ts: [ 'app/src/**/*.ts', '!app/src/**/*.spec.ts' ],
         tsunit: [ 'app/src/**/*.spec.ts' ],
         html: [ 'app/index.html', 'app/src/**/*.html' ],
-        less: ['app/assets/style/style.less'],
+        less: ['app/src/**/*.less', 'app/assets/style/*.less'],
         assets: ['fonts/**/*.*', 'resource/**/*.*']
     },
 

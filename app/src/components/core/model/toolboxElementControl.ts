@@ -2,7 +2,7 @@ module app.core.model {
 
     import ElementConfig = app.core.elementsConfig.ElementConfig;
 
-    export class ControlToolboxElement extends ToolboxElement {
+    export class ControlToolboxElement extends ToolboxElement{
 
         constructor(name:string, public datatype:string, private scope:string) {
             super(name, "", null);
@@ -27,6 +27,7 @@ module app.core.model {
         convertToTreeElement():TreeElement {
             var treeElement = new TreeElement();
             treeElement.setType("Control");
+            treeElement.setDataType(this.datatype);
             treeElement.setScope(this.scope);
             treeElement.setLabel(this.getLabel());
             treeElement.setAcceptedElements(this.getAcceptedElements());

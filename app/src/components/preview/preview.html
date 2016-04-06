@@ -2,7 +2,7 @@
     <jsonforms schema="preview.previewService.schema" ui-schema="preview.previewService.uiSchema"
                data="preview.data"></jsonforms>
 </md-content>
-<md-button ng-if="!preview.configService.isPreviewTab()" ng-click="preview.openInNewTab()" class="md-fab accent md-fab-bottom-right">
+<md-button ng-if="!preview.configService.isPreviewTab()&&preview.shouldShowNewTabButton()" ng-click="preview.openInNewTab()" class="md-fab accent md-fab-bottom-right">
     <md-icon class="material-icons">open_in_new</md-icon>
 </md-button>
 <script>
