@@ -11,22 +11,25 @@ var Strategy = require('passport-github').Strategy;
 var connector = require('../lib/github.connector.js');
 var github = express();
 
+
 github.use(passport.initialize());
 github.use(passport.session());
 
 github.get('/login', passport.authenticate('github'));
 
-passport.use(new Strategy({
+var strategy = new Strategy({
     clientID: keys.clientId,
     clientSecret: keys.clientSecret,
     callbackURL: config.appUrl + '/github/getRepoList'
 }, function(accessToken, refreshToken, profile, cb){
-	    console.log('Authenticated');
+	console.log(refreshToken);
 	    cb(null, {
 	      accessToken: accessToken,
-	      profile:profile
+	      profile:profile,
 	    });
-}));
+});
+
+passport.use(strategy);
 
 passport.serializeUser(function(user, done) {
 	done(null, user);
@@ -36,11 +39,11 @@ passport.deserializeUser(function(user, done) {
 	done(null, user);
 });
 
+
 github.get('/getRepoList', passport.authenticate('github', {failureRedirect: '/login'}),
 	   function(req, res, next){
-	  
+	       
 	       var code = req.user.accessToken;  
-	       console.log('GOT AccessToken: '+code);
 		   connector.getRepoList(code, function(error, result){
 			   if(error){
 				   return next(error);
