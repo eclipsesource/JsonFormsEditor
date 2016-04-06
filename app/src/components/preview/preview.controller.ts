@@ -15,8 +15,7 @@ module app.preview {
             if(!split){
                 return true;
             }
-            var queries = split[split.length-1];
-            console.log(queries);
+            var queries = _.last(split);
             if(!queries){
                 return true;
             }

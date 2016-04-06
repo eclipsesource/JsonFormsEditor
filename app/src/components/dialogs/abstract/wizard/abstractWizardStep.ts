@@ -21,5 +21,9 @@ module app.dialogs {
         abstract shallSubmit():boolean;
 
         abstract submit():IPromise<any>;
+
+        isAllowedToContinue(): boolean {
+            return true;
+        }
     }
 }

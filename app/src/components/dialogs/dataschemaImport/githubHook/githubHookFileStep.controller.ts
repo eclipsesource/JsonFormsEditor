@@ -18,6 +18,13 @@ module app.dialogs.dataschemaimport {
             this.wiz = wizard;
         }
 
+        isAllowedToContinue(): boolean {
+            if(this.selectedFile){
+	    	    return true;
+	    }
+	    return false;
+        }
+
         getTitle():string {
             return "Select Data Schema";
         }
