@@ -21,7 +21,7 @@ passport.use(new Strategy({
     clientSecret: keys.clientSecret,
     callbackURL: config.appUrl + '/github/getRepoList'
 }, function(accessToken, refreshToken, profile, cb){
-	    
+	    console.log('Authenticated');
 	    cb(null, {
 	      accessToken: accessToken,
 	      profile:profile
@@ -38,7 +38,9 @@ passport.deserializeUser(function(user, done) {
 
 github.get('/getRepoList', passport.authenticate('github', {failureRedirect: '/login'}),
 	   function(req, res, next){
+	  
 	       var code = req.user.accessToken;  
+	       console.log('GOT AccessToken: '+code);
 		   connector.getRepoList(code, function(error, result){
 			   if(error){
 				   return next(error);

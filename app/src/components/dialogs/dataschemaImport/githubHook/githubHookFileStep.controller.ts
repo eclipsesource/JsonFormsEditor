@@ -19,7 +19,10 @@ module app.dialogs.dataschemaimport {
         }
 
         isAllowedToContinue(): boolean {
-            return (this.selectedFile == true);
+            if(this.selectedFile){
+	    	    return true;
+	    }
+	    return false;
         }
 
         getTitle():string {
