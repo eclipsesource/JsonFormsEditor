@@ -129,7 +129,7 @@ module app.core.model {
                 json.rule.condition.scope = {};
                 json.rule.condition.scope.$ref = "#/properties/" + this.rule['condition'].scope;
             }
-            if (this.elements && this.elements.length > 0) {
+            if (this.metaData['acceptedElements']) {
                 json.elements = [];
                 for (var i = 0; i < this.elements.length; i++) {
                     json.elements.push(JSON.parse(this.elements[i].toJSONString()));
