@@ -43,11 +43,11 @@ module app.core.metaschema {
             return new Metaschema(definitions);
         }
 
-        private static extractDefinitionNameFromRef(ref:string):string {
+        static extractDefinitionNameFromRef(ref:string):string {
             return ref.substring(("#/definitions/").length);
         }
 
-        private static generateDefinition(definitions:Definition[], definitionName:string, metaschema:{}, resolvedMetaschema:{}, rootDefinitionsNames:string[], alreadyGenerated:string[]) {
+        static generateDefinition(definitions:Definition[], definitionName:string, metaschema:{}, resolvedMetaschema:{}, rootDefinitionsNames:string[], alreadyGenerated:string[]) {
             if (alreadyGenerated.indexOf(definitionName) < 0) {
                 var definitionMetaschema:{} = metaschema['definitions'][definitionName];
                 var resolvedDefinitionMetaschema:{} = resolvedMetaschema['definitions'][definitionName];
@@ -68,7 +68,7 @@ module app.core.metaschema {
             }
         }
 
-        private static generateDefinitionDataschema(resolvedDefinitionMetaschema:{}):{} {
+        static generateDefinitionDataschema(resolvedDefinitionMetaschema:{}):{} {
             var definitionDataschema = {};
 
             _.forOwn(resolvedDefinitionMetaschema, (value, key) => {
@@ -93,7 +93,7 @@ module app.core.metaschema {
             return definitionDataschema;
         }
 
-        private static extractPropertiesFromDefinitionMetaschema(definitionMetaschema:{}):{} {
+        static extractPropertiesFromDefinitionMetaschema(definitionMetaschema:{}):{} {
             var properties = {};
 
             if (definitionMetaschema['properties']) {
@@ -111,7 +111,7 @@ module app.core.metaschema {
              }, {});
         }
 
-        private static retrieveAcceptedElements(definitionMetaschema:{}, rootDefinitionsNames:string[]):string[] {
+        static retrieveAcceptedElements(definitionMetaschema:{}, rootDefinitionsNames:string[]):string[] {
             var acceptedElements:string[] = [];
 
             var properties = Metaschema.extractPropertiesFromDefinitionMetaschema(definitionMetaschema);
@@ -127,7 +127,7 @@ module app.core.metaschema {
             return acceptedElements;
         }
 
-        private static resolveTypesAndAcceptedElements(definitions, metaschema) {
+        static resolveTypesAndAcceptedElements(definitions, metaschema) {
             var nameTypeMap = {};
             for (var i = 0; i < definitions.length; i++) {
                 var definition:Definition = definitions[i];
@@ -147,7 +147,7 @@ module app.core.metaschema {
             }
         }
 
-        private static retrieveDefinitionTypes(definitionName:string, metaschema:{}):string[] {
+        static retrieveDefinitionTypes(definitionName:string, metaschema:{}):string[] {
             var definitionMetaschema:{} = metaschema['definitions'][definitionName];
             var properties = Metaschema.extractPropertiesFromDefinitionMetaschema(definitionMetaschema);
             return properties['type']['enum'];
