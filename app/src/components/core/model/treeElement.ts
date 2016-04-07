@@ -2,7 +2,7 @@ module app.core.model {
 
     export class TreeElement {
 
-
+        private errors: string[] = [];
         private type:string;
         private dataType:string;
         public label:string;
@@ -140,6 +140,19 @@ module app.core.model {
             }, 2);
         }
 
+        addError(error: string){
 
+        }
+
+        getErrors(): string[]{
+            return this.errors;
+        }
+
+        isValid(): boolean {
+            if(this.errors === []){
+                return true;
+            }
+            return false;
+        }
     }
 }

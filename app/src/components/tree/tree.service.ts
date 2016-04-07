@@ -79,7 +79,54 @@ module app.tree {
         }
 
         modifiedTree(){
-            this.validatorService.validateUISchema(this.exportUISchemaAsJSON());
+            var validation = this.validatorService.validateUISchema(this.exportUISchemaAsJSON());
+            if(!validation || validation.valid === undefined || validation.errors === undefined){
+                return;
+            }
+            if(validation.valid === false){
+                validation.errors.forEach((error)=>{
+                    this.processError(error);
+                });
+            }
+        }
+
+        processError(error: any){
+            if(!error){
+                return;
+            }
+            var dataPath = error.dataPath;
+            var message = error.message;
+            var subErrors = error.subErrors || [];
+
+            if(dataPath === undefined || message === undefined){
+                return;
+            }
+
+            this.getElementByPath(dataPath).addError(message);
+
+            for(var i = 0; i < subErrors.length; i++){
+                this.processError(subErrors[i]);
+            }
+
+        }
+
+        getElementByPath(path: string): TreeElement{
+            var element: TreeElement = this.elements[0];
+            var split = path.split('/');
+            if(split===undefined )split = [];
+            for(var i = 0; i< split.length; i++){
+                if(split[i]===''){
+                    continue;
+                }
+
+                //check if the value is neither a number nor 'elements'
+                if(isNaN(parseInt(split[i])) && split[i] !== 'elements'){
+                    break;
+                }
+                element = element[split[i]];
+            }
+
+            return element;
         }
     }
 
