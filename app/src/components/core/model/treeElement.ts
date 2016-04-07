@@ -3,9 +3,6 @@ module app.core.model {
     export class TreeElement {
 
 
-        private checks: Check[] = [];
-        private errors: TreeError[] = [];
-
         private type:string;
         private dataType:string;
         public label:string;
@@ -127,10 +124,10 @@ module app.core.model {
                 json.scope = {};
                 json.scope.$ref = "#/properties/" + this.scope;
             }
-            json.rule = JSON.parse(JSON.stringify(this.rule));
-            if (json.rule.condition.scope.$ref) {
+            if (this.rule['effect'].length > 0 && this.rule['condition']['scope'].length > 0 && this.rule['condition']['expectedValue'].length > 0) {
+                json.rule = JSON.parse(JSON.stringify(this.rule));
                 json.rule.condition.scope = {};
-                json.rule.condition.scope.$ref = "#/properties/" + this.rule['condition'].scope.$ref;
+                json.rule.condition.scope.$ref = "#/properties/" + this.rule['condition'].scope;
             }
             if (this.elements && this.elements.length > 0) {
                 json.elements = [];
@@ -143,18 +140,6 @@ module app.core.model {
             }, 2);
         }
 
-        // VALIDATION
-        public validate(): TreeError[]{
-            var errors = [];
-            for(var i=0; i<this.checks.length; i++){
-                var error = this.checks[i].validate();
-                if(error!=null){
-                    errors.push(error);
-                }
-            }
-            this.errors = errors;
-            return errors;
-        }
 
     }
 }

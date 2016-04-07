@@ -2,6 +2,7 @@
 /// <reference path="../../../../../typings/angularjs/angular-mocks.d.ts" />
 
 import Metaschema = app.core.metaschema.Metaschema;
+import Definition = app.core.metaschema.Definition;
 'use strict';
 
 describe('app.core.Metaschema', () => {
@@ -10,6 +11,75 @@ describe('app.core.Metaschema', () => {
 
     beforeAll(() => {
         metaschema = Metaschema.fromJSON(json);
+    });
+
+    it('should resolve runtimeProps', () => {
+        var controlDefinition:Definition = metaschema.getDefinitionByTypeLabel("Control");
+        expect(controlDefinition.getDataschema()['properties']['rule']).toBeDefined();
+    });
+
+    it('should merge the properties', () => {
+        var ab = { "properties": { "a": 1, "b": 2 } };
+        var cd = { "properties": { "c": 3, "d": 4 } }
+        var abcd = Metaschema.mergeDefinitionProperties([ab, cd]);
+        expect(abcd).toEqual({ "a": 1, "b": 2, "c": 3, "d": 4 });
+    });
+
+    it('should merge only the properties', () => {
+        var ab = { "properties": { "a": 1, "b": 2 } };
+        var cd = { "c": 3, "d": 4 };
+        var abcd = Metaschema.mergeDefinitionProperties([ab, cd]);
+        expect(abcd).toEqual({ "a": 1, "b": 2 });
+    });
+
+    it('should generate a correct definition dataschema', () => {
+        var controlResolvedMetaschema = {
+            "allOf": [{
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum":["ExampleType"]
+                    },
+                    "scope": {
+                        "type": "object",
+                        "properties": {
+                            "$ref": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "elements": {}
+                }
+            }, {
+                "properties": {
+                    "rule": {
+                        "type": "object",
+                        "properties": {
+                            "condition": {
+                                "type": "object",
+                                "properties": {
+                                    "scope": {
+                                        "type": "object",
+                                        "properties": {
+                                            "$ref": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }]
+        };
+        var controlDataschema = Metaschema.generateDefinitionDataschema(controlResolvedMetaschema);
+        expect(controlDataschema['allOf']).toBeUndefined();
+        expect(controlDataschema['properties']).toBeDefined();
+        expect(controlDataschema['properties']['elements']).toBeUndefined();
+        expect(controlDataschema['properties']['type']['enum']).toBeUndefined();
+        expect(controlDataschema['properties']['scope']["type"]).toBe("string");
+        expect(controlDataschema['properties']['rule']).toBeDefined();
     });
 
     it('should create metaschema from JSON', () => {
@@ -35,7 +105,7 @@ describe('app.core.Metaschema', () => {
         expect(metaschema.getDefinitionByTypeLabel('Control').acceptsElements()).toBeFalsy();
         expect(metaschema.getDefinitionByTypeLabel('VerticalLayout').acceptsElements()).toBeTruthy();
         expect(metaschema.getDefinitionByTypeLabel('VerticalLayout').getAcceptedElements().length).toBeGreaterThan(0);
-        expect(metaschema.getDefinitionByTypeLabel('Categorization').getAcceptedElements().length).toBe(1);
+        expect(metaschema.getDefinitionByTypeLabel('Categorization').getAcceptedElements()).toEqual(['Category']);
     });
 
     /**
@@ -43,48 +113,125 @@ describe('app.core.Metaschema', () => {
      */
     var json = {
         "definitions": {
-            "label": {
+            "rule": {
+                "type": "object",
+                "required": ["condition", "effect"],
                 "properties": {
-                    "text": {
-                        "type": "string"
+                    "effect": {
+                        "type": "string",
+                        "enum": ["", "HIDE"]
+                    },
+                    "condition": {
+                        "type": "object",
+                        "properties": {
+                            "scope": {
+                                "type": "object",
+                                "properties": {
+                                    "$ref": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "expectedValue": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "runtimeProps": {
+                "type": "object",
+                "properties": {
+                    "rule": {
+                        "$ref": "#/definitions/rule"
                     }
                 }
             },
             "control": {
                 "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "Control"
-                        ]
-                    },
-                    "label": {
-                        "type": "string"
-                    },
-                    "scope": {
-                        "type": "object",
-                        "properties": {
-                            "$ref": {
-                                "type": "string"
+                "allOf": [{
+                    "$ref": "#/definitions/runtimeProps"
+                }, {
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "enum": [
+                                "Control"
+                            ]
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "scope": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "readOnly": {
+                            "type": "boolean"
+                        }
+                    }
+                }],
+                "required": ["type", "scope"]
+            },
+            "layout": {
+                "type": "object",
+                "required": ["type", "elements"],
+                "additionalProperties": false,
+                "allOf": [{
+                    "$ref": "#/definitions/runtimeProps"
+                }, {
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "enum": [
+                                "HorizontalLayout",
+                                "VerticalLayout"
+                            ]
+                        },
+                        "elements": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#"
                             }
                         }
                     }
-                },
-                "required": [
-                    "type",
-                    "scope"
-                ]
+                }]
             },
-            "layout": {
+            "group": {
+                "type": "object",
+                "required": ["type", "elements"],
+                "additionalProperties": false,
+                "allOf": [{
+                    "$ref": "#/definitions/runtimeProps"
+                }, {
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "enum": ["Group"]
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "elements": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#"
+                            }
+                        }
+                    }
+                }]
+            },
+            "category": {
                 "type": "object",
                 "properties": {
                     "type": {
                         "type": "string",
                         "enum": [
-                            "HorizontalLayout",
-                            "VerticalLayout",
-                            "Group"
+                            "Category"
                         ]
                     },
                     "label": {
@@ -97,65 +244,42 @@ describe('app.core.Metaschema', () => {
                         }
                     }
                 },
-                "required": [
-                    "type",
-                    "elements"
-                ]
+                "required": ["type", "elements"],
+                "additionalProperties": false
             },
             "categorization": {
                 "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "Categorization"
-                        ]
-                    },
-                    "elements": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "type": {
-                                    "type": "string",
-                                    "enum": [
-                                        "Category"
-                                    ]
-                                },
-                                "elements": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#"
-                                    }
-                                }
-                            },
-                            "required": [
-                                "type",
-                                "elements"
+                "required": ["type", "elements"],
+                "additionalProperties": false,
+                "allOf": [{
+                    "$ref": "#/definitions/runtimeProps"
+                }, {
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "enum": [
+                                "Categorization"
                             ]
+                        },
+                        "elements": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/category"
+                            }
                         }
                     }
-                },
-                "required": [
-                    "type",
-                    "elements"
-                ]
+                }]
             }
         },
         "type": "object",
-        "oneOf": [
-            {
-                "$ref": "#/definitions/categorization"
-            },
-            {
-                "$ref": "#/definitions/layout"
-            },
-            {
-                "$ref": "#/definitions/control"
-            },
-            {
-                "$ref": "#/definitions/label"
-            }
-        ]
+        "anyOf": [{
+            "$ref": "#/definitions/categorization"
+        }, {
+            "$ref": "#/definitions/layout"
+        }, {
+            "$ref": "#/definitions/group"
+        }, {
+            "$ref": "#/definitions/control"
+        }]
     };
 });

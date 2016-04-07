@@ -37,8 +37,6 @@
     "control": {
       "type": "object",
       "allOf": [{
-        "$ref": "#/definitions/runtimeProps"
-      }, {
         "properties": {
           "type": {
             "type": "string",
@@ -61,6 +59,8 @@
             "type": "boolean"
           }
         }
+      }, {
+        "$ref": "#/definitions/runtimeProps"
       }],
       "required": ["type", "scope"]
     },
@@ -69,8 +69,6 @@
       "required": ["type", "elements"],
       "additionalProperties": false,
       "allOf": [{
-        "$ref": "#/definitions/runtimeProps"
-      }, {
         "properties": {
           "type": {
             "type": "string",
@@ -86,6 +84,8 @@
             }
           }
         }
+      }, {
+        "$ref": "#/definitions/runtimeProps"
       }]
     },
     "group": {
@@ -93,8 +93,6 @@
       "required": ["type", "elements"],
       "additionalProperties": false,
       "allOf": [{
-        "$ref": "#/definitions/runtimeProps"
-      }, {
         "properties": {
           "type": {
             "type": "string",
@@ -110,16 +108,37 @@
             }
           }
         }
+      }, {
+        "$ref": "#/definitions/runtimeProps"
       }]
+    },
+    "category": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Category"
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#"
+          }
+        }
+      },
+      "required": ["type", "elements"],
+      "additionalProperties": false
     },
     "categorization": {
       "type": "object",
-
       "required": ["type", "elements"],
       "additionalProperties": false,
       "allOf": [{
-        "$ref": "#/definitions/runtimeProps"
-      }, {
         "properties": {
           "type": {
             "type": "string",
@@ -130,29 +149,12 @@
           "elements": {
             "type": "array",
             "items": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "enum": [
-                    "Category"
-                  ]
-                },
-                "label": {
-                  "type": "string"
-                },
-                "elements": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#"
-                  }
-                }
-              },
-              "required": ["type", "elements"],
-              "additionalProperties": false
+              "$ref": "#/definitions/category"
             }
           }
         }
+      }, {
+        "$ref": "#/definitions/runtimeProps"
       }]
     }
   },

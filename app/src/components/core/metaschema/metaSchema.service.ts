@@ -9,13 +9,14 @@ module app.core.metaschema {
     export class MetaschemaService {
 
         static $inject = ['$http', '$q'];
-
+        private jsonMetaschema:any;
         private metaschema:IPromise<Metaschema>;
 
         constructor($http:ng.IHttpService, $q:IQService) {
             var deffered:IDeferred<Metaschema> = $q.defer();
 
             $http.get('resource/metaschema.json').success((json:any):void => {
+                this.jsonMetaschema = json;
                 deffered.resolve(Metaschema.fromJSON(json));
             });
 
@@ -29,6 +30,15 @@ module app.core.metaschema {
          */
         getMetaschema():IPromise<Metaschema> {
             return this.metaschema;
+        }
+
+        getJsonMetaschema():any{
+            if(!this.jsonMetaschema){
+                console.log('ERROR: The metaschema has not been loaded yet');
+                return undefined;
+            }
+
+            return this.jsonMetaschema;
         }
 
     }
