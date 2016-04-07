@@ -4,7 +4,7 @@
         <!--<md-icon class="material-icons red pull-right" ng-if="detail.detailService.currentElement && !detail.detailService.currentElement.isValid()">error</md-icon>-->
         <img class="detail-alert-image" ng-if="detail.detailService.currentElement && !detail.detailService.currentElement.isValid()" src="/resource/error_icon24.png">
     </md-subheader>
-    <md-content class="md-padding bottom-border" ng-if="detail.detailService.currentElement">
+    <md-content class="md-padding" ng-class="{'bottom-border': detail.detailService.currentElement && !detail.detailService.currentElement.isValid()}" ng-if="detail.detailService.currentElement">
         <section class="jsf" layout="row">
             <jsonforms schema="detail.detailService.schema" ui-schema="detail.detailService.uiSchema"
                        data="detail.detailService.currentElement">
@@ -14,7 +14,7 @@
     <md-subheader ng-if="detail.detailService.currentElement && !detail.detailService.currentElement.isValid()" class="md-primary bottom-border">
         ERRORS
     </md-subheader>
-    <md-content ng-if="detail.detailService.currentElement && !detail.detailService.currentElement.isValid()">
+    <md-content style="min-height: 200px;" ng-if="detail.detailService.currentElement && !detail.detailService.currentElement.isValid()">
         <div class="detail-error-box">
             <div class="detail-error-entry" ng-repeat="error in detail.detailService.currentElement.getErrors()">
                 {{error}}

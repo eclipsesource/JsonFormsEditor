@@ -107,7 +107,7 @@ module app.core.dataschema {
          * @returns {boolean} indicating if the addition was succesful(when false, it means the element was not added)
          */
         addNewProperty(label: string, type: string, config: any, path:string[]):boolean {
-
+            config = config || {};
             var property: any = {};
             property.type = type;
 
