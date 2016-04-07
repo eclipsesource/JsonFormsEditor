@@ -12,17 +12,12 @@ module app.core.metaschema {
          * @param dataschema the dataschema of the definition
          * @param acceptedElements the labels of the elements this definition accepts as children
          */
-        constructor(name:string, private dataschema:{}, private acceptedElements:string[]) {
-            if (this.dataschema.hasOwnProperty('properties')) {
-                if (this.dataschema['properties'].hasOwnProperty('type')) {
-                    if (this.dataschema['properties']['type'].hasOwnProperty('enum')) {
-                        this.types = this.dataschema['properties']['type']['enum'];
-                    } else {
-                        this.types.push(_.capitalize(name));
-                    }
-                }
-            }
-            this.uischema = this.generateUISchema(this.dataschema);
+        constructor(private name:string, private dataschema:{}, private acceptedElements:string[]) {
+            this.uischema = this.generateUISchema(dataschema);
+        }
+
+        getName():string {
+            return this.name;
         }
 
         /**
@@ -31,6 +26,10 @@ module app.core.metaschema {
          */
         getTypeLabels():string[] {
             return this.types;
+        }
+
+        setTypes(newTypes:string[]) {
+            this.types = newTypes;
         }
 
         /**
@@ -47,6 +46,10 @@ module app.core.metaschema {
          */
         getAcceptedElements():string[] {
             return this.acceptedElements;
+        }
+
+        setAcceptedElements(newAcceptedElements:string[]) {
+            this.acceptedElements = newAcceptedElements;
         }
 
         /**

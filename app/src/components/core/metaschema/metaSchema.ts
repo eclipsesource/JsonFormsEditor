@@ -1,3 +1,5 @@
+declare var JsonRefs;
+
 module app.core.metaschema {
 
     export class Metaschema {
@@ -9,161 +11,138 @@ module app.core.metaschema {
         /**
          * Factory-Method to create a Metaschema from a json-object.
          *
-         * @param json the json structure to create the metaschema from
+         * @param metaschema the json structure to create the metaschema from
          *
          * @returns {app.core.metaschema.Metaschema}
          */
-        static fromJSON(json:any):Metaschema {
+        static fromJSON(metaschema:{}):Metaschema {
             var definitions:Definition[] = [];
+            var rootDefinitionsNames:string[] = [];
+            var alreadyGenerated:string[] = [];
 
-            // array contains the names of all definitions
-            var definitionsNames:string[] = [];
+            // Resolve references of the metaschema
+            var resolvedMetaschema;
+            JsonRefs.resolveRefs(metaschema, {}, function(err, res) {
+                resolvedMetaschema = res;
+            });
 
-            if (json.hasOwnProperty('definitions')) {
-                var definitionsRefs = json['anyOf'];
-                for (var i = 0; i < definitionsRefs.length; i++) {
-                    var name = definitionsRefs[i]['$ref'].substring(("#/definitions/").length);
-                    var value = json['definitions'][name];
-                    if (value.hasOwnProperty('type')) {
-                        if (value['type'] === 'object') {
-                            var definition:Definition = new Definition(name, Metaschema.cleanupDataschema(value, json), Metaschema.retrieveAcceptedElements(value, definitionsNames));
-
-                            // now continue with all child elements that the current element can accept
-                            _.forEach(Metaschema.retrieveChildElements(value, definitionsNames, json), (child:Definition) => {
-                                definitions.push(child);
-                            });
-
-                            // add everything to the result
-                            definitions.push(definition);
-                            _.forEach(definition.getTypeLabels(), (type:string) => {
-                                if (definitionsNames.indexOf(type) === -1) {
-                                    definitionsNames.push(type);
-                                }
-                            });
-                        }
-                    }
-                }
+            // save root definitions names
+            for (var i = 0; i < metaschema['anyOf'].length; i++) {
+                rootDefinitionsNames.push(Metaschema.extractDefinitionNameFromRef(metaschema['anyOf'][i]['$ref']));
             }
+
+            // generate definitions
+            for (var i = 0; i < resolvedMetaschema['anyOf'].length; i++) {
+                var definitionName = rootDefinitionsNames[i];
+                Metaschema.generateDefinition(definitions, definitionName, metaschema, resolvedMetaschema, rootDefinitionsNames, alreadyGenerated);
+            }
+
+            // resolve accepted elements
+            Metaschema.resolveTypesAndAcceptedElements(definitions, metaschema);
+
             return new Metaschema(definitions);
         }
 
-        private static retrieveAcceptedElements(value:{}, definitionsNames:string[]):string[] {
-            var result:string[] = [];
-            var items = null;
-
-            if (value['allOf']) {
-                var index;
-                for (var i = 0; i < value['allOf'].length; i++) {
-                    if (value['allOf'][i]['properties']) index = i;
-                }
-                if (value['allOf'][index]['properties'].hasOwnProperty('elements') && value['allOf'][index]['properties']['elements'].hasOwnProperty('items')) {
-                    items = value['allOf'][index]['properties']['elements']['items'];
-                }
-            } else if (value.hasOwnProperty('properties') && value['properties'].hasOwnProperty('elements') && value['properties']['elements'].hasOwnProperty('items')) {
-                items = value['properties']['elements']['items'];
-            }
-
-            if (items && items.hasOwnProperty('$ref') && items['$ref'] === '#') {
-                result = definitionsNames;
-            } else {
-                // a new object is declared, so get its label
-                if (items && items.hasOwnProperty('properties') && items['properties'].hasOwnProperty('type') && items['properties']['type'].hasOwnProperty('enum')) {
-                    result = items['properties']['type']['enum'];
-                }
-            }
-
-            return result;
+        private static extractDefinitionNameFromRef(ref:string):string {
+            return ref.substring(("#/definitions/").length);
         }
 
-        private static retrieveChildElements(schema:{}, definitionsNames:string[], json:{}):Definition[] {
-            var result:Definition[] = [];
-            var elements = null;
+        private static generateDefinition(definitions:Definition[], definitionName:string, metaschema:{}, resolvedMetaschema:{}, rootDefinitionsNames:string[], alreadyGenerated:string[]) {
+            if (alreadyGenerated.indexOf(definitionName) < 0) {
+                var definitionMetaschema:{} = metaschema['definitions'][definitionName];
+                var resolvedDefinitionMetaschema:{} = resolvedMetaschema['definitions'][definitionName];
+                var definitionDataschema:{} = Metaschema.generateDefinitionDataschema(resolvedDefinitionMetaschema);
 
-            if (schema['allOf']) {
-                var index;
-                for (var i = 0; i < schema['allOf'].length; i++) {
-                    if (schema['allOf'][i]['properties']) index = i;
-                }
-                if (schema['allOf'][index]['properties'].hasOwnProperty('elements')) {
-                    elements = schema['allOf'][index]['properties']['elements'];
-                }
-            } else if (schema.hasOwnProperty('properties') && schema['properties'].hasOwnProperty('elements')) {
-                elements = schema['properties']['elements'];
-            }
+                var acceptedElements:string[] = Metaschema.retrieveAcceptedElements(definitionMetaschema, rootDefinitionsNames);
 
-            if (elements && elements.hasOwnProperty('type') && elements['type'] === 'array' && elements.hasOwnProperty('items')) {
-                var items = elements['items'];
-                if (items.hasOwnProperty('type')) {
-                    if (items['type'] === 'array') {
-                        if (!items.hasOwnProperty('$ref')) {
-                            // a new object is introduced, otherwise $ref would be used
+                definitions.push(new Definition(definitionName, definitionDataschema, acceptedElements));
+                alreadyGenerated.push(definitionName);
 
-                        }
-                    } else if (items['type'] === 'object') {
-                        // we are sure that there is a new object introduced here
-                        if (items.hasOwnProperty('properties') && items['properties'].hasOwnProperty('type')) {
-                            if (items['properties']['type'].hasOwnProperty('enum')) {
-                                _.forEach(items['properties']['type']['enum'], (name:string) => {
-                                    result.push(new Definition(name.toLowerCase(), Metaschema.cleanupDataschema(items, json), Metaschema.retrieveAcceptedElements(items, definitionsNames)));
-                                });
-                            }
-                        }
-                    }
+                // child definitions
+                var notGeneratedChildDefinitions = acceptedElements.filter(function (name:string) {
+                    return !_.contains(rootDefinitionsNames, name) && !_.contains(alreadyGenerated, name);
+                });
+                for (var i = 0; i < notGeneratedChildDefinitions.length; i++) {
+                    Metaschema.generateDefinition(definitions, notGeneratedChildDefinitions[i], metaschema, resolvedMetaschema, rootDefinitionsNames, alreadyGenerated);
                 }
             }
-
-            return result;
         }
 
-        private static cleanupDataschema(dataschema:{}, json:{}):{} {
-            var result = {
-                "type": "object",
-                "properties" : {}
-            };
-            var propertiesSources = [];
+        private static generateDefinitionDataschema(resolvedDefinitionMetaschema:{}):{} {
+            var definitionDataschema = {};
 
-            if (dataschema['properties']) {
-                propertiesSources = [dataschema];
-            } else {
-                propertiesSources = dataschema['allOf'];
+            _.forOwn(resolvedDefinitionMetaschema, (value, key) => {
+                // resolve properties
+                if (key == 'allOf' || key == 'properties') {
+                    var properties = Metaschema.extractPropertiesFromDefinitionMetaschema(resolvedDefinitionMetaschema);
+                    definitionDataschema['properties'] = _.omit(properties, ['elements']);
+                } else {
+                    definitionDataschema[key] = value;
+                }
+            });
+
+            return definitionDataschema;
+        }
+
+        private static extractPropertiesFromDefinitionMetaschema(definitionMetaschema:{}):{} {
+            var properties = {};
+
+            if (definitionMetaschema['properties']) {
+                properties = definitionMetaschema['properties'];
+            } else if (definitionMetaschema['allOf']) {
+                properties = Metaschema.mergeDefinitionProperties(definitionMetaschema['allOf']);
             }
-            for (var i = 0; i < propertiesSources.length; i++) {
-                var propertySource = propertiesSources[i];
 
-                if (propertySource['properties']) {
-                    result['properties'] = _.merge(_.omit(propertySource['properties'], ['elements']), result['properties']);
+            return properties;
+        }
 
-                    if (propertySource['properties'].hasOwnProperty('scope')) {
-                        result['properties']['scope'] = {'type': 'string'};
-                    }
+        static mergeDefinitionProperties(propertiesSources:{}[]):{} {
+            return propertiesSources.reduce(function(propertiesObject, propertySource) {
+                return _.merge(propertiesObject, propertySource['properties']);
+             }, {});
+        }
 
-                    if (propertySource['properties'].hasOwnProperty('type')) {
-                        if (propertySource['properties']['type'].hasOwnProperty('enum')) {
-                            if (propertySource['properties']['type']['enum'].length > 1) {
-                                result['properties']['type'] = propertySource['properties']['type'];
-                            }
-                            else {
-                                result['properties']['type'] = _.omit(propertySource['properties']['type'], ['enum']);
-                            }
-                        }
-                    }
-                } else if (propertySource['$ref']) {
-                    if (propertySource['$ref'].substring(("#/definitions/").length) == 'runtimeProps') {
-                        var runtimeProps = json['definitions']['runtimeProps']['properties'];
-                        _.forOwn(runtimeProps, (value, key) => {
-                            if (value['$ref']) {
-                                result['properties'][key] = json['definitions'][value['$ref'].substring(("#/definitions/").length)];
-                            }
-                        });
-                    }
+        private static retrieveAcceptedElements(definitionMetaschema:{}, rootDefinitionsNames:string[]):string[] {
+            var acceptedElements:string[] = [];
+
+            var properties = Metaschema.extractPropertiesFromDefinitionMetaschema(definitionMetaschema);
+            if (properties['elements']) {
+                var ref = properties['elements']['items']['$ref'];
+                if (ref == "#") {
+                    acceptedElements = acceptedElements.concat(rootDefinitionsNames);
+                } else {
+                    acceptedElements.push(Metaschema.extractDefinitionNameFromRef(ref));
                 }
             }
 
-            if (dataschema.hasOwnProperty('required')) {
-                result['required'] = dataschema['required'];
-            }
+            return acceptedElements;
+        }
 
-            return result;
+        private static resolveTypesAndAcceptedElements(definitions, metaschema) {
+            var nameTypeMap = {};
+            console.log(definitions);
+            for (var i = 0; i < definitions.length; i++) {
+                var definition:Definition = definitions[i];
+                var definitionName = definition.getName();
+                var definitionTypes = Metaschema.retrieveDefinitionTypes(definitionName, metaschema);
+                definition.setTypes(definitionTypes);
+                nameTypeMap[definitionName] = definitionTypes
+            }
+            for (var i = 0; i < definitions.length; i++) {
+                var definition:Definition = definitions[i];
+                var acceptedElements = definition.getAcceptedElements();
+                var resolvedAcceptedElements = [];
+                for (var j = 0; j < acceptedElements.length; j++) {
+                    resolvedAcceptedElements = resolvedAcceptedElements.concat(nameTypeMap[acceptedElements[j]]);
+                }
+                definition.setAcceptedElements(resolvedAcceptedElements);
+            }
+        }
+
+        private static retrieveDefinitionTypes(definitionName:string, metaschema:{}):string[] {
+            var definitionMetaschema:{} = metaschema['definitions'][definitionName];
+            var properties = Metaschema.extractPropertiesFromDefinitionMetaschema(definitionMetaschema);
+            return properties['type']['enum'];
         }
 
         /**
