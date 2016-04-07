@@ -37,8 +37,6 @@
     "control": {
       "type": "object",
       "allOf": [{
-        "$ref": "#/definitions/runtimeProps"
-      }, {
         "properties": {
           "type": {
             "type": "string",
@@ -61,6 +59,8 @@
             "type": "boolean"
           }
         }
+      }, {
+        "$ref": "#/definitions/runtimeProps"
       }],
       "required": ["type", "scope"]
     },
@@ -69,8 +69,6 @@
       "required": ["type", "elements"],
       "additionalProperties": false,
       "allOf": [{
-        "$ref": "#/definitions/runtimeProps"
-      }, {
         "properties": {
           "type": {
             "type": "string",
@@ -86,6 +84,8 @@
             }
           }
         }
+      }, {
+        "$ref": "#/definitions/runtimeProps"
       }]
     },
     "group": {
@@ -93,8 +93,6 @@
       "required": ["type", "elements"],
       "additionalProperties": false,
       "allOf": [{
-        "$ref": "#/definitions/runtimeProps"
-      }, {
         "properties": {
           "type": {
             "type": "string",
@@ -110,6 +108,8 @@
             }
           }
         }
+      }, {
+        "$ref": "#/definitions/runtimeProps"
       }]
     },
     "category": {
@@ -139,8 +139,6 @@
       "required": ["type", "elements"],
       "additionalProperties": false,
       "allOf": [{
-        "$ref": "#/definitions/runtimeProps"
-      }, {
         "properties": {
           "type": {
             "type": "string",
@@ -155,6 +153,8 @@
             }
           }
         }
+      }, {
+        "$ref": "#/definitions/runtimeProps"
       }]
     }
   },

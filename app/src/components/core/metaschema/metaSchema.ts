@@ -72,10 +72,19 @@ module app.core.metaschema {
             var definitionDataschema = {};
 
             _.forOwn(resolvedDefinitionMetaschema, (value, key) => {
-                // resolve properties
-                if (key == 'allOf' || key == 'properties') {
+                if (key == 'allOf' || key == 'properties') { // resolve properties
                     var properties = Metaschema.extractPropertiesFromDefinitionMetaschema(resolvedDefinitionMetaschema);
-                    definitionDataschema['properties'] = _.omit(properties, ['elements']);
+                    properties = _.omit(properties, ['elements']);
+                    if (properties['type']['enum'].length == 1) {
+                        properties['type'] = _.omit(properties['type'], ['enum']);
+                    }
+                    if (properties['scope']) {
+                        properties['scope'] = properties['scope']['properties']['$ref'];
+                    }
+                    if (properties['rule']) {
+                        properties['rule']['properties']['condition']['properties']['scope'] = properties['rule']['properties']['condition']['properties']['scope']['properties']['$ref'];
+                    }
+                    definitionDataschema['properties'] = properties;
                 } else {
                     definitionDataschema[key] = value;
                 }
@@ -120,7 +129,6 @@ module app.core.metaschema {
 
         private static resolveTypesAndAcceptedElements(definitions, metaschema) {
             var nameTypeMap = {};
-            console.log(definitions);
             for (var i = 0; i < definitions.length; i++) {
                 var definition:Definition = definitions[i];
                 var definitionName = definition.getName();

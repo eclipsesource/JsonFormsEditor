@@ -124,10 +124,10 @@ module app.core.model {
                 json.scope = {};
                 json.scope.$ref = "#/properties/" + this.scope;
             }
-            json.rule = JSON.parse(JSON.stringify(this.rule));
-            if (json.rule.condition.scope.$ref) {
+            if (this.rule['effect'].length > 0 && this.rule['condition']['scope'].length > 0 && this.rule['condition']['expectedValue'].length > 0) {
+                json.rule = JSON.parse(JSON.stringify(this.rule));
                 json.rule.condition.scope = {};
-                json.rule.condition.scope.$ref = "#/properties/" + this.rule['condition'].scope.$ref;
+                json.rule.condition.scope.$ref = "#/properties/" + this.rule['condition'].scope;
             }
             if (this.elements && this.elements.length > 0) {
                 json.elements = [];
