@@ -131,9 +131,6 @@ module app.core.model {
             }
             if (this.metaData['acceptedElements']) {
                 json.elements = [];
-                if(this.elements === undefined){
-                    return null;
-                }
                 for (var i = 0; i < this.elements.length; i++) {
                     json.elements.push(JSON.parse(this.elements[i].toJSONString()));
                 }
