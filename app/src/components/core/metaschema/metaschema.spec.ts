@@ -2,6 +2,7 @@
 /// <reference path="../../../../../typings/angularjs/angular-mocks.d.ts" />
 
 import Metaschema = app.core.metaschema.Metaschema;
+import Definition = app.core.metaschema.Definition;
 'use strict';
 
 describe('app.core.Metaschema', () => {
@@ -15,7 +16,6 @@ describe('app.core.Metaschema', () => {
     it('should resolve runtimeProps', () => {
         var metaschema:Metaschema = Metaschema.fromJSON(json);
         var controlDefinition:Definition = metaschema.getDefinitionByTypeLabel("Control");
-        console.log(JSON.stringify(controlDefinition.getDataschema()));
         expect(controlDefinition.getDataschema()['properties']['rule']).toBeDefined();
     });
 
@@ -26,11 +26,14 @@ describe('app.core.Metaschema', () => {
         expect(abcd).toEqual({ "a": 1, "b": 2, "c": 3, "d": 4 });
     });
 
-    xit('should merge the properties', () => {
+    it('should merge only the properties', () => {
         var ab = { "properties": { "a": 1, "b": 2 } };
         var cd = { "c": 3, "d": 4 };
-        var abcd = Metaschema.mergeDefinitionProperties([ab, cd]);  // expect to be a
+        var abcd = Metaschema.mergeDefinitionProperties([ab, cd]);
+        expect(abcd).toEqual({ "a": 1, "b": 2 });
     });
+
+
 
     it('should create metaschema from JSON', () => {
         var metaschema:Metaschema = Metaschema.fromJSON(json);
@@ -175,9 +178,30 @@ describe('app.core.Metaschema', () => {
                     }
                 }]
             },
+            "category": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "Category"
+                        ]
+                    },
+                    "label": {
+                        "type": "string"
+                    },
+                    "elements": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#"
+                        }
+                    }
+                },
+                "required": ["type", "elements"],
+                "additionalProperties": false
+            },
             "categorization": {
                 "type": "object",
-
                 "required": ["type", "elements"],
                 "additionalProperties": false,
                 "allOf": [{
@@ -193,26 +217,7 @@ describe('app.core.Metaschema', () => {
                         "elements": {
                             "type": "array",
                             "items": {
-                                "type": "object",
-                                "properties": {
-                                    "type": {
-                                        "type": "string",
-                                        "enum": [
-                                            "Category"
-                                        ]
-                                    },
-                                    "label": {
-                                        "type": "string"
-                                    },
-                                    "elements": {
-                                        "type": "array",
-                                        "items": {
-                                            "$ref": "#"
-                                        }
-                                    }
-                                },
-                                "required": ["type", "elements"],
-                                "additionalProperties": false
+                                "$ref": "#/definitions/category"
                             }
                         }
                     }

@@ -38,7 +38,7 @@ module app.core.metaschema {
             }
 
             // resolve accepted elements
-            Metaschema.resolveAcceptedElements(definitions, metaschema);
+            Metaschema.resolveTypesAndAcceptedElements(definitions, metaschema);
 
             return new Metaschema(definitions);
         }
@@ -118,8 +118,9 @@ module app.core.metaschema {
             return acceptedElements;
         }
 
-        private static resolveAcceptedElements(definitions, metaschema) {
+        private static resolveTypesAndAcceptedElements(definitions, metaschema) {
             var nameTypeMap = {};
+            console.log(definitions);
             for (var i = 0; i < definitions.length; i++) {
                 var definition:Definition = definitions[i];
                 var definitionName = definition.getName();
@@ -136,8 +137,6 @@ module app.core.metaschema {
                 }
                 definition.setAcceptedElements(resolvedAcceptedElements);
             }
-            console.log(acceptedElements);
-            console.log(resolvedAcceptedElements);
         }
 
         private static retrieveDefinitionTypes(definitionName:string, metaschema:{}):string[] {
