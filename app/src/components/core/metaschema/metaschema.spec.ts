@@ -14,7 +14,6 @@ describe('app.core.Metaschema', () => {
     });
 
     it('should resolve runtimeProps', () => {
-        var metaschema:Metaschema = Metaschema.fromJSON(json);
         var controlDefinition:Definition = metaschema.getDefinitionByTypeLabel("Control");
         expect(controlDefinition.getDataschema()['properties']['rule']).toBeDefined();
     });
@@ -33,7 +32,55 @@ describe('app.core.Metaschema', () => {
         expect(abcd).toEqual({ "a": 1, "b": 2 });
     });
 
-
+    it('should generate a correct definition dataschema', () => {
+        var controlResolvedMetaschema = {
+            "allOf": [{
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum":["ExampleType"]
+                    },
+                    "scope": {
+                        "type": "object",
+                        "properties": {
+                            "$ref": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "elements": {}
+                }
+            }, {
+                "properties": {
+                    "rule": {
+                        "type": "object",
+                        "properties": {
+                            "condition": {
+                                "type": "object",
+                                "properties": {
+                                    "scope": {
+                                        "type": "object",
+                                        "properties": {
+                                            "$ref": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }]
+        };
+        var controlDataschema = Metaschema.generateDefinitionDataschema(controlResolvedMetaschema);
+        expect(controlDataschema['allOf']).toBeUndefined();
+        expect(controlDataschema['properties']).toBeDefined();
+        expect(controlDataschema['properties']['elements']).toBeUndefined();
+        expect(controlDataschema['properties']['type']['enum']).toBeUndefined();
+        expect(controlDataschema['properties']['scope']["type"]).toBe("string");
+        expect(controlDataschema['properties']['rule']).toBeDefined();
+    });
 
     it('should create metaschema from JSON', () => {
         var metaschema:Metaschema = Metaschema.fromJSON(json);
@@ -58,7 +105,7 @@ describe('app.core.Metaschema', () => {
         expect(metaschema.getDefinitionByTypeLabel('Control').acceptsElements()).toBeFalsy();
         expect(metaschema.getDefinitionByTypeLabel('VerticalLayout').acceptsElements()).toBeTruthy();
         expect(metaschema.getDefinitionByTypeLabel('VerticalLayout').getAcceptedElements().length).toBeGreaterThan(0);
-        expect(metaschema.getDefinitionByTypeLabel('Categorization').getAcceptedElements().length).toBe(1);
+        expect(metaschema.getDefinitionByTypeLabel('Categorization').getAcceptedElements()).toEqual(['Category']);
     });
 
     /**

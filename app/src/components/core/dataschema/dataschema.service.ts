@@ -79,6 +79,26 @@ module app.core.dataschema {
             return JSON.stringify(this.json, (key, value) => {return value;}, 2);
         }
 
+        getPropertiesNames():string[] {
+            var propertiesNames = [];
+
+            _.forOwn(this.json['properties'], (value, key) => {
+                DataschemaService.retrievePropertiesNames(propertiesNames, key, value);
+            });
+
+            return propertiesNames;
+        }
+
+        private static retrievePropertiesNames(propertiesNames:string[], name:string, property:{}) {
+            if (property['properties']) {
+                _.forOwn(property['properties'], (value, key) => {
+                    DataschemaService.retrievePropertiesNames(propertiesNames, name + "/properties/" + key, value);
+                });
+            } else {
+                propertiesNames.push(name);
+            }
+        }
+
         /**
          * Adds a new Property to the data-schema.
          *
