@@ -129,8 +129,11 @@ module app.core.model {
                 json.rule.condition.scope = {};
                 json.rule.condition.scope.$ref = "#/properties/" + this.rule['condition'].scope;
             }
-            if (this.elements && this.elements.length > 0) {
+            if (this.metaData.acceptedElements && this.getAcceptedElements().length > 0) {
                 json.elements = [];
+                if(this.elements === undefined){
+                    return null;
+                }
                 for (var i = 0; i < this.elements.length; i++) {
                     json.elements.push(JSON.parse(this.elements[i].toJSONString()));
                 }
@@ -140,8 +143,14 @@ module app.core.model {
             }, 2);
         }
 
-        addError(error: string){
+        resetErrors(){
+            this.errors = [];
+        }
 
+        addError(error: string){
+            if(!~this.errors.indexOf(error)){
+                this.errors.push(error);
+            }
         }
 
         getErrors(): string[]{
@@ -149,7 +158,7 @@ module app.core.model {
         }
 
         isValid(): boolean {
-            if(this.errors === []){
+            if(this.errors.length <= 0){
                 return true;
             }
             return false;

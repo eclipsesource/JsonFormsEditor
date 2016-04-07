@@ -1,10 +1,24 @@
-<md-content style="height:100%;">
-    <md-subheader class="md-primary bottom-border">PROPERTIES</md-subheader>
-    <md-content class="md-padding" ng-if="detail.detailService.currentElement">
+<md-content layout="column">
+    <md-subheader class="md-primary bottom-border">
+        PROPERTIES
+        <img class="detail-alert-image" ng-if="detail.detailService.currentElement && !detail.detailService.currentElement.isValid()" src="/resource/error_icon24.png">
+    </md-subheader>
+    <md-content class="md-padding bottom-border" ng-if="detail.detailService.currentElement">
         <section class="jsf" layout="row">
             <jsonforms schema="detail.detailService.schema" ui-schema="detail.detailService.uiSchema"
-                       data="detail.detailService.currentElement"></jsonforms>
+                       data="detail.detailService.currentElement">
+            </jsonforms>
         </section>
+    </md-content>
+    <md-subheader ng-if="detail.detailService.currentElement && !detail.detailService.currentElement.isValid()" class="md-primary bottom-border">
+        ERRORS
+    </md-subheader>
+    <md-content ng-if="detail.detailService.currentElement && !detail.detailService.currentElement.isValid()">
+        <div class="detail-error-box">
+            <div class="detail-error-entry" ng-repeat="error in detail.detailService.currentElement.getErrors()">
+                {{error}}
+            </div>
+        </div>
     </md-content>
 </md-content>
 

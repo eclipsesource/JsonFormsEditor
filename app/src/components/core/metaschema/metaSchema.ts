@@ -40,6 +40,7 @@ module app.core.metaschema {
             // resolve accepted elements
             Metaschema.resolveTypesAndAcceptedElements(definitions, metaschema);
 
+            console.log(definitions);
             return new Metaschema(definitions);
         }
 

@@ -19,6 +19,9 @@ module app.core {
             if(tv4 === undefined){
                 return;
             }
+            if(!uiSchema){
+                return;
+            }
             uiSchema = JSON.parse(uiSchema);
             var metaschema: any = this.metaSchemaService.getJsonMetaschema();
 
