@@ -140,7 +140,10 @@ module app.toolbox {
         }
 
         isAlreadyPlaced(element:ControlToolboxElement):boolean {
-            return !this.canBeRemoved(element);
+            if(element.datatype === "object" || this.canBeRemoved(element)){
+                return false;
+            }
+            return true;
         }
 
         /**
