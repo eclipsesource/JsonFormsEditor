@@ -1,6 +1,7 @@
 <md-content layout="column">
     <md-subheader class="md-primary bottom-border">
         PROPERTIES
+        <!--<md-icon class="material-icons red pull-right" ng-if="detail.detailService.currentElement && !detail.detailService.currentElement.isValid()">error</md-icon>-->
         <img class="detail-alert-image" ng-if="detail.detailService.currentElement && !detail.detailService.currentElement.isValid()" src="/resource/error_icon24.png">
     </md-subheader>
     <md-content class="md-padding bottom-border" ng-if="detail.detailService.currentElement">
