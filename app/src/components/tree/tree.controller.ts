@@ -37,9 +37,11 @@ module app.tree {
                 beforeDrop: (event) => {
                     if(event['pos']['moving']){
                         this.undoService.snapshot();
+                        treeService.modifiedTree();
                     }
                 },
                 dropped: () => {
+                    treeService.modifiedTree();
                     this.treeService.notifyObservers(new PreviewUpdateEvent(null, JSON.parse(this.treeService.exportUISchemaAsJSON())));
                 },
                 beforeDrag: (sourceNodeScope) => {
@@ -50,6 +52,7 @@ module app.tree {
                     var treeElement:TreeElement = node.$modelValue;
                     this.treeService.notifyObservers(new PreviewUpdateEvent(null, JSON.parse(this.treeService.exportUISchemaAsJSON())));
                     this.decreasePlacedTimesOfChilds(treeElement);
+                    treeService.modifiedTree();
                 }
             };
         }

@@ -9,13 +9,15 @@ module app.tree {
     import ToolboxService = app.toolbox.ToolboxService;
     import IQService = angular.IQService;
     import TreeServiceMemento = app.core.undo.TreeServiceMemento;
+    import ValidatorService = app.core.ValidatorService;
 
     export class TreeService extends Observable<PreviewUpdateEvent> implements Originator<TreeServiceMemento> {
-        static $inject = ['LayoutsService', 'ToolboxService', '$q'];
+        static $inject = ['LayoutsService', 'ToolboxService', '$q', 'ValidatorService'];
 
         public elements:TreeElement[] = [];
 
-        constructor(private layoutsService:LayoutsService, private toolboxService:ToolboxService, private $q:IQService) {
+        constructor(private layoutsService:LayoutsService, private toolboxService:ToolboxService, private $q:IQService,
+            private validatorService: ValidatorService) {
             super();
             layoutsService.getElementByType('VerticalLayout').then((element:LayoutToolboxElement) => {
                 var rootElement:TreeElement = element.convertToTreeElement();
@@ -76,7 +78,9 @@ module app.tree {
             return new TreeServiceMemento(elements);
         }
 
-
+        modifiedTree(){
+            this.validatorService.validateUISchema(this.exportUISchemaAsJSON());
+        }
     }
 
     angular.module('app.tree').service('TreeService', TreeService);

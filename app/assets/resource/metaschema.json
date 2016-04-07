@@ -6,7 +6,7 @@
       "properties": {
         "effect": {
           "type": "string",
-          "enum": ["", "HIDE"]
+          "enum": ["HIDE"]
         },
         "condition": {
           "type": "object",
@@ -20,7 +20,7 @@
               }
             },
             "expectedValue": {
-              "type": "string"
+              "type": ["integer", "number", "string", "boolean", "object", "array"]
             }
           }
         }
@@ -67,17 +67,15 @@
     "layout": {
       "type": "object",
       "required": ["type", "elements"],
-      "additionalProperties": false,
+
       "allOf": [{
         "$ref": "#/definitions/runtimeProps"
       }, {
+        "additionalProperties": false,
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "HorizontalLayout",
-              "VerticalLayout"
-            ]
+            "enum": ["HorizontalLayout", "VerticalLayout"]
           },
           "elements": {
             "type": "array",
@@ -91,10 +89,11 @@
     "group": {
       "type": "object",
       "required": ["type", "elements"],
-      "additionalProperties": false,
+
       "allOf": [{
         "$ref": "#/definitions/runtimeProps"
       }, {
+        "additionalProperties": false,
         "properties": {
           "type": {
             "type": "string",
@@ -114,18 +113,15 @@
     },
     "categorization": {
       "type": "object",
-
       "required": ["type", "elements"],
-      "additionalProperties": false,
       "allOf": [{
         "$ref": "#/definitions/runtimeProps"
       }, {
+        "additionalProperties": false,
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "Categorization"
-            ]
+            "enum": ["Categorization"]
           },
           "elements": {
             "type": "array",
@@ -134,9 +130,7 @@
               "properties": {
                 "type": {
                   "type": "string",
-                  "enum": [
-                    "Category"
-                  ]
+                  "enum": ["Category"]
                 },
                 "label": {
                   "type": "string"

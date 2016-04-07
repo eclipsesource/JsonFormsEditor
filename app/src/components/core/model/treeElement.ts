@@ -3,9 +3,6 @@ module app.core.model {
     export class TreeElement {
 
 
-        private checks: Check[] = [];
-        private errors: TreeError[] = [];
-
         private type:string;
         private dataType:string;
         public label:string;
@@ -143,18 +140,6 @@ module app.core.model {
             }, 2);
         }
 
-        // VALIDATION
-        public validate(): TreeError[]{
-            var errors = [];
-            for(var i=0; i<this.checks.length; i++){
-                var error = this.checks[i].validate();
-                if(error!=null){
-                    errors.push(error);
-                }
-            }
-            this.errors = errors;
-            return errors;
-        }
 
     }
 }
