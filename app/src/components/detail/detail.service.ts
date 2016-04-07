@@ -21,8 +21,6 @@ module app.detail {
             this.metaschemaService.getMetaschema().then((metaschema:Metaschema) => {
                 this.schema = metaschema.getDefinitionByTypeLabel(element.getType()).getDataschema();
                 if (this.schema['properties']['rule']) {
-                    console.log(JSON.stringify(this.schema));
-                    console.log(JSON.stringify(this.dataschemaService.getPropertiesNames));
                     this.schema['properties']['rule']['properties']['condition']['properties']['scope']['enum'] = [""].concat(this.dataschemaService.getPropertiesNames());
                 }
                 this.uiSchema = metaschema.getDefinitionByTypeLabel(element.getType()).getUISchema();
