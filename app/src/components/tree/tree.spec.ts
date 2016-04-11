@@ -21,7 +21,10 @@ describe('app.tree', () => {
         ]
     };
 
-    beforeEach(angular.mock.module('app'));
+    beforeEach(angular.mock.module('app.tree'));
+    beforeEach(angular.mock.module('app.layouts'));
+    beforeEach(angular.mock.module('app.core'));
+    beforeEach(angular.mock.module('app.toolbox'));
 
     beforeEach(angular.mock.inject(['TreeService', (ts) => {
         treeService = ts;
