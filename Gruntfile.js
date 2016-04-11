@@ -237,6 +237,14 @@ module.exports = function (grunt) {
                 cmd: './deploy.sh',
                 args: ['<%= pkg.version %>']
             }
+        },
+        coveralls: {
+            options: {
+                force: false
+            },
+            build: {
+                src: './build/js/app.js'
+            }
         }
     };
 
@@ -254,6 +262,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-run');
+    grunt.loadNpmTasks('grunt-coveralls');
 
     // Initialize the config and add the build configuration file
     grunt.initConfig(grunt.util._.extend(taskConfig, buildConfig));
@@ -270,6 +279,7 @@ module.exports = function (grunt) {
         'ngtemplates:build',
         'less:build',
         'indexBuild',
+        'coveralls:build',
         'clean:temp'
     ]);
 
