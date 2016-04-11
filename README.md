@@ -3,7 +3,7 @@ A web-based editor to create and modify UI Schemata and Data Schemata for JsonFo
 
 Checkout [JsonForms](http://github.eclipsesource.com/jsonforms) for further information.
 
-[![Build Status](https://travis-ci.org/eclipsesource/JsonFormsEditor.svg?branch=master)](https://travis-ci.org/eclipsesource/JsonFormsEditor)
+[![Build Status](https://travis-ci.org/eclipsesource/JsonFormsEditor.svg?branch=master)](https://travis-ci.org/eclipsesource/JsonFormsEditor)[![Coverage Status](https://coveralls.io/repos/github/pancho111203/JsonFormsEditor/badge.svg?branch=master)](https://coveralls.io/github/pancho111203/JsonFormsEditor?branch=master)
 
 ## Demo
 Watch JSONForms Editor in action on the [demo page](http://github.eclipsesource.com/JsonFormsEditor).
