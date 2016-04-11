@@ -6,7 +6,7 @@ module.exports = function(config){
         frameworks: ['jasmine'],
         singleRun: false,
         autoWatch: true,
-        browsers: ['Chrome'],
+        browsers: ['PhantomJS'],
         basePath: '',
         preprocessors: {
             'temp/**/*.js': ['coverage']
@@ -17,10 +17,9 @@ module.exports = function(config){
             dir: 'temp/coverage/'
         }
     };
-    console.log(process);
 
-    if (process.env.TRAVIS) {
-        configuration.browsers = ['PhantomJS'];
+    if (process.env.USER === 'pancho111203') {
+        configuration.browsers = ['Chrome'];
     }
 
     config.set(configuration);
