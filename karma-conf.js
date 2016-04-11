@@ -17,6 +17,7 @@ module.exports = function(config){
             dir: 'temp/coverage/'
         }
     };
+    console.log(process);
 
     if (process.env.TRAVIS) {
         configuration.browsers = ['PhantomJS'];
