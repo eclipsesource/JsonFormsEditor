@@ -3,7 +3,7 @@ node_js:
 - node
 before_install: npm install -g grunt-cli
 install: npm install
-script: grunt dist
+script: grunt test && grunt dist
 after_script:
   - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && bash deploy.sh
   - cat ./temp/coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js
