@@ -196,10 +196,7 @@ module.exports = function (grunt) {
         karma: {
             unit: {
                 options: {
-                    frameworks: ['jasmine'],
-                    singleRun: false,
-                    autoWatch: true,
-                    browsers: ['Chrome'],
+                    configFile: './karma-conf.js',
                     files: [
                         '<%= vendor_files.js %>',
                         '<%= vendor_files.test %>',
@@ -210,18 +207,8 @@ module.exports = function (grunt) {
                         '<%= temp_dir %>/ts/components/**/*.js',
                         '<%= temp_dir %>/ts/app.config.js',
                         '<%= temp_dir %>/ts/app.run.js',
-                        '<%= temp_dir %>/ts/**/*.js',
-
-                    ],
-                    basePath: '',
-                    preprocessors: {
-                        'temp/**/*.js': ['coverage']
-                    },
-                    reporters: ['dots', 'coverage'],
-                    coverageReporter: {
-                        type: 'lcov',
-                        dir: 'temp/coverage/'
-                    }
+                        '<%= temp_dir %>/ts/**/*.js'
+                    ]
                 }
             }
         },
