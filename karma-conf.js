@@ -18,7 +18,7 @@ module.exports = function(config){
         }
     };
 
-    if (process.env.USER === 'pancho111203') {
+    if (process.env.USER === 'pancho111203' || process.env.USER === 'hector') {
         configuration.browsers = ['Chrome'];
         configuration.singleRun = false;
         configuration.autoWatch = true;

@@ -93,11 +93,6 @@ module app.core.model {
             return true;
         }
 
-        public hasLabel() : boolean {
-            return !(this.type == 'HorizontalLayout' || this.type == 'VerticalLayout' || this.type == 'Categorization');
-
-        }
-
         public clone():TreeElement{
             var result:TreeElement = new TreeElement();
 
