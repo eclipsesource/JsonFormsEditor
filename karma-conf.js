@@ -1,6 +1,5 @@
 
 module.exports = function(config){
-    var files = require("./build.config.js");
 
     var configuration = {
         // other things
