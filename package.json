@@ -24,9 +24,13 @@
     "karma": "^0.13.15",
     "karma-jasmine": "^0.3.6",
     "karma-chrome-launcher": "latest",
+    "phantomjs-prebuilt": "latest",
+    "karma-phantomjs-launcher": "latest",
     "grunt-bump": "latest",
     "grunt-file-append": "latest",
-    "grunt-git": "latest"
+    "grunt-git": "latest",
+    "coveralls": "2.11.8",
+    "karma-coverage": "0.5.4"
   },
   "scripts": {
     "postinstall": "bower install"
