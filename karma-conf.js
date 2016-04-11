@@ -4,8 +4,8 @@ module.exports = function(config){
     var configuration = {
         // other things
         frameworks: ['jasmine'],
-        singleRun: false,
-        autoWatch: true,
+        singleRun: true,
+        autoWatch: false,
         browsers: ['PhantomJS'],
         basePath: '',
         preprocessors: {
@@ -20,6 +20,8 @@ module.exports = function(config){
 
     if (process.env.USER === 'pancho111203') {
         configuration.browsers = ['Chrome'];
+        configuration.singleRun = false;
+        configuration.autoWatch = true;
     }
 
     config.set(configuration);
