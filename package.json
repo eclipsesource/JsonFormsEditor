@@ -27,7 +27,8 @@
     "grunt-bump": "latest",
     "grunt-file-append": "latest",
     "grunt-git": "latest",
-    "grunt-coveralls": "1.0.0"
+    "coveralls": "2.11.8",
+    "karma-coverage": "0.5.4"
   },
   "scripts": {
     "postinstall": "bower install"
