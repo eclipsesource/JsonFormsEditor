@@ -15,17 +15,11 @@ module.exports = function(config){
         coverageReporter: {
             type: 'lcov',
             dir: 'temp/coverage/'
-        },
-        customLaunchers: {
-            Chrome_travis_ci: {
-                base: 'Chrome',
-                flags: ['--no-sandbox']
-            }
         }
     };
 
     if (process.env.TRAVIS) {
-        configuration.browsers = ['Chrome_travis_ci'];
+        configuration.browsers = ['PhantomJS'];
     }
 
     config.set(configuration);
