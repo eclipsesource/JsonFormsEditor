@@ -23,7 +23,7 @@ app.use('/github', github);
 
 
 
-app.use(express.static(path.join(__dirname, '../build')));
+app.use(express.static(path.join(__dirname, '../dist')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
