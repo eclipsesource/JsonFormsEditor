@@ -44,6 +44,6 @@
     "karma-coverage": "0.5.4"
   },
   "scripts": {
-    "postinstall": "bower install"
+    "postinstall": "bower install && grunt dist"
   }
 }
