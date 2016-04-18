@@ -11,17 +11,17 @@ git remote add upstream "https://github.com/eclipsesource/JsonFormsEditor"
 git tag -a "v${rev}" -m "Created tag v${rev}"
 git push upstream "v${rev}"
 
-cd dist
+git remote remove heroku
+heroku git:remote -a jsonformseditor
+heroku config:set NPM_CONFIG_PRODUCTION=false
+git push heroku master
 
-git init
-
-git remote add upstream "https://github.com/eclipsesource/JsonFormsEditor"
-
-git fetch upstream
-git reset upstream/gh-pages
-
-touch .
-
-git add -A .
-git commit -m "Release version v${rev}"
-git push -q upstream HEAD:gh-pages
+# cd dist
+# git init
+# git remote add upstream "https://github.com/eclipsesource/JsonFormsEditor"
+# git fetch upstream
+# git reset upstream/gh-pages
+# touch .
+# git add -A .
+# git commit -m "Release version v${rev}"
+# git push -q upstream HEAD:gh-pages
