@@ -23,7 +23,10 @@ module app.tree {
                 var rootElement:TreeElement = element.convertToTreeElement();
                 rootElement['root'] = 'root';
                 this.elements.push(rootElement);
+                this.validateTree();
             });
+
+
         }
 
         exportUISchemaAsJSON():string {
@@ -79,7 +82,92 @@ module app.tree {
         }
 
         modifiedTree(){
-            this.validatorService.validateUISchema(this.exportUISchemaAsJSON());
+            this.validateTree();
+        }
+
+        validateTree(){
+            try{
+                var validation = this.validatorService.validateUISchema(this.exportUISchemaAsJSON());
+
+            }catch(error){
+                this.elements[0].addError('Unexpected Error validating');
+                return;
+            }
+
+            if(!validation || validation.valid === undefined || validation.errors === undefined){
+                this.elements[0].addError('Unexpected Error validating');
+                return;
+            }
+
+            this.resetAllErrors();
+            if(validation.valid === false){
+                validation.errors.forEach((error)=>{
+                    this.processError(error);
+                });
+            }
+        }
+
+        resetAllErrors(){
+            this.getAllElements().forEach((element)=>{
+                element.resetErrors();
+            });
+        }
+
+        getAllElements(): TreeElement[]{
+            var res: TreeElement[] = [];
+            for(var i = 0; i < this.elements.length; i++){
+                res.push(this.elements[i]);
+                this.getChildElements(this.elements[i], res);
+            }
+            return res;
+        }
+        getChildElements(element: TreeElement, res: TreeElement[]){
+            var childs = element.elements;
+            if(!childs){
+                return;
+            }
+            for(var i = 0; i < childs.length; i++){
+                res.push(childs[i]);
+                this.getChildElements(childs[i], res);
+            }
+        }
+        processError(error: any){
+            if(!error){
+                return;
+            }
+            var dataPath = error.dataPath;
+            var message = error.message;
+            var subErrors = error.subErrors || [];
+
+            if(dataPath === undefined || message === undefined){
+                return;
+            }
+
+            this.getElementByPath(dataPath).addError(message);
+
+            for(var i = 0; i < subErrors.length; i++){
+                this.processError(subErrors[i]);
+            }
+
+        }
+
+        getElementByPath(path: string): TreeElement{
+            var element: TreeElement = this.elements[0];
+            var split = path.split('/');
+            if(split===undefined )split = [];
+            for(var i = 0; i< split.length; i++){
+                if(split[i]===''){
+                    continue;
+                }
+
+                //check if the value is neither a number nor 'elements'
+                if(isNaN(parseInt(split[i])) && split[i] !== 'elements'){
+                    break;
+                }
+                element = element[split[i]];
+            }
+
+            return element;
         }
     }
 

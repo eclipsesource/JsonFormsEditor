@@ -1,11 +1,15 @@
 language: node_js
 node_js:
 - node
-before_install: npm install -g grunt-cli
+before_install:
+  - npm install -g grunt-cli
 install: npm install
-script: grunt dist
+script:
+  - grunt test
+  - cat ./temp/coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - grunt dist
 after_script:
-  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && bash deploy.sh
+  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master"
 env:
   global:
     secure: rQN6sNjbVoQIhOAIqcwb/4huDg7Lc6s+eNlX3pej6TtjF7iBlfbPPYqiKLVXeiHqtpnA9DTCAVWxuBDm/gtI0MhHZe6ho+LQfdAqxTlV17zbXtAC39eoevS+oRge+3ZuWnGxJXdME0smM8BNIuIuQjmOQf6Ylm06t6dbfKCwakR4dPXZe0xDtxK5BUgTgAxaoGAsqVnji+XGmBdCdnJKKfE7/27/l6nv4MnzZM3Y4JLqKumvDzwSIWFACJ7wYWvuE9wrxja3srthkZc/jGUQckhksooZ0tbSyAw52B2L/lsPWJCdpUiZVZNQS8CVuTnxKk6Gw9BojE5nLwyYEnzSt2i47l/4wMuzuNnInxuc/ylcLEr4vH0XLxRv80uM3sLr8lk2BBn7bVGHPUN5fiRFiTPPQ/4+Wr4Hlg/vqxCQ02XtlUCawIPUag/LsLq0RdgLj9Gg3yg5IiARJQC5d+6hec45XKCf7J9JUvX+zZPOwbI7Ean7s8WnJ/Z3l21cDOWiT+DZSxVWjJHHS94XVMkCWM2GX3dkn5K2ph7p6QI/2DRbNh9Oclk9QZ1ERm9V3zSEr0XBrL8F1/hQGAqmCHrI3rXo1FlJPNpf03d+pKxz9pTFojkSE8LMBGUFkU0pDRUhsBc7nQxKvRHqQ/zK5/Nni12vsOKRpCX5PHp4/63f9k8=

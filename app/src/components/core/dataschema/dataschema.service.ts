@@ -79,6 +79,26 @@ module app.core.dataschema {
             return JSON.stringify(this.json, (key, value) => {return value;}, 2);
         }
 
+        getPropertiesNames():string[] {
+            var propertiesNames = [];
+
+            _.forOwn(this.json['properties'], (value, key) => {
+                DataschemaService.retrievePropertiesNames(propertiesNames, key, value);
+            });
+
+            return propertiesNames;
+        }
+
+        private static retrievePropertiesNames(propertiesNames:string[], name:string, property:{}) {
+            if (property['properties']) {
+                _.forOwn(property['properties'], (value, key) => {
+                    DataschemaService.retrievePropertiesNames(propertiesNames, name + "/properties/" + key, value);
+                });
+            } else {
+                propertiesNames.push(name);
+            }
+        }
+
         /**
          * Adds a new Property to the data-schema.
          *
@@ -87,7 +107,7 @@ module app.core.dataschema {
          * @returns {boolean} indicating if the addition was succesful(when false, it means the element was not added)
          */
         addNewProperty(label: string, type: string, config: any, path:string[]):boolean {
-
+            config = config || {};
             var property: any = {};
             property.type = type;
 

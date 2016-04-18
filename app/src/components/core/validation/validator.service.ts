@@ -15,8 +15,11 @@ module app.core {
         constructor(private metaSchemaService: app.core.metaschema.MetaschemaService){
         }
 
-        validateUISchema(uiSchema: any){
+        validateUISchema(uiSchema: any): any{
             if(tv4 === undefined){
+                return;
+            }
+            if(!uiSchema){
                 return;
             }
             uiSchema = JSON.parse(uiSchema);
@@ -25,11 +28,8 @@ module app.core {
             if(!metaschema){
                 return;
             }
-
-            console.log(uiSchema);
-            console.log(metaschema);
             var validation = tv4.validateMultiple(uiSchema, metaschema);
-            console.log(validation);
+            return validation;
         }
 
     }

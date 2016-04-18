@@ -1,6 +1,6 @@
 <!-- Nested node template -->
 <script type="text/ng-template" id="tree_renderer.html">
-  <div ui-tree-handle class="tree-node tree-node-content" ng-click="tree.showDetails(node)">
+  <div ui-tree-handle ng-class="{'tree-invalid-node': !node.isValid()}" class="tree-node tree-node-content" ng-click="tree.showDetails(node)">
     <a ng-if="node.getElements().length > 0" data-nodrag ng-click="tree.toggle(this)">
       <md-icon class="btn material-icons" ng-show="collapsed">expand_more</md-icon>
       <md-icon class="btn material-icons" ng-show="!collapsed">expand_less</md-icon>

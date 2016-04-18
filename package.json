@@ -1,12 +1,23 @@
 {
   "name": "jsonforms-editor",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.0.8",
   "description": "An editor for jsonforms",
   "repository": "https://github.com/eclipsesource/JsonFormsEditor",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "bower": "^1.3.1",
+    "body-parser": "~1.13.2",
+    "cookie-parser": "~1.3.5",
+    "debug": "~2.2.0",
+    "express": "~4.13.1",
+    "morgan": "~1.6.1",
+    "passport": "0.3.1",
+    "passport-github": "1.1.0",
+    "request": "2.69.0",
+    "express-session": "1.12.0"
+  },
+  "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-angular-templates": "^0.5.7",
     "grunt-cli": "^0.1.3",
@@ -24,11 +35,15 @@
     "karma": "^0.13.15",
     "karma-jasmine": "^0.3.6",
     "karma-chrome-launcher": "latest",
+    "phantomjs-prebuilt": "latest",
+    "karma-phantomjs-launcher": "latest",
     "grunt-bump": "latest",
     "grunt-file-append": "latest",
-    "grunt-git": "latest"
+    "grunt-git": "latest",
+    "coveralls": "2.11.8",
+    "karma-coverage": "0.5.4"
   },
   "scripts": {
-    "postinstall": "bower install"
+    "postinstall": "bower install && grunt dist"
   }
 }

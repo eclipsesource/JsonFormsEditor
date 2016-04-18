@@ -2,7 +2,7 @@ module app.core.model {
 
     export class TreeElement {
 
-
+        private errors: string[] = [];
         private type:string;
         private dataType:string;
         public label:string;
@@ -93,11 +93,6 @@ module app.core.model {
             return true;
         }
 
-        public hasLabel() : boolean {
-            return !(this.type == 'HorizontalLayout' || this.type == 'VerticalLayout' || this.type == 'Categorization');
-
-        }
-
         public clone():TreeElement{
             var result:TreeElement = new TreeElement();
 
@@ -129,7 +124,7 @@ module app.core.model {
                 json.rule.condition.scope = {};
                 json.rule.condition.scope.$ref = "#/properties/" + this.rule['condition'].scope;
             }
-            if (this.elements && this.elements.length > 0) {
+            if (this.metaData['acceptedElements']) {
                 json.elements = [];
                 for (var i = 0; i < this.elements.length; i++) {
                     json.elements.push(JSON.parse(this.elements[i].toJSONString()));
@@ -140,6 +135,25 @@ module app.core.model {
             }, 2);
         }
 
+        resetErrors(){
+            this.errors = [];
+        }
 
+        addError(error: string){
+            if(!~this.errors.indexOf(error)){
+                this.errors.push(error);
+            }
+        }
+
+        getErrors(): string[]{
+            return this.errors;
+        }
+
+        isValid(): boolean {
+            if(this.errors.length <= 0){
+                return true;
+            }
+            return false;
+        }
     }
 }

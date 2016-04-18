@@ -37,6 +37,7 @@
     "control": {
       "type": "object",
       "allOf": [{
+        "additionalProperties": false,
         "properties": {
           "type": {
             "type": "string",
@@ -67,8 +68,8 @@
     "layout": {
       "type": "object",
       "required": ["type", "elements"],
-      "additionalProperties": false,
       "allOf": [{
+        "additionalProperties": false,
         "properties": {
           "type": {
             "type": "string",
@@ -91,8 +92,9 @@
     "group": {
       "type": "object",
       "required": ["type", "elements"],
-      "additionalProperties": false,
+
       "allOf": [{
+        "additionalProperties": false,
         "properties": {
           "type": {
             "type": "string",

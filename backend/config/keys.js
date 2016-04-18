@@ -4,8 +4,8 @@
 
 var keys = {};
 
-keys.clientId = "b5bf0085ff1ab4e303d7";
-keys.clientSecret = "548d1c70b950b5f27f1fbd132cbafa31e6c1d918";
+keys.clientId = "42e0b0e6cf509096ac40";
+keys.clientSecret = "30eed32b0b2ae5732a173ef184ec851b3f668c93";
 keys.sessionSecret = "random_key_to_encode_sessions";
 
 
