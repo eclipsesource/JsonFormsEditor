@@ -15,13 +15,3 @@ git remote remove heroku
 heroku git:remote -a jsonformseditor
 heroku config:set NPM_CONFIG_PRODUCTION=false
 git push heroku master
-
-# cd dist
-# git init
-# git remote add upstream "https://github.com/eclipsesource/JsonFormsEditor"
-# git fetch upstream
-# git reset upstream/gh-pages
-# touch .
-# git add -A .
-# git commit -m "Release version v${rev}"
-# git push -q upstream HEAD:gh-pages

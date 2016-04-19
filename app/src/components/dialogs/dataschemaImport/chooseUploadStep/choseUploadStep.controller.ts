@@ -10,7 +10,7 @@ module app.dialogs.dataschemaimport {
 
 
         getTitle():string {
-            return "Select your JSON data model";
+            return "Menu";
         }
 
         getTemplate():string {
