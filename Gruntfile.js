@@ -212,6 +212,12 @@ module.exports = function (grunt) {
                 }
             }
         },
+        protractor: {
+            options: {
+                configFile: 'e2e-tests/protractor.conf.js'
+            },
+            run: {}
+        },
         bump: {
             options: {
                 files: ['package.json', 'bower.json'],
@@ -247,6 +253,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-index-html-template');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-run');
 
@@ -281,7 +288,8 @@ module.exports = function (grunt) {
         'clean:temp',
         'typescript:test',
         'ngtemplates:test',
-        'karma'
+        'karma',
+        'protractor'
     ]);
 
     grunt.registerTask('dist', [
