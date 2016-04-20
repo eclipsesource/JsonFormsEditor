@@ -292,7 +292,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('test:e2e', [
-        'protractor'
+      'protractor'
     ]);
 
     grunt.registerTask('dist', [
