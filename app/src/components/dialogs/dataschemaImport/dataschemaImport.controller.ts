@@ -29,11 +29,6 @@ module app.dialogs.dataschemaimport {
             throw new Error(text);
         }
 
-        getDescription():string {
-            return "Please upload your schemas";
-        }
-
-
         submit():void {
             this.currentStep().submit().then((json:any) => {
                 var dataSchema = json.dataSchema;

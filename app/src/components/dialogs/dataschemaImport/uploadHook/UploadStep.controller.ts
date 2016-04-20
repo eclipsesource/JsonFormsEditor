@@ -48,6 +48,11 @@ module app.dialogs.dataschemaimport {
             return index+1+". Upload";
         }
 
+        getDescription():string {
+            return "Please upload your schemas";
+        }
+
+
         getTemplate():string {
             return "app/src/components/dialogs/dataschemaImport/uploadHook/uploadStep.html";
         }
