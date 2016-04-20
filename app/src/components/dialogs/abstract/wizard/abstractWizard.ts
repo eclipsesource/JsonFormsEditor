@@ -1,6 +1,7 @@
 module app.dialogs {
 
     import IDialogService = angular.material.IDialogService;
+    import IScope = angular.IScope;
 
     export abstract class AbstractWizard extends AbstractDialog {
 
@@ -9,7 +10,7 @@ module app.dialogs {
         public currentNotification:string = "";
         protected notificationTimerId:number;
 
-        constructor($mdDialog:IDialogService) {
+        constructor($mdDialog:IDialogService, public $rootScope:IScope) {
             super($mdDialog);
         }
 
@@ -27,11 +28,15 @@ module app.dialogs {
             return this.steps[this.stepNumber];
         }
 
+        currentStepNumber():number {
+            return this.stepNumber;
+        }
+
         shouldDisplayNotification(): boolean{
             return this.currentNotification !== "";
         }
 
-	abstract showNotification(text: string, time: number):void;
+        abstract showNotification(text: string):void;
 
         goTo(step:AbstractWizardStep):void {
             if (this.isNavigatableStep(step)) {
@@ -76,11 +81,11 @@ module app.dialogs {
         }
 
         next():void {
-	    if(!this.isAllowedToContinue()){
-		console.log("Can't continue yet");
-		return;
-	    }
-	    if (this.hasNext()) {
+            if(!this.isAllowedToContinue()){
+                console.log("Can't continue yet");
+                return;
+            }
+            if (this.hasNext()) {
                 if (this.currentStep().shallSubmit()) {
                     this.currentStep().submit().then(() => {
                         this.stepNumber++;

@@ -8,29 +8,44 @@ module app.dialogs.dataschemaimport {
 
     export class UploadHookController extends AbstractWizardStep {
 
-        public uploader;
+        public uploaderData;
+        public uploaderUI;
 
-        private json:any;
+        private dataFileName: string = "Select a file for the data schema";
+        private uiFileName: string = "Select a file for the UI schema (optional)";
+        private dataJson:any;
+        private uiJson:any;
 
         static $inject = ['$mdDialog', 'FileUploader', 'ToolboxService'];
 
         constructor(wizard:AbstractWizard, FileUploader, private $q:IQService) {
             super(wizard);
-            this.uploader = new FileUploader();
-
-            this.uploader.onAfterAddingFile = (file) => {
+            this.uploaderData = new FileUploader();
+            this.uploaderUI = new FileUploader();
+            this.uploaderData.onAfterAddingFile = (file) => {
                 var reader = new FileReader();
 
                 reader.onload = () => {
-                    this.json = JSON.parse(reader.result);
+                    this.dataJson = JSON.parse(reader.result);
                 };
 
+                this.dataFileName = file._file.name;
+                reader.readAsText(file._file);
+            };
+            this.uploaderUI.onAfterAddingFile = (file) => {
+                var reader = new FileReader();
+
+                reader.onload = () => {
+                    this.uiJson = JSON.parse(reader.result);
+                };
+
+                this.uiFileName = file._file.name;
                 reader.readAsText(file._file);
             };
         }
 
-        getTitle():string {
-            return "Upload";
+        getTitle(index:number):string {
+            return index+1+". Upload";
         }
 
         getTemplate():string {
@@ -44,11 +59,16 @@ module app.dialogs.dataschemaimport {
         submit():angular.IPromise<any> {
             var deferred:IDeferred<any> = this.$q.defer();
             var result = {
-                dataSchema: this.json
+                dataSchema: this.dataJson,
+                uiSchema: this.uiJson
             };
             deferred.resolve(result);
+            if(!result.dataSchema){
+                this.wizard.showNotification("Select at least a valid file for the Data Schema!");
+            }else{
+                return deferred.promise;
+            }
 
-            return deferred.promise;
 
         }
 

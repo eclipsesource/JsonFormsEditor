@@ -1,14 +1,21 @@
-<md-dialog class="modalDialog">
-    <md-toolbar>
+<md-dialog class="modalDialog data-schema-import-dialog">
+    <md-toolbar layout="row" layout-align="center center">
         <div class="md-toolbar-tools wizardStepsContainer">
             <span ng-repeat="step in dialog.getSteps()"
                   ng-class="(step.isActive() ? 'wizardStepActive' : (dialog.isNavigatableStep(step) ? 'wizardStep' : 'wizardStepNotNavigatable'))"
                   ng-style="dialog.getStyle()" ng-click="dialog.goTo(step)" md-ink-ripple>
-                    <h2>{{step.getTitle()}}</h2>
+                    <h2>{{step.getTitle($index, dialog.currentStepNumber())}}</h2>
             </span>
         </div>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="dialog.hideDialog()">
+            <md-icon class="material-icons">close</md-icon>
+        </md-button>
 	<div class="dialogError" ng-show="dialog.shouldDisplayNotification()">{{dialog.currentNotification}}</div>
     </md-toolbar>
+    <div class="dialog-description-box" ng-show="dialog.currentStep().getDescription()!==''">
+        <h4>{{dialog.currentStep().getDescription()}}</h4>
+    </div>
     <md-dialog-content class="md-padding">
         <ng-include src="dialog.currentStep().getTemplate()"/>
     </md-dialog-content>

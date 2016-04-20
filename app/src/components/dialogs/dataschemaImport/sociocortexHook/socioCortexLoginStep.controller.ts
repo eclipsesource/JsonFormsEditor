@@ -16,8 +16,8 @@ module app.dialogs.dataschemaimport {
             super(wizard);
         }
 
-        getTitle():string {
-            return "Login";
+        getTitle(index:number):string {
+            return index+1+". Login";
         }
 
         getTemplate():string {

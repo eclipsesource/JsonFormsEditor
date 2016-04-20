@@ -27,8 +27,8 @@ module app.dialogs.dataschemaimport {
 	  return false;
         }
 
-        getTitle():string {
-            return "UI";
+        getTitle(index:number):string {
+            return index+1+". UI";
         }
 
         getTemplate():string {
@@ -45,6 +45,10 @@ module app.dialogs.dataschemaimport {
 
         hasParentFolder():boolean{
             return this.githubConnector.hasParentFolder();
+        }
+
+        getDescription():string{
+            return "Select the UI Schema (JSON File). This step is optional";
         }
 
         goToParentFolder():void{
@@ -64,7 +68,7 @@ module app.dialogs.dataschemaimport {
                     uiSchema: res
                 };
             }, (error)=> {
-                this.wiz.showNotification("Invalid file selected, try with a json file.", 3000);
+                this.wiz.showNotification("Invalid file selected, try with a json file.");
             });
         }
 
