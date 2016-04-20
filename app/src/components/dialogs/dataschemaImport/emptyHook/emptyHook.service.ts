@@ -25,6 +25,6 @@ module app.dialogs.dataschemaimport {
 
     }
 
-    angular.module('app.dialogs').service('EmptyHookService', EmptyHookService);
+    angular.module('app.dialogs.empty').service('EmptyHookService', EmptyHookService);
 
 }

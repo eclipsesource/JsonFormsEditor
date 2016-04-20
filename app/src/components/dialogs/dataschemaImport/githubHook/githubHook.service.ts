@@ -29,6 +29,6 @@ module app.dialogs.dataschemaimport {
         }
     }
 
-    angular.module('app.dialogs').service('GithubHookService', GithubHookService);
+    angular.module('app.dialogs.github').service('GithubHookService', GithubHookService);
 
 }
