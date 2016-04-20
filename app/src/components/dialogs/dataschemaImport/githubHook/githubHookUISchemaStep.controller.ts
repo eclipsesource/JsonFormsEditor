@@ -28,11 +28,11 @@ module app.dialogs.dataschemaimport {
         }
 
         getTitle():string {
-            return "Select UI Schema (optional)";
+            return "UI";
         }
 
         getTemplate():string {
-            return "app/src/components/dialogs/dataschemaImport/githubHook/githubHookFileStep.html";
+            return "app/src/components/dialogs/dataschemaImport/githubHook/githubHookUISchemaStep.html";
         }
 
         hasNavigation():boolean {

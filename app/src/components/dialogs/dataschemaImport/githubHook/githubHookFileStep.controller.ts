@@ -26,7 +26,7 @@ module app.dialogs.dataschemaimport {
         }
 
         getTitle():string {
-            return "Select Data Schema";
+            return "Data";
         }
 
         getTemplate():string {
