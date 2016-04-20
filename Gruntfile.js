@@ -288,7 +288,10 @@ module.exports = function (grunt) {
         'clean:temp',
         'typescript:test',
         'ngtemplates:test',
-        'karma',
+        'karma'
+    ]);
+
+    grunt.registerTask('test:e2e', [
         'protractor'
     ]);
 
