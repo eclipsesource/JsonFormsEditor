@@ -314,6 +314,7 @@ module.exports = function (grunt) {
     grunt.registerTask('dist', [
         'clean:dist',
         'clean:build',
+        'clean:temp',
         'typescript:build',
         'copy:assets',
         'concat',
@@ -322,7 +323,8 @@ module.exports = function (grunt) {
         'uglify:dist',
         'copy:dist',
         'indexDist',
-        'clean:build'
+        'clean:build',
+        'clean:temp'
     ]);
 
     /**

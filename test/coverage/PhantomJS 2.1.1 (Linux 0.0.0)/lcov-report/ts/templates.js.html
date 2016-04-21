@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ts/templates.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">ts/</a> templates.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>20/20</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/1</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>20/20</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('app').run(['$templateCache', function($templateCache) {
+  'use strict';
+&nbsp;
+  $templateCache.put('app/index.html',
+    "&lt;!DOCTYPE html&gt;&lt;html lang=\"en\" ng-app=\"app\"&gt;&lt;head&gt;&lt;meta charset=\"utf-8\"&gt;&lt;meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"&gt;&lt;title&gt;JSON Forms Editor&lt;/title&gt;&lt;meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"&gt;&lt;% styles.forEach(function(file){ %&gt;&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"&lt;%= file %&gt;\"&gt;&lt;% }); %&gt;&lt;% scripts.forEach(function(file){ %&gt;&lt;script type=\"text/javascript\" src=\"&lt;%= file %&gt;\"&gt;&lt;/script&gt;&lt;% }); %&gt;&lt;/head&gt;&lt;body&gt;&lt;div class=\"jsonFormsEditor-Header\" ui-view=\"headerContainer\"&gt;&lt;/div&gt;&lt;!-- show edit area --&gt;&lt;div class=\"jsonFormsEditor-Body\" style=\"height: calc(100% - 66px)\" ui-view=\"contentContainer\"&gt;&lt;div layout=\"row\" class=\"bottom-border\" style=\"height:100%\"&gt;&lt;!-- toolbox --&gt;&lt;div class=\"toolbar-container\" layout=\"column\"&gt;&lt;div ui-view=\"layoutsContainer\"&gt;&lt;/div&gt;&lt;div style=\"overflow-y: auto\" ui-view=\"toolboxContainer\"&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- tree view --&gt;&lt;div flex class=\"side-borders\" layout-padding ui-view=\"treeContainer\"&gt;&lt;/div&gt;&lt;!-- properties --&gt;&lt;div class=\"toolbar-container layout-column\" ui-view=\"detailContainer\"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"
+  );
+&nbsp;
+&nbsp;
+  $templateCache.put('app/src/components/detail/detail.html',
+    "&lt;md-content layout=\"column\"&gt;&lt;md-subheader class=\"md-primary bottom-border\"&gt;PROPERTIES&lt;!--&lt;md-icon class=\"material-icons red pull-right\" ng-if=\"detail.detailService.currentElement &amp;&amp; !detail.detailService.currentElement.isValid()\"&gt;error&lt;/md-icon&gt;--&gt;&lt;img class=\"detail-alert-image\" ng-if=\"detail.detailService.currentElement &amp;&amp; !detail.detailService.currentElement.isValid()\" src=\"/resource/error_icon24.png\"&gt;&lt;/md-subheader&gt;&lt;md-content class=\"md-padding\" ng-class=\"{'bottom-border': detail.detailService.currentElement &amp;&amp; !detail.detailService.currentElement.isValid()}\" ng-if=\"detail.detailService.currentElement\"&gt;&lt;section class=\"jsf\" layout=\"row\"&gt;&lt;jsonforms schema=\"detail.detailService.schema\" ui-schema=\"detail.detailService.uiSchema\" data=\"detail.detailService.currentElement\"&gt;&lt;/jsonforms&gt;&lt;/section&gt;&lt;/md-content&gt;&lt;md-subheader ng-if=\"detail.detailService.currentElement &amp;&amp; !detail.detailService.currentElement.isValid()\" class=\"md-primary bottom-border\"&gt;ERRORS&lt;/md-subheader&gt;&lt;md-content style=\"min-height: 200px\" ng-if=\"detail.detailService.currentElement &amp;&amp; !detail.detailService.currentElement.isValid()\"&gt;&lt;div class=\"detail-error-box\"&gt;&lt;div class=\"detail-error-entry\" ng-repeat=\"error in detail.detailService.currentElement.getErrors()\"&gt;{{error}}&lt;/div&gt;&lt;/div&gt;&lt;/md-content&gt;&lt;/md-content&gt;"
+  );
+&nbsp;
+&nbsp;
+  $templateCache.put('app/src/components/dialogs/dataschemaImport/chooseUploadStep/chooseUploadStep.html',
+    "&lt;p&gt;The editor allows to efficiently develop form-based web UIs based on a given JSON data schema. You can find more information about the framework on the &lt;a target=\"_blank\" href=\"http://github.eclipsesource.com/jsonforms/\"&gt;JSON Forms webpage&lt;/a&gt;. To get started, please select below, whether you want to start with an empty data schema or whether you want to import an existing one from the available sources.&lt;/p&gt;&lt;div ng-cloak&gt;&lt;md-grid-list md-cols-xs=\"4\" md-cols-sm=\"4\" md-cols-md=\"4\" md-cols-gt-md=\"4\" md-row-height-gt-md=\"2:1\" md-row-height=\"2:1\" md-gutter=\"10px\" md-gutter-gt-sm=\"8px\" style=\"margin: 0px\"&gt;&lt;md-grid-tile ng-repeat=\"hook in dialog.importService.getHooks()\" ng-click=\"hook.openDialog(dialog)\" style=\"background-color: #03a9f4\" md-rowspan=\"1\" md-colspan=\"1\" md-colspan-sm=\"1\" md-ink-ripple&gt;&lt;md-icon class=\"material-icons\" style=\"color:white\"&gt;{{hook.getIconFont()}}&lt;/md-icon&gt;&lt;md-grid-tile-footer&gt;&lt;h3&gt;{{hook.getTitle()}}&lt;/h3&gt;&lt;/md-grid-tile-footer&gt;&lt;/md-grid-tile&gt;&lt;/md-grid-list&gt;&lt;/div&gt;"
+  );
+&nbsp;
+&nbsp;
+  $templateCache.put('app/src/components/dialogs/dataschemaImport/dataschemaImport.html',
+    "&lt;md-dialog class=\"modalDialog data-schema-import-dialog\"&gt;&lt;md-toolbar layout=\"row\" layout-align=\"center center\"&gt;&lt;div class=\"md-toolbar-tools wizardStepsContainer\"&gt;&lt;span ng-repeat=\"step in dialog.getSteps()\" ng-class=\"(step.isActive() ? 'wizardStepActive' : (dialog.isNavigatableStep(step) ? 'wizardStep' : 'wizardStepNotNavigatable'))\" ng-style=\"dialog.getStyle()\" ng-click=\"dialog.goTo(step)\" md-ink-ripple&gt;&lt;h2&gt;{{step.getTitle($index, dialog.currentStepNumber())}}&lt;/h2&gt;&lt;/span&gt;&lt;/div&gt;&lt;span flex&gt;&lt;/span&gt;&lt;md-button class=\"md-icon-button\" ng-click=\"dialog.hideDialog()\"&gt;&lt;md-icon class=\"material-icons\"&gt;close&lt;/md-icon&gt;&lt;/md-button&gt;&lt;div class=\"dialogError\" ng-show=\"dialog.shouldDisplayNotification()\"&gt;{{dialog.currentNotification}}&lt;/div&gt;&lt;/md-toolbar&gt;&lt;div class=\"dialog-description-box\" ng-show=\"dialog.currentStep().getDescription()!==''\"&gt;&lt;h4&gt;{{dialog.currentStep().getDescription()}}&lt;/h4&gt;&lt;/div&gt;&lt;md-dialog-content class=\"md-padding\"&gt;&lt;ng-include src=\"dialog.currentStep().getTemplate()\"&gt;&lt;/md-dialog-content&gt;&lt;md-dialog-actions ng-if=\"dialog.currentStep().hasNavigation()\"&gt;&lt;md-button ng-if=\"dialog.hasPrevious()\" ng-click=\"dialog.previous()\"&gt;Previous&lt;/md-button&gt;&lt;md-button class=\"md-primary\" ng-click=\"dialog.next()\"&gt;{{dialog.getTextNextButton()}}&lt;/md-button&gt;&lt;md-button class=\"md-primary\" ng-if=\"dialog.currentStep().canSkip()\" ng-click=\"dialog.currentStep().skip()\"&gt;Skip&lt;/md-button&gt;&lt;/md-dialog-actions&gt;&lt;/md-dialog&gt;"
+  );
+&nbsp;
+&nbsp;
+  $templateCache.put('app/src/components/dialogs/dataschemaImport/fromUrlHook/fromUrlStep.html',
+    "&lt;md-input-container class=\"md-block\"&gt;&lt;form ng-submit=\"dialog.next()\"&gt;&lt;label&gt;URL&lt;/label&gt;&lt;input required type=\"url\" name=\"url\" ng-model=\"dialog.currentStep().url\"&gt;&lt;div ng-messages=\"dialog.currentStep().url.$error\" role=\"alert\"&gt;&lt;div ng-message-exp=\"['required']\"&gt;Please enter a valid URL.&lt;/div&gt;&lt;/div&gt;&lt;/form&gt;&lt;/md-input-container&gt;"
+  );
+&nbsp;
+&nbsp;
+  $templateCache.put('app/src/components/dialogs/dataschemaImport/githubHook/githubHookFileStep.html',
+    "&lt;md-list&gt;&lt;md-icon class=\"material-icons\" ng-if=\"dialog.currentStep().hasParentFolder()\" ng-click=\"dialog.currentStep().goToParentFolder()\"&gt;arrow_upward&lt;/md-icon&gt;&lt;md-list-item ng-repeat=\"file in dialog.currentStep().getFiles() track by $index\" ng-click=\"dialog.currentStep().selectFile(file)\" ng-class=\"{selectedListItem: dialog.currentStep().selectedFile === file}\"&gt;{{file.getName()}}&lt;/md-list-item&gt;&lt;/md-list&gt;"
+  );
+&nbsp;
+&nbsp;
+  $templateCache.put('app/src/components/dialogs/dataschemaImport/githubHook/githubHookLoginStep.html',
+    "&lt;div class=\"github-login-image-container\"&gt;&lt;img src=\"/resource/github_logo.png\" class=\"github-login-image\" ng-click=\"dialog.next()\"&gt;&lt;/div&gt;"
+  );
+&nbsp;
+&nbsp;
+  $templateCache.put('app/src/components/dialogs/dataschemaImport/githubHook/githubHookRepoStep.html',
+    "&lt;md-content layout=\"rows\"&gt;&lt;md-list flex=\"80\"&gt;&lt;md-list-item ng-repeat=\"repo in dialog.currentStep().getRepos() track by $index\" ng-click=\"dialog.currentStep().selectRepo(repo)\" ng-class=\"{selectedListItem: dialog.currentStep().selectedRepo === repo}\"&gt;{{repo.name}}&lt;/md-list-item&gt;&lt;/md-list&gt;&lt;md-list ng-if=\"dialog.currentStep().someRepoIsSelected\" flex=\"20\"&gt;&lt;md-list-item ng-repeat=\"branch in dialog.currentStep().getBranches() track by $index\" ng-click=\"dialog.currentStep().selectBranch(branch)\" ng-class=\"{selectedListItem: dialog.currentStep().selectedBranch === branch}\"&gt;{{branch.name}}&lt;/md-list-item&gt;&lt;/md-list&gt;&lt;/md-content&gt;"
+  );
+&nbsp;
+&nbsp;
+  $templateCache.put('app/src/components/dialogs/dataschemaImport/githubHook/githubHookUISchemaStep.html',
+    "&lt;md-list&gt;&lt;md-icon class=\"material-icons\" ng-if=\"dialog.currentStep().hasParentFolder()\" ng-click=\"dialog.currentStep().goToParentFolder()\"&gt;arrow_upward&lt;/md-icon&gt;&lt;md-list-item ng-repeat=\"file in dialog.currentStep().getFiles() track by $index\" ng-click=\"dialog.currentStep().selectFile(file)\" ng-class=\"{selectedListItem: dialog.currentStep().selectedFile === file}\"&gt;{{file.getName()}}&lt;/md-list-item&gt;&lt;/md-list&gt;"
+  );
+&nbsp;
+&nbsp;
+  $templateCache.put('app/src/components/dialogs/dataschemaImport/sociocortexHook/socioCortexHookEntityTypeStep.html',
+    "&lt;md-list&gt;&lt;md-list-item ng-repeat=\"entityType in dialog.currentStep().sociocortexConnector.getEntityTypes()\" ng-click=\"dialog.currentStep().selectEntityType(entityType)\" ng-class=\"{selectedListItem: dialog.currentStep().selectedEntityType === entityType}\"&gt;{{entityType.name}}&lt;/md-list-item&gt;&lt;/md-list&gt;"
+  );
+&nbsp;
+&nbsp;
+  $templateCache.put('app/src/components/dialogs/dataschemaImport/sociocortexHook/socioCortexLoginStep.html',
+    "&lt;div class=\"dialogError\" ng-show=\"dialog.currentStep().loginError\"&gt;{{dialog.currentStep().loginErrorMessage}}&lt;/div&gt;&lt;form ng-submit=\"dialog.next()\"&gt;&lt;md-input-container class=\"md-block\"&gt;&lt;label&gt;SocioCortex Server URL&lt;/label&gt;&lt;input type=\"text\" name=\"username\" ng-model=\"dialog.currentStep().serverURL\"&gt;&lt;/md-input-container&gt;&lt;md-input-container class=\"md-block\"&gt;&lt;label&gt;Username&lt;/label&gt;&lt;input type=\"text\" name=\"username\" ng-model=\"dialog.currentStep().username\"&gt;&lt;/md-input-container&gt;&lt;md-input-container class=\"md-block\"&gt;&lt;label&gt;Password&lt;/label&gt;&lt;input type=\"password\" name=\"password\" ng-model=\"dialog.currentStep().password\"&gt;&lt;/md-input-container&gt;&lt;button style=\"display: none\" type=\"submit\"&gt;Login&lt;/button&gt;&lt;/form&gt;"
+  );
+&nbsp;
+&nbsp;
+  $templateCache.put('app/src/components/dialogs/dataschemaImport/sociocortexHook/socioCortexWorkspaceStep.html',
+    "&lt;md-list&gt;&lt;md-list-item ng-repeat=\"workspace in dialog.currentStep().sociocortexConnector.getWorkspaces()\" ng-click=\"dialog.currentStep().selectWorkspace(workspace)\" ng-class=\"{selectedListItem: dialog.currentStep().selectedWorkspace === workspace}\"&gt;{{workspace.name}}&lt;/md-list-item&gt;&lt;/md-list&gt;"
+  );
+&nbsp;
+&nbsp;
+  $templateCache.put('app/src/components/dialogs/dataschemaImport/uploadHook/uploadStep.html',
+    "&lt;form ng-submit=\"dialog.next()\" class=\"dialog-file-upload\"&gt;&lt;div class=\"dialog-file-upload-container\"&gt;&lt;input type=\"file\" nv-file-select uploader=\"dialog.currentStep().uploaderData\" id=\"dialog-file-upload-data-input\" class=\"ng-hide\"&gt;&lt;label for=\"dialog-file-upload-data-input\" class=\"md-raised md-button md-primary\"&gt;Data schema&lt;/label&gt;&lt;p&gt;{{dialog.currentStep().dataFileName}}&lt;/p&gt;&lt;/div&gt;&lt;div class=\"dialog-file-upload-container\"&gt;&lt;input type=\"file\" nv-file-select uploader=\"dialog.currentStep().uploaderUI\" id=\"dialog-file-upload-ui-input\" class=\"ng-hide\"&gt;&lt;label for=\"dialog-file-upload-ui-input\" class=\"md-raised md-button md-primary\"&gt;UI Schema&lt;/label&gt;&lt;p&gt;{{dialog.currentStep().uiFileName}}&lt;/p&gt;&lt;/div&gt;&lt;/form&gt;"
+  );
+&nbsp;
+&nbsp;
+  $templateCache.put('app/src/components/dialogs/export/exportDialog.html',
+    "&lt;md-dialog flex=\"65\"&gt;&lt;md-toolbar&gt;&lt;div class=\"md-toolbar-tools\"&gt;&lt;h2&gt;Export Dialog&lt;/h2&gt;&lt;span flex&gt;&lt;/span&gt;&lt;md-button class=\"md-icon-button\" ng-click=\"dialog.hideDialog()\"&gt;&lt;md-icon class=\"material-icons\"&gt;close&lt;/md-icon&gt;&lt;/md-button&gt;&lt;/div&gt;&lt;/md-toolbar&gt;&lt;md-dialog-content&gt;&lt;md-tabs md-border-bottom md-selected=\"dialog.selectedIndex\"&gt;&lt;md-tab id=\"uiSchema\" label=\"UI Schema\"&gt;&lt;md-content class=\"md-padding\"&gt;&lt;md-input-container class=\"md-block\"&gt;&lt;textarea ng-model=\"dialog.uiSchema\"&gt;&lt;/textarea&gt;&lt;/md-input-container&gt;&lt;/md-content&gt;&lt;/md-tab&gt;&lt;md-tab id=\"dataSchema\" label=\"Data Schema\"&gt;&lt;md-content class=\"md-padding\"&gt;&lt;md-input-container class=\"md-block\"&gt;&lt;textarea ng-model=\"dialog.dataSchema\"&gt;&lt;/textarea&gt;&lt;/md-input-container&gt;&lt;/md-content&gt;&lt;/md-tab&gt;&lt;/md-tabs&gt;&lt;/md-dialog-content&gt;&lt;md-dialog-actions&gt;&lt;md-button ngclipboard data-clipboard-text=\"{{dialog.getActiveSchema()}}\" class=\"md-primary\"&gt;Copy to clipboard&lt;/md-button&gt;&lt;md-button ng-click=\"dialog.downloadSchema()\" class=\"md-primary\"&gt;Download&lt;/md-button&gt;&lt;a id=\"a\" style=\"display: none\" ng-href=\"{{dialog.url}}\" download=\"{{dialog.activeSchemaFileName}}\"&gt;&lt;/a&gt;&lt;/md-dialog-actions&gt;&lt;/md-dialog&gt;"
+  );
+&nbsp;
+&nbsp;
+  $templateCache.put('app/src/components/header/header.html',
+    "&lt;md-toolbar style=\"height:100%\"&gt;&lt;div class=\"md-toolbar-tools\"&gt;&lt;div class=\"md-toolbar-tools\" style=\"height: 100%;padding-left: 0px\" ng-click=\"header.showImportDialog()\"&gt;&lt;img src=\"resource/jsonforms-logo.png\" class=\"logo-img\"&gt; &lt;span&gt;JSON Forms Editor v0.0.9&lt;/span&gt;&lt;/div&gt;&lt;!-- fill up the space between left and right area --&gt;&lt;span flex&gt;&lt;/span&gt;&lt;!--&lt;i ng-if=\"header.undoService.canUndo()\" ng-click=\"header.undoService.undo()\" class=\"material-icons\"\n" +
+    "           style=\"padding-right: 6px; margin: 4px\"&gt;undo&lt;/i&gt;--&gt;&lt;md-button ng-if=\"!header.configService.isPreviewTab()\" class=\"md-raised md-accent\" ui-sref=\"preview\" ui-sref-active=\"hidden\"&gt;Preview&lt;/md-button&gt;&lt;md-button ng-if=\"!header.configService.isPreviewTab()\" class=\"md-raised md-accent\" ui-sref=\"edit\" ui-sref-active=\"hidden\"&gt;Edit&lt;/md-button&gt;&lt;md-button ng-if=\"header.socioCortexConnector.isLoggedWithSocioCortex()\" class=\"md-raised md-accent\" ng-click=\"header.saveToSocioCortex()\"&gt;&lt;md-tooltip md-direction=\"down\"&gt;Save to SocioCortex&lt;/md-tooltip&gt;Save&lt;/md-button&gt;&lt;md-button ng-if=\"!header.configService.isPreviewTab() &amp;&amp; !header.socioCortexConnector.isLoggedWithSocioCortex()\" class=\"md-raised md-accent\" ng-click=\"header.showExportDialog()\"&gt;Export&lt;/md-button&gt;&lt;/div&gt;&lt;/md-toolbar&gt;"
+  );
+&nbsp;
+&nbsp;
+  $templateCache.put('app/src/components/layouts/layouts.html',
+    "&lt;md-subheader class=\"md-primary bottom-border\"&gt;LAYOUTS&lt;/md-subheader&gt;&lt;md-content class=\"layouts-view bottom-border md-padding\"&gt;&lt;div ui-tree=\"layouts.treeOptions\" data-clone-enabled=\"true\" data-nodrop-enabled=\"true\"&gt;&lt;div layout=\"row\" layout-wrap ui-tree-nodes data-clone-enabled=\"true\" data-nodrop-enabled=\"true\" ng-model=\"layouts.layoutsService.elements\"&gt;&lt;md-card flex class=\"layouts-element\" ng-repeat=\"element in layouts.layoutsService.elements\" ui-tree-handle ui-tree-node&gt;&lt;md-icon class=\"material-icons\"&gt;{{element.getIcon()}}&lt;/md-icon&gt;&lt;md-tooltip&gt;{{element.getLabel()}} - {{element.getDescription()}}&lt;/md-tooltip&gt;&lt;/md-card&gt;&lt;/div&gt;&lt;/div&gt;&lt;/md-content&gt;"
+  );
+&nbsp;
+&nbsp;
+  $templateCache.put('app/src/components/preview/preview.html',
+    "&lt;md-content style=\"height: 100%\" class=\"md-padding jsf\" ng-if=\"preview.previewService.schema\"&gt;&lt;jsonforms schema=\"preview.previewService.schema\" ui-schema=\"preview.previewService.uiSchema\" data=\"preview.data\"&gt;&lt;/jsonforms&gt;&lt;/md-content&gt;&lt;md-button ng-if=\"!preview.configService.isPreviewTab()&amp;&amp;preview.shouldShowNewTabButton()\" ng-click=\"preview.openInNewTab()\" class=\"md-fab accent md-fab-bottom-right\"&gt;&lt;md-icon class=\"material-icons\"&gt;open_in_new&lt;/md-icon&gt;&lt;/md-button&gt;&lt;script&gt;window.addEventListener('message', function (event) {\n" +
+    "        var injector = angular.element('html').injector();\n" +
+    "        var service = injector.get('PreviewService');\n" +
+    "        if (event.data.schema) {\n" +
+    "            service.schema = event.data.schema;\n" +
+    "        }\n" +
+    "        if (event.data.uiSchema) {\n" +
+    "            service.uiSchema = event.data.uiSchema;\n" +
+    "        }\n" +
+    "\n" +
+    "        // set to preview Mode\n" +
+    "        var config = injector.get('ConfigService');\n" +
+    "        config.setIsPreviewTab();\n" +
+    "\n" +
+    "        // update everything\n" +
+    "        var scope = injector.get('$rootScope');\n" +
+    "        scope.$apply();\n" +
+    "    }, false);&lt;/script&gt;"
+  );
+&nbsp;
+&nbsp;
+  $templateCache.put('app/src/components/toolbox/toolbox.html',
+    "&lt;md-content style=\"height:100%\" layout=\"column\"&gt;&lt;md-subheader class=\"md-primary bottom-border\"&gt;CONTROLS&lt;/md-subheader&gt;&lt;md-content style=\"padding-top: 10px\"&gt;&lt;div layout=\"row\" style=\"padding-right: 17px; padding-left: 17px\"&gt;&lt;md-switch class=\"md-primary\" style=\"margin-top: 0px; margin-bottom: 0px\" md-no-ink ng-model=\"toolbox.configService.enableFilter\"&gt;Hide used elements&lt;/md-switch&gt;&lt;span flex&gt;&lt;/span&gt;&lt;md-icon class=\"material-icons\" ng-if=\"!toolbox.isParentFolder()\" ng-click=\"toolbox.clickedBack()\"&gt;arrow_upward&lt;/md-icon&gt;&lt;/div&gt;&lt;/md-content&gt;&lt;md-content flex class=\"md-padding tree-view\" style=\"margin-bottom:150px; padding-top: 0px\"&gt;&lt;div ui-tree=\"toolbox.treeOptions\" id=\"toolbox-root\" data-drag-delay=\"100\" data-clone-enabled=\"true\" data-nodrop-enabled=\"true\"&gt;&lt;ol ui-tree-nodes ng-model=\"toolbox.toolboxService.elements\"&gt;&lt;li ng-repeat=\"element in toolbox.toolboxService.elements\" ui-tree-node ng-hide=\"toolbox.shouldHide(element)\"&gt;&lt;div ui-tree-handle class=\"tree-node tree-node-content\" ng-class=\"{'toolbox-element-placed': toolbox.isPlaced(element)}\" ng-style=\"{cursor: (element.isObject() ? 'default' : 'move')}\"&gt;&lt;md-icon ng-if=\"element.isObject()\" ng-click=\"toolbox.clickedIcon(element)\" class=\"material-icons\"&gt;{{element.getIcon()}}&lt;/md-icon&gt;&lt;span ng-if=\"element.isObject()\" ng-click=\"toolbox.clickedIcon(element)\" style=\"overflow:hidden\" class=\"left-margin\"&gt;{{element.getLabel()}}&lt;/span&gt;&lt;md-icon ng-if=\"!element.isObject()\" class=\"material-icons\"&gt;{{element.getIcon()}}&lt;/md-icon&gt;&lt;span ng-if=\"!element.isObject()\" style=\"overflow:hidden\" class=\"left-margin\"&gt;{{element.getLabel()}}&lt;/span&gt; &lt;a class=\"pull-right left-margin\" ng-hide=\"!toolbox.canBeRemoved(element)\" ng-click=\"toolbox.removeDataElement(element)\"&gt;&lt;md-icon class=\"btn material-icons\"&gt;delete&lt;/md-icon&gt;&lt;/a&gt;&lt;/div&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/div&gt;&lt;/md-content&gt;&lt;md-content class=\"toolbox-bottom-control top-border\" ng-controller=\"ToolboxBottomController as toolboxBottom\"&gt;&lt;div ng-show=\"toolboxBottom.newElementConfig.hasEnum\" ng-include=\"'enumProperties.html'\"&gt;&lt;/div&gt;&lt;div ng-show=\"toolboxBottom.showAdvanced\" ng-include=\"toolboxBottom.advancedTemplate\"&gt;&lt;/div&gt;&lt;md-button ng-show=\"toolboxBottom.advancedTemplate!=null\" class=\"md-primary md-ink-ripple toolbox-advanced-button\" ng-click=\"toolboxBottom.showAdvanced = !toolboxBottom.showAdvanced\"&gt;Advanced&lt;/md-button&gt;&lt;div layout=\"row\"&gt;&lt;div flex class=\"toolbox-input-datatype-box\" ng-repeat=\"(typeLabel, typeTemplate) in toolboxBottom.elementTypes\" ng-click=\"toolboxBottom.changeType(typeLabel, typeTemplate)\" ng-class=\"{'toolbox-input-datatype-box-active': toolboxBottom.newElementTypeLabel===typeLabel}\"&gt;{{typeLabel}}&lt;/div&gt;&lt;/div&gt;&lt;div layout=\"row\" layout-align=\"space-around center\"&gt;&lt;md-input-container flex=\"70\" style=\"margin-top:20px; margin-bottom:0px\"&gt;&lt;input id=\"inputLabel\" ng-enter=\"toolboxBottom.addNewElement()\" ng-model=\"toolboxBottom.newElementLabel\" class=\"md-primary\" type=\"text\" placeholder=\"Add new attribute...\"&gt;&lt;/md-input-container&gt;&lt;div flex=\"30\"&gt;&lt;md-button class=\"md-raised md-primary toolbox-button-create\" ng-click=\"toolboxBottom.addNewElement()\"&gt;Create&lt;/md-button&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- Templates for the advanced menus --&gt;&lt;script type=\"text/ng-template\" id=\"basicProperties.html\"&gt;&lt;md-checkbox ng-model=\"$parent.toolboxBottom.newElementConfig.required\"&gt;Required&lt;/md-checkbox&gt;\n" +
+    "            &lt;md-checkbox ng-model=\"$parent.toolboxBottom.newElementConfig.hasEnum\"&gt;Enum&lt;/md-checkbox&gt;&lt;/script&gt;&lt;script type=\"text/ng-template\" id=\"enumProperties.html\"&gt;&lt;div layout=\"row\" layout-align=\"space-around center\"&gt;\n" +
+    "\n" +
+    "                &lt;md-input-container flex=\"70\" style=\"margin-top:20px; margin-bottom:0px;\"&gt;\n" +
+    "                    &lt;input ng-enter=\"$parent.toolboxBottom.addEnumElement()\" ng-model=\"$parent.toolboxBottom.currentEnumElementLabel\" class=\"md-primary\" type=\"text\" placeholder=\"Add new enum element...\"/&gt;\n" +
+    "                &lt;/md-input-container&gt;\n" +
+    "                &lt;div flex=\"30\"&gt;\n" +
+    "                    &lt;md-button class=\"md-raised md-primary toolbox-button-create\" ng-click=\"$parent.toolboxBottom.addEnumElement()\"&gt;\n" +
+    "                        Add\n" +
+    "                    &lt;/md-button&gt;\n" +
+    "                &lt;/div&gt;\n" +
+    "            &lt;/div&gt;\n" +
+    "\n" +
+    "            &lt;md-select ng-model=\"$parent.toolboxBottom.newElementConfig.enum\" multiple placeholder=\"Current elements\"&gt;\n" +
+    "                &lt;md-option selected=\"true\" ng-repeat=\"elem in $parent.toolboxBottom.newEnumElements\"&gt;{{elem}}&lt;/md-option&gt;\n" +
+    "            &lt;/md-select&gt;&lt;/script&gt;&lt;/md-content&gt;&lt;/md-content&gt;"
+  );
+&nbsp;
+&nbsp;
+  $templateCache.put('app/src/components/tree/tree.html',
+    "&lt;!-- Nested node template --&gt;&lt;script type=\"text/ng-template\" id=\"tree_renderer.html\"&gt;&lt;div ui-tree-handle ng-class=\"{'tree-invalid-node': !node.isValid()}\" class=\"tree-node tree-node-content\" ng-click=\"tree.showDetails(node)\"&gt;\n" +
+    "    &lt;a ng-if=\"node.getElements().length &gt; 0\" data-nodrag ng-click=\"tree.toggle(this)\"&gt;\n" +
+    "      &lt;md-icon class=\"btn material-icons\" ng-show=\"collapsed\"&gt;expand_more&lt;/md-icon&gt;\n" +
+    "      &lt;md-icon class=\"btn material-icons\" ng-show=\"!collapsed\"&gt;expand_less&lt;/md-icon&gt;\n" +
+    "    &lt;/a&gt;\n" +
+    "    {{node.getLongType()}} &lt;span ng-show=\"node.getLabel()\"&gt;-&lt;/span&gt;  {{node.getLabel()}}\n" +
+    "    &lt;a class=\"pull-right left-margin\" hideif=\"node.root\" data-nodrag ng-click=\"tree.remove(this)\"&gt;\n" +
+    "      &lt;md-icon class=\"btn material-icons\"&gt;delete&lt;/md-icon&gt;\n" +
+    "    &lt;/a&gt;\n" +
+    "  &lt;/div&gt;\n" +
+    "\n" +
+    "  &lt;ol ui-tree-nodes=\"\" ng-model=\"node.elements\" ng-class=\"{hidden: collapsed}\"&gt;\n" +
+    "    &lt;li ng-repeat=\"node in node.elements\" ui-tree-node ng-include=\"'tree_renderer.html'\"&gt;&lt;/li&gt;\n" +
+    "  &lt;/ol&gt;&lt;/script&gt;&lt;!-- tree view --&gt;&lt;md-content style=\"height: calc(100% - 60px)\" class=\"md-padding tree-view\"&gt;&lt;div style=\"margin-bottom:200px\" ui-tree=\"tree.treeOptions\" id=\"tree-root\" data-drag-delay=\"300\"&gt;&lt;ol ui-tree-nodes ng-model=\"tree.treeService.elements\"&gt;&lt;li ng-repeat=\"node in tree.treeService.elements\" ui-tree-node ng-include=\"'tree_renderer.html'\"&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/div&gt;&lt;/md-content&gt;"
+  );
+&nbsp;
+}]);
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Apr 21 2016 10:44:34 GMT+0200 (CEST)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

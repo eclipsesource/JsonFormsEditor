@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ts/components/core/connectors/github/githubConnector.service.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../../index.html">all files</a> / <a href="index.html">ts/components/core/connectors/github/</a> githubConnector.service.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">45.07% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>32/71</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">33.33% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>4/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">30% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>6/20</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">45.07% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>32/71</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var app;
+(function (app) {
+    var core;
+    (function (core) {
+        var connectors;
+        (function (connectors) {
+            var GithubConnector = (function () {
+                function GithubConnector($http, $window, $q, $location) {
+                    this.$http = $http;
+                    this.$window = $window;
+                    this.$q = $q;
+                    this.$location = $location;
+                    this.url = $location.protocol() + "://" + $location.host() + ":" + $location.port();
+                    this.fileLoaders = [];
+                    // We need one fileLoader per schema (ui-schema and data-schema)
+                    this.addFileLoader();
+                    this.addFileLoader();
+                }
+                GithubConnector.prototype.addFileLoader = function () {
+                    return this.fileLoaders.push(new connectors.FileLoader());
+                };
+                GithubConnector.prototype.getFileLoader = <span class="fstat-no" title="function not covered" >function (index) {</span>
+<span class="cstat-no" title="statement not covered" >                    return this.fileLoaders[index];</span>
+                };
+                GithubConnector.prototype.showPopupGithub = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                    var _this = this;</span>
+<span class="cstat-no" title="statement not covered" >                    var left = screen.width / 2 - 200;</span>
+<span class="cstat-no" title="statement not covered" >                    var top = screen.height / 2 - 200;</span>
+<span class="cstat-no" title="statement not covered" >                    var popup = this.$window.open('/github/login', '', "top=" + top + ", left=" + left + ", width=400, height=500");</span>
+<span class="cstat-no" title="statement not covered" >                    var deferred = this.$q.defer();</span>
+<span class="cstat-no" title="statement not covered" >                    window.onmessage = <span class="fstat-no" title="function not covered" >function (event) {</span></span>
+                        //TODO detect only pertinent message
+<span class="cstat-no" title="statement not covered" >                        popup.close();</span>
+<span class="cstat-no" title="statement not covered" >                        var data = event.data;</span>
+<span class="cstat-no" title="statement not covered" >                        _this.repoList = JSON.parse(data.body);</span>
+<span class="cstat-no" title="statement not covered" >                        deferred.resolve();</span>
+                    };
+<span class="cstat-no" title="statement not covered" >                    return deferred.promise;</span>
+                };
+                GithubConnector.prototype.getRepoList = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                    return this.repoList;</span>
+                };
+                GithubConnector.prototype.getBranchList = <span class="fstat-no" title="function not covered" >function (repoName) {</span>
+<span class="cstat-no" title="statement not covered" >                    return this.$http.get(this.url + "/github/getBranchList?repoName=" + repoName, {});</span>
+                };
+                GithubConnector.prototype.getFilesFromBranch = <span class="fstat-no" title="function not covered" >function (repoName, branchName) {</span>
+<span class="cstat-no" title="statement not covered" >                    var _this = this;</span>
+<span class="cstat-no" title="statement not covered" >                    return this.$http.get(this.url + "/github/getFilesFromBranch?repoName=" + repoName + "&amp;branchName=" + branchName, {})</span>
+                        .success(<span class="fstat-no" title="function not covered" >function (result) {</span>
+<span class="cstat-no" title="statement not covered" >                        _this.fileLevel = new connectors.GithubFileLevel(result, null);</span>
+                    });
+                };
+                GithubConnector.prototype.getFileLevel = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                    return this.fileLevel;</span>
+                };
+                GithubConnector.prototype.goIntoFolder = <span class="fstat-no" title="function not covered" >function (file) {</span>
+<span class="cstat-no" title="statement not covered" >                    var _this = this;</span>
+<span class="cstat-no" title="statement not covered" >                    if (file.getType() !== 'tree') {</span>
+<span class="cstat-no" title="statement not covered" >                        throw new Error('Calling method "goIntoFolder" with a regular file instead of a folder!');</span>
+                    }
+                    // Here I'm reusing previously loaded fileLevels
+<span class="cstat-no" title="statement not covered" >                    if (this.fileLevel) {</span>
+<span class="cstat-no" title="statement not covered" >                        var child = this.fileLevel.getChild(file.getName());</span>
+<span class="cstat-no" title="statement not covered" >                        if (child) {</span>
+<span class="cstat-no" title="statement not covered" >                            this.fileLevel = child;</span>
+<span class="cstat-no" title="statement not covered" >                            return this.$q.when(child);</span>
+                        }
+                    }
+<span class="cstat-no" title="statement not covered" >                    return this.$http.get(this.url + "/github/getFileLevel?url=" + file.getUrl())</span>
+                        .success(<span class="fstat-no" title="function not covered" >function (result) {</span>
+<span class="cstat-no" title="statement not covered" >                        var previousLevel = _this.fileLevel;</span>
+<span class="cstat-no" title="statement not covered" >                        _this.fileLevel = new connectors.GithubFileLevel(result, previousLevel);</span>
+<span class="cstat-no" title="statement not covered" >                        previousLevel.addChild(file.getName(), _this.fileLevel);</span>
+                    });
+                };
+                GithubConnector.prototype.goToParentFolder = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                    this.fileLevel = this.fileLevel.getParent();</span>
+                };
+                GithubConnector.prototype.hasParentFolder = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                    return this.fileLevel.hasParent();</span>
+                };
+                GithubConnector.prototype.loadFile = <span class="fstat-no" title="function not covered" >function (file, fileSelectorId) {</span>
+<span class="cstat-no" title="statement not covered" >                    var _this = this;</span>
+<span class="cstat-no" title="statement not covered" >                    return this.$http.get(this.url + "/github/loadFile?url=" + file.getUrl())</span>
+                        .then(<span class="fstat-no" title="function not covered" >function (result) {</span>
+<span class="cstat-no" title="statement not covered" >                        try {</span>
+<span class="cstat-no" title="statement not covered" >                            _this.fileLoaders[fileSelectorId].loadedFile = result.data;</span>
+<span class="cstat-no" title="statement not covered" >                            _this.fileLoaders[fileSelectorId].loadedFileContents = JSON.parse(atob(result.data.content));</span>
+<span class="cstat-no" title="statement not covered" >                            return _this.fileLoaders[fileSelectorId].loadedFileContents;</span>
+                        }
+                        catch (error) {
+<span class="cstat-no" title="statement not covered" >                            throw new Error('Invalid Json Object! Select another one');</span>
+                        }
+                    });
+                };
+                GithubConnector.$inject = ['$http', '$window', '$q', '$location'];
+                return GithubConnector;
+            })();
+            connectors.GithubConnector = GithubConnector;
+            angular.module('app.core').service('GithubConnector', GithubConnector);
+        })(connectors = core.connectors || (core.connectors = {}));
+    })(core = app.core || (<span class="branch-1 cbranch-no" title="branch not covered" >app.core = {})</span>);
+})(app || (<span class="branch-1 cbranch-no" title="branch not covered" >app = {})</span>);
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Apr 21 2016 10:44:34 GMT+0200 (CEST)
+</div>
+</div>
+<script src="../../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../../sorter.js"></script>
+</body>
+</html>

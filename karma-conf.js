@@ -9,7 +9,7 @@ module.exports = function(config){
         browsers: ['PhantomJS'],
         basePath: '',
         preprocessors: {
-            'temp/**/*.js': ['coverage']
+            'test/**/*.js': ['coverage']
         },
         reporters: ['dots', 'coverage'],
         coverageReporter: {
