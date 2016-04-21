@@ -138,8 +138,8 @@
     "categorization": {
       "type": "object",
       "required": ["type", "elements"],
-      "additionalProperties": false,
       "allOf": [{
+        "additionalProperties": false,
         "properties": {
           "type": {
             "type": "string",
