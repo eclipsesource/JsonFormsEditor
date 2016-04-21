@@ -2,15 +2,18 @@ module app.dialogs.dataschemaimport {
     import IDialogService = angular.material.IDialogService;
     import ToolboxService = app.toolbox.ToolboxService;
     import TreeService = app.tree.TreeService;
+    import IToastService = angular.material.IToastService;
+    import IScope = angular.IScope;
 
 
     export class DataschemaImportController extends AbstractWizard {
 
-        static $inject = ['$mdDialog', 'DataschemaImportService', 'ToolboxService', 'TreeService', '$scope'];
+        static $inject = ['$mdDialog', 'DataschemaImportService', 'ToolboxService', 'TreeService', '$scope', '$mdToast', '$rootScope'];
 
 
-        constructor($mdDialog:IDialogService, public importService:DataschemaImportService, private toolboxService:ToolboxService, private treeService:TreeService, private $scope:any) {
-            super($mdDialog);
+        constructor($mdDialog:IDialogService, public importService:DataschemaImportService, private toolboxService:ToolboxService,
+                    private treeService:TreeService, private $scope:any, public $mdToast:IToastService, public $rootScope:IScope) {
+            super($mdDialog, $rootScope);
             this.addSteps([new ChooseUploadStepController(this)]);
         }
 
@@ -18,17 +21,13 @@ module app.dialogs.dataschemaimport {
             return true;
         }
 
-        showNotification(text:string, time:number):void {
-            clearTimeout(this.notificationTimerId);
-            this.currentNotification = text;
-            this.notificationTimerId = setTimeout(()=> {
+        showNotification(text:string):void {
+            var parent = document.querySelector('.data-schema-import-dialog');
+            var errorNotification = this.$mdToast.simple().textContent(text).position('bottom left').parent(parent).theme('error-toast');
 
-                this.$scope.$apply(()=> {
-                    this.currentNotification = "";
-                });
-            }, time);
+            this.$mdToast.show(errorNotification);
+            throw new Error(text);
         }
-
 
         submit():void {
             this.currentStep().submit().then((json:any) => {

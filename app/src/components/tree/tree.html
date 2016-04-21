@@ -18,7 +18,7 @@
 
 <!-- tree view -->
 <md-content style="height: calc(100% - 60px);" class="md-padding tree-view">
-  <div style="margin-bottom:200px;" ui-tree="tree.treeOptions" data-drag-delay="300">
+  <div style="margin-bottom:200px;" ui-tree="tree.treeOptions" id="tree-root" data-drag-delay="300">
     <ol ui-tree-nodes ng-model="tree.treeService.elements">
       <li ng-repeat="node in tree.treeService.elements" ui-tree-node ng-include="'tree_renderer.html'"></li>
     </ol>

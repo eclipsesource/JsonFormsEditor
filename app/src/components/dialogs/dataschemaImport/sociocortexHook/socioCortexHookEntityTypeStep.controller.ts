@@ -12,8 +12,8 @@ module app.dialogs.dataschemaimport {
             super(wizard);
         }
 
-        getTitle():string {
-            return "EntityType";
+        getTitle(index:number):string {
+            return index+1+". EntityType";
         }
 
         getTemplate():string {

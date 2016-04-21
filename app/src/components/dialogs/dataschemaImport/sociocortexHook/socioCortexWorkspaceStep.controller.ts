@@ -12,8 +12,8 @@ module app.dialogs.dataschemaimport {
             super(wizard);
         }
 
-        getTitle():string {
-            return "Workspace";
+        getTitle(index:number):string {
+            return index+1+". Workspace";
         }
 
         getTemplate():string {

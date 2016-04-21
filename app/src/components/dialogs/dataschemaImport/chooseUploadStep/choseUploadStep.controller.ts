@@ -9,8 +9,15 @@ module app.dialogs.dataschemaimport {
         }
 
 
-        getTitle():string {
-            return "Select your JSON data model";
+        getTitle(index:number, stepNumber:number):string {
+            if(stepNumber===0){
+                return "Welcome to the JSON Forms Editor!";
+            }
+            return index+1+". Welcome";
+        }
+
+        getDescription():string{
+            return "Please select and option to continue";
         }
 
         getTemplate():string {

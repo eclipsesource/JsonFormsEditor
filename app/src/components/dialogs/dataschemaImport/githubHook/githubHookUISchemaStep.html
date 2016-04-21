@@ -1,0 +1,6 @@
+<md-list>
+    <md-icon class="material-icons" ng-if="dialog.currentStep().hasParentFolder()" ng-click="dialog.currentStep().goToParentFolder()">arrow_upward</md-icon>
+    <md-list-item ng-repeat="file in dialog.currentStep().getFiles() track by $index" ng-click="dialog.currentStep().selectFile(file)" ng-class="{selectedListItem: dialog.currentStep().selectedFile === file}">
+        {{file.getName()}}
+    </md-list-item>
+</md-list>

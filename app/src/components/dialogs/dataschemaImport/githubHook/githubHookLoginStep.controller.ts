@@ -13,12 +13,16 @@ module app.dialogs.dataschemaimport {
             super(wizard);
         }
 
-        getTitle():string {
-            return "Github Login";
+        getTitle(index:number):string {
+            return index+1+". Github Login";
         }
 
         getTemplate():string {
             return "app/src/components/dialogs/dataschemaImport/githubHook/githubHookLoginStep.html";
+        }
+
+        getDescription():string {
+            return "Click below to log-in to Github"
         }
 
         hasNavigation():boolean {

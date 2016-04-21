@@ -68,6 +68,8 @@ module app {
                 .accentPalette('blue', {'default': '500'})
                 .warnPalette('red', {'default': '600'});
 
+            $mdThemingProvider.theme('error-toast');
+
             $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);
         }
     }

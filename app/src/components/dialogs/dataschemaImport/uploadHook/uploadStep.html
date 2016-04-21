@@ -1,2 +1,13 @@
-<form ng-submit="dialog.next()">
-<input type="file" nv-file-select uploader="dialog.currentStep().uploader"></form>
+<form ng-submit="dialog.next()" class="dialog-file-upload">
+    <div class="dialog-file-upload-container">
+        <input type="file" nv-file-select uploader="dialog.currentStep().uploaderData" id="dialog-file-upload-data-input" class="ng-hide">
+        <label for="dialog-file-upload-data-input" class="md-raised md-button md-primary">Data schema</label>
+        <p>{{dialog.currentStep().dataFileName}}</p>
+    </div>
+    <div class="dialog-file-upload-container">
+        <input type="file" nv-file-select uploader="dialog.currentStep().uploaderUI" id="dialog-file-upload-ui-input" class="ng-hide">
+        <label for="dialog-file-upload-ui-input" class="md-raised md-button md-primary">UI Schema</label>
+        <p>{{dialog.currentStep().uiFileName}}</p>
+    </div>
+
+</form>

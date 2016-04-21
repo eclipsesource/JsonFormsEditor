@@ -23,12 +23,16 @@ module app.dialogs.dataschemaimport {
             return this.githubConnector.getRepoList();
         }
 
-        getTitle():string {
-            return "Repository";
+        getTitle(index:number):string {
+            return index+1+". Repository";
         }
 
         getTemplate():string {
             return "app/src/components/dialogs/dataschemaImport/githubHook/githubHookRepoStep.html";
+        }
+
+        getDescription():string{
+            return "Select the repository and branch containing your schemas";
         }
 
         hasNavigation():boolean {

@@ -25,8 +25,8 @@ module app.dialogs.dataschemaimport {
 	    return false;
         }
 
-        getTitle():string {
-            return "Select Data Schema";
+        getTitle(index:number):string {
+            return index+1+". Data";
         }
 
         getTemplate():string {
@@ -41,6 +41,10 @@ module app.dialogs.dataschemaimport {
             return true;
         }
 
+        getDescription():string{
+            return "Select the data-schema (JSON file)";
+        }
+
         hasParentFolder():boolean{
             return this.githubConnector.hasParentFolder();
         }
@@ -51,8 +55,7 @@ module app.dialogs.dataschemaimport {
 
         submit():IPromise<any> {
             return this.githubConnector.loadFile(this.selectedFile, this.fileSelectorID).catch((error)=> {
-                this.wiz.showNotification("Invalid file selected, try with a json file.", 3000);
-		throw new Error("Invalid file selected, try with a json file.");
+                this.wiz.showNotification("Invalid file selected, try with a json file.");
             });
         }
 

@@ -12,7 +12,7 @@ module app.dialogs {
             return this.wizard.currentStep() === this;
         }
 
-        abstract getTitle():string;
+        abstract getTitle(index?:number, stepNumber?:number):string;
 
         abstract getTemplate():string;
 
@@ -21,6 +21,10 @@ module app.dialogs {
         abstract shallSubmit():boolean;
 
         abstract submit():IPromise<any>;
+
+        getDescription(): string{
+            return "";
+        }
 
         isAllowedToContinue(): boolean {
             return true;

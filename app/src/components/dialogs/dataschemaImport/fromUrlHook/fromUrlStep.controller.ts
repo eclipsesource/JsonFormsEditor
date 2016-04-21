@@ -12,8 +12,12 @@ module app.dialogs.dataschemaimport {
             super(wizard);
         }
 
-        getTitle():string {
-            return "URL";
+        getTitle(index: number):string {
+            return index+1+". URL";
+        }
+
+        getDescription(): string {
+            return "Insert the URL from where you want to load your data-schema"
         }
 
         getTemplate():string {
