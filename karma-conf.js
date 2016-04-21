@@ -14,7 +14,7 @@ module.exports = function(config){
         reporters: ['dots', 'coverage'],
         coverageReporter: {
             type: 'lcov',
-            dir: 'temp/coverage/'
+            dir: 'test/coverage/'
         }
     };
 

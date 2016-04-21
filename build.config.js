@@ -12,6 +12,12 @@ module.exports = {
      */
     temp_dir: 'temp',
 
+    /*
+     * Test directory to store test coverage and testing classes
+     */
+
+    test_dir: 'test',
+
     /**
      * Distribution Directory, where the project is compiled for production
      */
