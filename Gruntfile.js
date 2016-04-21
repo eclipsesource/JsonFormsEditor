@@ -321,7 +321,6 @@ module.exports = function (grunt) {
         'uglify:dist',
         'copy:dist',
         'indexDist',
-        'clean:temp',
         'clean:build'
     ]);
 
