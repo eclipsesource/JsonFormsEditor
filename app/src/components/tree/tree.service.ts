@@ -25,8 +25,6 @@ module app.tree {
                 this.elements.push(rootElement);
                 this.validateTree();
             });
-
-
         }
 
         exportUISchemaAsJSON():string {
@@ -83,6 +81,7 @@ module app.tree {
 
         modifiedTree(){
             this.validateTree();
+            this.notifyObservers(new PreviewUpdateEvent(null, JSON.parse(this.exportUISchemaAsJSON())));
         }
 
         validateTree(){

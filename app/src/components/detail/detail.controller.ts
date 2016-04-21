@@ -10,7 +10,7 @@ module app.detail {
 
         constructor(public detailService:DetailService, $scope:IScope, treeService:TreeService) {
             $scope.$on('modelChanged', () => {
-                treeService.notifyObservers(new PreviewUpdateEvent(null, JSON.parse(treeService.exportUISchemaAsJSON())));
+                treeService.modifiedTree();
             });
         }
 
