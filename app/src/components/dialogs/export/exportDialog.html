@@ -12,6 +12,7 @@
         <md-tabs md-border-bottom md-selected="dialog.selectedIndex">
             <md-tab id="uiSchema" label="UI Schema">
                 <md-content class="md-padding">
+                    <div class="dialogError" ng-show="!dialog.isUISchemaValid">{{dialog.validationErrorMessage}}</div>
                     <md-input-container class="md-block">
                         <textarea ng-model="dialog.uiSchema"></textarea>
                     </md-input-container>
