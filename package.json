@@ -47,6 +47,6 @@
     "grunt-protractor-runner": "^3.0.0"
   },
   "scripts": {
-    "postinstall": "bower install && ./node_modules/protractor/bin/webdriver-manager update"
+    "postinstall": "bower install"
   }
 }
