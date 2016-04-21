@@ -239,6 +239,10 @@ module.exports = function (grunt) {
             deploy: {
                 cmd: './deploy.sh',
                 args: ['<%= pkg.version %>']
+            },
+            commit: {
+                cmd: './commit.sh',
+                args: ['<%= grunt.option("msg") %>']
             }
         }
     };
@@ -292,6 +296,15 @@ module.exports = function (grunt) {
         'ngtemplates:test',
         'karma'
     ]);
+
+    grunt.registerTask('commit', function(msg) {
+        if(!msg){
+            grunt.log.error('You need to specify a commit message to continue! (use grunt commit:yourmessage)');
+            return;
+        }
+        grunt.option('msg', msg);
+        grunt.task.run('test', 'dist', 'run:commit');
+    });
 
     grunt.registerTask('test:e2e', [
       'protractor'
