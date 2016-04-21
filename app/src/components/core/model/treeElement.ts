@@ -119,10 +119,18 @@ module app.core.model {
                 json.scope = {};
                 json.scope.$ref = "#/properties/" + this.scope;
             }
-            if (this.rule['effect'].length > 0 && this.rule['condition']['scope'].length > 0 && this.rule['condition']['expectedValue'].length > 0) {
-                json.rule = JSON.parse(JSON.stringify(this.rule));
-                json.rule.condition.scope = {};
-                json.rule.condition.scope.$ref = "#/properties/" + this.rule['condition'].scope;
+            if (this.rule['effect'].length > 0 /*&& this.rule['condition']['scope'].length > 0 && this.rule['condition']['expectedValue'].length > 0*/) {
+                json.rule = {
+                    "effect": this.rule['effect']
+                };
+                if (this.rule['condition']['scope'].length > 0) {
+                    json.rule.condition  = {
+                        "scope": {
+                            "$ref": "#/properties/" + this.rule['condition']['scope']
+                        },
+                        "expectedValue": this.rule['condition']['expectedValue']
+                    };
+                }
             }
             if (this.metaData['acceptedElements']) {
                 json.elements = [];

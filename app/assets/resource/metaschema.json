@@ -37,7 +37,6 @@
     "control": {
       "type": "object",
       "allOf": [{
-        "additionalProperties": false,
         "properties": {
           "type": {
             "type": "string",
