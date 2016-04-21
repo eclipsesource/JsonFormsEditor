@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ts/components/toolbox/toolbox.service.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">ts/components/toolbox/</a> toolbox.service.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">70.21% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>66/94</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">46.67% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>14/30</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">68.18% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>15/22</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">70.21% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>66/94</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * Created by pancho111203 on 20/12/15.
+ */
+var app;
+(function (app) {
+    var toolbox;
+    (function (toolbox) {
+        var ControlToolboxElement = app.core.model.ControlToolboxElement;
+        var ToolboxServiceMemento = app.core.undo.ToolboxServiceMemento;
+        var ToolboxService = (function () {
+            function ToolboxService(dataschemaService, $q, layoutsService) {
+                this.dataschemaService = dataschemaService;
+                this.$q = $q;
+                this.layoutsService = layoutsService;
+                this.elements = [];
+                this.currentPath = [];
+                this.placedTimes = {};
+            }
+            /**
+             * Adds a new DataschemaProperty into the dataschema and adds the corresponding ToolboxElement.
+             * @param property the DataschemaProperty to add
+             * @param path the path to the property in the dataschema, e.g. ['person', 'adress']
+             * @returns {boolean} true, if the addition was successful
+             */
+            ToolboxService.prototype.addSchemaElement = function (label, type, config) {
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (this.dataschemaService.addNewProperty(label, type, config, this.currentPath)) {
+                    var element = new ControlToolboxElement(this.dataschemaService.convertNameToLabel(label), type, this.generateScope(label, this.currentPath));
+                    this.elements.push(element);
+                    return true;
+                }
+                else {
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+            };
+            ToolboxService.prototype.generateScope = function (label, path) {
+                var scope = '';
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (path.length &lt;= 0) {
+                    scope = label;
+                }
+                else {
+<span class="cstat-no" title="statement not covered" >                    scope = path.join('/properties/') + '/properties/' + label;</span>
+                }
+                return scope;
+            };
+            ToolboxService.prototype.accessFolder = function (folderName) {
+                this.currentPath.push(folderName);
+                //If folder exists
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (this.dataschemaService.getFolderAt(this.currentPath)) {
+                    this.loadSchemaElements();
+                }
+                else {
+<span class="cstat-no" title="statement not covered" >                    this.currentPath.pop();</span>
+                }
+            };
+            ToolboxService.prototype.previousFolder = function () {
+                this.currentPath.pop();
+                this.loadSchemaElements();
+            };
+            /**
+             * Removes the ControlToolboxElement from the Dataschema.
+             *
+             * @param element the element to be removed.
+             * @returns {boolean} returns true, if the element was successfully removed
+             */
+            ToolboxService.prototype.removeSchemaElement = function (element) {
+                var name = element.getScope();
+                var path = this.currentPath;
+                if (this.canBeRemoved(element) &amp;&amp; this.dataschemaService.removeProperty(name, path)) {
+                    return _.remove(this.elements, element).length === 1;
+                }
+                else {
+                    return false;
+                }
+            };
+            ToolboxService.prototype.decreasePlacedTimes = <span class="fstat-no" title="function not covered" >function (scope) {</span>
+<span class="cstat-no" title="statement not covered" >                var splitted = scope.split('/');</span>
+<span class="cstat-no" title="statement not covered" >                if (splitted.length &gt; 1) {</span>
+<span class="cstat-no" title="statement not covered" >                    splitted.pop();</span>
+                    // The second pop is to remove the properties subfolder from the scope string
+<span class="cstat-no" title="statement not covered" >                    splitted.pop();</span>
+<span class="cstat-no" title="statement not covered" >                    this.decreasePlacedTimes(splitted.join('/'));</span>
+                }
+<span class="cstat-no" title="statement not covered" >                if (!this.placedTimes.hasOwnProperty(scope)) {</span>
+<span class="cstat-no" title="statement not covered" >                    console.log("ERROR: Placed times of the element is -1");</span>
+<span class="cstat-no" title="statement not covered" >                    this.placedTimes[scope] = -1;</span>
+                }
+                else {
+<span class="cstat-no" title="statement not covered" >                    this.placedTimes[scope] = this.placedTimes[scope] - 1;</span>
+                }
+            };
+            ToolboxService.prototype.increasePlacedTimes = function (scope) {
+                var splitted = scope.split('/');
+                if (splitted.length &gt; 1) {
+                    splitted.pop();
+                    // The second pop is to remove the properties subfolder from the scope string
+                    splitted.pop();
+                    this.increasePlacedTimes(splitted.join('/'));
+                }
+                //if the element hasnt been added yet to the placedTimesArray
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (!this.placedTimes.hasOwnProperty(scope)) {
+                    this.placedTimes[scope] = 1;
+                }
+                else {
+<span class="cstat-no" title="statement not covered" >                    this.placedTimes[scope] = this.placedTimes[scope] + 1;</span>
+                }
+            };
+            ToolboxService.prototype.canBeRemoved = function (element) {
+                if (this.placedTimes[element.getScope()] &gt; 0) {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            };
+            ToolboxService.prototype.isAlreadyPlaced = <span class="fstat-no" title="function not covered" >function (element) {</span>
+<span class="cstat-no" title="statement not covered" >                if (element.datatype === "object" || this.canBeRemoved(element)) {</span>
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+<span class="cstat-no" title="statement not covered" >                return true;</span>
+            };
+            /**
+             * Used for retrieving the data element associated with the given TreeElement.
+             * @param treeElement
+             * @returns {IPromise&lt;ToolboxElement&gt;}
+             */
+            ToolboxService.prototype.getAssociatedToolboxElement = <span class="fstat-no" title="function not covered" >function (treeElement) {</span>
+<span class="cstat-no" title="statement not covered" >                var deffered = this.$q.defer();</span>
+<span class="cstat-no" title="statement not covered" >                if (treeElement.getType() != 'Control') {</span>
+                    //Layouts
+<span class="cstat-no" title="statement not covered" >                    this.layoutsService.getElementByType(treeElement.getType()).then(<span class="fstat-no" title="function not covered" >function (element) {</span></span>
+<span class="cstat-no" title="statement not covered" >                        deffered.resolve(element);</span>
+                    });
+                }
+                else {
+                    //Controls
+<span class="cstat-no" title="statement not covered" >                    deffered.resolve(this.getElementByScope(treeElement.getScope()));</span>
+                }
+<span class="cstat-no" title="statement not covered" >                return deffered.promise;</span>
+            };
+            /**
+             * Used to load a schema into the dataschemaservice(without loading the elements for the toolbar)
+             * @param json the json file to load
+             */
+            ToolboxService.prototype.loadSchema = function (json) {
+                this.dataschemaService.loadFromJson(json);
+                this.loadSchemaElements();
+            };
+            /**
+             * Used to load the schema elements for the toolbar from a specified folder (uses currentPath)
+             */
+            ToolboxService.prototype.loadSchemaElements = function () {
+                this.elements = this.dataschemaService.convertPropertiesToControls(this.currentPath);
+            };
+            ToolboxService.prototype.getElementByScope = function (scope) {
+                return _.find(this.elements, function (element) {
+                    return element.getScope() === scope;
+                });
+            };
+            ToolboxService.prototype.setMemento = <span class="fstat-no" title="function not covered" >function (memento) {</span>
+<span class="cstat-no" title="statement not covered" >                this.elements = memento.getElements();</span>
+<span class="cstat-no" title="statement not covered" >                this.placedTimes = memento.getPlacedTimes();</span>
+            };
+            ToolboxService.prototype.createMemento = <span class="fstat-no" title="function not covered" >function () {</span>
+                // we cannot just clone the whole array, since this doesn't preserve the functions on ControlToolboxElement
+<span class="cstat-no" title="statement not covered" >                var elementsCopy = [];</span>
+<span class="cstat-no" title="statement not covered" >                _.forEach(this.elements, <span class="fstat-no" title="function not covered" >function (element) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    elementsCopy.push(element.clone());</span>
+                });
+<span class="cstat-no" title="statement not covered" >                return new ToolboxServiceMemento(elementsCopy, _.clone(this.placedTimes, true));</span>
+            };
+            ToolboxService.$inject = ['DataschemaService', '$q', 'LayoutsService'];
+            return ToolboxService;
+        })();
+        toolbox.ToolboxService = ToolboxService;
+        angular.module('app.toolbox').service('ToolboxService', ToolboxService);
+    })(toolbox = app.toolbox || (<span class="branch-1 cbranch-no" title="branch not covered" >app.toolbox = {})</span>);
+})(app || (<span class="branch-1 cbranch-no" title="branch not covered" >app = {})</span>);
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Apr 21 2016 10:03:03 GMT+0200 (CEST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>
