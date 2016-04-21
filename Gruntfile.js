@@ -201,6 +201,7 @@ module.exports = function (grunt) {
                     files: [
                         '<%= vendor_files.js %>',
                         '<%= vendor_files.test %>',
+                        '<%= temp_dir %>/ts/**/*.first.js',
                         '<%= temp_dir %>/ts/**/*.module.js',
                         '<%= temp_dir %>/ts/shared/**/*.js',
                         '<%= temp_dir %>/ts/components/core/elementsConfig/*.js',
