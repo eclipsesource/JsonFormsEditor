@@ -311,15 +311,6 @@ module.exports = function (grunt) {
         'remapIstanbul:build'
     ]);
 
-    grunt.registerTask('commit', function(msg) {
-        if(!msg){
-            grunt.log.error('You need to specify a commit message to continue! (use grunt commit:yourmessage)');
-            return;
-        }
-        grunt.option('msg', msg);
-        grunt.task.run('test', 'dist', 'run:commit');
-    });
-
     grunt.registerTask('test:e2e', [
       'protractor'
     ]);
