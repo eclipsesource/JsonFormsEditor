@@ -1,6 +1,6 @@
 <md-toolbar style="height:100%;">
     <div class="md-toolbar-tools">
-        <div class="md-toolbar-tools" style="height: 100%;padding-left: 0px;" ng-click="header.showImportDialog()">
+        <div class="md-toolbar-tools" style="height: 100%;padding-left: 0px;">
             <img src="resource/jsonforms-logo.png" class="logo-img"/>
             <span>JSON Forms Editor v0.0.9</span>
         </div>
@@ -8,6 +8,7 @@
         <span flex></span>
         <!--<i ng-if="header.undoService.canUndo()" ng-click="header.undoService.undo()" class="material-icons"
            style="padding-right: 6px; margin: 4px">undo</i>-->
+        <md-button class="md-raised md-accent" ng-click="header.showImportDialog()">New</md-button>
         <md-button ng-if="!header.configService.isPreviewTab()" class="md-raised md-accent" ui-sref="preview"
                    ui-sref-active="hidden">Preview
         </md-button>
