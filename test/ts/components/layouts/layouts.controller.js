@@ -37,3 +37,4 @@ var app;
         angular.module('app.layouts').controller('LayoutsController', LayoutsController);
     })(layouts = app.layouts || (app.layouts = {}));
 })(app || (app = {}));
+//# sourceMappingURL=layouts.controller.js.map

@@ -40,7 +40,10 @@ module app.dialogs.dataschemaimport {
         }
 
         submit():angular.IPromise<any> {
-            return this.githubConnector.getFilesFromBranch(this.selectedRepo.name, this.selectedBranch.name);
+            return this.githubConnector.getFilesFromBranch(this.selectedRepo.name, this.selectedBranch.name).then((res)=>{
+                this.selectedRepo = undefined;
+                this.selectedBranch = undefined;
+            });
         }
 
         shallSubmit():boolean {

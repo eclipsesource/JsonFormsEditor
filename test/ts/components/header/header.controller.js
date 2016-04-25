@@ -64,3 +64,4 @@ var app;
         angular.module('app.header').controller('HeaderViewController', HeaderViewController);
     })(header = app.header || (app.header = {}));
 })(app || (app = {}));
+//# sourceMappingURL=header.controller.js.map

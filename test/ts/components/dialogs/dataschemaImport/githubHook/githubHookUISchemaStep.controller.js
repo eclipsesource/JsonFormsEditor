@@ -20,7 +20,7 @@ var app;
                     this.wiz = wizard;
                 }
                 GithubHookUISchemaStepController.prototype.isAllowedToContinue = function () {
-                    if (this.selectedFile) {
+                    if (this.gonnaSkip || this.selectedFile) {
                         return true;
                     }
                     return false;
@@ -88,3 +88,4 @@ var app;
         })(dataschemaimport = dialogs.dataschemaimport || (dialogs.dataschemaimport = {}));
     })(dialogs = app.dialogs || (app.dialogs = {}));
 })(app || (app = {}));
+//# sourceMappingURL=githubHookUISchemaStep.controller.js.map

@@ -8,3 +8,4 @@ var app;
         angular.module('app.dialogs.upload', []);
     })(dialogs = app.dialogs || (app.dialogs = {}));
 })(app || (app = {}));
+//# sourceMappingURL=uploadHook.module.js.map

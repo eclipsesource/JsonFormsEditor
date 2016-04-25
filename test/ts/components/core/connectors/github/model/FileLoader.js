@@ -16,3 +16,4 @@ var app;
         })(connectors = core.connectors || (core.connectors = {}));
     })(core = app.core || (app.core = {}));
 })(app || (app = {}));
+//# sourceMappingURL=FileLoader.js.map

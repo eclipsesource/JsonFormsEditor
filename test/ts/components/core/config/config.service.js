@@ -30,3 +30,4 @@ var app;
         angular.module('app.core').service('ConfigService', ConfigService);
     })(core = app.core || (app.core = {}));
 })(app || (app = {}));
+//# sourceMappingURL=config.service.js.map

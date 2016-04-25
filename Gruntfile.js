@@ -15,17 +15,18 @@ module.exports = function (grunt) {
                 options: {
                     module: 'commonjs',
                     target: 'es5',
-                    sourceMap: false,
+                    sourceMap: true,
                     declaration: false
                 }
             },
             test: {
+
                 src: ['<%= app_files.ts %>', '<%= app_files.tsunit %>'],
                 dest: '<%= test_dir %>/ts',
                 options: {
                     module: 'commonjs',
                     target: 'es5',
-                    sourceMap: false,
+                    sourceMap: true,
                     declarations: false
                 }
             }
@@ -245,6 +246,15 @@ module.exports = function (grunt) {
                 cmd: './commit.sh',
                 args: ['<%= grunt.option("msg") %>']
             }
+        },
+        remapIstanbul: {
+            build: {
+                files: [ {
+                    src: 'test/coverage/PhantomJS 2.1.1 (Linux 0.0.0)/coverage.json',
+                    dest: 'test/coverage-final.json',
+                    type: 'json'
+                } ]
+            }
         }
     };
 
@@ -263,6 +273,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-run');
+    grunt.loadNpmTasks('remap-istanbul');
 
     // Initialize the config and add the build configuration file
     grunt.initConfig(grunt.util._.extend(taskConfig, buildConfig));
@@ -295,7 +306,8 @@ module.exports = function (grunt) {
         'clean:test',
         'typescript:test',
         'ngtemplates:test',
-        'karma'
+        'karma',
+        'remapIstanbul:build'
     ]);
 
     grunt.registerTask('commit', function(msg) {

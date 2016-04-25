@@ -21,3 +21,4 @@ var app;
     })();
     angular.module('app').run(Runner);
 })(app || (app = {}));
+//# sourceMappingURL=app.run.js.map

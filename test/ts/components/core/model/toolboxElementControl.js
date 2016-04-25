@@ -52,3 +52,4 @@ var app;
         })(model = core.model || (core.model = {}));
     })(core = app.core || (app.core = {}));
 })(app || (app = {}));
+//# sourceMappingURL=toolboxElementControl.js.map

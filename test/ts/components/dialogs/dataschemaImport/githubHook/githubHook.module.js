@@ -8,3 +8,4 @@ var app;
         angular.module('app.dialogs.github', []);
     })(dialogs = app.dialogs || (app.dialogs = {}));
 })(app || (app = {}));
+//# sourceMappingURL=githubHook.module.js.map

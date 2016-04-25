@@ -16,3 +16,4 @@ var Observable = (function () {
     };
     return Observable;
 })();
+//# sourceMappingURL=observer.js.map

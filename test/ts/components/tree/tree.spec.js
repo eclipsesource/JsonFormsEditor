@@ -241,3 +241,4 @@ describe('app.tree', function () {
         }
     ];
 });
+//# sourceMappingURL=tree.spec.js.map

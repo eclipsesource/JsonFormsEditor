@@ -24,18 +24,23 @@ var app;
                 };
                 GithubConnector.prototype.showPopupGithub = function () {
                     var _this = this;
-                    var left = screen.width / 2 - 200;
-                    var top = screen.height / 2 - 200;
-                    var popup = this.$window.open('/github/login', '', "top=" + top + ", left=" + left + ", width=400, height=500");
-                    var deferred = this.$q.defer();
-                    window.onmessage = function (event) {
-                        //TODO detect only pertinent message
-                        popup.close();
-                        var data = event.data;
-                        _this.repoList = JSON.parse(data.body);
-                        deferred.resolve();
-                    };
-                    return deferred.promise;
+                    /*var left = screen.width / 2 - 200;
+                     var top = screen.height / 2 - 200;
+                     var popup = this.$window.open('/github/login', '', "top=" + top + ", left=" + left + ", width=400, height=500");
+                     var deferred = this.$q.defer();
+        
+                     window.onmessage = (event) => {
+                     //TODO detect only pertinent message
+                     popup.close();
+                     var data = event.data;
+                     this.repoList = JSON.parse(data.body);
+                     deferred.resolve();
+                     };
+                     return deferred.promise;*/
+                    return this.$http.get(this.url + '/github/getRepoListDev?accessToken=108f0f00612b6954a0f73bb1249727668c4c78a8&user=pancho111203', {})
+                        .then(function (res) {
+                        _this.repoList = JSON.parse(res.data.body);
+                    });
                 };
                 GithubConnector.prototype.getRepoList = function () {
                     return this.repoList;
@@ -101,3 +106,4 @@ var app;
         })(connectors = core.connectors || (core.connectors = {}));
     })(core = app.core || (app.core = {}));
 })(app || (app = {}));
+//# sourceMappingURL=githubConnector.service.js.map

@@ -8,3 +8,4 @@ var app;
         angular.module('app.dialogs.sociocortex', []);
     })(dialogs = app.dialogs || (app.dialogs = {}));
 })(app || (app = {}));
+//# sourceMappingURL=sociocortexHook.module.js.map

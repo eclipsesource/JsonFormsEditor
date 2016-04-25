@@ -8,3 +8,4 @@ var app;
         angular.module('app.dialogs.url', []);
     })(dialogs = app.dialogs || (app.dialogs = {}));
 })(app || (app = {}));
+//# sourceMappingURL=fromURLHook.module.js.map

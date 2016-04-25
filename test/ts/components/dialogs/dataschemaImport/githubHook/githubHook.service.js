@@ -29,3 +29,4 @@ var app;
         })(dataschemaimport = dialogs.dataschemaimport || (dialogs.dataschemaimport = {}));
     })(dialogs = app.dialogs || (app.dialogs = {}));
 })(app || (app = {}));
+//# sourceMappingURL=githubHook.service.js.map

@@ -5,3 +5,4 @@ var app;
         angular.module('app.layouts', []);
     })(layouts = app.layouts || (app.layouts = {}));
 })(app || (app = {}));
+//# sourceMappingURL=layouts.module.js.map

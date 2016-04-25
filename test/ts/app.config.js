@@ -64,3 +64,4 @@ var app;
     })();
     angular.module('app').config(AppConfig);
 })(app || (app = {}));
+//# sourceMappingURL=app.config.js.map

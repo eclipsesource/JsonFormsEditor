@@ -16,3 +16,4 @@ var app;
         angular.module('app.detail').controller('DetailController', DetailController);
     })(detail = app.detail || (app.detail = {}));
 })(app || (app = {}));
+//# sourceMappingURL=detail.controller.js.map

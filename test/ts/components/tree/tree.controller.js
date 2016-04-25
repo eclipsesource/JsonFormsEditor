@@ -82,3 +82,4 @@ var app;
         angular.module('app.tree').controller('MyTreeController', MyTreeController);
     })(tree = app.tree || (app.tree = {}));
 })(app || (app = {}));
+//# sourceMappingURL=tree.controller.js.map

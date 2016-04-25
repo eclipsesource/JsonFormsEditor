@@ -31,3 +31,4 @@ var app;
         angular.module('app.preview').controller('PreviewController', PreviewController);
     })(preview = app.preview || (app.preview = {}));
 })(app || (app = {}));
+//# sourceMappingURL=preview.controller.js.map

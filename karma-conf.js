@@ -13,8 +13,9 @@ module.exports = function(config){
         },
         reporters: ['dots', 'coverage'],
         coverageReporter: {
-            type: 'lcov',
-            dir: 'test/coverage/'
+            type: 'json',
+            dir: 'test/coverage/',
+            file: 'coverage.json'
         }
     };
 

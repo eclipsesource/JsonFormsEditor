@@ -24,3 +24,4 @@ var app;
         preview.PreviewUpdateEvent = PreviewUpdateEvent;
     })(preview = app.preview || (app.preview = {}));
 })(app || (app = {}));
+//# sourceMappingURL=previewUpdateEvent.js.map

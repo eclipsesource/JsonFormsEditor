@@ -25,3 +25,4 @@ var app;
         })(elementsConfig = core.elementsConfig || (core.elementsConfig = {}));
     })(core = app.core || (app.core = {}));
 })(app || (app = {}));
+//# sourceMappingURL=ElementConfig.js.map

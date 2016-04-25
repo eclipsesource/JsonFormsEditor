@@ -41,3 +41,4 @@ var app;
         angular.module('app.preview').service('PreviewService', PreviewService);
     })(preview = app.preview || (app.preview = {}));
 })(app || (app = {}));
+//# sourceMappingURL=preview.service.js.map

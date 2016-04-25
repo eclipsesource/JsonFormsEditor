@@ -52,3 +52,4 @@ var app;
         })(dataschemaimport = dialogs.dataschemaimport || (dialogs.dataschemaimport = {}));
     })(dialogs = app.dialogs || (app.dialogs = {}));
 })(app || (app = {}));
+//# sourceMappingURL=dataschemaImport.controller.js.map

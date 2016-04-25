@@ -157,3 +157,4 @@ var app;
         angular.module('app.tree').service('TreeService', TreeService);
     })(tree = app.tree || (app.tree = {}));
 })(app || (app = {}));
+//# sourceMappingURL=tree.service.js.map

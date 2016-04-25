@@ -117,3 +117,4 @@ var app;
         })(connectors = core.connectors || (core.connectors = {}));
     })(core = app.core || (app.core = {}));
 })(app || (app = {}));
+//# sourceMappingURL=sociocortexConnector.service.js.map

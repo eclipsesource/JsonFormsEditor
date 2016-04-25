@@ -28,3 +28,4 @@ var app;
         })(elementsConfig = core.elementsConfig || (core.elementsConfig = {}));
     })(core = app.core || (app.core = {}));
 })(app || (app = {}));
+//# sourceMappingURL=elementsConfig.service.js.map

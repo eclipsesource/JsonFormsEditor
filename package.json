@@ -44,7 +44,8 @@
     "karma-jasmine": "^0.3.6",
     "karma-phantomjs-launcher": "latest",
     "phantomjs-prebuilt": "latest",
-    "protractor": "^3.0.0"
+    "protractor": "^3.0.0",
+    "remap-istanbul": "latest"
   },
   "scripts": {
     "postinstall": "bower install && grunt dist && ./node_modules/protractor/bin/webdriver-manager update"

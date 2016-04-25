@@ -32,3 +32,4 @@ var app;
         angular.module('app.detail').service('DetailService', DetailService);
     })(detail = app.detail || (app.detail = {}));
 })(app || (app = {}));
+//# sourceMappingURL=detail.service.js.map

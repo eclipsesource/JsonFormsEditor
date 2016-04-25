@@ -6,3 +6,4 @@ var app;
         angular.module('app.header', []);
     })(header = app.header || (app.header = {}));
 })(app || (app = {}));
+//# sourceMappingURL=header.module.js.map

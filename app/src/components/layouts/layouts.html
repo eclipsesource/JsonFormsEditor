@@ -7,8 +7,7 @@
                           ui-tree-node>
                 <md-icon class="material-icons">{{element.getIcon()}}</md-icon>
                 <md-tooltip>
-                    {{element.getLabel()}} -
-                    {{element.getDescription()}}
+                    <span>{{element.getLabel()}}</span><span ng-if="element.getDescription()!==''">- {{element.getDescription()}}</span>
                 </md-tooltip>
             </md-card>
         </div>

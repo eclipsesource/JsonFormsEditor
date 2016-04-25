@@ -21,7 +21,7 @@
     </md-dialog-content>
     <md-dialog-actions ng-if="dialog.currentStep().hasNavigation()">
         <md-button ng-if="dialog.hasPrevious()" ng-click="dialog.previous()">Previous</md-button>
-        <md-button class="md-primary" ng-click="dialog.next()">{{dialog.getTextNextButton()}}</md-button>
+        <md-button class="md-primary" ng-disabled="!dialog.isAllowedToContinue()" ng-click="dialog.next()">{{dialog.getTextNextButton()}}</md-button>
         <md-button class="md-primary" ng-if="dialog.currentStep().canSkip()" ng-click="dialog.currentStep().skip()">Skip</md-button>
     </md-dialog-actions>
 </md-dialog>

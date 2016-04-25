@@ -9,3 +9,4 @@ var app;
         angular.module('app.dialogs', deps);
     })(dialogs = app.dialogs || (app.dialogs = {}));
 })(app || (app = {}));
+//# sourceMappingURL=dialogs.module.js.map

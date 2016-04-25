@@ -54,3 +54,4 @@ var app;
         angular.module('app.layouts').service('LayoutsService', LayoutsService);
     })(layouts = app.layouts || (app.layouts = {}));
 })(app || (app = {}));
+//# sourceMappingURL=layouts.service.js.map

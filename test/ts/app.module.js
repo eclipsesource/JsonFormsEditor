@@ -17,3 +17,4 @@ var app;
         'ngclipboard'
     ]);
 })(app || (app = {}));
+//# sourceMappingURL=app.module.js.map

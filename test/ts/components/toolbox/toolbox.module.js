@@ -6,3 +6,4 @@ var app;
         angular.module('app.toolbox', []);
     })(toolbox = app.toolbox || (app.toolbox = {}));
 })(app || (app = {}));
+//# sourceMappingURL=toolbox.module.js.map

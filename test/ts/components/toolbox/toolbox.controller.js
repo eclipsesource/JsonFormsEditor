@@ -98,3 +98,4 @@ var app;
         angular.module('app.toolbox').controller('ToolboxController', ToolboxController);
     })(toolbox = app.toolbox || (app.toolbox = {}));
 })(app || (app = {}));
+//# sourceMappingURL=toolbox.controller.js.map

@@ -36,7 +36,11 @@ var app;
                     return true;
                 };
                 GithubHookRepoStepController.prototype.submit = function () {
-                    return this.githubConnector.getFilesFromBranch(this.selectedRepo.name, this.selectedBranch.name);
+                    var _this = this;
+                    return this.githubConnector.getFilesFromBranch(this.selectedRepo.name, this.selectedBranch.name).then(function (res) {
+                        _this.selectedRepo = undefined;
+                        _this.selectedBranch = undefined;
+                    });
                 };
                 GithubHookRepoStepController.prototype.shallSubmit = function () {
                     return true;
@@ -68,3 +72,4 @@ var app;
         })(dataschemaimport = dialogs.dataschemaimport || (dialogs.dataschemaimport = {}));
     })(dialogs = app.dialogs || (app.dialogs = {}));
 })(app || (app = {}));
+//# sourceMappingURL=githubHookRepoStep.controller.js.map

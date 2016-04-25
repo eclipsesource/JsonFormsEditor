@@ -25,7 +25,7 @@ var app;
                     return index + 1 + ". Welcome";
                 };
                 ChooseUploadStepController.prototype.getDescription = function () {
-                    return "Please select and option to continue";
+                    return "Please select an option to continue";
                 };
                 ChooseUploadStepController.prototype.getTemplate = function () {
                     return "app/src/components/dialogs/dataschemaImport/chooseUploadStep/chooseUploadStep.html";
@@ -42,3 +42,4 @@ var app;
         })(dataschemaimport = dialogs.dataschemaimport || (dialogs.dataschemaimport = {}));
     })(dialogs = app.dialogs || (app.dialogs = {}));
 })(app || (app = {}));
+//# sourceMappingURL=choseUploadStep.controller.js.map

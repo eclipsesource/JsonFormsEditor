@@ -62,3 +62,4 @@ describe('toolbox', function () {
         expect(service.removeSchemaElement(scope.addressControl)).toBeFalsy();
     })));
 });
+//# sourceMappingURL=toolbox.spec.js.map

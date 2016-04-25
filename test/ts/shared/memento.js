@@ -3,3 +3,4 @@ var Memento = (function () {
     }
     return Memento;
 })();
+//# sourceMappingURL=memento.js.map

@@ -270,3 +270,4 @@ describe('app.core.Metaschema', function () {
             }]
     };
 });
+//# sourceMappingURL=metaschema.spec.js.map

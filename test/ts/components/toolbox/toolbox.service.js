@@ -175,3 +175,4 @@ var app;
         angular.module('app.toolbox').service('ToolboxService', ToolboxService);
     })(toolbox = app.toolbox || (app.toolbox = {}));
 })(app || (app = {}));
+//# sourceMappingURL=toolbox.service.js.map

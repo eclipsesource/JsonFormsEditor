@@ -8,3 +8,4 @@ var app;
         ]);
     })(detail = app.detail || (app.detail = {}));
 })(app || (app = {}));
+//# sourceMappingURL=detail.module.js.map

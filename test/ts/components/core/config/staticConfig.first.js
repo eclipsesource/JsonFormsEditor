@@ -18,3 +18,4 @@ var app;
         core.StaticConfig = StaticConfig;
     })(core = app.core || (app.core = {}));
 })(app || (app = {}));
+//# sourceMappingURL=staticConfig.first.js.map
