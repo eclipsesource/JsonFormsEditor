@@ -18,8 +18,10 @@
     "express-session": "1.12.0"
   },
   "devDependencies": {
+    "coveralls": "2.11.8",
     "grunt": "^0.4.5",
     "grunt-angular-templates": "^0.5.7",
+    "grunt-bump": "latest",
     "grunt-cli": "^0.1.3",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-concat": "^0.5.1",
@@ -28,23 +30,21 @@
     "grunt-contrib-less": "^1.0.1",
     "grunt-contrib-uglify": "^0.11.0",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-file-append": "latest",
+    "grunt-git": "latest",
     "grunt-index-html-template": "^0.2.5",
-    "grunt-run": "latest",
     "grunt-karma": "^0.12.1",
+    "grunt-protractor-runner": "^3.0.0",
+    "grunt-run": "latest",
     "grunt-typescript": "^0.8.0",
     "jasmine-core": "~2.4.0",
     "karma": "^0.13.15",
-    "karma-jasmine": "^0.3.6",
     "karma-chrome-launcher": "latest",
-    "phantomjs-prebuilt": "latest",
-    "karma-phantomjs-launcher": "latest",
-    "grunt-bump": "latest",
-    "grunt-file-append": "latest",
-    "grunt-git": "latest",
-    "coveralls": "2.11.8",
     "karma-coverage": "0.5.4",
-    "protractor": "^3.0.0",
-    "grunt-protractor-runner": "^3.0.0"
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "latest",
+    "phantomjs-prebuilt": "latest",
+    "protractor": "^3.0.0"
   },
   "scripts": {
     "postinstall": "bower install && grunt dist && ./node_modules/protractor/bin/webdriver-manager update"
