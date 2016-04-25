@@ -42,8 +42,7 @@ passport.deserializeUser(function(user, done) {
 
 github.get('/getRepoList', passport.authenticate('github', {failureRedirect: '/login'}),
 	   function(req, res, next){
-	       
-	       var code = req.user.accessToken;  
+	       var code = req.user.accessToken;
 		   connector.getRepoList(code, function(error, result){
 			   if(error){
 				   return next(error);
@@ -53,10 +52,32 @@ github.get('/getRepoList', passport.authenticate('github', {failureRedirect: '/l
 			   response+= "</script>";
 			   res.writeHead(200, {"Content-Type": "text/html"});
 			   res.end(response);
-	       });
+		   });
 
            }
 );
+
+// ONLY FOR DEBUGGING
+github.get('/getRepoListDev', function(req,res,next){
+
+	var code = req.query.accessToken;
+	var username = req.query.user;
+	req.session.passport = {
+		user:{
+			accessToken: code,
+			profile: {
+				username: 'pancho111203'
+			}
+		}
+	};
+
+	connector.getRepoList(code, function(error, result){
+		if(error){
+			return next(error);
+		}
+		res.json(result);
+	});
+});
 
 github.get('/getBranchList',
 		function(req, res, next){

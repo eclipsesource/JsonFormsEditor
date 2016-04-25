@@ -9,5 +9,5 @@ module app.dialogs.dataschemaimport {
         }
     }
 
-    angular.module('app.dialogs').run(Runner);
+    angular.module('app.dialogs.sociocortex').run(Runner);
 }

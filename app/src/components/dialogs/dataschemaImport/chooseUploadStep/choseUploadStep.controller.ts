@@ -17,7 +17,7 @@ module app.dialogs.dataschemaimport {
         }
 
         getDescription():string{
-            return "Please select and option to continue";
+            return "Please select an option to continue";
         }
 
         getTemplate():string {

@@ -21,10 +21,10 @@ module app.dialogs.dataschemaimport {
         }
 
         isAllowedToContinue(): boolean {
-          if(this.selectedFile){
-		 return true;
-	  }	  
-	  return false;
+            if(this.gonnaSkip || this.selectedFile){
+                return true;
+            }
+            return false;
         }
 
         getTitle(index:number):string {

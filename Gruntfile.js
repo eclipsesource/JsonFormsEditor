@@ -15,17 +15,18 @@ module.exports = function (grunt) {
                 options: {
                     module: 'commonjs',
                     target: 'es5',
-                    sourceMap: false,
+                    sourceMap: true,
                     declaration: false
                 }
             },
             test: {
+
                 src: ['<%= app_files.ts %>', '<%= app_files.tsunit %>'],
-                dest: '<%= temp_dir %>/ts',
+                dest: '<%= test_dir %>/ts',
                 options: {
                     module: 'commonjs',
                     target: 'es5',
-                    sourceMap: false,
+                    sourceMap: true,
                     declarations: false
                 }
             }
@@ -50,6 +51,7 @@ module.exports = function (grunt) {
             },
             "app": {
                 src: [
+                    '<%= temp_dir %>/ts/**/*.first.js',
                     '<%= temp_dir %>/ts/**/*.module.js',
                     '<%= temp_dir %>/ts/shared/**/*.js',
                     '<%= temp_dir %>/ts/components/core/elementsConfig/*.js',
@@ -118,7 +120,7 @@ module.exports = function (grunt) {
             },
             test: {
                 src: '<%= app_files.html %>',
-                dest: '<%= temp_dir %>/ts/templates.js',
+                dest: '<%= test_dir %>/ts/templates.js',
                 options: {
                     htmlmin: {collapseWhitespace: true, collapseBooleanAttributes: true},
                     module: "app"
@@ -180,6 +182,7 @@ module.exports = function (grunt) {
         clean: {
             build: ['<%= build_dir %>'],
             temp: ['<%= temp_dir %>'],
+            test: ['<%= test_dir %>'],
             dist: ['<%= dist_dir %>'],
             lib: ["node_modules", "app/assets/libs"]
         },
@@ -200,14 +203,15 @@ module.exports = function (grunt) {
                     files: [
                         '<%= vendor_files.js %>',
                         '<%= vendor_files.test %>',
-                        '<%= temp_dir %>/ts/**/*.module.js',
-                        '<%= temp_dir %>/ts/shared/**/*.js',
-                        '<%= temp_dir %>/ts/components/core/elementsConfig/*.js',
-                        '<%= temp_dir %>/ts/components/core/model/*.js',
-                        '<%= temp_dir %>/ts/components/**/*.js',
-                        '<%= temp_dir %>/ts/app.config.js',
-                        '<%= temp_dir %>/ts/app.run.js',
-                        '<%= temp_dir %>/ts/**/*.js'
+                        '<%= test_dir %>/ts/**/*.first.js',
+                        '<%= test_dir %>/ts/**/*.module.js',
+                        '<%= test_dir %>/ts/shared/**/*.js',
+                        '<%= test_dir %>/ts/components/core/elementsConfig/*.js',
+                        '<%= test_dir %>/ts/components/core/model/*.js',
+                        '<%= test_dir %>/ts/components/**/*.js',
+                        '<%= test_dir %>/ts/app.config.js',
+                        '<%= test_dir %>/ts/app.run.js',
+                        '<%= test_dir %>/ts/**/*.js'
                     ]
                 }
             }
@@ -237,6 +241,20 @@ module.exports = function (grunt) {
             deploy: {
                 cmd: './deploy.sh',
                 args: ['<%= pkg.version %>']
+            },
+            commit: {
+                cmd: './commit.sh',
+                args: ['<%= grunt.option("msg") %>']
+            }
+        },
+        remapIstanbul: {
+            build: {
+                src: 'test/coverage/PhantomJS 2.1.1 (Linux 0.0.0)/coverage.json',
+                options: {
+                    reports: {
+                        'lcovonly': 'test/coverage/coverage-final.info'
+                    }
+                }
             }
         }
     };
@@ -256,6 +274,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-run');
+    grunt.loadNpmTasks('remap-istanbul');
 
     // Initialize the config and add the build configuration file
     grunt.initConfig(grunt.util._.extend(taskConfig, buildConfig));
@@ -285,10 +304,11 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('test', [
-        'clean:temp',
+        'clean:test',
         'typescript:test',
         'ngtemplates:test',
-        'karma'
+        'karma',
+        'remapIstanbul:build'
     ]);
 
     grunt.registerTask('test:e2e', [
@@ -298,6 +318,7 @@ module.exports = function (grunt) {
     grunt.registerTask('dist', [
         'clean:dist',
         'clean:build',
+        'clean:temp',
         'typescript:build',
         'copy:assets',
         'concat',
@@ -306,8 +327,8 @@ module.exports = function (grunt) {
         'uglify:dist',
         'copy:dist',
         'indexDist',
-        'clean:temp',
-        'clean:build'
+        'clean:build',
+        'clean:temp'
     ]);
 
     /**

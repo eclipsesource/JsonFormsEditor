@@ -26,5 +26,5 @@ module app.dialogs.dataschemaimport {
         }
     }
 
-    angular.module('app.dialogs').service('FromUrlHookService', FromUrlHookService);
+    angular.module('app.dialogs.url').service('FromUrlHookService', FromUrlHookService);
 }

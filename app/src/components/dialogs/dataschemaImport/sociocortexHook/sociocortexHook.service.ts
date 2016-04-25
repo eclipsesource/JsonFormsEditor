@@ -31,5 +31,5 @@ module app.dialogs.dataschemaimport {
         }
     }
 
-    angular.module('app.dialogs').service('SociocortexHookService', SociocortexHookService);
+    angular.module('app.dialogs.sociocortex').service('SociocortexHookService', SociocortexHookService);
 }

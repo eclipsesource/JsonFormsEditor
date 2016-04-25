@@ -26,5 +26,5 @@ module app.dialogs.dataschemaimport {
         }
     }
 
-    angular.module('app.dialogs').service('UploadHookService', UploadHookService);
+    angular.module('app.dialogs.upload').service('UploadHookService', UploadHookService);
 }

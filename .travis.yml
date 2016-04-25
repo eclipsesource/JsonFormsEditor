@@ -6,7 +6,7 @@ before_install:
 install: npm install
 script:
   - grunt test
-  - cat ./temp/coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - cat ./test/coverage/coverage-final.info | ./node_modules/coveralls/bin/coveralls.js
   - grunt dist
 after_script:
   - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master"

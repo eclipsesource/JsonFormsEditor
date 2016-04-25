@@ -37,19 +37,18 @@ module app.core.connectors {
 
         showPopupGithub():IPromise<any> {
             var left = screen.width / 2 - 200;
-            var top = screen.height / 2 - 200;
-            var popup = this.$window.open('/github/login', '', "top=" + top + ", left=" + left + ", width=400, height=500");
-            var deferred = this.$q.defer();
+             var top = screen.height / 2 - 200;
+             var popup = this.$window.open('/github/login', '', "top=" + top + ", left=" + left + ", width=400, height=500");
+             var deferred = this.$q.defer();
 
-            window.onmessage = (event) => {
-                //TODO detect only pertinent message
-                popup.close();
-                var data = event.data;
-                this.repoList = JSON.parse(data.body);
-                deferred.resolve();
-            };
-            return deferred.promise;
-
+             window.onmessage = (event) => {
+             //TODO detect only pertinent message
+             popup.close();
+             var data = event.data;
+             this.repoList = JSON.parse(data.body);
+             deferred.resolve();
+             };
+             return deferred.promise;
         }
 
         getRepoList():any {
