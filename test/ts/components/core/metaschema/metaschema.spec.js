@@ -137,8 +137,6 @@ describe('app.core.Metaschema', function () {
             "control": {
                 "type": "object",
                 "allOf": [{
-                        "$ref": "#/definitions/runtimeProps"
-                    }, {
                         "properties": {
                             "type": {
                                 "type": "string",
@@ -161,16 +159,15 @@ describe('app.core.Metaschema', function () {
                                 "type": "boolean"
                             }
                         }
+                    }, {
+                        "$ref": "#/definitions/runtimeProps"
                     }],
                 "required": ["type", "scope"]
             },
             "layout": {
                 "type": "object",
                 "required": ["type", "elements"],
-                "additionalProperties": false,
                 "allOf": [{
-                        "$ref": "#/definitions/runtimeProps"
-                    }, {
                         "properties": {
                             "type": {
                                 "type": "string",
@@ -186,15 +183,14 @@ describe('app.core.Metaschema', function () {
                                 }
                             }
                         }
+                    }, {
+                        "$ref": "#/definitions/runtimeProps"
                     }]
             },
             "group": {
                 "type": "object",
                 "required": ["type", "elements"],
-                "additionalProperties": false,
                 "allOf": [{
-                        "$ref": "#/definitions/runtimeProps"
-                    }, {
                         "properties": {
                             "type": {
                                 "type": "string",
@@ -210,6 +206,8 @@ describe('app.core.Metaschema', function () {
                                 }
                             }
                         }
+                    }, {
+                        "$ref": "#/definitions/runtimeProps"
                     }]
             },
             "category": {
@@ -231,16 +229,12 @@ describe('app.core.Metaschema', function () {
                         }
                     }
                 },
-                "required": ["type", "elements"],
-                "additionalProperties": false
+                "required": ["type", "elements"]
             },
             "categorization": {
                 "type": "object",
                 "required": ["type", "elements"],
-                "additionalProperties": false,
                 "allOf": [{
-                        "$ref": "#/definitions/runtimeProps"
-                    }, {
                         "properties": {
                             "type": {
                                 "type": "string",
@@ -255,6 +249,8 @@ describe('app.core.Metaschema', function () {
                                 }
                             }
                         }
+                    }, {
+                        "$ref": "#/definitions/runtimeProps"
                     }]
             }
         },

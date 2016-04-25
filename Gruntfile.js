@@ -249,11 +249,12 @@ module.exports = function (grunt) {
         },
         remapIstanbul: {
             build: {
-                files: [ {
-                    src: 'test/coverage/PhantomJS 2.1.1 (Linux 0.0.0)/coverage.json',
-                    dest: 'test/coverage-final.json',
-                    type: 'json'
-                } ]
+                src: 'test/coverage/PhantomJS 2.1.1 (Linux 0.0.0)/coverage.json',
+                options: {
+                    reports: {
+                        'lcovonly': 'test/coverage/coverage-final.info'
+                    }
+                }
             }
         }
     };
