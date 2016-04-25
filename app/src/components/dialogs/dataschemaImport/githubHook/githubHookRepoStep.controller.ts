@@ -58,7 +58,7 @@ module app.dialogs.dataschemaimport {
 
         private reloadBranches(): void{
             this.branches = [];
-            this.githubConnector.getBranchList(this.selectedRepo.name).then(
+            this.githubConnector.getBranchList(this.selectedRepo.name, this.selectedRepo.owner.login).then(
                 (result) => {
                     this.branches=JSON.parse(result.data);
                 },

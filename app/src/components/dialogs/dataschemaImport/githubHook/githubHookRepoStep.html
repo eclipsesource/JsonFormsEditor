@@ -3,7 +3,7 @@
     <md-list>
       <md-list-item ng-repeat="repo in dialog.currentStep().getRepos() track by $index" ng-click="dialog.currentStep().selectRepo(repo)"
                     class="github-list-item md-body-1" ng-class="{selectedListItem: dialog.currentStep().selectedRepo === repo}">
-        {{repo.name}}
+        {{repo.full_name}}
       </md-list-item>
 
     </md-list>

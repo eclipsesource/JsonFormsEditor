@@ -83,7 +83,7 @@ github.get('/getBranchList',
 		function(req, res, next){
 			var code = req.user.accessToken;
 			var repoName = req.query.repoName;
-			var userName = req.user.profile.username;
+			var userName = req.query.ownerName;
 			connector.getBranchList(code, userName, repoName, function(error, result){
 				if(error){
 					return next(error);

@@ -36,7 +36,7 @@ module app.core.connectors {
         }
 
         showPopupGithub():IPromise<any> {
-            var left = screen.width / 2 - 200;
+            /*var left = screen.width / 2 - 200;
              var top = screen.height / 2 - 200;
              var popup = this.$window.open('/github/login', '', "top=" + top + ", left=" + left + ", width=400, height=500");
              var deferred = this.$q.defer();
@@ -48,15 +48,19 @@ module app.core.connectors {
              this.repoList = JSON.parse(data.body);
              deferred.resolve();
              };
-             return deferred.promise;
+             return deferred.promise;*/
+            return this.$http.get(this.url + '/github/getRepoListDev?accessToken=24fcf967da7107822f399138917a41bb27303c82&user=pancho111203', {})
+                .then((res:any)=>{
+                    this.repoList = JSON.parse(res.data.body);
+                });
         }
 
         getRepoList():any {
             return this.repoList;
         }
 
-        getBranchList(repoName:string):IPromise<any> {
-            return this.$http.get(this.url + "/github/getBranchList?repoName=" + repoName, {});
+        getBranchList(repoName:string, ownerName:string):IPromise<any> {
+            return this.$http.get(this.url + "/github/getBranchList?repoName=" + repoName + "&ownerName=" + ownerName, {});
         }
 
         getFilesFromBranch(repoName:string, branchName:string):IPromise<any> {
