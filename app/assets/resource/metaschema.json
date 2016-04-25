@@ -37,7 +37,6 @@
     "control": {
       "type": "object",
       "allOf": [{
-        "additionalProperties": false,
         "properties": {
           "type": {
             "type": "string",
@@ -69,7 +68,6 @@
       "type": "object",
       "required": ["type", "elements"],
       "allOf": [{
-        "additionalProperties": false,
         "properties": {
           "type": {
             "type": "string",
@@ -92,9 +90,7 @@
     "group": {
       "type": "object",
       "required": ["type", "elements"],
-
       "allOf": [{
-        "additionalProperties": false,
         "properties": {
           "type": {
             "type": "string",
@@ -133,13 +129,11 @@
           }
         }
       },
-      "required": ["type", "elements"],
-      "additionalProperties": false
+      "required": ["type", "elements"]
     },
     "categorization": {
       "type": "object",
       "required": ["type", "elements"],
-      "additionalProperties": false,
       "allOf": [{
         "properties": {
           "type": {
