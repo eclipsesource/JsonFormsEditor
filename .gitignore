@@ -7,3 +7,4 @@ app/assets/libs
 .tscache
 dist
 temp
+test
