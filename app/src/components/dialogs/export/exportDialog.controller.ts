@@ -1,26 +1,25 @@
 module app.dialogs {
 
     import IDialogService = angular.material.IDialogService;
-    import ValidatorService = app.core.ValidatorService;
+    import TreeService = app.tree.TreeService;
 
     export class ExportDialogController extends AbstractDialog {
 
-        static $inject = ['$scope', '$mdDialog', 'ValidatorService', 'uiSchema', 'dataSchema'];
+        static $inject = ['$scope', '$mdDialog', 'TreeService', 'uiSchema', 'dataSchema'];
 
         public selectedIndex:number = 0;
 
         public url;
         public activeSchemaFileName:string;
 
-        public isUISchemaValid:boolean = true;
-        public validationErrorMessage:string = "The UI Schema contains validation errors";
+        public isUISchemaValid:boolean;
+        public validationErrorMessage:string = "The UI Schema contains validation errors. They have been filtered.";
         
-        constructor($scope, public $mdDialog:IDialogService, private validatorService:ValidatorService, public uiSchema:string, public dataSchema:string) {
+        constructor($scope, public $mdDialog:IDialogService, private treeService:TreeService, public uiSchema:string, public dataSchema:string) {
             super($mdDialog);
             this.onChangeActiveTab();
 
-            var validation = this.validatorService.validateUISchema(uiSchema);
-            this.isUISchemaValid = validation && validation.valid;
+            this.isUISchemaValid = treeService.isUISchemaValid();
 
             $scope.$watch(() => { return this.selectedIndex; }, (current, old) => {
                 if (current != old) this.onChangeActiveTab();
