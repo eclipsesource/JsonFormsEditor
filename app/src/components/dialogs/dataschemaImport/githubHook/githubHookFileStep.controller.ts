@@ -18,6 +18,11 @@ module app.dialogs.dataschemaimport {
             this.wiz = wizard;
         }
 
+        navigatingToPrevious(){
+            this.selectedFile = undefined;
+            this.fileSelectorID = undefined;
+        }
+
         isAllowedToContinue(): boolean {
             if(this.selectedFile){
 	    	    return true;

@@ -1,6 +1,7 @@
 <div layout="rows">
   <md-content flex="80">
     <md-list>
+      <md-list-item ng-if="dialog.currentStep().getRepos().length === 0">No repositories found.</md-list-item>
       <md-list-item ng-repeat="repo in dialog.currentStep().getRepos() track by $index" ng-click="dialog.currentStep().selectRepo(repo)"
                     class="github-list-item md-body-1" ng-class="{selectedListItem: dialog.currentStep().selectedRepo === repo}">
         {{repo.full_name}}
@@ -10,6 +11,7 @@
   </md-content>
   <md-content flex="20">
     <md-list ng-if="dialog.currentStep().someRepoIsSelected">
+      <md-list-item ng-if="dialog.currentStep().getBranches().length === 0">No branches found.</md-list-item>
       <md-list-item ng-repeat="branch in dialog.currentStep().getBranches() track by $index" ng-click="dialog.currentStep().selectBranch(branch)"
                     class="github-list-item md-body-1" ng-class="{selectedListItem: dialog.currentStep().selectedBranch === branch}">
         {{branch.name}}

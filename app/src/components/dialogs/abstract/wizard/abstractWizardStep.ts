@@ -22,6 +22,9 @@ module app.dialogs {
 
         abstract submit():IPromise<any>;
 
+        navigatingToPrevious(){
+        }
+
         getDescription(): string{
             return "";
         }

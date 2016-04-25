@@ -5,9 +5,9 @@ var config = require('../config/config.js');
 var api = {};
 
 api.getRepoList = function(token, callback){
-
+	var genToken = (token ? "?access_token="+token : "");
     var options = {
-		url: "https://api.github.com/user/repos?access_token="+token,
+		url: "https://api.github.com/user/repos"+genToken,
 		headers: {
 			//    "Authorization": "token "+token,
 			"User-Agent": config.appName
@@ -22,13 +22,30 @@ api.getRepoList = function(token, callback){
     });
 };
 
+api.getRepoBySearch = function(query, callback){
+	var options = {
+		url: "https://api.github.com/search/repositories?q="+query,
+		headers: {
+			"User-Agent": config.appName
+		}
+	};
+	request(options, function(error, response, body){
+		if(error){
+			callback(error);
+		}else{
+			callback(null, response);
+		}
+	});
+};
+
 api.getBranchList = function(token, ownerName, repoName, callback){
-	if(!token||!ownerName||!repoName){
+	if(!ownerName||!repoName){
 		callback('Missing data');
 		return;
 	}
+	var genToken = (token ? "?access_token="+token : "");
 	var options = {
-		url: "https://api.github.com/repos/"+ownerName+"/"+repoName+"/branches?access_token="+token,
+		url: "https://api.github.com/repos/"+ownerName+"/"+repoName+"/branches"+genToken,
 		headers: {
 			"User-Agent": config.appName
 		}
@@ -43,12 +60,14 @@ api.getBranchList = function(token, ownerName, repoName, callback){
 	});
 };
 api.getFilesFromBranch = function(token, ownerName, repoName, branchName, callback){
-	if(!token||!ownerName||!repoName||!branchName){
+	if(!ownerName||!repoName||!branchName){
 		callback('Missing data');
 		return;
 	}
+
+	var genToken = (token ? "?access_token="+token : "");
 	var options = {
-                url: "https://api.github.com/repos/"+ownerName+"/"+repoName+"/commits/"+branchName+"?access_token="+token,
+                url: "https://api.github.com/repos/"+ownerName+"/"+repoName+"/commits/"+branchName+genToken,
 		headers: {
 			"User-Agent": config.appName
 		}
@@ -64,11 +83,13 @@ api.getFilesFromBranch = function(token, ownerName, repoName, branchName, callba
 };
 
 api.getFilesFromTree = function(token, treeUrl, callback){
-    if(!token || !treeUrl){
+    if(!treeUrl){
 	callback('Missing data');
     }
+
+	var genToken = (token ? "?access_token="+token : "");
     var options = {
-	url: treeUrl+"?access_token="+token,
+	url: treeUrl+genToken,
 	headers: {
 	    "User-Agent":config.appName
 	}

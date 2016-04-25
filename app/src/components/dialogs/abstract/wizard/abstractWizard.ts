@@ -108,8 +108,8 @@ module app.dialogs {
 
         previous():void {
             if (this.hasPrevious()) {
+                this.currentStep().navigatingToPrevious();
                 this.stepNumber--;
-
                 // if we are on the first step, and resetting is configured, remove all steps except the first
                 if (this.shallReset() && !this.hasPrevious()) {
                     this.steps = [_.head(this.steps)];

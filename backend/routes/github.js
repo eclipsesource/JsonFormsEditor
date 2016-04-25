@@ -42,7 +42,10 @@ passport.deserializeUser(function(user, done) {
 
 github.get('/getRepoList', passport.authenticate('github', {failureRedirect: '/login'}),
 	   function(req, res, next){
-	       var code = req.user.accessToken;
+		   var code;
+		   if(req.user){
+			   code = req.user.accessToken;
+		   }
 		   connector.getRepoList(code, function(error, result){
 			   if(error){
 				   return next(error);
@@ -81,7 +84,11 @@ github.get('/getRepoListDev', function(req,res,next){
 
 github.get('/getBranchList',
 		function(req, res, next){
-			var code = req.user.accessToken;
+			var code;
+			if(req.user){
+				code = req.user.accessToken;
+			}
+
 			var repoName = req.query.repoName;
 			var userName = req.query.ownerName;
 			connector.getBranchList(code, userName, repoName, function(error, result){
@@ -94,9 +101,26 @@ github.get('/getBranchList',
 
 		}
 );
+
+github.get('/queryRepo',
+		function(req, res, next){
+			var query = req.query.q;
+
+			connector.getRepoBySearch(query, function(error, result){
+				if(error){
+					return next(error);
+				}
+				res.json(result);
+			});
+		}
+);
 github.get('/getFilesFromBranch',
 		function(req, res, next){
-			var code = req.user.accessToken;
+			var code;
+			if(req.user){
+				code = req.user.accessToken;
+			}
+
 			var repoName = req.query.repoName;
 			var userName = req.user.profile.username;
 			var branchName = req.query.branchName;
@@ -126,7 +150,11 @@ github.get('/getFilesFromBranch',
 
 github.get('/getFileLevel',
 		function(req,res,next){
-			var code = req.user.accessToken;
+			var code;
+			if(req.user){
+				code = req.user.accessToken;
+			}
+
 			var url = req.query.url;
 
 			connector.getFilesFromTree(code, url, function(error, result){
@@ -140,7 +168,11 @@ github.get('/getFileLevel',
 
 github.get('/loadFile',
 		function(req, res, next) {
-			var code = req.user.accessToken;
+			var code;
+			if(req.user){
+				code = req.user.accessToken;
+			}
+
 			var url = req.query.url;
 
 			connector.getFilesFromTree(code, url, function(error, result){

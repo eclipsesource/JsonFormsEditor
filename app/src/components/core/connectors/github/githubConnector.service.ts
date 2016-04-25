@@ -36,7 +36,7 @@ module app.core.connectors {
         }
 
         showPopupGithub():IPromise<any> {
-            /*var left = screen.width / 2 - 200;
+            var left = screen.width / 2 - 200;
              var top = screen.height / 2 - 200;
              var popup = this.$window.open('/github/login', '', "top=" + top + ", left=" + left + ", width=400, height=500");
              var deferred = this.$q.defer();
@@ -48,10 +48,14 @@ module app.core.connectors {
              this.repoList = JSON.parse(data.body);
              deferred.resolve();
              };
-             return deferred.promise;*/
-            return this.$http.get(this.url + '/github/getRepoListDev?accessToken=24fcf967da7107822f399138917a41bb27303c82&user=pancho111203', {})
+             return deferred.promise;
+        }
+
+        getReposByQuery(query: string):IPromise<any>{
+            // Search without logging in
+            return this.$http.get(this.url + '/github/queryRepo?q='+query, {})
                 .then((res:any)=>{
-                    this.repoList = JSON.parse(res.data.body);
+                    this.repoList = JSON.parse(res.data.body).items;
                 });
         }
 

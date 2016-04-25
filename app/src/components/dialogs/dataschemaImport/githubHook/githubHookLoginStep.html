@@ -1,3 +1,8 @@
 <div class="github-login-image-container">
   <img src="/resource/github_logo.png" class="github-login-image" ng-click="dialog.next()">
+  <br />
+  <p class="md-headline">Or find a public repository:</p>
+  <md-input-container>
+    <input ng-enter="dialog.next()" id="github-login-query-input" type="text" placeholder="Search by repository name, tags, user...">
+  </md-input-container>
 </div>
