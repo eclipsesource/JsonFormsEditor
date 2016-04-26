@@ -4,14 +4,15 @@ module app.dialogs.dataschemaimport {
     import TreeService = app.tree.TreeService;
     import IToastService = angular.material.IToastService;
     import IScope = angular.IScope;
+    import ValidatorService = app.core.ValidatorService;
 
 
     export class DataschemaImportController extends AbstractWizard {
 
-        static $inject = ['$mdDialog', 'DataschemaImportService', 'ToolboxService', 'TreeService', '$scope', '$mdToast', '$rootScope'];
+        static $inject = ['$mdDialog', 'DataschemaImportService', 'ValidatorService', 'ToolboxService', 'TreeService', '$scope', '$mdToast', '$rootScope'];
 
 
-        constructor($mdDialog:IDialogService, public importService:DataschemaImportService, private toolboxService:ToolboxService,
+        constructor($mdDialog:IDialogService, public importService:DataschemaImportService, private validatorService:ValidatorService, private toolboxService:ToolboxService,
                     private treeService:TreeService, private $scope:any, public $mdToast:IToastService, public $rootScope:IScope) {
             super($mdDialog, $rootScope);
             this.addSteps([new ChooseUploadStepController(this)]);
@@ -31,15 +32,25 @@ module app.dialogs.dataschemaimport {
 
         submit():void {
             this.currentStep().submit().then((json:any) => {
-                var dataSchema = json.dataSchema;
-                var uiSchema = json.uiSchema;
-                if(!dataSchema){
+                var dataschema = json.dataSchema;
+                var uischema = json.uiSchema;
+                if (!dataschema){
                     throw new Error('DataSchema is undefined!');
                 }
-                this.toolboxService.loadSchema(dataSchema);
+                if (!this.validatorService.validateDataschema(dataschema)) {
+                 var error = 'The Dataschema is not valid';
+                 this.showNotification(error);
+                 throw new Error(error);
+                 }
+                this.toolboxService.loadSchema(dataschema);
 
-                if (uiSchema) {
-                    this.treeService.generateTreeFromExistingUISchema(uiSchema);
+                if (uischema) {
+                    if (!this.validatorService.validateUISchema(uischema)) {
+                     var error = 'The UISchema is not valid';
+                     this.showNotification(error);
+                     throw new Error(error);
+                     }
+                    this.treeService.generateTreeFromExistingUISchema(uischema);
                 }
 
                 this.hideDialog();

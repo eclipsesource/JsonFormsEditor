@@ -19,26 +19,26 @@ describe('app.core.Metaschema', () => {
     });
 
     it('should merge the properties', () => {
-        var ab = { "properties": { "a": 1, "b": 2 } };
-        var cd = { "properties": { "c": 3, "d": 4 } }
+        var ab = {"properties": {"a": 1, "b": 2}};
+        var cd = {"properties": {"c": 3, "d": 4}}
         var abcd = Metaschema.mergeDefinitionProperties([ab, cd]);
-        expect(abcd).toEqual({ "a": 1, "b": 2, "c": 3, "d": 4 });
+        expect(abcd).toEqual({"a": 1, "b": 2, "c": 3, "d": 4});
     });
 
     it('should merge only the properties', () => {
-        var ab = { "properties": { "a": 1, "b": 2 } };
-        var cd = { "c": 3, "d": 4 };
+        var ab = {"properties": {"a": 1, "b": 2}};
+        var cd = {"c": 3, "d": 4};
         var abcd = Metaschema.mergeDefinitionProperties([ab, cd]);
-        expect(abcd).toEqual({ "a": 1, "b": 2 });
+        expect(abcd).toEqual({"a": 1, "b": 2});
     });
 
-    it('should generate a correct definition dataschema', () => {
+    it('should correctly clean up the definition metaschema', () => {
         var controlResolvedMetaschema = {
             "allOf": [{
                 "properties": {
                     "type": {
                         "type": "string",
-                        "enum":["ExampleType"]
+                        "enum": ["ExampleType"]
                     },
                     "scope": {
                         "type": "object",
@@ -73,10 +73,64 @@ describe('app.core.Metaschema', () => {
                 }
             }]
         };
-        var controlDataschema = Metaschema.generateDefinitionDataschema(controlResolvedMetaschema);
-        expect(controlDataschema['allOf']).toBeUndefined();
-        expect(controlDataschema['properties']).toBeDefined();
-        expect(controlDataschema['properties']['elements']).toBeUndefined();
+        var cleanUpDefinitionMetaschema = Metaschema.cleanUpDefinitionMetaschema(controlResolvedMetaschema);
+        expect(cleanUpDefinitionMetaschema['allOf']).toBeUndefined();
+        expect(cleanUpDefinitionMetaschema['properties']).toBeDefined();
+        expect(cleanUpDefinitionMetaschema['properties']['elements']).toBeUndefined();
+    });
+
+    it('should generate a correct definition dataschema', () => {
+        var controlCleanedUpMetaschema = {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["Control"]
+                },
+                "label": {
+                    "type": "string"
+                },
+                "scope": {
+                    "type": "object",
+                    "properties": {
+                        "$ref": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "readOnly": {
+                    "type": "boolean"
+                },
+                "rule": {
+                    "type": "object",
+                    "required": ["condition", "effect"],
+                    "properties": {
+                        "effect": {
+                            "type": "string",
+                            "enum": ["", "HIDE"]
+                        },
+                        "condition": {
+                            "type": "object",
+                            "properties": {
+                                "scope": {
+                                    "type": "object",
+                                    "properties": {
+                                        "$ref": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "expectedValue": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "required": ["type", "scope"]
+        };
+        var controlDataschema = Metaschema.generateDefinitionDataschema(controlCleanedUpMetaschema);
         expect(controlDataschema['properties']['type']['enum']).toBeUndefined();
         expect(controlDataschema['properties']['scope']["type"]).toBe("string");
         expect(controlDataschema['properties']['rule']).toBeDefined();

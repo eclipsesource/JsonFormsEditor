@@ -15,7 +15,7 @@ module app.detail {
 
         static $inject = ['MetaschemaService', 'DataschemaService', '$q'];
 
-        constructor(private metaschemaService:MetaschemaService, private dataschemaService:DataschemaService, private $q: IQService) {
+        constructor(private metaschemaService:MetaschemaService, private dataschemaService:DataschemaService, private $q:IQService) {
 
         }
 

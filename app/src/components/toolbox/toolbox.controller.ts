@@ -47,7 +47,6 @@ module app.toolbox {
                     event.dest.nodesScope.$modelValue[index] = destination.convertToTreeElement();
 
                     this.treeService.modifiedTree();
-                    this.treeService.notifyObservers(new PreviewUpdateEvent(null, JSON.parse(treeService.exportUISchemaAsJSON())));
                 }
             };
         }

@@ -7,6 +7,7 @@ module app.core.model {
         private dataType:string;
         public label:string;
         private scope:string;
+        private readOnly:boolean;
         private rule:{} = {
             "effect": "",
             "condition": {
@@ -56,6 +57,14 @@ module app.core.model {
 
         public setScope(newScope:string):void {
             this.scope = newScope;
+        }
+
+        public getReadOnly():boolean {
+            return this.readOnly;
+        }
+
+        public setReadOnly(newReadOnly:boolean):void {
+            this.readOnly = newReadOnly;
         }
 
         public initElements():void {
@@ -109,6 +118,13 @@ module app.core.model {
             return result;
         }
 
+        public toJSONStringDepurated():string {
+            if (!this.isValid()) {
+                return "";
+            }
+            return this.toJSONString();
+        }
+
         public toJSONString():string {
             var json:any = {};
             json.type = this.type;
@@ -119,15 +135,29 @@ module app.core.model {
                 json.scope = {};
                 json.scope.$ref = "#/properties/" + this.scope;
             }
-            if (this.rule['effect'].length > 0 && this.rule['condition']['scope'].length > 0 && this.rule['condition']['expectedValue'].length > 0) {
-                json.rule = JSON.parse(JSON.stringify(this.rule));
-                json.rule.condition.scope = {};
-                json.rule.condition.scope.$ref = "#/properties/" + this.rule['condition'].scope;
+            if (this.readOnly != undefined) {
+                json.readOnly = this.readOnly;
+            }
+            if (this.rule['effect'].length > 0) {
+                json.rule = {
+                    "effect": this.rule['effect']
+                };
+                if (this.rule['condition']['scope'].length > 0) {
+                    json.rule.condition  = {
+                        "scope": {
+                            "$ref": "#/properties/" + this.rule['condition']['scope']
+                        },
+                        "expectedValue": this.rule['condition']['expectedValue']
+                    };
+                }
             }
             if (this.metaData['acceptedElements']) {
                 json.elements = [];
                 for (var i = 0; i < this.elements.length; i++) {
-                    json.elements.push(JSON.parse(this.elements[i].toJSONString()));
+                    var subElement = this.elements[i].toJSONStringDepurated();
+                    if (subElement) {
+                        json.elements.push(JSON.parse(subElement));
+                    }
                 }
             }
             return JSON.stringify(json, (key, value) => {
