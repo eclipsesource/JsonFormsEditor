@@ -29,6 +29,7 @@ module app.core.model {
             treeElement.setType("Control");
             treeElement.setDataType(this.datatype);
             treeElement.setScope(this.scope);
+            treeElement.setReadOnly(false);
             treeElement.setLabel(this.getLabel());
             treeElement.setAcceptedElements(this.getAcceptedElements());
             return treeElement;

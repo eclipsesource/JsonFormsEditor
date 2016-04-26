@@ -5,14 +5,16 @@ module app.layouts {
     import ToolboxElement = app.core.model.ToolboxElement;
     import ControlToolboxElement = app.core.model.ControlToolboxElement;
     import UndoService = app.core.undo.UndoService;
+    import TreeService = app.tree.TreeService;
+    import PreviewUpdateEvent = app.preview.PreviewUpdateEvent;
 
     class LayoutsController {
 
         public treeOptions:{};
 
-        static $inject = ['LayoutsService', 'UndoService'];
+        static $inject = ['LayoutsService', 'TreeService', 'UndoService'];
 
-        constructor(public layoutsService:LayoutsService, private undoService:UndoService) {
+        constructor(public layoutsService:LayoutsService, private treeService:TreeService, private undoService:UndoService) {
             this.treeOptions = {
                 accept: () => {
                     return false;
@@ -31,6 +33,8 @@ module app.layouts {
                     var index = event.dest.index;
                     var destination:ToolboxElement = event.dest.nodesScope.$modelValue[index];
                     event.dest.nodesScope.$modelValue[index] = destination.convertToTreeElement();
+
+                    this.treeService.modifiedTree();
                 }
             };
         }

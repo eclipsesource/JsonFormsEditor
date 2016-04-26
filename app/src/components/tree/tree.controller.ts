@@ -37,7 +37,6 @@ module app.tree {
                 beforeDrop: (event) => {
                     if(event['pos']['moving']){
                         this.undoService.snapshot();
-                        treeService.modifiedTree();
                     }
                 },
                 dropped: () => {

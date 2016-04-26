@@ -3,17 +3,19 @@ module app.core.metaschema {
     export class Definition {
 
         private types:string[] = [];
+        private dataschema:{};
         private uischema:{};
 
         /**
          * Constructs a new definition.
          *
          * @param name the name of the definition
-         * @param dataschema the dataschema of the definition
+         * @param metaschema the metaschema of the definition
          * @param acceptedElements the labels of the elements this definition accepts as children
          */
-        constructor(private name:string, private dataschema:{}, private acceptedElements:string[]) {
-            this.uischema = this.generateUISchema(dataschema);
+        constructor(private name:string, private metaschema:{}, private acceptedElements:string[]) {
+            this.dataschema = Metaschema.generateDefinitionDataschema(metaschema);
+            this.uischema = Metaschema.generateDefinitionUISchema(this.dataschema);
         }
 
         getName():string {
@@ -52,6 +54,10 @@ module app.core.metaschema {
             this.acceptedElements = newAcceptedElements;
         }
 
+        getMetaschema():{} {
+            return this.metaschema;
+        }
+
         /**
          * Gets the dataschema for this definition, so it can be edited by jsonforms.
          * @returns {{}}
@@ -66,69 +72,6 @@ module app.core.metaschema {
          */
         getUISchema():{} {
             return this.uischema;
-        }
-
-        private generateUISchema(dataschema:{}):{} {
-            var elements = [];
-
-            var properties = dataschema['properties'];
-            _.forOwn(properties, (value, key) => {
-                if (key == 'rule') {
-                    elements.push({
-                        "type": "Group",
-                        "label": _.capitalize(key),
-                        "elements": [
-                            {
-                                "type": "Control",
-                                "label": "Effect",
-                                "scope": {
-                                    "$ref": "#/properties/rule/properties/effect"
-                                }
-                            },
-                            {
-                                "type": "Group",
-                                "label": "Condition",
-                                "elements": [
-                                    {
-                                        "type": "VerticalLayout",
-                                        "elements": [
-                                            {
-                                                "type": "Control",
-                                                "label": "Scope",
-                                                "scope": {
-                                                    "$ref": "#/properties/rule/properties/condition/properties/scope"
-                                                }
-                                            },
-                                            {
-                                                "type": "Control",
-                                                "label": "Expected Value",
-                                                "scope": {
-                                                    "$ref": "#/properties/rule/properties/condition/properties/expectedValue"
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ]
-
-                            }
-                        ]
-                    });
-                } else {
-                    elements.push({
-                        "type": "Control",
-                        "label": _.capitalize(key),
-                        "scope": {
-                            "$ref": "#/properties/" + key
-                        },
-                        "readOnly": !value['enum'] && (key === 'type' || key === 'scope')
-                    });
-                }
-            });
-
-            return {
-                "type": "VerticalLayout",
-                "elements": elements
-            }
         }
     }
 }

@@ -68,13 +68,11 @@ module app.dialogs.dataschemaimport {
                 uiSchema: this.uiJson
             };
             deferred.resolve(result);
-            if(!result.dataSchema){
+            if (!result.dataSchema) {
                 this.wizard.showNotification("Select at least a valid file for the Data Schema!");
-            }else{
+            } else {
                 return deferred.promise;
             }
-
-
         }
 
         shallSubmit():boolean {

@@ -51,11 +51,11 @@ module app.core.metaschema {
             if (alreadyGenerated.indexOf(definitionName) < 0) {
                 var definitionMetaschema:{} = metaschema['definitions'][definitionName];
                 var resolvedDefinitionMetaschema:{} = resolvedMetaschema['definitions'][definitionName];
-                var definitionDataschema:{} = Metaschema.generateDefinitionDataschema(resolvedDefinitionMetaschema);
+                var cleanedUpDefinitionMetaschema:{} = Metaschema.cleanUpDefinitionMetaschema(resolvedDefinitionMetaschema);
 
                 var acceptedElements:string[] = Metaschema.retrieveAcceptedElements(definitionMetaschema, rootDefinitionsNames);
 
-                definitions.push(new Definition(definitionName, definitionDataschema, acceptedElements));
+                definitions.push(new Definition(definitionName, cleanedUpDefinitionMetaschema, acceptedElements));
                 alreadyGenerated.push(definitionName);
 
                 // child definitions
@@ -68,13 +68,46 @@ module app.core.metaschema {
             }
         }
 
-        static generateDefinitionDataschema(resolvedDefinitionMetaschema:{}):{} {
-            var definitionDataschema = {};
+        static cleanUpDefinitionMetaschema(resolvedDefinitionMetaschema:{}):{} {
+            var cleanedUpDefinitionMetaschema:{} = {};
 
             _.forOwn(resolvedDefinitionMetaschema, (value, key) => {
                 if (key == 'allOf' || key == 'properties') { // resolve properties
                     var properties = Metaschema.extractPropertiesFromDefinitionMetaschema(resolvedDefinitionMetaschema);
                     properties = _.omit(properties, ['elements']);
+                    cleanedUpDefinitionMetaschema['properties'] = properties;
+                } else {
+                    cleanedUpDefinitionMetaschema[key] = value;
+                }
+            });
+
+            return cleanedUpDefinitionMetaschema;
+        }
+
+        static extractPropertiesFromDefinitionMetaschema(definitionMetaschema:{}):{} {
+            var properties = {};
+
+            if (definitionMetaschema['properties']) {
+                properties = definitionMetaschema['properties'];
+            } else if (definitionMetaschema['allOf']) {
+                properties = Metaschema.mergeDefinitionProperties(definitionMetaschema['allOf']);
+            }
+
+            return properties;
+        }
+
+        static mergeDefinitionProperties(propertiesSources:{}[]):{} {
+            return propertiesSources.reduce(function(propertiesObject, propertySource) {
+                return _.merge(propertiesObject, propertySource['properties']);
+            }, {});
+        }
+
+        static generateDefinitionDataschema(cleanedUpDefinitionMetaschema:{}):{} {
+            var definitionDataschema = {};
+
+            _.forOwn(cleanedUpDefinitionMetaschema, (value, key) => {
+                if (key == 'properties') { // resolve properties
+                    var properties = JSON.parse(JSON.stringify(cleanedUpDefinitionMetaschema['properties']));
                     if (properties['type']['enum'].length == 1) {
                         properties['type'] = _.omit(properties['type'], ['enum']);
                     }
@@ -93,22 +126,67 @@ module app.core.metaschema {
             return definitionDataschema;
         }
 
-        static extractPropertiesFromDefinitionMetaschema(definitionMetaschema:{}):{} {
-            var properties = {};
+        static generateDefinitionUISchema(definitionDataschema:{}):{} {
+            var elements = [];
 
-            if (definitionMetaschema['properties']) {
-                properties = definitionMetaschema['properties'];
-            } else if (definitionMetaschema['allOf']) {
-                properties = Metaschema.mergeDefinitionProperties(definitionMetaschema['allOf']);
-            }
+            var properties = definitionDataschema['properties'];
+            _.forOwn(properties, (value, key) => {
+                if (key == 'rule') {
+                    elements.push({
+                        "type": "Group",
+                        "label": _.capitalize(key),
+                        "elements": [
+                            {
+                                "type": "Control",
+                                "label": "Effect",
+                                "scope": {
+                                    "$ref": "#/properties/rule/properties/effect"
+                                }
+                            },
+                            {
+                                "type": "Group",
+                                "label": "Condition",
+                                "elements": [
+                                    {
+                                        "type": "VerticalLayout",
+                                        "elements": [
+                                            {
+                                                "type": "Control",
+                                                "label": "Scope",
+                                                "scope": {
+                                                    "$ref": "#/properties/rule/properties/condition/properties/scope"
+                                                }
+                                            },
+                                            {
+                                                "type": "Control",
+                                                "label": "Expected Value",
+                                                "scope": {
+                                                    "$ref": "#/properties/rule/properties/condition/properties/expectedValue"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
 
-            return properties;
-        }
+                            }
+                        ]
+                    });
+                } else {
+                    elements.push({
+                        "type": "Control",
+                        "label": _.capitalize(key),
+                        "scope": {
+                            "$ref": "#/properties/" + key
+                        },
+                        "readOnly": !value['enum'] && (key === 'type' || key === 'scope')
+                    });
+                }
+            });
 
-        static mergeDefinitionProperties(propertiesSources:{}[]):{} {
-            return propertiesSources.reduce(function(propertiesObject, propertySource) {
-                return _.merge(propertiesObject, propertySource['properties']);
-             }, {});
+            return {
+                "type": "VerticalLayout",
+                "elements": elements
+            };
         }
 
         static retrieveAcceptedElements(definitionMetaschema:{}, rootDefinitionsNames:string[]):string[] {

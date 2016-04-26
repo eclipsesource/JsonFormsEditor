@@ -24,7 +24,8 @@ describe('app.tree', () => {
                 "type": "Control",
                 "scope": {
                     "$ref": "#/properties/name"
-                }
+                },
+                "readOnly": false
             }
         ]
     };
