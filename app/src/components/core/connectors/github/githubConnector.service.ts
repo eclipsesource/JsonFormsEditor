@@ -116,13 +116,14 @@ module app.core.connectors {
             return this.$http.get(this.url + "/github/loadFile?url=" + file.getUrl())
                 .then((result:any) => {
                     try {
-                        this.fileLoaders[fileSelectorId].loadedFile = result.data;
-                        this.fileLoaders[fileSelectorId].loadedFileContents = JSON.parse(atob(result.data.content));
-                        return this.fileLoaders[fileSelectorId].loadedFileContents;
+                        var resJson = JSON.parse(atob(result.data.content));
                     } catch (error) {
-
                         throw new Error('Invalid Json Object! Select another one');
                     }
+                    console.log(resJson);
+                    this.fileLoaders[fileSelectorId].loadedFile = result.data;
+                    this.fileLoaders[fileSelectorId].loadedFileContents = resJson;
+                    return this.fileLoaders[fileSelectorId].loadedFileContents;
                 });
         }
     }

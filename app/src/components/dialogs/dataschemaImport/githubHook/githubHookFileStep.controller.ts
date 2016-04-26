@@ -20,7 +20,6 @@ module app.dialogs.dataschemaimport {
 
         navigatingToPrevious(){
             this.selectedFile = undefined;
-            this.fileSelectorID = undefined;
         }
 
         isAllowedToContinue(): boolean {
@@ -73,6 +72,7 @@ module app.dialogs.dataschemaimport {
                 //The file selected was a folder, go into it
                 this.githubConnector.goIntoFolder(file);
             } else {
+                console.log(file);
                 this.selectedFile = file;
                 // Uncomment this if you want to move to next step when clicking on the file
                 //this.wizard.next();

@@ -153,6 +153,7 @@ github.get('/loadFile',
 			}
 
 			var url = req.query.url;
+			console.log(url);
 
 			connector.getFilesFromTree(code, url, function(error, result){
 				if(error){
