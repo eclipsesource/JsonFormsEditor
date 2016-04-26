@@ -36,6 +36,7 @@ module app.core.connectors {
         }
 
         showPopupGithub():IPromise<any> {
+
             var left = screen.width / 2 - 200;
              var top = screen.height / 2 - 200;
              var popup = this.$window.open('/github/login', '', "top=" + top + ", left=" + left + ", width=400, height=500");
@@ -49,6 +50,7 @@ module app.core.connectors {
              deferred.resolve();
              };
              return deferred.promise;
+
         }
 
         getReposByQuery(query: string):IPromise<any>{
