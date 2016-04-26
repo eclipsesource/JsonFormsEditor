@@ -12,9 +12,9 @@ module app.dialogs.dataschemaimport {
         static $inject = ['$mdDialog', 'DataschemaImportService', 'ValidatorService', 'ToolboxService', 'TreeService', '$scope', '$mdToast', '$rootScope'];
 
 
-        constructor($mdDialog:IDialogService, public importService:DataschemaImportService, private validatorService:ValidatorService, private toolboxService:ToolboxService,
+        constructor($mdDialog:IDialogService, public importService:DataschemaImportService, public validatorService:ValidatorService, private toolboxService:ToolboxService,
                     private treeService:TreeService, private $scope:any, public $mdToast:IToastService, public $rootScope:IScope) {
-            super($mdDialog, $rootScope);
+            super($mdDialog, $rootScope, validatorService);
             this.addSteps([new ChooseUploadStepController(this)]);
         }
 
