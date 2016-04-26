@@ -43,6 +43,7 @@ module app.dialogs.dataschemaimport {
             return this.githubConnector.getFilesFromBranch(this.selectedRepo.name, this.selectedBranch.name).then((res)=>{
                 this.selectedRepo = undefined;
                 this.selectedBranch = undefined;
+                this.branches = undefined;
             });
         }
 
@@ -57,8 +58,8 @@ module app.dialogs.dataschemaimport {
         }
 
         private reloadBranches(): void{
-            this.branches = [];
-            this.githubConnector.getBranchList(this.selectedRepo.name).then(
+            this.branches = ['loading'];
+            this.githubConnector.getBranchList(this.selectedRepo.name, this.selectedRepo.owner.login).then(
                 (result) => {
                     this.branches=JSON.parse(result.data);
                 },
@@ -67,6 +68,13 @@ module app.dialogs.dataschemaimport {
                     throw new Error('unable to load branches')
                 }
             );
+        }
+
+        navigatingToPrevious(){
+            this.someRepoIsSelected = false;
+            this.selectedRepo = undefined;
+            this.selectedBranch = undefined;
+            this.branches = undefined;
         }
 
         getBranches(): any{

@@ -34,7 +34,12 @@ module app.dialogs.dataschemaimport {
         }
 
         submit():IPromise<any> {
-           return this.githubConnector.showPopupGithub();
+            var query = $(document.getElementById('github-login-query-input')).val();
+            if(query){
+                return this.githubConnector.getReposByQuery(query);
+            }else{
+                return this.githubConnector.showPopupGithub();
+            }
         }
     }
 

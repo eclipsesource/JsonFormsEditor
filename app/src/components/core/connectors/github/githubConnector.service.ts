@@ -51,12 +51,20 @@ module app.core.connectors {
              return deferred.promise;
         }
 
+        getReposByQuery(query: string):IPromise<any>{
+            // Search without logging in
+            return this.$http.get(this.url + '/github/queryRepo?q='+query, {})
+                .then((res:any)=>{
+                    this.repoList = JSON.parse(res.data.body).items;
+                });
+        }
+
         getRepoList():any {
             return this.repoList;
         }
 
-        getBranchList(repoName:string):IPromise<any> {
-            return this.$http.get(this.url + "/github/getBranchList?repoName=" + repoName, {});
+        getBranchList(repoName:string, ownerName:string):IPromise<any> {
+            return this.$http.get(this.url + "/github/getBranchList?repoName=" + repoName + "&ownerName=" + ownerName, {});
         }
 
         getFilesFromBranch(repoName:string, branchName:string):IPromise<any> {

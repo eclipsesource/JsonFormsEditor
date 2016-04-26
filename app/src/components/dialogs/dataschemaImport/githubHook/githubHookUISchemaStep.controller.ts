@@ -27,6 +27,11 @@ module app.dialogs.dataschemaimport {
             return false;
         }
 
+        navigatingToPrevious(){
+            this.selectedFile = undefined;
+            this.fileSelectorID = undefined;
+        }
+
         getTitle(index:number):string {
             return index+1+". UI";
         }
