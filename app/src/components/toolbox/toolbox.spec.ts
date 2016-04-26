@@ -78,4 +78,45 @@ describe('toolbox', ()=> {
         expect(service.removeSchemaElement(scope.addressControl)).toBeFalsy();
     })));
 
+
+
+});
+
+describe('toolbox.directive', ()=>{
+    beforeEach(angular.mock.module('app.toolbox'));
+    beforeEach(angular.mock.module('app.tree'));
+    beforeEach(angular.mock.module('app.core'));
+    beforeEach(angular.mock.module('app.layouts'));
+    it("focus on element if directive with toolbox-focus-input was clicked", (inject(($rootScope, $compile)=>{
+        var parent = document.createElement('div');
+        var input = document.createElement('input');
+        input.setAttribute('id','test-input');
+        input.setAttribute('type', 'text');
+
+        var inputNoFocus = document.createElement('input');
+        inputNoFocus.setAttribute('id','test-input-no-focus');
+        inputNoFocus.setAttribute('type', 'text');
+
+        var button = document.createElement('button');
+        button.setAttribute('toolbox-focus-input', 'test-input');
+        button.setAttribute('id', 'test-button');
+
+        parent.appendChild(input);
+        parent.appendChild(inputNoFocus);
+        parent.appendChild(button);
+
+        var scope = $rootScope.$new();
+        document.body.appendChild(parent);
+        $compile(document)(scope);
+
+        $rootScope.$digest();
+
+        document.getElementById('test-input-no-focus').focus();
+        expect(document.activeElement).toBe(document.getElementById('test-input-no-focus'));
+
+        document.getElementById('test-button').click();
+        expect(document.activeElement).toBe(document.getElementById('test-input'));
+
+
+    })));
 });
