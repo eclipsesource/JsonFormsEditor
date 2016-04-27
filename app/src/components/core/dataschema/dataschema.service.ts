@@ -117,27 +117,27 @@ module app.core.dataschema {
             }
             var parent = this.getFolderAt(path);
 
-            if(!parent || !parent.hasOwnProperty('properties')){
+            if (!parent || !parent.hasOwnProperty('properties')) {
                 console.log('ERROR: the path accessed is not a folder');
                 return false;
             }
             parent = parent.properties;
 
             // Check if there is a property with same name already
-            if(parent.hasOwnProperty(label)){
+            if (parent.hasOwnProperty(label)) {
                 console.log('ERROR: a property with the same name exists already in the current folder');
                 return false;
             }
             //Initialize properties object if its a folder
-            if(type == 'object'){
+            if (type == 'object') {
                 property.properties = {};
             }
 
-            if(config['required'] === true){
+            if (config['required'] === true) {
                 this.addPropertyToRequired(label, parent);
             }
 
-            if(config['hasEnum']===true){
+            if (config['allowsEnum'] && config['enum'].length > 0) {
                 property['enum'] = config['enum'];
             }
 
