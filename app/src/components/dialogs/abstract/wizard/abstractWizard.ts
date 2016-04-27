@@ -2,6 +2,7 @@ module app.dialogs {
 
     import IDialogService = angular.material.IDialogService;
     import IScope = angular.IScope;
+    import ValidatorService = app.core.ValidatorService;
 
     export abstract class AbstractWizard extends AbstractDialog {
 
@@ -10,7 +11,7 @@ module app.dialogs {
         public currentNotification:string = "";
         protected notificationTimerId:number;
 
-        constructor($mdDialog:IDialogService, public $rootScope:IScope) {
+        constructor($mdDialog:IDialogService, public $rootScope:IScope, public validatorService: ValidatorService) {
             super($mdDialog);
         }
 

@@ -29,7 +29,6 @@ module app.dialogs.dataschemaimport {
 
         navigatingToPrevious(){
             this.selectedFile = undefined;
-            this.fileSelectorID = undefined;
         }
 
         getTitle(index:number):string {

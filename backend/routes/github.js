@@ -60,28 +60,6 @@ github.get('/getRepoList', passport.authenticate('github', {failureRedirect: '/l
            }
 );
 
-// ONLY FOR DEBUGGING
-github.get('/getRepoListDev', function(req,res,next){
-
-	var code = req.query.accessToken;
-	var username = req.query.user;
-	req.session.passport = {
-		user:{
-			accessToken: code,
-			profile: {
-				username: 'pancho111203'
-			}
-		}
-	};
-
-	connector.getRepoList(code, function(error, result){
-		if(error){
-			return next(error);
-		}
-		res.json(result);
-	});
-});
-
 github.get('/getBranchList',
 		function(req, res, next){
 			var code;
@@ -91,6 +69,7 @@ github.get('/getBranchList',
 
 			var repoName = req.query.repoName;
 			var userName = req.query.ownerName;
+			req.session.repoOwner = userName;
 			connector.getBranchList(code, userName, repoName, function(error, result){
 				if(error){
 					return next(error);
@@ -117,12 +96,12 @@ github.get('/queryRepo',
 github.get('/getFilesFromBranch',
 		function(req, res, next){
 			var code;
+			var userName = req.session.repoOwner;
 			if(req.user){
 				code = req.user.accessToken;
 			}
 
 			var repoName = req.query.repoName;
-			var userName = req.user.profile.username;
 			var branchName = req.query.branchName;
 
 
@@ -174,6 +153,7 @@ github.get('/loadFile',
 			}
 
 			var url = req.query.url;
+			console.log(url);
 
 			connector.getFilesFromTree(code, url, function(error, result){
 				if(error){

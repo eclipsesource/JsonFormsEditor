@@ -36,6 +36,7 @@ module app.core.connectors {
         }
 
         showPopupGithub():IPromise<any> {
+
             var left = screen.width / 2 - 200;
              var top = screen.height / 2 - 200;
              var popup = this.$window.open('/github/login', '', "top=" + top + ", left=" + left + ", width=400, height=500");
@@ -49,6 +50,7 @@ module app.core.connectors {
              deferred.resolve();
              };
              return deferred.promise;
+
         }
 
         getReposByQuery(query: string):IPromise<any>{
@@ -114,13 +116,14 @@ module app.core.connectors {
             return this.$http.get(this.url + "/github/loadFile?url=" + file.getUrl())
                 .then((result:any) => {
                     try {
-                        this.fileLoaders[fileSelectorId].loadedFile = result.data;
-                        this.fileLoaders[fileSelectorId].loadedFileContents = JSON.parse(atob(result.data.content));
-                        return this.fileLoaders[fileSelectorId].loadedFileContents;
+                        var resJson = JSON.parse(atob(result.data.content));
                     } catch (error) {
-
                         throw new Error('Invalid Json Object! Select another one');
                     }
+                    console.log(resJson);
+                    this.fileLoaders[fileSelectorId].loadedFile = result.data;
+                    this.fileLoaders[fileSelectorId].loadedFileContents = resJson;
+                    return this.fileLoaders[fileSelectorId].loadedFileContents;
                 });
         }
     }

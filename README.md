@@ -6,7 +6,7 @@ Checkout [JsonForms](http://github.eclipsesource.com/jsonforms) for further info
 [![Build Status](https://travis-ci.org/eclipsesource/JsonFormsEditor.svg?branch=master)](https://travis-ci.org/eclipsesource/JsonFormsEditor)[![Coverage Status](https://coveralls.io/repos/github/pancho111203/JsonFormsEditor/badge.svg?branch=master)](https://coveralls.io/github/pancho111203/JsonFormsEditor?branch=master)
 
 ## Demo
-Watch JSONForms Editor in action on the [demo page](http://github.eclipsesource.com/JsonFormsEditor).
+Watch JSONForms Editor in action on the [demo page](https://jsonformseditor.herokuapp.com/).
 
 ## Working with TypeScript
 #### Definitely Typed
