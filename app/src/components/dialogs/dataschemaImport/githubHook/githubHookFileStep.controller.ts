@@ -20,7 +20,6 @@ module app.dialogs.dataschemaimport {
 
         navigatingToPrevious(){
             this.selectedFile = undefined;
-            this.fileSelectorID = undefined;
         }
 
         isAllowedToContinue(): boolean {
@@ -59,7 +58,17 @@ module app.dialogs.dataschemaimport {
         }
 
         submit():IPromise<any> {
-            return this.githubConnector.loadFile(this.selectedFile, this.fileSelectorID).catch((error)=> {
+
+
+            return this.githubConnector.loadFile(this.selectedFile, this.fileSelectorID).then((res)=>{
+                if (!this.wiz.validatorService.validateDataschema(res)) {
+                    var error = 'The Dataschema is not valid';
+                    this.wiz.showNotification(error);
+                    throw new Error(error);
+                }
+
+            }, (error)=> {
+
                 this.wiz.showNotification("Invalid file selected, try with a json file.");
             });
         }
@@ -73,6 +82,7 @@ module app.dialogs.dataschemaimport {
                 //The file selected was a folder, go into it
                 this.githubConnector.goIntoFolder(file);
             } else {
+                console.log(file);
                 this.selectedFile = file;
                 // Uncomment this if you want to move to next step when clicking on the file
                 //this.wizard.next();

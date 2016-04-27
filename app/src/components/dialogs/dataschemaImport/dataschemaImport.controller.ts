@@ -12,9 +12,9 @@ module app.dialogs.dataschemaimport {
         static $inject = ['$mdDialog', 'DataschemaImportService', 'ValidatorService', 'ToolboxService', 'TreeService', '$scope', '$mdToast', '$rootScope'];
 
 
-        constructor($mdDialog:IDialogService, public importService:DataschemaImportService, private validatorService:ValidatorService, private toolboxService:ToolboxService,
+        constructor($mdDialog:IDialogService, public importService:DataschemaImportService, public validatorService:ValidatorService, private toolboxService:ToolboxService,
                     private treeService:TreeService, private $scope:any, public $mdToast:IToastService, public $rootScope:IScope) {
-            super($mdDialog, $rootScope);
+            super($mdDialog, $rootScope, validatorService);
             this.addSteps([new ChooseUploadStepController(this)]);
         }
 
@@ -34,22 +34,27 @@ module app.dialogs.dataschemaimport {
             this.currentStep().submit().then((json:any) => {
                 var dataschema = json.dataSchema;
                 var uischema = json.uiSchema;
-                if (!dataschema){
+                if (!dataschema) {
                     throw new Error('DataSchema is undefined!');
                 }
                 if (!this.validatorService.validateDataschema(dataschema)) {
-                 var error = 'The Dataschema is not valid';
-                 this.showNotification(error);
-                 throw new Error(error);
-                 }
+                    var error = 'The Dataschema is not valid';
+                    this.showNotification(error);
+                    throw new Error(error);
+                }
                 this.toolboxService.loadSchema(dataschema);
 
                 if (uischema) {
                     if (!this.validatorService.validateUISchema(uischema)) {
-                     var error = 'The UISchema is not valid';
-                     this.showNotification(error);
-                     throw new Error(error);
-                     }
+                        var error = 'The UISchema is not valid';
+                        this.showNotification(error);
+                        throw new Error(error);
+                    }
+                    if (!this.validatorService.areSchemasCompatible(dataschema, uischema)) {
+                        var error = 'The Dataschema and UISchema are not compatible';
+                        this.showNotification(error);
+                        throw new Error(error);
+                    }
                     this.treeService.generateTreeFromExistingUISchema(uischema);
                 }
 

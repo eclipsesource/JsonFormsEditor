@@ -1,4 +1,5 @@
 declare var tv4;
+declare var JsonRefs;
 
 module app.core {
 
@@ -37,6 +38,21 @@ module app.core {
                 return true;
             }
             return tv4.validate(uischema, metaschema);
+        }
+
+        areSchemasCompatible(dataschema:{}, uischema:{}):boolean {
+            var compatible = true;
+            var refs = JsonRefs.findRefs(uischema);
+            _.forEach(refs, (ref) => {
+                var segments = ref.split('/');
+                segments.shift();
+                var dataschemaProperty = _.get(dataschema, segments);
+                if (!dataschemaProperty || dataschemaProperty['type'] == 'object') {
+                    compatible = false;
+                    return;
+                }
+            });
+            return compatible;
         }
 
         validateTreeElement(treeElement:TreeElement):IPromise<boolean> {
