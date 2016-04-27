@@ -35,7 +35,7 @@ module app.dialogs.dataschemaimport {
         submit():IPromise<any> {
             return this.$http.get(this.url).then((res)=>{
                 var result = {
-                    dataSchema: res
+                    dataSchema: res.data
                 };
                 return result;
             });
