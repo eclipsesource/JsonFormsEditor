@@ -34,22 +34,27 @@ module app.dialogs.dataschemaimport {
             this.currentStep().submit().then((json:any) => {
                 var dataschema = json.dataSchema;
                 var uischema = json.uiSchema;
-                if (!dataschema){
+                if (!dataschema) {
                     throw new Error('DataSchema is undefined!');
                 }
                 if (!this.validatorService.validateDataschema(dataschema)) {
-                 var error = 'The Dataschema is not valid';
-                 this.showNotification(error);
-                 throw new Error(error);
-                 }
+                    var error = 'The Dataschema is not valid';
+                    this.showNotification(error);
+                    throw new Error(error);
+                }
                 this.toolboxService.loadSchema(dataschema);
 
                 if (uischema) {
                     if (!this.validatorService.validateUISchema(uischema)) {
-                     var error = 'The UISchema is not valid';
-                     this.showNotification(error);
-                     throw new Error(error);
-                     }
+                        var error = 'The UISchema is not valid';
+                        this.showNotification(error);
+                        throw new Error(error);
+                    }
+                    if (!this.validatorService.areSchemasCompatible(dataschema, uischema)) {
+                        var error = 'The Dataschema and UISchema are not compatible';
+                        this.showNotification(error);
+                        throw new Error(error);
+                    }
                     this.treeService.generateTreeFromExistingUISchema(uischema);
                 }
 
