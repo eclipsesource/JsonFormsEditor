@@ -8,7 +8,6 @@
   "dependencies": {
     "angular": "~1.4.0",
     "angular-ui-router": "^0.2.15",
-    "angular-ui-tree": "~2.13.0",
     "bootstrap": "~3.3.5",
     "jquery": "~2.1.4",
     "jsonforms": "0.0.15",
