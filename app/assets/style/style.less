@@ -8,7 +8,7 @@
 @soft-border: #bed2db;
 @color-white: #fff;
 @color-black: #000;
-
+@dark-bg: #283593;
 @header-size: 66px;
 
 @toolbox-width: 320px;
@@ -231,4 +231,9 @@ md-grid-tile {
 
 .flex-align-end {
   margin-left: auto;
+}
+
+[angular-ui-tree-node-selected="true"] > div ,
+[angular-ui-tree-node-selected="true"] > div:hover {
+  background-color: @dark-bg;
 }

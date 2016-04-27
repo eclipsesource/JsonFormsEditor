@@ -8,19 +8,20 @@
 
   angular.module('ui.tree', [])
     .constant('treeConfig', {
-        treeClass: 'angular-ui-tree',
-        emptyTreeClass: 'angular-ui-tree-empty',
-        hiddenClass: 'angular-ui-tree-hidden',
-        nodesClass: 'angular-ui-tree-nodes',
-        nodeClass: 'angular-ui-tree-node',
-        handleClass: 'angular-ui-tree-handle',
-        placeholderClass: 'angular-ui-tree-placeholder',
-        placeHoldersWrapperClass: 'angular-ui-tree-placeholders-wrapper',
-        dragClass: 'angular-ui-tree-drag',
-        dragWrapperClass: 'angular-ui-tree-drag-wrapper',
-        dragThreshold: 3,
-        levelThreshold: 30,
-        defaultCollapsed: false
+          treeClass: 'angular-ui-tree',
+          emptyTreeClass: 'angular-ui-tree-empty',
+          hiddenClass: 'angular-ui-tree-hidden',
+          nodesClass: 'angular-ui-tree-nodes',
+          nodeClass: 'angular-ui-tree-node',
+          handleClass: 'angular-ui-tree-handle',
+          placeholderClass: 'angular-ui-tree-placeholder',
+          placeHoldersWrapperClass: 'angular-ui-tree-placeholders-wrapper',
+          dragClass: 'angular-ui-tree-drag',
+          dragWrapperClass: 'angular-ui-tree-drag-wrapper',
+          selectedClass: 'angular-ui-tree-node-selected',
+          dragThreshold: 3,
+          levelThreshold: 30,
+          defaultCollapsed: false
     });
 
 })();
@@ -570,7 +571,6 @@
             });
 
             var keydownHandler = function(e){
-              console.log(scope.selecteds);
               if(e.keyCode === scope.$multiSelectKey){
                 if(!scope.$multiSelect){
                   scope.$apply(function(){
@@ -704,12 +704,12 @@
 
                         scope.selected = !!UiTreeHelper.getNodeAttribute(scope, 'selected');
 
-                        scope.$watch(attrs.selected, function (val) {
+                        scope.$watch(attrs[treeConfig.selectedClass], function (val) {
                             scope.selected = angular.isDefined(val);
                         });
                         scope.$watch('selected', function (val) {
                             UiTreeHelper.setNodeAttribute(scope, 'selected', val);
-                            attrs.$set('selected', val);
+                            attrs.$set(treeConfig.selectedClass, val);
                         });
 
                         var toggleSelect = function (e) {
@@ -954,7 +954,6 @@
 
 
                                 angular.forEach(scope.$treeScope.selecteds, function(selectedElement) {
-                                    selectedElement = angular.element(selectedElement);
                                     var selectedElementScope = selectedElement.$scope;
 
                                     selectedElementScope.$apply(function() {
@@ -1004,9 +1003,12 @@
 
                                 bindDragMoveEvents();
                                 // Fire dragStart callback
-                                scope.$apply(function () {
-                                    scope.$treeScope.$callbacks.dragStart(dragInfo.eventArgs(elements, pos));
+                                angular.forEach(scope.$treeScope.selecteds, function(selectedElement){
+                                    scope.$apply(function () {
+                                        scope.$treeScope.$callbacks.dragStart(selectedElement.$scope.$dragInfo.eventArgs(elements, pos));
+                                    });
                                 });
+
                             }
                             document_height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
                             document_width = Math.max(body.scrollWidth, body.offsetWidth, html.clientWidth, html.scrollWidth, html.offsetWidth);
@@ -1280,7 +1282,10 @@
                                 }
 
                                 scope.$apply(function () {
-                                    scope.$treeScope.$callbacks.dragMove(dragInfo.eventArgs(elements, pos));
+                                    angular.forEach(scope.$treeScope.selecteds, function(selectedElement){
+                                        scope.$treeScope.$callbacks.dragMove(selectedElement.$scope.$dragInfo.eventArgs(elements, pos));
+                                    });
+
                                 });
                             }
                         };
@@ -1298,9 +1303,11 @@
                                         if (allowDrop !== false && scope.$$allowNodeDrop && !outOfBounds) { // node drop accepted)
                                             angular.forEach(scope.$treeScope.selecteds, function(selectedElement, index){
                                                 selectedElement.$scope.$dragInfo.apply();
+
+                                                scope.$treeScope.$callbacks.dropped(selectedElement.$scope.$dragInfo.eventArgs(elements, pos));
                                             });
                                             // fire the dropped callback only if the move was successful
-                                            scope.$treeScope.$callbacks.dropped(dragEventArgs);
+
                                         } else { // drop canceled - revert the node to its original position
                                             bindDragStartEvents();
                                         }
@@ -1317,13 +1324,16 @@
                                             dragElm.remove();
                                             dragElm = null;
                                         }
-                                        scope.$treeScope.$callbacks.dragStop(dragEventArgs);
+
+
                                         scope.$$allowNodeDrop = false;
+
                                         dragInfo = null;
-                                        scope.$treeScope.selecteds = [];
                                         angular.forEach(scope.$treeScope.selecteds, function(selectedElement, index){
+                                            scope.$treeScope.$callbacks.dragStop(selectedElement.$scope.$dragInfo.eventArgs(elements, pos));
                                             selectedElement.$scope.$dragInfo = null;
                                         });
+                                        scope.$treeScope.selecteds = [];
 
                                         // Restore cursor in Opera 12.16 and IE
                                         var oldCur = document.body.getAttribute('ui-tree-cursor');

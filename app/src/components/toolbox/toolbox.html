@@ -12,7 +12,7 @@
     </md-content>
 
     <md-content flex class="md-padding tree-view" style="margin-bottom:150px; padding-top: 0px;">
-        <div ui-tree="toolbox.treeOptions" id="toolbox-root" data-drag-delay="100" data-clone-enabled="true" data-nodrop-enabled="true">
+        <div ui-tree="toolbox.treeOptions" id="toolbox-root" data-drag-delay="100" data-clone-enabled="true" data-nodrop-enabled="true" select="17">
             <ol ui-tree-nodes
                 ng-model="toolbox.toolboxService.elements">
                 <li ng-repeat="element in toolbox.toolboxService.elements"
