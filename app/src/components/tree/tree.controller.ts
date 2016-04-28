@@ -17,7 +17,11 @@ module app.tree {
         constructor(private treeService:TreeService, private dataschemaService:DataschemaService, private toolboxService:ToolboxService, private detailService:DetailService, private undoService:UndoService) {
             this.treeOptions = {
                 // don't accept more than one element (layout) in the root of the tree
-                accept: (sourceNodeScope, destNodesScope) => {
+                accept: (sourceNodeScope, destNodesScope, destIndex) => {
+
+
+
+
 
                     var source:ToolboxElement = sourceNodeScope.$modelValue;
 
@@ -32,7 +36,7 @@ module app.tree {
 
                     var accepted:boolean = destParent.acceptsElement(source.getType());
 
-                    return accepted;
+                    return accepted && !(destNodesScope.nodropEnabled || destNodesScope.$treeScope.nodropEnabled || destNodesScope.outOfDepth(sourceNodeScope));
                 },
                 beforeDrop: (event) => {
                     if(event['pos']['moving']){
