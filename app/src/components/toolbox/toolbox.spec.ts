@@ -15,7 +15,7 @@ describe('toolbox', ()=> {
     beforeEach(angular.mock.module('app.core'));
     beforeEach(angular.mock.module('app.layouts'));
 
-    beforeEach(inject((ToolboxService)=>{
+    beforeEach(inject((ToolboxService, DataschemaService)=>{
         service = ToolboxService;
     }));
 
@@ -78,8 +78,53 @@ describe('toolbox', ()=> {
         expect(service.removeSchemaElement(scope.addressControl)).toBeFalsy();
     })));
 
+    it("should not allow to create two elements with the same name", inject(($rootScope, $controller) => {
+        var scope = $rootScope.$new();
+        var controller = $controller('ToolboxBottomController', { $scope: scope });
 
+        controller.setNewElementType('string');
+        controller.newElementLabel = 'name';
+        controller.addNewElement();
+        controller.newElementLabel = 'name';
+        var addedSecond = controller.addNewElement();
 
+        expect(addedSecond).toBeFalsy();
+    }));
+
+    it("should not allow to create two enum elements with the same name", inject(($rootScope, $controller) => {
+        var scope = $rootScope.$new();
+        var controller = $controller('ToolboxBottomController', { $scope: scope });
+
+        controller.setNewElementType('string');
+        controller.newEnumElementLabel = 'male';
+        controller.addNewEnumElement();
+        controller.newEnumElementLabel = 'male';
+        var addedSecond = controller.addNewEnumElement();
+
+        expect(addedSecond).toBeFalsy();
+    }));
+
+    it("should not allow to create a string enum element if number type selected", inject(($rootScope, $controller) => {
+        var scope = $rootScope.$new();
+        var controller = $controller('ToolboxBottomController', { $scope: scope });
+
+        controller.setNewElementType('number');
+        controller.newEnumElementLabel = 'male';
+        var added = controller.addNewEnumElement();
+
+        expect(added).toBeFalsy();
+    }));
+
+    it("should not allow to create a decimal number enum element if integer type selected", inject(($rootScope, $controller) => {
+        var scope = $rootScope.$new();
+        var controller = $controller('ToolboxBottomController', { $scope: scope });
+
+        controller.setNewElementType('integer');
+        controller.newEnumElementLabel = '1.2';
+        var added = controller.addNewEnumElement();
+
+        expect(added).toBeFalsy();
+    }));
 });
 
 describe('toolbox.directive', ()=>{

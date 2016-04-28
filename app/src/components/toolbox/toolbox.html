@@ -73,10 +73,10 @@
             <div layout="row" layout-align="space-around center">
 
                 <md-input-container flex="70" style="margin-top:20px; margin-bottom:0px;">
-                    <input id="toolbox-bottom-enum-input" ng-enter="$parent.toolboxBottom.addEnumElement()" ng-model="$parent.toolboxBottom.newEnumElementLabel" class="md-primary" type="text" placeholder="Add new enum element..."/>
+                    <input id="toolbox-bottom-enum-input" ng-enter="$parent.toolboxBottom.addNewEnumElement()" ng-model="$parent.toolboxBottom.newEnumElementLabel" class="md-primary" type="text" placeholder="Add new enum element..."/>
                 </md-input-container>
                 <div flex="30">
-                    <md-button toolbox-focus-input="toolbox-bottom-enum-input" class="md-raised md-primary toolbox-button-create" ng-click="$parent.toolboxBottom.addEnumElement()">
+                    <md-button toolbox-focus-input="toolbox-bottom-enum-input" class="md-raised md-primary toolbox-button-create" ng-click="$parent.toolboxBottom.addNewEnumElement()">
                         Add
                     </md-button>
                 </div>

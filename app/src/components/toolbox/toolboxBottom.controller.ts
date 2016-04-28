@@ -48,7 +48,11 @@ module app.toolbox {
 
         setNewElementType(type:string){
             this.newElementType = type;
-            this.newElementConfig = JSON.parse(JSON.stringify(this.elementTypes[type]));
+            this.reset();
+        }
+
+        reset() {
+            this.newElementConfig = JSON.parse(JSON.stringify(this.elementTypes[this.newElementType]));
             this.resetAdvanced();
         }
 
@@ -68,7 +72,7 @@ module app.toolbox {
         /**
          * Submits the current newElementLabel and newElementTypeLabel and creates a new DataschemaPropery.
          */
-        addNewElement() {
+        addNewElement():boolean {
             if (this.newElementType == 'integer' || this.newElementType == 'number') {
                 var numberEnum = [];
                 for (var i = 0; i < this.newElementConfig['enum'].length; i++) {
@@ -77,34 +81,37 @@ module app.toolbox {
                 this.newElementConfig['enum'] = numberEnum;
             }
 
-            if (!this.toolboxService.addSchemaElement(this.newElementLabel, this.newElementType, this.newElementConfig)) {
+            var added = this.toolboxService.addSchemaElement(this.newElementLabel, this.newElementType, this.newElementConfig);
+            if (!added) {
                 console.log('ERROR: failed to add the element into the schema');
             }
             this.newElementLabel = '';
-            this.resetAdvanced();
+            this.reset();
+            return added;
         }
 
-        addEnumElement() {
+        addNewEnumElement():boolean {
             if (~this.enumOptions.indexOf(this.newEnumElementLabel)) {
                 console.log('ERROR: element already exists');
                 this.newEnumElementLabel = '';
-                return;
+                return false;
             }
             if (this.newElementType == 'integer' || this.newElementType == 'number') {
                 var number = Number(this.newEnumElementLabel);
                 if (isNaN(number)) {
                     console.log('ERROR: insert a number');
                     this.newEnumElementLabel = '';
-                    return;
+                    return false;
                 }
                 if (this.newElementType == 'integer' && ~this.newEnumElementLabel.indexOf('.')) {
                     console.log('ERROR: insert an integer');
                     this.newEnumElementLabel = '';
-                    return;
+                    return false;
                 }
             }
             this.enumOptions.push(this.newEnumElementLabel);
             this.newEnumElementLabel = '';
+            return true;
         }
     }
 
