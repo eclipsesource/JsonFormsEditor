@@ -1,57 +1,70 @@
-/**
- * Created by pancho111203 on 5/04/16.
- */
-
 module app.toolbox {
-
-    import ControlToolboxElement = app.core.model.ControlToolboxElement;
 
     class ToolboxBottomController {
 
-
-        public showAdvanced: boolean = false;
-        public advancedTemplate: string = null;
-
-
         public newElementLabel:string = '';
-        public newElementTypeLabel:string = null;
+        public newElementType:string = null;
+        public newElementConfig:{} = {};
 
+        public showAdvanced:boolean = false;
+        public showEnum:boolean = false;
 
-        public newEnumElements = [];
-        public currentEnumElementLabel = '';
-
+        public newEnumElementLabel:string = '';
+        public enumOptions = [];
 
         public elementTypes = {
-            'string': 'basicProperties.html',
-            'number': 'basicProperties.html',
-            'boolean': 'basicProperties.html',
-            'object': null
+            'string': {
+                'allowsAdvanced': true,
+                'required': false,
+                'allowsEnum': true,
+                'enum': []
+            },
+            'integer': {
+                'allowsAdvanced': true,
+                'required': false,
+                'allowsEnum': true,
+                'enum': []
+            },
+            'number': {
+                'allowsAdvanced': true,
+                'required': false,
+                'allowsEnum': true,
+                'enum': []
+            },
+            'boolean': {
+                'allowsAdvanced': true,
+                'required': false,
+                'allowsEnum': false
+            },
+            'object': {
+                'allowsAdvanced': false
+            }
         };
-
-        public newElementConfig: any = {};
 
         static $inject = ['ToolboxService'];
 
-        constructor(public toolboxService: ToolboxService){
+        constructor(public toolboxService:ToolboxService) {
         }
 
-        changeType(label: string, template: string){
-            this.setNewElementTypeLabel(label);
-            this.setTypeTemplate(template);
-            this.showAdvanced = false;
-            this.newElementConfig = {};
+        setNewElementType(type:string){
+            this.newElementType = type;
+            this.reset();
         }
 
-        /**
-         * Setter for the label of the tobe created dataschema element.
-         * @param type
-         */
-        setNewElementTypeLabel(type:string) {
-            this.newElementTypeLabel = type;
+        reset() {
+            this.newElementConfig = JSON.parse(JSON.stringify(this.elementTypes[this.newElementType]));
+            this.resetAdvanced();
         }
 
-        setTypeTemplate(template:string){
-            this.advancedTemplate = template;
+        resetAdvanced() {
+            this.setShowAdvanced(false);
+            this.newEnumElementLabel = '';
+            this.enumOptions = [];
+        }
+
+        setShowAdvanced(show:boolean) {
+            this.showAdvanced = show;
+            this.showEnum = false;
         }
 
         //TODO support different scopes(inside folders)
@@ -59,24 +72,46 @@ module app.toolbox {
         /**
          * Submits the current newElementLabel and newElementTypeLabel and creates a new DataschemaPropery.
          */
-        addNewElement() {
-            if (!this.toolboxService.addSchemaElement(this.newElementLabel, this.newElementTypeLabel, this.newElementConfig)) {
-                console.log("ERROR: failed to add the element into the schema");
+        addNewElement():boolean {
+            if (this.newElementType == 'integer' || this.newElementType == 'number') {
+                var numberEnum = [];
+                for (var i = 0; i < this.newElementConfig['enum'].length; i++) {
+                    numberEnum.push(Number(this.newElementConfig['enum'][i]));
+                }
+                this.newElementConfig['enum'] = numberEnum;
             }
 
+            var added = this.toolboxService.addSchemaElement(this.newElementLabel, this.newElementType, this.newElementConfig);
+            if (!added) {
+                console.log('ERROR: failed to add the element into the schema');
+            }
             this.newElementLabel = '';
-            this.newElementConfig = {};
-            this.newEnumElements = [];
+            this.reset();
+            return added;
         }
 
-        addEnumElement(){
-            if(~this.newEnumElements.indexOf(this.currentEnumElementLabel)){
-                console.log("ERROR: element already exists");
-                this.currentEnumElementLabel = "";
-                return;
+        addNewEnumElement():boolean {
+            if (~this.enumOptions.indexOf(this.newEnumElementLabel)) {
+                console.log('ERROR: element already exists');
+                this.newEnumElementLabel = '';
+                return false;
             }
-            this.newEnumElements.push(this.currentEnumElementLabel);
-            this.currentEnumElementLabel = "";
+            if (this.newElementType == 'integer' || this.newElementType == 'number') {
+                var number = Number(this.newEnumElementLabel);
+                if (isNaN(number)) {
+                    console.log('ERROR: insert a number');
+                    this.newEnumElementLabel = '';
+                    return false;
+                }
+                if (this.newElementType == 'integer' && ~this.newEnumElementLabel.indexOf('.')) {
+                    console.log('ERROR: insert an integer');
+                    this.newEnumElementLabel = '';
+                    return false;
+                }
+            }
+            this.enumOptions.push(this.newEnumElementLabel);
+            this.newEnumElementLabel = '';
+            return true;
         }
     }
 
