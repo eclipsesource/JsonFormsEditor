@@ -50,12 +50,6 @@ module app.tree {
                 beforeDrag: (sourceNodeScope) => {
                     var dragElement:TreeElement = sourceNodeScope.$modelValue;
                     return !dragElement['root'];
-                },
-                removed: (node) => {
-                    var treeElement:TreeElement = node.$modelValue;
-                    this.treeService.notifyObservers(new PreviewUpdateEvent(null, JSON.parse(this.treeService.exportUISchemaAsJSON())));
-                    this.decreasePlacedTimesOfChilds(treeElement);
-                    treeService.modifiedTree();
                 }
             };
         }
@@ -65,6 +59,10 @@ module app.tree {
          * @param scope Scope Element from ui.tree.
          */
         remove(scope):void {
+            var treeElement:TreeElement = scope.$nodeScope.$modelValue;
+            this.treeService.notifyObservers(new PreviewUpdateEvent(null, JSON.parse(this.treeService.exportUISchemaAsJSON())));
+            this.decreasePlacedTimesOfChilds(treeElement);
+            this.treeService.modifiedTree();
             this.undoService.snapshot();
             scope.removeNode(scope);
         }
