@@ -52,6 +52,10 @@ module app.tree {
                     return !dragElement['root'];
                 }
             };
+
+            Profiler.getInstance().watch('detailLoader', function(timeTaken){
+                console.log("Time to execute: " + timeTaken);
+            });
         }
 
         /**
@@ -72,7 +76,11 @@ module app.tree {
          * @param node
          */
         showDetails(node:TreeElement):void {
-            this.detailService.setElement(node);
+
+            Profiler.getInstance().startMeasure('detailLoader');
+            this.detailService.setElement(node).then(function(){
+                Profiler.getInstance().endMeasure('detailLoader');
+            });
         }
 
         /**
