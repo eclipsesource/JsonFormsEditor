@@ -137,6 +137,10 @@ module app.core.dataschema {
                 this.addPropertyToRequired(label, parent);
             }
 
+            if (config['format']){
+                property['format'] = config['format'];
+            }
+
             if (config['allowsEnum'] && config['enum'].length > 0) {
                 property['enum'] = config['enum'];
             }

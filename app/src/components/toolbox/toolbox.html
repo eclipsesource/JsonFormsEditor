@@ -67,6 +67,16 @@
         <script type="text/ng-template" id="advanced.html">
             <md-checkbox toolbox-focus-input="toolbox-bottom-input" ng-model="$parent.toolboxBottom.newElementConfig.required">Required</md-checkbox>
             <md-checkbox toolbox-focus-input="toolbox-bottom-input" ng-show="$parent.toolboxBottom.newElementConfig.allowsEnum" ng-model="$parent.toolboxBottom.showEnum">Enum</md-checkbox>
+
+            <md-input-container ng-if="$parent.toolboxBottom.newElementConfig.formats" class="md-block">
+                <label for="toolbox-bottom-advanced-format">Format</label>
+                <md-select id="toolbox-bottom-advanced-format" toolbox-focus-input="toolbox-bottom-input" ng-model="$parent.toolboxBottom.newElementConfig.format">
+                    <md-option ng-repeat="format in $parent.toolboxBottom.newElementConfig.formats" value="{{format}}">
+                        {{format}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+
         </script>
 
         <script type="text/ng-template" id="enum.html">
