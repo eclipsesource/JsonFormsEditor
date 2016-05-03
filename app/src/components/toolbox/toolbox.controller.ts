@@ -96,8 +96,8 @@ module app.toolbox {
             }
         }
 
-        canBeRemoved(element: ControlToolboxElement): boolean{
-            return this.toolboxService.canBeRemoved(element);
+        canBeRemoved(element: ControlToolboxElement, node:any): boolean{
+            return !node.$nodeScope.selected && this.toolboxService.canBeRemoved(element);
         }
         isParentFolder(){
             return this.toolboxService.currentPath.length == 0;
