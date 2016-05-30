@@ -14,7 +14,7 @@ module app.tree {
     export class TreeService extends Observable<PreviewUpdateEvent> implements Originator<TreeServiceMemento> {
         static $inject = ['LayoutsService', 'ToolboxService', '$q', 'ValidatorService'];
 
-        public elements:TreeElement[] = [];
+        public elements:TreeElement[];
         public uischemaValid:boolean = true;
 
         constructor(private layoutsService:LayoutsService, private toolboxService:ToolboxService, private $q:IQService,
@@ -23,8 +23,7 @@ module app.tree {
             layoutsService.getElementByType('VerticalLayout').then((element:LayoutToolboxElement) => {
                 var rootElement:TreeElement = element.convertToTreeElement();
                 rootElement['root'] = 'root';
-                this.elements.push(rootElement);
-                this.validateTree();
+                this.elements = [rootElement];
             });
         }
 
@@ -47,14 +46,13 @@ module app.tree {
         }
 
         generateTreeFromExistingUISchema(uiSchema:any) {
-            this.elements.splice(0, this.elements.length);
             this.layoutsService.getElementByType(uiSchema.type).then((element:LayoutToolboxElement) => {
                 var rootElement:TreeElement = element.convertToTreeElement();
                 rootElement['root'] = 'root';
                 for (var i = 0; i < uiSchema.elements.length; i++) {
                     this.generateTreeElement(rootElement, uiSchema.elements[i]);
                 }
-                this.elements.push(rootElement);
+                this.elements = [rootElement];
             });
         }
 

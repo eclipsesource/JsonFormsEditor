@@ -58,6 +58,16 @@ module app {
                             templateUrl: 'app/src/components/preview/preview.html'
                         }
                     }
+                })
+                .state('demo', {
+                    url: '/demo',
+                    views: {
+                        contentContainer: {
+                            controller: 'DemoController',
+                            controllerAs: 'demo',
+                            templateUrl: 'app/src/components/demo/demo.html'
+                        }
+                    }
                 });
 
 

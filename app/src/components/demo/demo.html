@@ -1,0 +1,38 @@
+<p>{{demo.text}}</p>
+<!--
+<script>
+  window.addEventListener('message', function (event) {
+    var injector = angular.element('html').injector();
+    var validatorService = injector.get('ValidatorService');
+    var toolboxService = injector.get('ToolboxService');
+    var treeService = injector.get('TreeService');
+    var $state = injector.get('$state');
+
+var dataschema = event.data.dataSchema;
+    var uischema = event.data.uiSchema;
+    if (!dataschema) {
+      demo.text ='DataSchema is undefined!';
+      return;
+    }
+    if (!validatorService.validateDataschema(dataschema)) {
+      demo.text = 'The Dataschema is not valid';
+      return;
+    }
+    toolboxService.loadSchema(dataschema);
+
+    if (uischema) {
+      if (!validatorService.validateUISchema(uischema)) {
+        demo.text = 'The UISchema is not valid';
+        return;
+      }
+      if (!validatorService.areSchemasCompatible(dataschema, uischema)) {
+        demo.text = 'The Dataschema and UISchema are not compatible';
+        return;
+      }
+      treeService.generateTreeFromExistingUISchema(uischema);
+    }
+
+    $state.go('edit');
+
+  }, false);
+</script>-->
