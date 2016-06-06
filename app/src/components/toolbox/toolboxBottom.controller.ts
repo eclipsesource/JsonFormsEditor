@@ -17,7 +17,8 @@ module app.toolbox {
                 'allowsAdvanced': true,
                 'required': false,
                 'allowsEnum': true,
-                'enum': []
+                'enum': [],
+                'formats': ['date-time']
             },
             'integer': {
                 'allowsAdvanced': true,
@@ -67,8 +68,7 @@ module app.toolbox {
             this.showEnum = false;
         }
 
-        //TODO support different scopes(inside folders)
-        //TODO add more data into content(required, min chars, etc)
+
         /**
          * Submits the current newElementLabel and newElementTypeLabel and creates a new DataschemaPropery.
          */

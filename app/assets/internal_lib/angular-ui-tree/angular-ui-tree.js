@@ -192,12 +192,10 @@
         };
 
         $scope.deselect = function(){
-          if($scope.selected){
+          if($scope.selected && $scope.$treeScope.$callbacks.deselect($scope)){
             $scope.selected = false;
 
             $scope.$treeScope.selecteds.splice($scope.$treeScope.selecteds.indexOf($scope.$element), 1);
-
-            $scope.$treeScope.$callbacks.deselect($scope);
           }
         };
 
@@ -208,12 +206,10 @@
         };
 
         $scope.select = function(){
-          if(!$scope.selected){
+          if(!$scope.selected && $scope.$treeScope.$callbacks.select($scope)){
             $scope.selected = true;
 
             $scope.$treeScope.selecteds.push($scope.$element);
-
-            $scope.$treeScope.$callbacks.select($scope);
           }
         };
       }
@@ -540,12 +536,17 @@
 
             };
 
+            /**
+             * Callback checks if the node can be selected
+             * @param node
+             * @returns {boolean}
+             */
             callbacks.select = function(node){
-
+              return true;
             };
 
             callbacks.deselect = function(node){
-
+              return true;
             };
 
             callbacks.endSelect = function(){
