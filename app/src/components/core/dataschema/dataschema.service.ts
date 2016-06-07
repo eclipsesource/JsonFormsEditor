@@ -18,7 +18,9 @@ module app.core.dataschema {
          * @param json a dataschema json structure.
          */
         loadFromJson(json:any) {
-            this.json = json;
+            if (json.hasOwnProperty('properties')) {
+                this.json = json;
+            }
         }
 
         /**

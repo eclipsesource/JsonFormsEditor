@@ -15,7 +15,7 @@ module app.core {
         constructor(private metaschemaService: app.core.metaschema.MetaschemaService, private $q: IQService) {
         }
 
-        validateDataschema(dataschema:string):boolean {
+        validateDataschema(dataschema:{}):boolean {
             if (!tv4) {
                 return true;
             }
