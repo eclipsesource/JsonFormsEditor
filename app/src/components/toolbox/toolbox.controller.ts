@@ -21,6 +21,12 @@ module app.toolbox {
                 accept: () => {
                     return false;
                 },
+                select: (node) => {
+                    if(node.$modelValue.datatype === "object"){
+                        return false;
+                    }
+                    return true;
+                },
                 beforeDrag: (sourceNodeScope) => {
                     var dragElement:ControlToolboxElement = sourceNodeScope.$modelValue;
                     return !dragElement.isObject();
