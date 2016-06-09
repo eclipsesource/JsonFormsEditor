@@ -57,7 +57,7 @@
                 <input id="toolbox-bottom-input" ng-enter="toolboxBottom.addNewElement()" ng-model="toolboxBottom.newElementLabel" class="md-primary" type="text" placeholder="Add new attribute..."/>
             </md-input-container>
             <div flex="30">
-                <md-button toolbox-focus-input="toolbox-bottom-input" class="md-raised md-primary toolbox-button-create" ng-click="toolboxBottom.addNewElement()">
+                <md-button toolbox-focus-input="toolbox-bottom-input" class="md-raised md-primary toolbox-button-create" ng-disabled="!toolboxBottom.newElementLabel" ng-click="toolboxBottom.addNewElement()">
                     Create
                 </md-button>
             </div>

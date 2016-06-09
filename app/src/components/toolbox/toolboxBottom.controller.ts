@@ -3,7 +3,7 @@ module app.toolbox {
     class ToolboxBottomController {
 
         public newElementLabel:string = '';
-        public newElementType:string = null;
+        public newElementType:string = 'string';
         public newElementConfig:{} = {};
 
         public showAdvanced:boolean = false;
@@ -70,9 +70,13 @@ module app.toolbox {
 
 
         /**
-         * Submits the current newElementLabel and newElementTypeLabel and creates a new DataschemaPropery.
+         * Submits the current newElementLabel and newElementType and creates a new DataschemaPropery.
          */
         addNewElement():boolean {
+            if (!this.newElementLabel) {
+                return false;
+            }
+
             if (this.newElementType == 'integer' || this.newElementType == 'number') {
                 var numberEnum = [];
                 for (var i = 0; i < this.newElementConfig['enum'].length; i++) {
