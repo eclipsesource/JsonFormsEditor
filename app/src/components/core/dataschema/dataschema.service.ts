@@ -39,10 +39,8 @@ module app.core.dataschema {
                 return [];
             }
 
-            parent = parent.properties;
 
-
-            _.forEach(parent, (property:any, name:string) => {
+            _.forEach(parent.properties, (property:any, name:string) => {
                 result.push(new ControlToolboxElement(this.convertNameToLabel(name), property.type, this.generateScope(name, path)));
             });
 
@@ -123,10 +121,9 @@ module app.core.dataschema {
                 console.log('ERROR: the path accessed is not a folder');
                 return false;
             }
-            parent = parent.properties;
 
             // Check if there is a property with same name already
-            if (parent.hasOwnProperty(label)) {
+            if (parent.properties.hasOwnProperty(label)) {
                 console.log('ERROR: a property with the same name exists already in the current folder');
                 return false;
             }
@@ -147,7 +144,7 @@ module app.core.dataschema {
                 property['enum'] = config['enum'];
             }
 
-            parent[label] = property;
+            parent.properties[label] = property;
             this.notifyObservers(new PreviewUpdateEvent(this.getDataSchema(), null));
             return true;
         }
