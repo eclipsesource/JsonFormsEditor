@@ -20,18 +20,20 @@ module app.detail {
         }
 
         setElement(element:TreeElement):IPromise<boolean> {
-            var deferred = this.$q.defer();
+            this.currentElement = element;
 
+            var deferred = this.$q.defer();
             this.metaschemaService.getMetaschema().then((metaschema:Metaschema) => {
-                this.schema = metaschema.getDefinitionByTypeLabel(element.getType()).getDataschema();
-                if (this.schema['properties']['rule']) {
-                    this.schema['properties']['rule']['properties']['condition']['properties']['scope']['enum'] = [""].concat(this.dataschemaService.getPropertiesNames());
+                if (element) {
+                    this.schema = metaschema.getDefinitionByTypeLabel(element.getType()).getDataschema();
+                    if (this.schema['properties']['rule']) {
+                        this.schema['properties']['rule']['properties']['condition']['properties']['scope']['enum'] = [""].concat(this.dataschemaService.getPropertiesNames());
+                    }
+                    this.uiSchema = metaschema.getDefinitionByTypeLabel(element.getType()).getUISchema();
+                    /*if (this.currentElement.getType() == 'Control') {
+                     this.currentElement.setType(this.currentElement.getLongType());
+                     }*/
                 }
-                this.uiSchema = metaschema.getDefinitionByTypeLabel(element.getType()).getUISchema();
-                this.currentElement = element;
-                /*if (this.currentElement.getType() == 'Control') {
-                    this.currentElement.setType(this.currentElement.getLongType());
-                }*/
 
                 deferred.resolve(true);
             });
