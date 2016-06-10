@@ -12,6 +12,8 @@ module app.demo {
 
         constructor(private $state, private toolboxService: ToolboxService, private treeService: TreeService, private validatorService: ValidatorService) {
             window.addEventListener('message', (event) => {
+                window.removeEventListener('message', () => {}, false);
+                event.source.window.postMessage('ACK', event.origin);
                 var dataschema = event.data.dataSchema;
                 var uischema = event.data.uiSchema;
                 if (!dataschema) {
