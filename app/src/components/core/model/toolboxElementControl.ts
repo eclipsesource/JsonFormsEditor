@@ -4,8 +4,9 @@ module app.core.model {
 
     export class ControlToolboxElement extends ToolboxElement{
 
-        constructor(name:string, public datatype:string, private scope:string) {
+        constructor(name: string, public datatype: string, private scope: string, private required:boolean) {
             super(name, "", null);
+            this.generateLabel(name);
             var config, type;
             if(datatype == 'object'){
                 config = new ElementConfig('object', '', 'folder');
@@ -16,13 +17,22 @@ module app.core.model {
             }
             this.elementConfig = config;
             this.type = type;
+        }
 
+        generateLabel(name) {
+            this.label = _.startCase(name);
+            if (this.required) {
+                this.label += '*';
+            }
         }
 
         isObject(): boolean {
             return this.datatype == 'object';
         }
 
+        isRequired(): boolean {
+            return this.required;
+        }
 
         convertToTreeElement():TreeElement {
             var treeElement = new TreeElement();
@@ -40,7 +50,7 @@ module app.core.model {
         }
 
         clone():ControlToolboxElement {
-            return new ControlToolboxElement(this.label, this.datatype, this.scope);
+            return new ControlToolboxElement(this.label, this.datatype, this.scope, this.required);
         }
 
     }

@@ -39,10 +39,10 @@ module app.toolbox {
          * @param path the path to the property in the dataschema, e.g. ['person', 'adress']
          * @returns {boolean} true, if the addition was successful
          */
-        addSchemaElement(label:string, type:string, config: any):boolean {
+        addSchemaElement(name: string, type: string, config: any): boolean {
 
-            if (this.dataschemaService.addNewProperty(label, type, config, this.currentPath)) {
-                var element:ControlToolboxElement = new ControlToolboxElement(this.dataschemaService.convertNameToLabel(label), type, this.generateScope(label, this.currentPath));
+            if (this.dataschemaService.addNewProperty(name, type, config, this.currentPath)) {
+                var element:ControlToolboxElement = new ControlToolboxElement(name, type, this.generateScope(name, this.currentPath), config['required'] == true);
                 this.elements.push(element);
                 return true;
             } else {
@@ -50,12 +50,12 @@ module app.toolbox {
             }
         }
 
-        generateScope(label:string, path:string[]):string {
+        generateScope(name:string, path:string[]):string {
             var scope = '';
             if (path.length <= 0) {
-                scope = label;
+                scope = name;
             } else {
-                scope = path.join('/properties/') + '/properties/' + label;
+                scope = path.join('/properties/') + '/properties/' + name;
             }
 
             return scope;

@@ -41,29 +41,27 @@ module app.core.dataschema {
 
 
             _.forEach(parent.properties, (property:any, name:string) => {
-                result.push(new ControlToolboxElement(this.convertNameToLabel(name), property.type, this.generateScope(name, path)));
+                var required = false;
+                if (parent['required']) {
+                    required = parent['required'].indexOf(name) >= 0;
+                }
+                result.push(new ControlToolboxElement(name, property.type, this.generateScope(name, path), required));
             });
 
 
             return result;
         }
 
-        generateScope(label: string, path: string[]) : string{
+        generateScope(name: string, path: string[]) : string{
             var scope = '';
             if(path.length<=0){
-                scope = label;
+                scope = name;
             }else {
-                scope = path.join('/properties/') + '/properties/' + label;
+                scope = path.join('/properties/') + '/properties/' + name;
             }
 
             return scope;
 
-        }
-
-        convertNameToLabel(name:string):string {
-
-
-            return _.startCase(name);
         }
 
 
@@ -106,13 +104,13 @@ module app.core.dataschema {
          * @param path path is an array of string containing the name of the parent properties in order eg. : ['person', 'appearance', 'head']
          * @returns {boolean} indicating if the addition was succesful(when false, it means the element was not added)
          */
-        addNewProperty(label: string, type: string, config: any, path:string[]):boolean {
+        addNewProperty(name: string, type: string, config: any, path:string[]):boolean {
             config = config || {};
             var property: any = {};
             property.type = type;
 
-            if (!(label&&type)) {
-                console.log('ERROR: label or type undefined');
+            if (!(name&&type)) {
+                console.log('ERROR: name or type undefined');
                 return false;
             }
             var parent = this.getFolderAt(path);
@@ -123,7 +121,7 @@ module app.core.dataschema {
             }
 
             // Check if there is a property with same name already
-            if (parent.properties.hasOwnProperty(label)) {
+            if (parent.properties.hasOwnProperty(name)) {
                 console.log('ERROR: a property with the same name exists already in the current folder');
                 return false;
             }
@@ -133,7 +131,7 @@ module app.core.dataschema {
             }
 
             if (config['required'] === true) {
-                this.addPropertyToRequired(label, parent);
+                this.addPropertyToRequired(name, parent);
             }
 
             if (config['format']){
@@ -144,19 +142,19 @@ module app.core.dataschema {
                 property['enum'] = config['enum'];
             }
 
-            parent.properties[label] = property;
+            parent.properties[name] = property;
             this.notifyObservers(new PreviewUpdateEvent(this.getDataSchema(), null));
             return true;
         }
 
 
-        addPropertyToRequired(label: string, parent: any){
+        addPropertyToRequired(name: string, parent: any){
 
             if(!parent['required']){
                 parent.required = [];
             }
-            if(!~parent.required.indexOf(label)){
-                parent.required.push(label);
+            if(!~parent.required.indexOf(name)){
+                parent.required.push(name);
             }
         }
 

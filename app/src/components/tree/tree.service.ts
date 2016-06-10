@@ -61,7 +61,9 @@ module app.tree {
             if (uiSchema.type == "Control") {
                 this.toolboxService.increasePlacedTimes(this.toolboxService.getElementByScope(uiSchema.scope.$ref.substring(13)).getScope());
                 treeElement = this.toolboxService.getElementByScope(uiSchema.scope.$ref.substring(13)).convertToTreeElement();
-                treeElement.setLabel(uiSchema.label);
+                if (uiSchema.label) {
+                    treeElement.setLabel(uiSchema.label);
+                }
                 parent.addElement(treeElement);
             } else {
                 this.layoutsService.getElementByType(uiSchema.type).then((element:LayoutToolboxElement) => {
