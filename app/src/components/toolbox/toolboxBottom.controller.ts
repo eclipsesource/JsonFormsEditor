@@ -3,7 +3,7 @@ module app.toolbox {
     class ToolboxBottomController {
 
         public newElementLabel:string = '';
-        public newElementType:string = 'string';
+        public newElementType:string;
         public newElementConfig:{} = {};
 
         public showAdvanced:boolean = false;
@@ -45,6 +45,7 @@ module app.toolbox {
         static $inject = ['ToolboxService'];
 
         constructor(public toolboxService:ToolboxService) {
+            this.setNewElementType('string');
         }
 
         setNewElementType(type:string){
