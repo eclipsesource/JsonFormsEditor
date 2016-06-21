@@ -245,6 +245,9 @@ module.exports = function (grunt) {
             commit: {
                 cmd: './commit.sh',
                 args: ['<%= grunt.option("msg") %>']
+            },
+            upload: {
+                cmd: './upload.sh'
             }
         },
         remapIstanbul: {
@@ -343,6 +346,11 @@ module.exports = function (grunt) {
         'bump-only:patch',
         'bump-commit',
         'run:deploy'
+    ]);
+
+    grunt.registerTask('upload', [
+        'dist',
+        'run:upload'
     ]);
 
     /**
