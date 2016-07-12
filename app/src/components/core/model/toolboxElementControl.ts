@@ -40,7 +40,11 @@ module app.core.model {
             treeElement.setDataType(this.datatype);
             treeElement.setScope(this.scope);
             treeElement.setReadOnly(false);
-            treeElement.setLabel(this.getLabel());
+            let label = this.getLabel();
+            if (this.isRequired()) {
+                label = label.substring(0, label.length - 1);
+            }
+            treeElement.setLabel(label);
             treeElement.setAcceptedElements(this.getAcceptedElements());
             return treeElement;
         }
