@@ -72,6 +72,7 @@ module app.toolbox {
 
         /**
          * Submits the current newElementLabel and newElementType and creates a new DataschemaPropery.
+         * Returns true if the element was correctly added, false otherwise.
          */
         addNewElement():boolean {
             if (!this.newElementLabel) {
