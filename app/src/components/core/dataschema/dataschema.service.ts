@@ -39,17 +39,20 @@ module app.core.dataschema {
                 return [];
             }
 
-
+            var requiredProperties = parent['required'];
             _.forEach(parent.properties, (property:any, name:string) => {
-                var required = false;
-                if (parent['required']) {
-                    required = parent['required'].indexOf(name) >= 0;
-                }
-                result.push(new ControlToolboxElement(name, property.type, this.generateScope(name, path), required));
+                result.push(new ControlToolboxElement(name, property.type, this.generateScope(name, path), this.isPropertyRequired(requiredProperties, name)));
             });
 
 
             return result;
+        }
+
+        private isPropertyRequired(requiredProperties: string[], propertyName: string) {
+            if (!requiredProperties) {
+                return false;
+            }
+            return requiredProperties.indexOf(propertyName) >= 0;
         }
 
         generateScope(name: string, path: string[]) : string{
