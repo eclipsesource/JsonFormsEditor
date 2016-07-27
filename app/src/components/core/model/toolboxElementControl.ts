@@ -6,7 +6,7 @@ module app.core.model {
 
         constructor(name: string, public datatype: string, private scope: string, private required:boolean) {
             super(name, "", null);
-            this.generateLabel(name);
+            this.label = this.generateLabel(name);
             var config, type;
             if(datatype == 'object'){
                 config = new ElementConfig('object', '', 'folder');
@@ -19,11 +19,12 @@ module app.core.model {
             this.type = type;
         }
 
-        generateLabel(name) {
-            this.label = _.startCase(name);
+        generateLabel(name): string {
+            let label: string = _.startCase(name);
             if (this.required) {
-                this.label += '*';
+                label += '*';
             }
+            return label;
         }
 
         isObject(): boolean {
