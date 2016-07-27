@@ -30,12 +30,11 @@ module app.detail {
                         this.schema['properties']['rule']['properties']['condition']['properties']['scope']['enum'] = [""].concat(this.dataschemaService.getPropertiesNames());
                     }
                     this.uiSchema = metaschema.getDefinitionByTypeLabel(element.getType()).getUISchema();
-                    /*if (this.currentElement.getType() == 'Control') {
-                     this.currentElement.setType(this.currentElement.getLongType());
-                     }*/
                 }
 
                 deferred.resolve(true);
+            }, (error: any) => {
+                deferred.resolve(false);
             });
             return deferred.promise;
         }
