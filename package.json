@@ -48,6 +48,7 @@
     "remap-istanbul": "latest"
   },
   "scripts": {
+    "preinstall": "npm install typings -g",
     "postinstall": "bower install && grunt dist && ./node_modules/protractor/bin/webdriver-manager update"
   }
 }
