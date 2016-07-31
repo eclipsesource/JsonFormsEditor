@@ -68,7 +68,7 @@ module.exports = {
             'app/assets/libs/path-loader/browser/path-loader.js',
             'app/assets/libs/traverse/traverse.js',
             'app/assets/libs/json-refs/browser/json-refs.js',
-            'app/assets/libs/tv4/tv4.js',
+            'node_modules/tv4/tv4.js',
             'node_modules/jsonforms/dist/jsonforms.js',
             'app/assets/libs/material-design-lite/material.js',
             'app/assets/libs/angular-animate/angular-animate.js',

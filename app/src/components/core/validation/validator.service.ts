@@ -2,7 +2,6 @@ declare var tv4;
 declare var JsonRefs;
 
 module app.core {
-
     import Metaschema = app.core.metaschema.Metaschema;
     import TreeElement = app.core.model.TreeElement;
     import IQService = angular.IQService;
