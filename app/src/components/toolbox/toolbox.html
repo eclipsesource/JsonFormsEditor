@@ -24,7 +24,7 @@
                         <md-icon ng-if="!element.isObject()" class="material-icons">{{element.getIcon()}}
                         </md-icon>
                         <span ng-if="!element.isObject()" style="overflow:hidden;" class="left-margin">{{element.getLabel()}}</span>
-                        <a class="pull-right left-margin" ng-hide="!toolbox.canBeRemoved(element)"
+                        <a class="pull-right left-margin" ng-hide="!toolbox.canBeRemoved(element, this)"
                            ng-click="toolbox.removeDataElement(element)">
                             <md-icon class="btn material-icons">delete</md-icon>
                         </a>

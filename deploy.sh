@@ -12,6 +12,6 @@ git tag -a "v${rev}" -m "Created tag v${rev}"
 git push upstream "v${rev}"
 
 git remote remove heroku
-heroku git:remote -a jsonformseditor
+heroku git:remote -a jsonforms-editor
 heroku config:set NPM_CONFIG_PRODUCTION=false
 git push heroku master

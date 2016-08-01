@@ -63,6 +63,10 @@ module app.tree {
                     treeService.modifiedTree();
                 }
             };
+
+            Profiler.getInstance().watch('detailLoader', function(timeTaken){
+                console.log("Time to execute: " + timeTaken);
+            });
         }
 
         /**
@@ -70,6 +74,10 @@ module app.tree {
          * @param scope Scope Element from ui.tree.
          */
         remove(scope):void {
+            var treeElement:TreeElement = scope.$nodeScope.$modelValue;
+            this.treeService.notifyObservers(new PreviewUpdateEvent(null, JSON.parse(this.treeService.exportUISchemaAsJSON())));
+            this.decreasePlacedTimesOfChilds(treeElement);
+            this.treeService.modifiedTree();
             this.undoService.snapshot();
             scope.removeNode(scope);
         }
@@ -79,8 +87,11 @@ module app.tree {
          * @param node
          */
         showDetails(node:TreeElement):void {
-            this.selectedTreeElement = node;
-            this.detailService.setElement(node);
+
+            Profiler.getInstance().startMeasure('detailLoader');
+            this.detailService.setElement(node).then(function(){
+                Profiler.getInstance().endMeasure('detailLoader');
+            });
         }
 
         /**
