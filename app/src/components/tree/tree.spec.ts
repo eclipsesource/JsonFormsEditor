@@ -22,6 +22,7 @@ describe('app.tree', () => {
         "elements": [
             {
                 "type": "Control",
+                "label": "Name",
                 "scope": {
                     "$ref": "#/properties/name"
                 },
