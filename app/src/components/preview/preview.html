@@ -1,5 +1,5 @@
 <md-content style="height: 100%;" class="md-padding jsf" ng-if="preview.previewService.schema">
-    <jsonforms schema="preview.previewService.schema" ui-schema="preview.previewService.uiSchema"
+    <jsonforms schema="preview.previewService.schema" uischema="preview.previewService.uiSchema"
                data="preview.data"></jsonforms>
 </md-content>
 <md-button ng-if="!preview.configService.isPreviewTab()&&preview.shouldShowNewTabButton()" ng-click="preview.openInNewTab()" class="md-fab accent md-fab-bottom-right">

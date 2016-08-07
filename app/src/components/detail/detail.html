@@ -6,7 +6,7 @@
     </md-subheader>
     <md-content class="md-padding" ng-class="{'bottom-border': detail.detailService.currentElement && !detail.detailService.currentElement.isValid()}" ng-if="detail.detailService.currentElement">
         <section class="jsf" layout="row">
-            <jsonforms schema="detail.detailService.schema" ui-schema="detail.detailService.uiSchema"
+            <jsonforms schema="detail.detailService.schema" uischema="detail.detailService.uiSchema"
                        data="detail.detailService.currentElement">
             </jsonforms>
         </section>
