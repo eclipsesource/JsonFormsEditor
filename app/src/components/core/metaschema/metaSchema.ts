@@ -60,7 +60,7 @@ module app.core.metaschema {
 
                 // child definitions
                 var notGeneratedChildDefinitions = acceptedElements.filter(function (name:string) {
-                    return !_.contains(rootDefinitionsNames, name) && !_.contains(alreadyGenerated, name);
+                    return !_.includes(rootDefinitionsNames, name) && !_.includes(alreadyGenerated, name);
                 });
                 for (var i = 0; i < notGeneratedChildDefinitions.length; i++) {
                     Metaschema.generateDefinition(definitions, notGeneratedChildDefinitions[i], metaschema, resolvedMetaschema, rootDefinitionsNames, alreadyGenerated);
@@ -246,7 +246,7 @@ module app.core.metaschema {
          */
         getDefinitionByTypeLabel(typeLabel:String):Definition {
             return _.find(this.definitions, (definition:Definition) => {
-                return _.contains(definition.getTypeLabels(), typeLabel);
+                return _.includes(definition.getTypeLabels(), typeLabel);
             })
         }
 

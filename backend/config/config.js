@@ -1,7 +1,7 @@
 
 var config = {};
 
-config.appName = "JsonFormEditor";
-config.appUrl = 'https://jsonformseditor.herokuapp.com';
+config.appName = process.env['GITHUB_APP_NAME'];
+config.appUrl = process.env['GITHUB_APP_URL'];
 
 module.exports = config;

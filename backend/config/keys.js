@@ -4,8 +4,8 @@
 
 var keys = {};
 
-keys.clientId = "42e0b0e6cf509096ac40";
-keys.clientSecret = "30eed32b0b2ae5732a173ef184ec851b3f668c93";
+keys.clientId = process.env['GITHUB_CLIENT_ID'];
+keys.clientSecret = process.env['GITHUB_CLIENT_SECRET'];
 keys.sessionSecret = "random_key_to_encode_sessions";
 
 

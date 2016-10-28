@@ -10,7 +10,6 @@
     "angular-ui-router": "^0.2.15",
     "bootstrap": "~3.3.5",
     "jquery": "~2.1.4",
-    "jsonforms": "0.0.15",
     "material-design-lite": "~1.0.6",
     "angular-material": "~1.1.0",
     "ngclipboard": "latest",

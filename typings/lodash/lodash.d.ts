@@ -3914,7 +3914,7 @@ declare module _ {
         ): LoDashExplicitArrayWrapper<boolean>;
     }
 
-    //_.contains
+    //_.includes
     interface LoDashStatic {
         /**
          * @see _.includes
@@ -5460,7 +5460,7 @@ declare module _ {
          * Checks if target is in collection using SameValueZero for equality comparisons. If fromIndex is negative,
          * it’s used as the offset from the end of collection.
          *
-         * @alias _.contains, _.include
+         * @alias _.includes, _.include
          *
          * @param collection The collection to search.
          * @param target The value to search for.
