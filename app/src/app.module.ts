@@ -13,6 +13,7 @@ module app {
         'app.layouts',
         'app.preview',
         'app.dialogs',
+        'app.demo',
         'ui.router',
         'ngMaterial',
         'ngclipboard'

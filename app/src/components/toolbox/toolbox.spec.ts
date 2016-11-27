@@ -24,7 +24,7 @@ describe('toolbox', ()=> {
     });
 
     it('should add element when creating new one', () => {
-        service.addSchemaElement('test', 'string');
+        service.addSchemaElement('test', 'string', { 'required': false });
         expect(service.elements.length).toEqual(1);
     });
 
@@ -32,7 +32,7 @@ describe('toolbox', ()=> {
         var scope = $rootScope.$new();
         var controller = $controller('ToolboxController', {$scope: scope});
 
-        service.addSchemaElement('test', 'string');
+        service.addSchemaElement('test', 'string', { 'required': false });
 
         controller.removeDataElement(service.elements[0]);
 

@@ -4,8 +4,9 @@ module app.core.model {
 
     export class ControlToolboxElement extends ToolboxElement{
 
-        constructor(name:string, public datatype:string, private scope:string) {
+        constructor(name: string, public datatype: string, private scope: string, private required:boolean) {
             super(name, "", null);
+            this.label = this.generateLabel(name);
             var config, type;
             if(datatype == 'object'){
                 config = new ElementConfig('object', '', 'folder');
@@ -16,13 +17,23 @@ module app.core.model {
             }
             this.elementConfig = config;
             this.type = type;
+        }
 
+        generateLabel(name): string {
+            let label: string = _.startCase(name);
+            if (this.required) {
+                label += '*';
+            }
+            return label;
         }
 
         isObject(): boolean {
             return this.datatype == 'object';
         }
 
+        isRequired(): boolean {
+            return this.required;
+        }
 
         convertToTreeElement():TreeElement {
             var treeElement = new TreeElement();
@@ -30,7 +41,11 @@ module app.core.model {
             treeElement.setDataType(this.datatype);
             treeElement.setScope(this.scope);
             treeElement.setReadOnly(false);
-            treeElement.setLabel(this.getLabel());
+            let label = this.getLabel();
+            if (this.isRequired()) {
+                label = label.substring(0, label.length - 1);
+            }
+            treeElement.setLabel(label);
             treeElement.setAcceptedElements(this.getAcceptedElements());
             return treeElement;
         }
@@ -40,7 +55,7 @@ module app.core.model {
         }
 
         clone():ControlToolboxElement {
-            return new ControlToolboxElement(this.label, this.datatype, this.scope);
+            return new ControlToolboxElement(this.label, this.datatype, this.scope, this.required);
         }
 
     }

@@ -3,7 +3,7 @@ module app.toolbox {
     class ToolboxBottomController {
 
         public newElementLabel:string = '';
-        public newElementType:string = null;
+        public newElementType:string;
         public newElementConfig:{} = {};
 
         public showAdvanced:boolean = false;
@@ -45,6 +45,7 @@ module app.toolbox {
         static $inject = ['ToolboxService'];
 
         constructor(public toolboxService:ToolboxService) {
+            this.setNewElementType('string');
         }
 
         setNewElementType(type:string){
@@ -70,9 +71,14 @@ module app.toolbox {
 
 
         /**
-         * Submits the current newElementLabel and newElementTypeLabel and creates a new DataschemaPropery.
+         * Submits the current newElementLabel and newElementType and creates a new DataschemaPropery.
+         * Returns true if the element was correctly added, false otherwise.
          */
         addNewElement():boolean {
+            if (!this.newElementLabel) {
+                return false;
+            }
+
             if (this.newElementType == 'integer' || this.newElementType == 'number') {
                 var numberEnum = [];
                 for (var i = 0; i < this.newElementConfig['enum'].length; i++) {

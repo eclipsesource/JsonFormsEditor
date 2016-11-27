@@ -11,6 +11,7 @@ module app.tree {
 
     class MyTreeController {
         public treeOptions:{};
+        public selectedTreeElement:TreeElement;
 
         static $inject = ['TreeService', 'DataschemaService', 'ToolboxService', 'DetailService', 'UndoService'];
 
@@ -50,6 +51,16 @@ module app.tree {
                 beforeDrag: (sourceNodeScope) => {
                     var dragElement:TreeElement = sourceNodeScope.$modelValue;
                     return !dragElement['root'];
+                },
+                removed: (node) => {
+                    var treeElement:TreeElement = node.$modelValue;
+                    if (treeElement == this.selectedTreeElement) {
+                        this.selectedTreeElement = null;
+                        this.detailService.setElement(null);
+                    }
+                    this.treeService.notifyObservers(new PreviewUpdateEvent(null, JSON.parse(this.treeService.exportUISchemaAsJSON())));
+                    this.decreasePlacedTimesOfChilds(treeElement);
+                    treeService.modifiedTree();
                 }
             };
 
@@ -89,6 +100,10 @@ module app.tree {
          */
         toggle(scope):void {
             scope.toggle();
+        }
+
+        isNodeSelected(node: TreeElement): boolean {
+            return this.selectedTreeElement == node;
         }
 
         private decreasePlacedTimesOfChilds(treeElement:TreeElement) {
